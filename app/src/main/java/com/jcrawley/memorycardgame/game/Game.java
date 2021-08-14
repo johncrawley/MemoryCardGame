@@ -9,14 +9,14 @@ import java.util.List;
 public class Game {
 
     List<Card> cards;
-
+    int firstSelectedPosition = -1;
+    int secondPosition = -1;
 
 
     public Game(){
         cards = CardFactory.createCards();
         shuffleCards();
     }
-
 
 
     public void shuffleCards(){
