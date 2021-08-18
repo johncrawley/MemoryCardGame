@@ -11,17 +11,16 @@ public class PositionResolver {
     }
 
 
-
-
     public int getPositionFor(float x, float y){
         return -1;
-
     }
+
 
     public int getXForPosition(int position){
         return -1;
     }
 
+    
     public int getYForPosition(int position){
         return -1;
     }
