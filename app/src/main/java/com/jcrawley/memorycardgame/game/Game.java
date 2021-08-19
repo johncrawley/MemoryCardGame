@@ -1,5 +1,9 @@
 package com.jcrawley.memorycardgame.game;
 
+import android.content.Context;
+import android.view.View;
+
+import com.jcrawley.memorycardgame.R;
 import com.jcrawley.memorycardgame.card.Card;
 import com.jcrawley.memorycardgame.card.CardFactory;
 
@@ -8,12 +12,14 @@ import java.util.List;
 
 public class Game {
 
-    List<Card> cards;
-    int firstSelectedPosition = -1;
-    int secondPosition = -1;
+    private List<Card> cards;
+    private int firstSelectedPosition = -1;
+    private int secondPosition = -1;
+    private Context context;
 
 
-    public Game(){
+    public Game(Context context){
+        this.context = context;
         cards = CardFactory.createCards();
         shuffleCards();
     }
@@ -34,6 +40,11 @@ public class Game {
         if(cards.get(position1).getRank() == cards.get(position2).getRank()){
 
         }
+
+    }
+
+    public void notifyClickOnPosition(View view){
+        int position = (int)view.getTag(R.string.position_tag);
 
     }
 

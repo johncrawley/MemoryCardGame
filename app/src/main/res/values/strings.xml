@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MemoryCardGame</string>
+    <string name="position_tag">positionTag</string>
 </resources>
