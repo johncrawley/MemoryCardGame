@@ -10,26 +10,32 @@ import android.widget.LinearLayout;
 
 import com.jcrawley.memorycardgame.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CardLayoutPopulator {
 
     private int width, height;
     private final Activity activity;
     private Bitmap cardBack;
     private View.OnClickListener onClickListener;
-    private final int MAX_NUMBER_OF_CARDS = 52;
+    private final int MAX_NUMBER_OF_CARDS;
     private int currentNumberOfCards;
-    private Game game;
+    private final Game game;
+    private List<ImageView> imageViews;
+    private boolean hasRun = false;
+    private final LinearLayout parentLayout;
 
     @SuppressLint("UseCompatLoadingForDrawables")
     public CardLayoutPopulator(Activity activity, LinearLayout parentLayout, Game game){
         this.activity = activity;
         this.parentLayout = parentLayout;
         this.game = game;
+        MAX_NUMBER_OF_CARDS = game.getNumberOfCards();
+        imageViews = new ArrayList<>(MAX_NUMBER_OF_CARDS);
         createClickListener();
     }
 
-    private boolean hasRun = false;
-    private LinearLayout parentLayout;
 
     public void addCards(){
         if(hasRun){
@@ -47,7 +53,11 @@ public class CardLayoutPopulator {
         for(int i=0; i< NUMBER_OF_ROWS; i++){
             addRowOfCards(NUMBER_OF_CARDS_PER_ROW);
         }
+    }
 
+
+    public List<ImageView> getImageViews(){
+        return imageViews;
     }
 
 
@@ -66,6 +76,9 @@ public class CardLayoutPopulator {
 
     private ImageView createCard(){
         ImageView imageView = new ImageView(activity);
+        int id = View.generateViewId();
+        imageView.setId(id);
+        imageViews.add(imageView);
         imageView.setImageBitmap(cardBack);
         imageView.setPadding(15,15,15,15);
         LinearLayout.LayoutParams layoutParams =  new LinearLayout.LayoutParams(width, height);//mageView.getLayoutParams();
@@ -80,8 +93,10 @@ public class CardLayoutPopulator {
 
     private void createClickListener(){
         onClickListener = view -> {
-            System.out.println("Hello Card!");
-            game.notifyClickOnPosition(view);
+            System.out.println("Hello Card! position: " + (int)view.getTag(R.string.position_tag));
+            if(view.getVisibility() == View.VISIBLE){
+                game.notifyClickOnPosition((ImageView)view);
+            }
         };
     }
 

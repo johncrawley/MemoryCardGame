@@ -18,8 +18,8 @@ public class MainActivity extends AppCompatActivity {
         Game game = new Game(this);
 
         final LinearLayout linearLayout = findViewById(R.id.cardLayout);
-
         CardLayoutPopulator cardLayoutPopulator = new CardLayoutPopulator(this, linearLayout, game);
+        game.setCardLayoutPopulator(cardLayoutPopulator);
         linearLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
