@@ -15,16 +15,18 @@ import java.util.List;
 
 public class CardLayoutPopulator {
 
-    private int width, height;
+    private int cardWidth, cardHeight;
     private final Activity activity;
     private Bitmap cardBack;
     private View.OnClickListener onClickListener;
     private final int MAX_NUMBER_OF_CARDS;
     private int currentNumberOfCards;
     private final Game game;
-    private List<ImageView> imageViews;
+    private final List<ImageView> imageViews;
     private boolean hasRun = false;
     private final LinearLayout parentLayout;
+    private int NUMBER_OF_CARDS_PER_ROW;
+    private int NUMBER_OF_ROWS;
 
     @SuppressLint("UseCompatLoadingForDrawables")
     public CardLayoutPopulator(Activity activity, LinearLayout parentLayout, Game game){
@@ -44,15 +46,22 @@ public class CardLayoutPopulator {
         hasRun = true;
         currentNumberOfCards = 0;
         cardBack = BitmapFactory.decodeResource(activity.getResources(), R.drawable.card_back_1);
-        final int NUMBER_OF_CARDS_PER_ROW = 7;
-        final int NUMBER_OF_ROWS = 8;
-        width = parentLayout.getWidth() / (NUMBER_OF_CARDS_PER_ROW + 1);
-        height = parentLayout.getHeight() / (NUMBER_OF_ROWS + 1);
-        System.out.println("Width and height: " + width + ", " + height);
+        setDimensions();
+        addCardsToParent();
+    }
 
-        for(int i=0; i< NUMBER_OF_ROWS; i++){
-            addRowOfCards(NUMBER_OF_CARDS_PER_ROW);
-        }
+
+    private void setDimensions(){
+        int parentWidth = parentLayout.getWidth();
+        int parentHeight = parentLayout.getHeight();
+
+        float parentArea = parentWidth * parentHeight;
+        float maxAreaPerCard = parentArea / MAX_NUMBER_OF_CARDS;
+        cardWidth = (int)Math.sqrt(maxAreaPerCard/ 2f);
+        cardHeight = (int)(cardWidth * 1.5);
+
+        NUMBER_OF_CARDS_PER_ROW = parentWidth / cardWidth;
+        NUMBER_OF_ROWS = (parentHeight / cardHeight);
     }
 
 
@@ -60,6 +69,12 @@ public class CardLayoutPopulator {
         return imageViews;
     }
 
+
+    private void addCardsToParent(){
+        for(int i = 0; i < NUMBER_OF_ROWS; i++){
+            addRowOfCards(NUMBER_OF_CARDS_PER_ROW);
+        }
+    }
 
     private void addRowOfCards(int numberOfCardsPerRow){
 
@@ -81,7 +96,7 @@ public class CardLayoutPopulator {
         imageViews.add(imageView);
         imageView.setImageBitmap(cardBack);
         imageView.setPadding(15,15,15,15);
-        LinearLayout.LayoutParams layoutParams =  new LinearLayout.LayoutParams(width, height);//mageView.getLayoutParams();
+        LinearLayout.LayoutParams layoutParams =  new LinearLayout.LayoutParams(cardWidth, cardHeight);//mageView.getLayoutParams();
         imageView.setTag(R.string.position_tag, currentNumberOfCards);
         imageView.setOnClickListener(onClickListener);
         imageView.setLayoutParams(layoutParams);
