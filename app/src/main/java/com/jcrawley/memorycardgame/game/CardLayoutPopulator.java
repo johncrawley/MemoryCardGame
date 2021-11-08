@@ -96,7 +96,7 @@ public class CardLayoutPopulator {
         imageViews.add(imageView);
         imageView.setImageBitmap(cardBack);
         imageView.setPadding(15,15,15,15);
-        LinearLayout.LayoutParams layoutParams =  new LinearLayout.LayoutParams(cardWidth, cardHeight);//mageView.getLayoutParams();
+        LinearLayout.LayoutParams layoutParams =  new LinearLayout.LayoutParams(cardWidth, cardHeight);
         imageView.setTag(R.string.position_tag, currentNumberOfCards);
         imageView.setOnClickListener(onClickListener);
         imageView.setLayoutParams(layoutParams);

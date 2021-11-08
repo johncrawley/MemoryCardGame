@@ -26,32 +26,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Game game = new Game(this);
         final LinearLayout linearLayout = findViewById(R.id.cardLayout);
-        if(outOfTime()){
-            displaySorryMessage(linearLayout);
-            return;
-        }
         CardLayoutPopulator cardLayoutPopulator = new CardLayoutPopulator(this, linearLayout, game);
         game.setCardLayoutPopulator(cardLayoutPopulator);
-        linearLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-               cardLayoutPopulator.addCards();
-            }
-        });
+        linearLayout.getViewTreeObserver().addOnGlobalLayoutListener(cardLayoutPopulator::addCards);
     }
 
-    private boolean outOfTime(){
-        return System.currentTimeMillis() > 1629990000_000L;
-    }
-
-    private void displaySorryMessage(LinearLayout linearLayout){
-        TextView textView = new TextView(this);
-        textView.setText("This version is now obsolete, thank you for your participation");
-        linearLayout.addView(textView);
-        Handler handler = new Handler(Looper.getMainLooper());
-        handler.postDelayed(() ->{
-            MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.sorry);
-            mediaPlayer.start();
-        }, 1500);
-    }
 }
