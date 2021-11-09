@@ -38,19 +38,19 @@ public class CardFactory {
     public static List<Card> createCards(){
         cards = new ArrayList<>(52);
         suit = CLUBS;
-        add(TWO, R.drawable.card_diamonds_2);
-        add(THREE,R.drawable.card_diamonds_3);
-        add(FOUR,R.drawable.card_diamonds_4);
-        add(FIVE,R.drawable.card_diamonds_5);
-        add(SIX,R.drawable.card_diamonds_6);
-        add(SEVEN,R.drawable.card_diamonds_7);
-        add(EIGHT,R.drawable.card_diamonds_8);
-        add(NINE,R.drawable.card_diamonds_9);
-        add(TEN,R.drawable.card_diamonds_10);
-        add(JACK,R.drawable.card_diamonds_jack);
-        add(QUEEN,R.drawable.card_diamonds_queen);
-        add(KING,R.drawable.card_diamonds_king);
-        add(ACE,R.drawable.card_diamonds_ace);
+        add(TWO, R.drawable.card_clubs_2);
+        add(THREE,R.drawable.card_clubs_3);
+        add(FOUR,R.drawable.card_clubs_4);
+        add(FIVE,R.drawable.card_clubs_5);
+        add(SIX,R.drawable.card_clubs_6);
+        add(SEVEN,R.drawable.card_clubs_7);
+        add(EIGHT,R.drawable.card_clubs_8);
+        add(NINE,R.drawable.card_clubs_9);
+        add(TEN,R.drawable.card_clubs_10);
+        add(JACK,R.drawable.card_clubs_jack);
+        add(QUEEN,R.drawable.card_clubs_queen);
+        add(KING,R.drawable.card_clubs_king);
+        add(ACE,R.drawable.card_clubs_ace);
 
         suit = DIAMONDS;
         add(TWO, R.drawable.card_diamonds_2);

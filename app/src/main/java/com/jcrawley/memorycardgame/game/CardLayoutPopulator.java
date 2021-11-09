@@ -108,7 +108,6 @@ public class CardLayoutPopulator {
 
     private void createClickListener(){
         onClickListener = view -> {
-            System.out.println("Hello Card! position: " + (int)view.getTag(R.string.position_tag));
             if(view.getVisibility() == View.VISIBLE){
                 game.notifyClickOnPosition((ImageView)view);
             }

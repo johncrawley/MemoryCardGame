@@ -53,7 +53,6 @@ public class Game {
 
     public void notifyClickOnPosition(ImageView view){
         int position = (int)view.getTag(R.string.position_tag);
-        System.out.println("Game.notifyClickOnPosition() , gameState: " + gameState.name());
 
         if(gameState == GameState.NOTHING_SELECTED){
             gameState = GameState.FIRST_CARD_SELECTED;
