@@ -1,4 +1,5 @@
 <resources>
-    <string name="app_name">MemoryCardGame</string>
+    <string name="app_name">Memory Card Game</string>
     <string name="position_tag">positionTag</string>
+    <string name="default_turn_text">Turn 1</string>
 </resources>

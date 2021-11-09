@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         setContentView(R.layout.activity_main);
-        Game game = new Game(this);
+        Game game = new Game(this, findViewById(R.id.numberOfTurnsTextView));
         final LinearLayout linearLayout = findViewById(R.id.cardLayout);
         CardLayoutPopulator cardLayoutPopulator = new CardLayoutPopulator(this, linearLayout, game);
         game.setCardLayoutPopulator(cardLayoutPopulator);

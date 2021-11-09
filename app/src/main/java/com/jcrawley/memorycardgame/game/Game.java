@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.jcrawley.memorycardgame.BitmapLoader;
 import com.jcrawley.memorycardgame.R;
@@ -26,21 +27,26 @@ public class Game {
     private CardLayoutPopulator cardLayoutPopulator;
     private final int NUMBER_OF_CARDS;
     private int remainingCards;
+    private int numberOfTurns;
+    private final TextView numberOfTurnsTextView;
+    private boolean isFirstTurn = true;
 
 
-    public Game(Context context){
+    public Game(Context context, TextView numberOfTurnsTextView){
         bitmapLoader = new BitmapLoader(context);
         gameState = GameState.NOTHING_SELECTED;
         cards = CardFactory.createCards();
         NUMBER_OF_CARDS = cards.size();
         remainingCards = NUMBER_OF_CARDS;
         shuffleCards();
+        this.numberOfTurnsTextView = numberOfTurnsTextView;
     }
 
 
     public void shuffleCards(){
         Collections.shuffle(cards);
     }
+
 
     public int getNumberOfCards(){
         return NUMBER_OF_CARDS;
@@ -51,21 +57,42 @@ public class Game {
         this.cardLayoutPopulator = cardLayoutPopulator;
     }
 
+
     public void notifyClickOnPosition(ImageView view){
         int position = (int)view.getTag(R.string.position_tag);
 
         if(gameState == GameState.NOTHING_SELECTED){
-            gameState = GameState.FIRST_CARD_SELECTED;
-            firstSelectedPosition = position;
-            selectedView1 = view;
-            bitmapLoader.setBitmap(selectedView1, cards.get(firstSelectedPosition).getImageId());
-            return;
+            handleFirstSelection(view, position);
         }
-        if(gameState == GameState.FIRST_CARD_SELECTED){
+        else if(gameState == GameState.FIRST_CARD_SELECTED) {
+            handleSecondSelection(view, position);
+        }
+    }
 
+
+    private void handleFirstSelection(ImageView view, int position){
+        if(!isFirstTurn){
+            numberOfTurns++;
+            log("updating number of turns");
+            updateNumberOfTurns();
+        }
+        gameState = GameState.FIRST_CARD_SELECTED;
+        firstSelectedPosition = position;
+        selectedView1 = view;
+        bitmapLoader.setBitmap(selectedView1, cards.get(firstSelectedPosition).getImageId());
+    }
+
+
+    private void log(String msg){
+        System.out.println("^^^ Game: " + msg);
+    }
+
+    private void handleSecondSelection(ImageView view, int position){
             if(position == firstSelectedPosition){
                 return;
             }
+            log("setting isFirstTurn to false");
+            isFirstTurn = false;
             gameState = GameState.SECOND_CARD_SELECTED;
             secondSelectedPosition = position;
             selectedView2 = view;
@@ -77,8 +104,6 @@ public class Game {
             else{
                 turnOverCards();
             }
-
-        }
     }
 
 
@@ -105,8 +130,19 @@ public class Game {
 
     private void startAgain(){
         Collections.shuffle(cards);
+        numberOfTurns = 1;
+        isFirstTurn = true;
+        updateNumberOfTurns();
         Handler handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(this::reset, 2000);
+    }
+
+
+
+
+    private void updateNumberOfTurns(){
+        String turnsText = "Turn " + numberOfTurns;
+        numberOfTurnsTextView.setText(turnsText);
     }
 
 
@@ -127,6 +163,7 @@ public class Game {
             imageView.setVisibility(View.VISIBLE);
         }
     }
+
 
     private void setCardFaceDown(ImageView imageView){
         bitmapLoader.setBitmap(imageView, R.drawable.card_back_1);
