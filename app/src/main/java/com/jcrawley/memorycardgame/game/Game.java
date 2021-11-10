@@ -166,7 +166,7 @@ public class Game {
 
 
     private void setCardFaceDown(ImageView imageView){
-        bitmapLoader.setBitmap(imageView, R.drawable.card_back_1);
+        bitmapLoader.setBitmap(imageView, R.drawable.card_back_2);
     }
 
 }

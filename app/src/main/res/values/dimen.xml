@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="turns_text_padding_horizontal">18dp</dimen>
+    <dimen name="turns_text_padding_bottom">8dp</dimen>
+    <dimen name="card_layout_padding">0dp</dimen>
+    <dimen name="main_layout_padding">8dp</dimen>
+    <dimen name="card_layout_margin">0dp</dimen>
 
 </resources>

@@ -45,7 +45,7 @@ public class CardLayoutPopulator {
         }
         hasRun = true;
         currentNumberOfCards = 0;
-        cardBack = BitmapFactory.decodeResource(activity.getResources(), R.drawable.card_back_1);
+        cardBack = BitmapFactory.decodeResource(activity.getResources(), R.drawable.card_back_2);
         setDimensions();
         addCardsToParent();
     }
@@ -57,7 +57,7 @@ public class CardLayoutPopulator {
 
         float parentArea = parentWidth * parentHeight;
         float maxAreaPerCard = parentArea / MAX_NUMBER_OF_CARDS;
-        cardWidth = (int)Math.sqrt(maxAreaPerCard/ 2f);
+        cardWidth = (int)Math.sqrt(maxAreaPerCard/ 2f) + 7;
         cardHeight = (int)(cardWidth * 1.5);
 
         NUMBER_OF_CARDS_PER_ROW = parentWidth / cardWidth;

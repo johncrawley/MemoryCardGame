@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.ViewTreeObserver;
+import android.view.Window;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -21,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setStatusBarColor();
 
         setContentView(R.layout.activity_main);
         Game game = new Game(this, findViewById(R.id.numberOfTurnsTextView));
@@ -29,6 +30,13 @@ public class MainActivity extends AppCompatActivity {
         CardLayoutPopulator cardLayoutPopulator = new CardLayoutPopulator(this, linearLayout, game);
         game.setCardLayoutPopulator(cardLayoutPopulator);
         linearLayout.getViewTreeObserver().addOnGlobalLayoutListener(cardLayoutPopulator::addCards);
+    }
+
+
+    private void setStatusBarColor(){
+        Window window = getWindow();
+        if(window != null){
+            window.setStatusBarColor(getResources().getColor(R.color.status_bar_color, getTheme()));        }
     }
 
 }
