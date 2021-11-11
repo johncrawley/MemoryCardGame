@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,7 +22,7 @@ public class Game {
     private final List<Card> cards;
     private int firstSelectedPosition = -1;
     private int secondSelectedPosition = -1;
-    private ImageView selectedView1, selectedView2;
+    private ImageView selectedCard1, selectedCard2;
     private enum GameState { NOTHING_SELECTED, FIRST_CARD_SELECTED, SECOND_CARD_SELECTED}
     private GameState gameState;
     private final BitmapLoader bitmapLoader;
@@ -30,14 +32,16 @@ public class Game {
     private int numberOfTurns;
     private final TextView numberOfTurnsTextView;
     private boolean isFirstTurn = true;
+    private final int screenWidth;
 
 
-    public Game(Context context, TextView numberOfTurnsTextView){
+    public Game(Context context, TextView numberOfTurnsTextView, int screenWidth){
         bitmapLoader = new BitmapLoader(context);
         gameState = GameState.NOTHING_SELECTED;
         cards = CardFactory.createCards();
         NUMBER_OF_CARDS = cards.size();
         remainingCards = NUMBER_OF_CARDS;
+        this.screenWidth = screenWidth;
         shuffleCards();
         this.numberOfTurnsTextView = numberOfTurnsTextView;
     }
@@ -73,30 +77,24 @@ public class Game {
     private void handleFirstSelection(ImageView view, int position){
         if(!isFirstTurn){
             numberOfTurns++;
-            log("updating number of turns");
             updateNumberOfTurns();
         }
         gameState = GameState.FIRST_CARD_SELECTED;
         firstSelectedPosition = position;
-        selectedView1 = view;
-        bitmapLoader.setBitmap(selectedView1, cards.get(firstSelectedPosition).getImageId());
+        selectedCard1 = view;
+        bitmapLoader.setBitmap(selectedCard1, cards.get(firstSelectedPosition).getImageId());
     }
 
-
-    private void log(String msg){
-        System.out.println("^^^ Game: " + msg);
-    }
 
     private void handleSecondSelection(ImageView view, int position){
             if(position == firstSelectedPosition){
                 return;
             }
-            log("setting isFirstTurn to false");
             isFirstTurn = false;
             gameState = GameState.SECOND_CARD_SELECTED;
             secondSelectedPosition = position;
-            selectedView2 = view;
-            bitmapLoader.setBitmap(selectedView2, cards.get(secondSelectedPosition).getImageId());
+            selectedCard2 = view;
+            bitmapLoader.setBitmap(selectedCard2, cards.get(secondSelectedPosition).getImageId());
 
             if(matches()){
                 removeCards();
@@ -116,15 +114,52 @@ public class Game {
 
     private void removeCards(){
         Handler handler = new Handler(Looper.getMainLooper());
+        addSwipeAnimationTo(selectedCard1);
+        addSwipeAnimationTo(selectedCard2);
         handler.postDelayed(() -> {
-            selectedView1.setVisibility(View.INVISIBLE);
-            selectedView2.setVisibility(View.INVISIBLE);
             remainingCards -=2;
             gameState = GameState.NOTHING_SELECTED;
+           // selectedCard1.animate();
+           // selectedCard2.animate();
             if(remainingCards <= 0){
                 startAgain();
             }
         }, 1000);
+    }
+
+    private void log(String msg){
+        System.out.println("^^^ Game: " + msg);
+    }
+
+
+    private void addSwipeAnimationTo(View card){
+        float previousElevation = card.getElevation();
+        card.setElevation(15);
+        Animation animation = new TranslateAnimation(
+                0,
+                screenWidth + 100,
+                0,
+                0);
+        animation.setDuration(1100);
+        animation.setStartOffset(400);
+
+        animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation arg0) {
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation arg0) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation arg0) {
+                card.setVisibility(View.INVISIBLE);
+                card.clearAnimation();
+                card.setElevation(previousElevation);
+            }
+        });
+        card.startAnimation(animation);
     }
 
 
@@ -138,8 +173,6 @@ public class Game {
     }
 
 
-
-
     private void updateNumberOfTurns(){
         String turnsText = "Turn " + numberOfTurns;
         numberOfTurnsTextView.setText(turnsText);
@@ -149,8 +182,8 @@ public class Game {
     private void turnOverCards(){
         Handler handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(() -> {
-            setCardFaceDown(selectedView1);
-            setCardFaceDown(selectedView2);
+            setCardFaceDown(selectedCard1);
+            setCardFaceDown(selectedCard2);
             gameState = GameState.NOTHING_SELECTED;
         }, 1000);
     }
