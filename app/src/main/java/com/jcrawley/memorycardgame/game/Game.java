@@ -3,9 +3,6 @@ package com.jcrawley.memorycardgame.game;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,7 +29,7 @@ public class Game {
     private int numberOfTurns;
     private final TextView numberOfTurnsTextView;
     private boolean isFirstTurn = true;
-    private final int screenWidth;
+    private final CardAnimator cardAnimator;
 
 
     public Game(Context context, TextView numberOfTurnsTextView, int screenWidth){
@@ -41,9 +38,9 @@ public class Game {
         cards = CardFactory.createCards();
         NUMBER_OF_CARDS = cards.size();
         remainingCards = NUMBER_OF_CARDS;
-        this.screenWidth = screenWidth;
         shuffleCards();
         this.numberOfTurnsTextView = numberOfTurnsTextView;
+        cardAnimator = new CardAnimator(screenWidth);
     }
 
 
@@ -114,60 +111,21 @@ public class Game {
 
     private void removeCards(){
         Handler handler = new Handler(Looper.getMainLooper());
-        addSwipeAnimationTo(selectedCard1);
-        addSwipeAnimationTo(selectedCard2);
+        cardAnimator.addSwipeAnimationTo(selectedCard1);
+        cardAnimator.addSwipeAnimationTo(selectedCard2);
         handler.postDelayed(() -> {
             remainingCards -=2;
             gameState = GameState.NOTHING_SELECTED;
-           // selectedCard1.animate();
-           // selectedCard2.animate();
             if(remainingCards <= 0){
                 startAgain();
             }
         }, 1000);
     }
 
-    private void log(String msg){
-        System.out.println("^^^ Game: " + msg);
-    }
-
-
-    private void addSwipeAnimationTo(View card){
-        float previousElevation = card.getElevation();
-        card.setElevation(15);
-        Animation animation = new TranslateAnimation(
-                0,
-                screenWidth + 100,
-                0,
-                0);
-        animation.setDuration(1100);
-        animation.setStartOffset(400);
-
-        animation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation arg0) {
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation arg0) {
-            }
-
-            @Override
-            public void onAnimationEnd(Animation arg0) {
-                card.setVisibility(View.INVISIBLE);
-                card.clearAnimation();
-                card.setElevation(previousElevation);
-            }
-        });
-        card.startAnimation(animation);
-    }
-
 
     private void startAgain(){
+        resetNumberOfTurns();
         Collections.shuffle(cards);
-        numberOfTurns = 1;
-        isFirstTurn = true;
-        updateNumberOfTurns();
         Handler handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(this::reset, 2000);
     }
@@ -176,6 +134,12 @@ public class Game {
     private void updateNumberOfTurns(){
         String turnsText = "Turn " + numberOfTurns;
         numberOfTurnsTextView.setText(turnsText);
+    }
+
+    private void resetNumberOfTurns(){
+        numberOfTurns = 1;
+        isFirstTurn = true;
+        updateNumberOfTurns();
     }
 
 
@@ -191,12 +155,16 @@ public class Game {
 
     private void reset(){
         remainingCards = NUMBER_OF_CARDS;
-        for(ImageView imageView : cardLayoutPopulator.getImageViews()){
-            setCardFaceDown(imageView);
-            imageView.setVisibility(View.VISIBLE);
-        }
+        setAllCardsFaceDown();
+        cardAnimator.swipeInAll(cardLayoutPopulator.getImageViews());
     }
 
+
+    private void setAllCardsFaceDown(){
+        for(ImageView card : cardLayoutPopulator.getImageViews()){
+            setCardFaceDown(card);
+        }
+    }
 
     private void setCardFaceDown(ImageView imageView){
         bitmapLoader.setBitmap(imageView, R.drawable.card_back_2);
