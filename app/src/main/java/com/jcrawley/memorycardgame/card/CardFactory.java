@@ -14,26 +14,27 @@ public class CardFactory {
 
     public static List<Card> createSmallCards(){
 
-        cards = new ArrayList<>(52);
-        suit = CLUBS;
-        add(TWO, R.drawable.card_diamonds_2);
-        add(THREE,R.drawable.card_diamonds_3);
-        add(FOUR,R.drawable.card_diamonds_4);
-        add(FIVE,R.drawable.card_diamonds_5);
-        add(SIX,R.drawable.card_diamonds_6);
-        add(SEVEN,R.drawable.card_diamonds_7);
-        add(EIGHT,R.drawable.card_diamonds_8);
-
+        cards = new ArrayList<>(16);
         suit = DIAMONDS;
         add(TWO, R.drawable.card_diamonds_2);
-        add(THREE,R.drawable.card_diamonds_3);
-        add(FOUR,R.drawable.card_diamonds_4);
-        add(FIVE,R.drawable.card_diamonds_5);
-        add(SIX,R.drawable.card_diamonds_6);
-        add(SEVEN,R.drawable.card_diamonds_7);
-        add(EIGHT,R.drawable.card_diamonds_8);
+        add(THREE, R.drawable.card_diamonds_3);
+        add(FOUR, R.drawable.card_diamonds_4);
+        add(FIVE, R.drawable.card_diamonds_5);
+       // add(SIX, R.drawable.card_diamonds_6);
+       // add(SEVEN, R.drawable.card_diamonds_7);
+       // add(EIGHT, R.drawable.card_diamonds_8);
+
+        suit = CLUBS;
+        add(TWO, R.drawable.card_clubs_2);
+        add(THREE, R.drawable.card_clubs_3);
+        add(FOUR, R.drawable.card_clubs_4);
+        add(FIVE, R.drawable.card_clubs_5);
+       // add(SIX, R.drawable.card_clubs_6);
+       // add(SEVEN, R.drawable.card_clubs_7);
+      //  add(EIGHT, R.drawable.card_clubs_8);
         return cards;
     }
+
 
     public static List<Card> createCards(){
         cards = new ArrayList<>(52);

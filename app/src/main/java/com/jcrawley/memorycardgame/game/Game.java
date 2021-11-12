@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jcrawley.memorycardgame.BitmapLoader;
+import com.jcrawley.memorycardgame.MainActivity;
 import com.jcrawley.memorycardgame.R;
 import com.jcrawley.memorycardgame.card.Card;
 import com.jcrawley.memorycardgame.card.CardFactory;
@@ -30,11 +31,16 @@ public class Game {
     private final TextView numberOfTurnsTextView;
     private boolean isFirstTurn = true;
     private final CardAnimator cardAnimator;
+    private final RecordKeeper recordKeeper;
+    private final MainActivity mainActivity;
 
 
-    public Game(Context context, TextView numberOfTurnsTextView, int screenWidth){
-        bitmapLoader = new BitmapLoader(context);
+    public Game(MainActivity mainActivity, TextView numberOfTurnsTextView, int screenWidth){
+        this.mainActivity = mainActivity;
+        this.recordKeeper = new RecordKeeper(mainActivity.getApplicationContext());
+        bitmapLoader = new BitmapLoader(mainActivity.getApplicationContext());
         gameState = GameState.NOTHING_SELECTED;
+        //cards = CardFactory.createSmallCards();
         cards = CardFactory.createCards();
         NUMBER_OF_CARDS = cards.size();
         remainingCards = NUMBER_OF_CARDS;
@@ -43,6 +49,9 @@ public class Game {
         cardAnimator = new CardAnimator(screenWidth);
     }
 
+    private void log(String msg){
+        System.out.println("Game: " + msg);
+    }
 
     public void shuffleCards(){
         Collections.shuffle(cards);
@@ -117,13 +126,31 @@ public class Game {
             remainingCards -=2;
             gameState = GameState.NOTHING_SELECTED;
             if(remainingCards <= 0){
-                startAgain();
+                displayResults();
             }
         }, 1000);
     }
 
 
-    private void startAgain(){
+    private void displayResults(){
+        String resultsText;
+        String numberOfTurnsStr = String.valueOf(numberOfTurns) + " turns taken";
+        int currentRecord = recordKeeper.getCurrentTurnsRecordFromPreferences();
+        if(numberOfTurns < currentRecord){
+            resultsText = "" +  numberOfTurns + " turns taken: That's a New Record!!";
+            recordKeeper.saveNewTurnsRecord(numberOfTurns);
+        }
+        else if(numberOfTurns == currentRecord){
+            resultsText = numberOfTurnsStr + " matching the current record!";
+        }
+        else{
+            resultsText = numberOfTurnsStr + " current record : " + currentRecord;
+        }
+        mainActivity.displayResultsText(resultsText);
+    }
+
+
+    public void startAgain(){
         resetNumberOfTurns();
         Collections.shuffle(cards);
         Handler handler = new Handler(Looper.getMainLooper());
@@ -169,5 +196,7 @@ public class Game {
     private void setCardFaceDown(ImageView imageView){
         bitmapLoader.setBitmap(imageView, R.drawable.card_back_2);
     }
+
+
 
 }
