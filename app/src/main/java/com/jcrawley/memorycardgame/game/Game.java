@@ -40,8 +40,8 @@ public class Game {
         this.recordKeeper = new RecordKeeper(mainActivity.getApplicationContext());
         bitmapLoader = new BitmapLoader(mainActivity.getApplicationContext());
         gameState = GameState.NOTHING_SELECTED;
-        //cards = CardFactory.createSmallCards();
-        cards = CardFactory.createCards();
+        cards = CardFactory.createSmallCards();
+        //cards = CardFactory.createCards();
         NUMBER_OF_CARDS = cards.size();
         remainingCards = NUMBER_OF_CARDS;
         shuffleCards();
@@ -133,20 +133,20 @@ public class Game {
 
 
     private void displayResults(){
-        String resultsText;
+        String recordText;
         String numberOfTurnsStr = String.valueOf(numberOfTurns) + " turns taken";
         int currentRecord = recordKeeper.getCurrentTurnsRecordFromPreferences();
         if(numberOfTurns < currentRecord){
-            resultsText = "" +  numberOfTurns + " turns taken: That's a New Record!!";
+            recordText = "Congratulations! New Record!!";
             recordKeeper.saveNewTurnsRecord(numberOfTurns);
         }
         else if(numberOfTurns == currentRecord){
-            resultsText = numberOfTurnsStr + " matching the current record!";
+            recordText = "Matching the current record!";
         }
         else{
-            resultsText = numberOfTurnsStr + " current record : " + currentRecord;
+            recordText = "Current record : " + currentRecord;
         }
-        mainActivity.displayResultsText(resultsText);
+        mainActivity.displayResultsText(numberOfTurnsStr, recordText);
     }
 
 

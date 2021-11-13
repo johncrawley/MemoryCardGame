@@ -59,9 +59,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void displayResultsText(String resultsText){
+    public void displayResultsText(String resultsText, String recordText){
         TextView resultsTextView = findViewById(R.id.finalNumberOfTurnsTextView);
+        TextView recordTextView = findViewById(R.id.currentRecordTurnsTextView);
         resultsTextView.setText(resultsText);
+        recordTextView.setText(recordText);
         resultsLayout = findViewById(R.id.resultsLayout);
         resultsLayout.setVisibility(View.VISIBLE);
 

@@ -13,4 +13,5 @@
     <color name="default_color_primary_variant">#216326</color>
     <color name="default_colorOnPrimary">#43A047</color>
     <color name="status_bar_color">#0E3C10</color>
+    <color name="results_layout_background">#216326</color>
 </resources>
