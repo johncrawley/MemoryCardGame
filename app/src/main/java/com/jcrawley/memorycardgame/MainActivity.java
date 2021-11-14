@@ -26,20 +26,27 @@ public class MainActivity extends AppCompatActivity {
     private int width;
     private LinearLayout resultsLayout;
     private Game game;
+    private boolean isReadyToDismissResults = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setStatusBarColor();
         setContentView(R.layout.activity_main);
+        setupResultsLayout();
         assignScreenDimensions();
         TextView numberOfTurnsTextView = findViewById(R.id.numberOfTurnsTextView);
-        resultsLayout = findViewById(R.id.resultsLayout);
         game = new Game(this, numberOfTurnsTextView, width);
         final LinearLayout linearLayout = findViewById(R.id.cardLayout);
         CardLayoutPopulator cardLayoutPopulator = new CardLayoutPopulator(this, linearLayout, game);
         game.setCardLayoutPopulator(cardLayoutPopulator);
         linearLayout.getViewTreeObserver().addOnGlobalLayoutListener(cardLayoutPopulator::addCards);
+    }
+
+
+    private void setupResultsLayout(){
+        resultsLayout = findViewById(R.id.resultsLayout);
+        resultsLayout.setOnClickListener(view -> dismissResults());
     }
 
 
@@ -64,15 +71,18 @@ public class MainActivity extends AppCompatActivity {
         TextView recordTextView = findViewById(R.id.currentRecordTurnsTextView);
         resultsTextView.setText(resultsText);
         recordTextView.setText(recordText);
-        resultsLayout = findViewById(R.id.resultsLayout);
         resultsLayout.setVisibility(View.VISIBLE);
 
         Handler handler = new Handler(Looper.getMainLooper());
-        handler.postDelayed(this::dismissResults, 3000);
+        handler.postDelayed(() -> isReadyToDismissResults=true, 800);
     }
 
+
     private void dismissResults(){
-        resultsLayout.setVisibility(View.GONE);
-        game.startAgain();
+        if(isReadyToDismissResults) {
+            isReadyToDismissResults = false;
+            resultsLayout.setVisibility(View.GONE);
+            game.startAgain();
+        }
     }
 }

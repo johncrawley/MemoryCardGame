@@ -1,6 +1,5 @@
 package com.jcrawley.memorycardgame.game;
 
-import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.widget.ImageView;
@@ -134,7 +133,7 @@ public class Game {
 
     private void displayResults(){
         String recordText;
-        String numberOfTurnsStr = String.valueOf(numberOfTurns) + " turns taken";
+        String numberOfTurnsStr = numberOfTurns + " turns taken";
         int currentRecord = recordKeeper.getCurrentTurnsRecordFromPreferences();
         if(numberOfTurns < currentRecord){
             recordText = "Congratulations! New Record!!";
