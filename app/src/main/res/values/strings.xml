@@ -2,4 +2,5 @@
     <string name="app_name">Memory Card Game</string>
     <string name="position_tag">positionTag</string>
     <string name="default_turn_text">Turn 1</string>
+    <string name="game_complete_text">WELL DONE!</string>
 </resources>

@@ -8,7 +8,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1769352290679305" />
+        <entry key="app/src/main/res/drawable/background_with_shadow.xml" value="0.20208333333333334" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.2" />
       </map>
     </option>
   </component>
