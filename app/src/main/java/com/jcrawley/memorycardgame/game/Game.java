@@ -145,7 +145,7 @@ public class Game {
         else{
             recordText = "Current record : " + currentRecord;
         }
-        mainActivity.displayResultsText(numberOfTurnsStr, recordText);
+        mainActivity.displayResults(numberOfTurnsStr, recordText);
     }
 
 
@@ -153,7 +153,7 @@ public class Game {
         resetNumberOfTurns();
         Collections.shuffle(cards);
         Handler handler = new Handler(Looper.getMainLooper());
-        handler.postDelayed(this::reset, 2000);
+        handler.postDelayed(this::reset, 500);
     }
 
 
