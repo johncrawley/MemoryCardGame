@@ -1,5 +1,6 @@
 package com.jcrawley.memorycardgame;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -23,18 +24,19 @@ public class MainActivity extends AppCompatActivity {
     private Game game;
     private boolean isReadyToDismissResults = false;
     private Animation dropInAnimation, dropOutAnimation;
+    private ActionBar actionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setStatusBarColor();
         setContentView(R.layout.activity_main);
+        actionBar = getSupportActionBar();
         setupResultsLayout();
         assignScreenDimensions();
         setupDropInAnimation();
         setupDropOutAnimation();
-        TextView numberOfTurnsTextView = findViewById(R.id.numberOfTurnsTextView);
-        game = new Game(this, numberOfTurnsTextView, screenWidth);
+        game = new Game(this, screenWidth);
         final LinearLayout linearLayout = findViewById(R.id.cardLayout);
         CardLayoutPopulator cardLayoutPopulator = new CardLayoutPopulator(this, linearLayout, game);
         game.setCardLayoutPopulator(cardLayoutPopulator);
@@ -89,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
                 resultsLayout.clearAnimation();
                 resultsLayout.setVisibility(View.GONE);
                 game.startAgain();
+                setPlainTitle();
             }
         });
     }
@@ -116,12 +119,28 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void displayResults(String resultsText, String recordText){
+        setGameOverTitle();
         TextView resultsTextView = findViewById(R.id.finalNumberOfTurnsTextView);
         TextView recordTextView = findViewById(R.id.currentRecordTurnsTextView);
         resultsTextView.setText(resultsText);
         recordTextView.setText(recordText);
         resultsLayout.setVisibility(View.VISIBLE);
         resultsLayout.startAnimation(dropInAnimation);
+    }
+
+
+    public void setTitleWithTurns(int turn){
+        String turnsWithTitle = getString(R.string.title) + getString(R.string.turn) + turn;
+       actionBar.setTitle(turnsWithTitle);
+    }
+
+
+    public void setGameOverTitle(){
+        actionBar.setTitle(getString(R.string.game_over));
+    }
+
+    public void setPlainTitle(){
+        actionBar.setTitle(getString(R.string.title));
     }
 
 

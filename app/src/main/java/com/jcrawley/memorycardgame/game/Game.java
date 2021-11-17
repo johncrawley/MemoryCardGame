@@ -1,9 +1,9 @@
 package com.jcrawley.memorycardgame.game;
 
+import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.jcrawley.memorycardgame.BitmapLoader;
 import com.jcrawley.memorycardgame.MainActivity;
@@ -27,15 +27,15 @@ public class Game {
     private final int NUMBER_OF_CARDS;
     private int remainingCards;
     private int numberOfTurns;
-    private final TextView numberOfTurnsTextView;
-    private boolean isFirstTurn = true;
     private final CardAnimator cardAnimator;
     private final RecordKeeper recordKeeper;
     private final MainActivity mainActivity;
+    private final Context context;
 
 
-    public Game(MainActivity mainActivity, TextView numberOfTurnsTextView, int screenWidth){
+    public Game(MainActivity mainActivity, int screenWidth){
         this.mainActivity = mainActivity;
+        context = mainActivity.getApplicationContext();
         this.recordKeeper = new RecordKeeper(mainActivity.getApplicationContext());
         bitmapLoader = new BitmapLoader(mainActivity.getApplicationContext());
         gameState = GameState.NOTHING_SELECTED;
@@ -44,13 +44,9 @@ public class Game {
         NUMBER_OF_CARDS = cards.size();
         remainingCards = NUMBER_OF_CARDS;
         shuffleCards();
-        this.numberOfTurnsTextView = numberOfTurnsTextView;
         cardAnimator = new CardAnimator(screenWidth);
     }
 
-    private void log(String msg){
-        System.out.println("Game: " + msg);
-    }
 
     public void shuffleCards(){
         Collections.shuffle(cards);
@@ -80,10 +76,7 @@ public class Game {
 
 
     private void handleFirstSelection(ImageView view, int position){
-        if(!isFirstTurn){
-            numberOfTurns++;
-            updateNumberOfTurns();
-        }
+        mainActivity.setTitleWithTurns(++numberOfTurns);
         gameState = GameState.FIRST_CARD_SELECTED;
         firstSelectedPosition = position;
         selectedCard1 = view;
@@ -95,7 +88,6 @@ public class Game {
             if(position == firstSelectedPosition){
                 return;
             }
-            isFirstTurn = false;
             gameState = GameState.SECOND_CARD_SELECTED;
             secondSelectedPosition = position;
             selectedCard2 = view;
@@ -117,6 +109,11 @@ public class Game {
     }
 
 
+    private String getStr(int resId){
+        return context.getString(resId);
+    }
+
+
     private void removeCards(){
         Handler handler = new Handler(Looper.getMainLooper());
         cardAnimator.addSwipeAnimationTo(selectedCard1);
@@ -133,17 +130,17 @@ public class Game {
 
     private void displayResults(){
         String recordText;
-        String numberOfTurnsStr = numberOfTurns + " turns taken";
+        String numberOfTurnsStr = numberOfTurns + getStr(R.string.results_status_turns_taken);
         int currentRecord = recordKeeper.getCurrentTurnsRecordFromPreferences();
         if(numberOfTurns < currentRecord){
-            recordText = "Congratulations! New Record!!";
+            recordText = getStr(R.string.results_status_new_record);
             recordKeeper.saveNewTurnsRecord(numberOfTurns);
         }
         else if(numberOfTurns == currentRecord){
-            recordText = "Matching the current record!";
+            recordText = getStr(R.string.results_status_matching_record);
         }
         else{
-            recordText = "Current record : " + currentRecord;
+            recordText = getStr(R.string.results_status_current_record) + currentRecord;
         }
         mainActivity.displayResults(numberOfTurnsStr, recordText);
     }
@@ -157,15 +154,8 @@ public class Game {
     }
 
 
-    private void updateNumberOfTurns(){
-        String turnsText = "Turn " + numberOfTurns;
-        numberOfTurnsTextView.setText(turnsText);
-    }
-
     private void resetNumberOfTurns(){
-        numberOfTurns = 1;
-        isFirstTurn = true;
-        updateNumberOfTurns();
+        numberOfTurns = 0;
     }
 
 
@@ -191,6 +181,7 @@ public class Game {
             setCardFaceDown(card);
         }
     }
+
 
     private void setCardFaceDown(ImageView imageView){
         bitmapLoader.setBitmap(imageView, R.drawable.card_back_2);

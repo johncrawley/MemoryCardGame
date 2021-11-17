@@ -13,7 +13,8 @@
     <color name="default_color_primary_variant">#216326</color>
     <color name="default_colorOnPrimary">#43A047</color>
     <color name="status_bar_color">#0E3C10</color>
-    <color name="results_layout_background">#216326</color>
+    <color name="results_layout_background">#143C17</color>
     <color name="game_complete_text_color">#F57F17</color>
     <color name="game_complete_text_shadow_color">#2B231A</color>
+    <color name="results_details_text_color">#164A1A</color>
 </resources>
