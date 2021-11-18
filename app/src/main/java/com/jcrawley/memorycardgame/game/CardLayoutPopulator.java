@@ -20,7 +20,7 @@ public class CardLayoutPopulator {
     private Bitmap cardBack;
     private View.OnClickListener onClickListener;
     private final int MAX_NUMBER_OF_CARDS;
-    private int currentNumberOfCards;
+    private int cardsAdded;
     private final Game game;
     private final List<ImageView> imageViews;
     private boolean hasRun = false;
@@ -44,11 +44,13 @@ public class CardLayoutPopulator {
             return;
         }
         hasRun = true;
-        currentNumberOfCards = 0;
+        cardsAdded = 0;
         cardBack = BitmapFactory.decodeResource(activity.getResources(), R.drawable.card_back_2);
         setDimensions();
         addCardsToParent();
     }
+
+
 
 
     private void setDimensions(){
@@ -63,11 +65,22 @@ public class CardLayoutPopulator {
         }
         while(NUMBER_OF_CARDS_PER_ROW * NUMBER_OF_ROWS < MAX_NUMBER_OF_CARDS);
 
-        log("setDimensions() cardsPerRow: " + NUMBER_OF_CARDS_PER_ROW
-                + " numberOfRows: " + NUMBER_OF_ROWS
-                + " maxNumberOfCards: " + MAX_NUMBER_OF_CARDS
-                + " reductionOffset: " + reductionOffset);
     }
+
+
+    private void calculateCardAndGridDimensions(int parentWidth, int parentHeight, int reductionOffset, int numberOfCards){
+
+        float parentArea = parentWidth * parentHeight;
+        float maxAreaPerCard = parentArea / numberOfCards;
+        cardWidth = (int)Math.floor(Math.sqrt(maxAreaPerCard/ 2f)) + 10;
+        cardWidth -= reductionOffset;
+        cardHeight = (int)(cardWidth * 1.5);
+
+        NUMBER_OF_CARDS_PER_ROW = parentWidth / cardWidth;
+        NUMBER_OF_ROWS = (parentHeight / cardHeight);
+    }
+
+
 
     private void calculateCardAndGridDimensions(int parentWidth, int parentHeight, int reductionOffset){
 
@@ -100,7 +113,7 @@ public class CardLayoutPopulator {
 
         LinearLayout rowLayout = new LinearLayout(activity);
         for(int i=0; i< numberOfCardsPerRow; i++){
-            if(currentNumberOfCards < MAX_NUMBER_OF_CARDS){
+            if(cardsAdded < MAX_NUMBER_OF_CARDS){
                 ImageView imageView = createCard();
                 rowLayout.addView(imageView);
             }
@@ -117,11 +130,11 @@ public class CardLayoutPopulator {
         imageView.setImageBitmap(cardBack);
         imageView.setPadding(15,15,15,15);
         LinearLayout.LayoutParams layoutParams =  new LinearLayout.LayoutParams(cardWidth, cardHeight);
-        imageView.setTag(R.string.position_tag, currentNumberOfCards);
+        imageView.setTag(R.string.position_tag, cardsAdded);
         imageView.setOnClickListener(onClickListener);
         imageView.setLayoutParams(layoutParams);
         imageView.setVisibility(View.VISIBLE);
-        currentNumberOfCards++;
+        cardsAdded++;
         return  imageView;
     }
 

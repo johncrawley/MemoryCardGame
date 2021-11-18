@@ -13,10 +13,11 @@ import com.jcrawley.memorycardgame.card.CardFactory;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 public class Game {
 
-    private final List<Card> cards;
+    private List<Card> cards;
     private int firstSelectedPosition = -1;
     private int secondSelectedPosition = -1;
     private ImageView selectedCard1, selectedCard2;
@@ -31,6 +32,7 @@ public class Game {
     private final RecordKeeper recordKeeper;
     private final MainActivity mainActivity;
     private final Context context;
+    private final Map<Integer, List<Card>> deck;
 
 
     public Game(MainActivity mainActivity, int screenWidth){
@@ -39,7 +41,8 @@ public class Game {
         this.recordKeeper = new RecordKeeper(mainActivity.getApplicationContext());
         bitmapLoader = new BitmapLoader(mainActivity.getApplicationContext());
         gameState = GameState.NOTHING_SELECTED;
-        cards = CardFactory.createSmallCards();
+        deck = CardFactory.createDeck();
+        cards = deck.get(8);
         //cards = CardFactory.createCards();
         NUMBER_OF_CARDS = cards.size();
         remainingCards = NUMBER_OF_CARDS;
@@ -146,8 +149,12 @@ public class Game {
     }
 
 
-    public void startAgain(){
+    public void startAgain(int numberOfCards){
         resetNumberOfTurns();
+        cards = deck.get(numberOfCards);
+        if(cards == null){
+            return;
+        }
         Collections.shuffle(cards);
         Handler handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(this::reset, 500);

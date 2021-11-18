@@ -3,7 +3,10 @@ package com.jcrawley.memorycardgame.card;
 import com.jcrawley.memorycardgame.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import static com.jcrawley.memorycardgame.card.Rank.*;
 import static com.jcrawley.memorycardgame.card.Suit.*;
 
@@ -11,32 +14,94 @@ public class CardFactory {
     
     private static List<Card> cards;
     private static Suit suit;
+    private static Map<Integer, List<Card>> deckMap;
 
-    public static List<Card> createSmallCards(){
+    public static Map<Integer, List<Card>> createDeck(){
+        deckMap = new HashMap<>(4);
+        deckMap.put(8, create8Cards());
+        deckMap.put(16, create16Cards());
+        deckMap.put(26, create26Cards());
+        deckMap.put(52, create52Cards());
+        return deckMap;
+    }
 
-        cards = new ArrayList<>(16);
-        suit = DIAMONDS;
+
+    public static List<Card> create8Cards(){
+        cards = new ArrayList<>(8);
         add(TWO, R.drawable.card_diamonds_2);
         add(THREE, R.drawable.card_diamonds_3);
         add(FOUR, R.drawable.card_diamonds_4);
         add(FIVE, R.drawable.card_diamonds_5);
-       // add(SIX, R.drawable.card_diamonds_6);
-       // add(SEVEN, R.drawable.card_diamonds_7);
-       // add(EIGHT, R.drawable.card_diamonds_8);
-
         suit = CLUBS;
         add(TWO, R.drawable.card_clubs_2);
         add(THREE, R.drawable.card_clubs_3);
         add(FOUR, R.drawable.card_clubs_4);
         add(FIVE, R.drawable.card_clubs_5);
-       // add(SIX, R.drawable.card_clubs_6);
-       // add(SEVEN, R.drawable.card_clubs_7);
-      //  add(EIGHT, R.drawable.card_clubs_8);
         return cards;
     }
 
 
-    public static List<Card> createCards(){
+    public static List<Card> create16Cards(){
+
+        cards = new ArrayList<>(16);
+        suit = HEARTS;
+        add(TWO, R.drawable.card_diamonds_2);
+        add(THREE, R.drawable.card_diamonds_3);
+        add(FOUR, R.drawable.card_diamonds_4);
+        add(FIVE, R.drawable.card_diamonds_5);
+        add(SIX, R.drawable.card_diamonds_6);
+        add(SEVEN, R.drawable.card_diamonds_7);
+        add(EIGHT, R.drawable.card_diamonds_8);
+
+        suit = SPADES;
+        add(TWO, R.drawable.card_clubs_2);
+        add(THREE, R.drawable.card_clubs_3);
+        add(FOUR, R.drawable.card_clubs_4);
+        add(FIVE, R.drawable.card_clubs_5);
+        add(SIX, R.drawable.card_clubs_6);
+        add(SEVEN, R.drawable.card_clubs_7);
+        add(EIGHT, R.drawable.card_clubs_8);
+        return cards;
+    }
+
+
+    public static List<Card> create26Cards(){
+        cards = new ArrayList<>(26);
+        suit = CLUBS;
+        add(TWO, R.drawable.card_clubs_2);
+        add(THREE,R.drawable.card_clubs_3);
+        add(FOUR,R.drawable.card_clubs_4);
+        add(FIVE,R.drawable.card_clubs_5);
+        add(SIX,R.drawable.card_clubs_6);
+        add(SEVEN,R.drawable.card_clubs_7);
+        add(EIGHT,R.drawable.card_clubs_8);
+        add(NINE,R.drawable.card_clubs_9);
+        add(TEN,R.drawable.card_clubs_10);
+        add(JACK,R.drawable.card_clubs_jack);
+        add(QUEEN,R.drawable.card_clubs_queen);
+        add(KING,R.drawable.card_clubs_king);
+        add(ACE,R.drawable.card_clubs_ace);
+
+        suit = DIAMONDS;
+        add(TWO, R.drawable.card_diamonds_2);
+        add(THREE,R.drawable.card_diamonds_3);
+        add(FOUR,R.drawable.card_diamonds_4);
+        add(FIVE,R.drawable.card_diamonds_5);
+        add(SIX,R.drawable.card_diamonds_6);
+        add(SEVEN,R.drawable.card_diamonds_7);
+        add(EIGHT,R.drawable.card_diamonds_8);
+        add(NINE,R.drawable.card_diamonds_9);
+        add(TEN,R.drawable.card_diamonds_10);
+        add(JACK,R.drawable.card_diamonds_jack);
+        add(QUEEN,R.drawable.card_diamonds_queen);
+        add(KING,R.drawable.card_diamonds_king);
+        add(ACE,R.drawable.card_diamonds_ace);
+        return cards;
+    }
+
+
+
+    public static List<Card> create52Cards(){
         cards = new ArrayList<>(52);
         suit = CLUBS;
         add(TWO, R.drawable.card_clubs_2);
