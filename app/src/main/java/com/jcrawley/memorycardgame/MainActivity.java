@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         newGameLayout = findViewById(R.id.newGameLayout);
         CardLayoutPopulator cardLayoutPopulator = new CardLayoutPopulator(this, linearLayout, game);
         game.setCardLayoutPopulator(cardLayoutPopulator);
-        linearLayout.getViewTreeObserver().addOnGlobalLayoutListener(cardLayoutPopulator::addCards);
+        linearLayout.getViewTreeObserver().addOnGlobalLayoutListener(cardLayoutPopulator::addCardViews);
 
     }
 

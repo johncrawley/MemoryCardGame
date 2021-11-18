@@ -25,7 +25,7 @@ public class Game {
     private GameState gameState;
     private final BitmapLoader bitmapLoader;
     private CardLayoutPopulator cardLayoutPopulator;
-    private final int NUMBER_OF_CARDS;
+    private int numberOfCards;
     private int remainingCards;
     private int numberOfTurns;
     private final CardAnimator cardAnimator;
@@ -44,8 +44,9 @@ public class Game {
         deck = CardFactory.createDeck();
         cards = deck.get(8);
         //cards = CardFactory.createCards();
-        NUMBER_OF_CARDS = cards.size();
-        remainingCards = NUMBER_OF_CARDS;
+        assert cards != null;
+        numberOfCards = cards.size();
+        remainingCards = numberOfCards;
         shuffleCards();
         cardAnimator = new CardAnimator(screenWidth);
     }
@@ -57,7 +58,7 @@ public class Game {
 
 
     public int getNumberOfCards(){
-        return NUMBER_OF_CARDS;
+        return numberOfCards;
     }
 
 
@@ -151,7 +152,9 @@ public class Game {
 
     public void startAgain(int numberOfCards){
         resetNumberOfTurns();
+        this.numberOfCards = numberOfCards;
         cards = deck.get(numberOfCards);
+        cardLayoutPopulator.addCardViews(numberOfCards);
         if(cards == null){
             return;
         }
@@ -177,7 +180,7 @@ public class Game {
 
 
     private void reset(){
-        remainingCards = NUMBER_OF_CARDS;
+        remainingCards = numberOfCards;
         setAllCardsFaceDown();
         cardAnimator.swipeInAll(cardLayoutPopulator.getImageViews());
     }
