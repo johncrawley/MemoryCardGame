@@ -120,11 +120,16 @@ public class CardLayoutPopulator {
         imageView.setPadding(15,15,15,15);
         LinearLayout.LayoutParams layoutParams =  new LinearLayout.LayoutParams(cardWidth, cardHeight);
         imageView.setTag(R.string.position_tag, cardsAdded);
+        log("Set tag for position, number: " + cardsAdded);
         imageView.setOnClickListener(onClickListener);
         imageView.setLayoutParams(layoutParams);
         imageView.setVisibility(isFirstRun ? View.VISIBLE : View.GONE);
         cardsAdded++;
         return  imageView;
+    }
+
+    private void log(String msg){
+        System.out.println("^^^ CardLayoutPopulator: " + msg);
     }
 
 

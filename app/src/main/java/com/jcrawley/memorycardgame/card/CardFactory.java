@@ -14,10 +14,9 @@ public class CardFactory {
     
     private static List<Card> cards;
     private static Suit suit;
-    private static Map<Integer, List<Card>> deckMap;
 
     public static Map<Integer, List<Card>> createDeck(){
-        deckMap = new HashMap<>(4);
+        Map<Integer, List<Card>> deckMap = new HashMap<>(4);
         deckMap.put(8, create8Cards());
         deckMap.put(16, create16Cards());
         deckMap.put(26, create26Cards());
@@ -52,6 +51,7 @@ public class CardFactory {
         add(SIX, R.drawable.card_diamonds_6);
         add(SEVEN, R.drawable.card_diamonds_7);
         add(EIGHT, R.drawable.card_diamonds_8);
+        add(NINE, R.drawable.card_diamonds_9);
 
         suit = SPADES;
         add(TWO, R.drawable.card_clubs_2);
@@ -61,6 +61,7 @@ public class CardFactory {
         add(SIX, R.drawable.card_clubs_6);
         add(SEVEN, R.drawable.card_clubs_7);
         add(EIGHT, R.drawable.card_clubs_8);
+        add(NINE, R.drawable.card_clubs_9);
         return cards;
     }
 
@@ -98,6 +99,7 @@ public class CardFactory {
         add(ACE,R.drawable.card_diamonds_ace);
         return cards;
     }
+
 
 
 

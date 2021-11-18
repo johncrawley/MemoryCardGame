@@ -8,7 +8,7 @@
     <string name="new_game_text">New Game</string>
     <string name="button_8_cards_text">8 Cards</string>
     <string name="button_16_cards_text">16 Cards</string>
-    <string name="button_26_cards_text">32 Cards</string>
+    <string name="button_26_cards_text">26 Cards</string>
     <string name="button_52_cards_text">52 Cards</string>
     <string name="game_complete_text">WELL DONE!</string>
     <string name="results_status_current_record">Current Record:&#160;</string>
