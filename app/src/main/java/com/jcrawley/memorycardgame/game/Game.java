@@ -20,7 +20,7 @@ public class Game {
     private List<Card> cards;
     private int firstSelectedPosition = -1;
     private int secondSelectedPosition = -1;
-    private ImageView selectedCard1, selectedCard2;
+    private ImageView firstSelectedCard, secondSelectedCard;
     private enum GameState { NOTHING_SELECTED, FIRST_CARD_SELECTED, SECOND_CARD_SELECTED}
     private GameState gameState;
     private final BitmapLoader bitmapLoader;
@@ -83,8 +83,8 @@ public class Game {
         mainActivity.setTitleWithTurns(++numberOfTurns);
         gameState = GameState.FIRST_CARD_SELECTED;
         firstSelectedPosition = position;
-        selectedCard1 = view;
-        bitmapLoader.setBitmap(selectedCard1, cards.get(firstSelectedPosition).getImageId());
+        firstSelectedCard = view;
+        bitmapLoader.setBitmap(firstSelectedCard, cards.get(firstSelectedPosition).getImageId());
     }
 
 
@@ -94,8 +94,8 @@ public class Game {
             }
             gameState = GameState.SECOND_CARD_SELECTED;
             secondSelectedPosition = position;
-            selectedCard2 = view;
-            bitmapLoader.setBitmap(selectedCard2, cards.get(secondSelectedPosition).getImageId());
+            secondSelectedCard = view;
+            bitmapLoader.setBitmap(secondSelectedCard, cards.get(secondSelectedPosition).getImageId());
 
             if(matches()){
                 removeCards();
@@ -120,8 +120,8 @@ public class Game {
 
     private void removeCards(){
         Handler handler = new Handler(Looper.getMainLooper());
-        cardAnimator.addSwipeAnimationTo(selectedCard1);
-        cardAnimator.addSwipeAnimationTo(selectedCard2);
+        cardAnimator.addSwipeAnimationTo(firstSelectedCard);
+        cardAnimator.addSwipeAnimationTo(secondSelectedCard);
         handler.postDelayed(() -> {
             remainingCards -=2;
             gameState = GameState.NOTHING_SELECTED;
@@ -135,10 +135,10 @@ public class Game {
     private void displayResults(){
         String recordText;
         String numberOfTurnsStr = numberOfTurns + getStr(R.string.results_status_turns_taken);
-        int currentRecord = recordKeeper.getCurrentTurnsRecordFromPreferences();
+        int currentRecord = recordKeeper.getCurrentTurnsRecordFromPreferences(numberOfCards);
         if(numberOfTurns < currentRecord){
             recordText = getStr(R.string.results_status_new_record);
-            recordKeeper.saveNewTurnsRecord(numberOfTurns);
+            recordKeeper.saveNewTurnsRecord(numberOfTurns, numberOfCards);
         }
         else if(numberOfTurns == currentRecord){
             recordText = getStr(R.string.results_status_matching_record);
@@ -172,8 +172,8 @@ public class Game {
     private void turnOverCards(){
         Handler handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(() -> {
-            setCardFaceDown(selectedCard1);
-            setCardFaceDown(selectedCard2);
+            setCardFaceDown(firstSelectedCard);
+            setCardFaceDown(secondSelectedCard);
             gameState = GameState.NOTHING_SELECTED;
         }, 1000);
     }
