@@ -3,6 +3,9 @@ package com.jcrawley.memorycardgame.game;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 
 import com.jcrawley.memorycardgame.BitmapLoader;
@@ -196,6 +199,29 @@ public class Game {
     private void setCardFaceDown(ImageView imageView){
         bitmapLoader.setBitmap(imageView, R.drawable.card_back_2);
     }
+
+
+    private Animation flipOverAnimation;
+
+    private void setupFlipAnimations(ImageView card, int position){
+        flipOverAnimation = new ScaleAnimation(0f, 1f, 0f, 1f,
+                Animation.RELATIVE_TO_SELF,
+                0.5f,
+                Animation.RELATIVE_TO_SELF,
+                0.5f);
+
+        flipOverAnimation.setAnimationListener(new Animation.AnimationListener(){
+            public void onAnimationStart(Animation arg0) { }
+            public void onAnimationRepeat(Animation arg0) {}
+            @Override
+            public void onAnimationEnd(Animation arg0) {
+                Handler handler = new Handler(Looper.getMainLooper());
+              //  handler.postDelayed(() -> isReadyToDismissResults=true, 800);
+                bitmapLoader.setBitmap(card, cards.get(position).getImageId());
+            }
+        });
+    }
+
 
 
 
