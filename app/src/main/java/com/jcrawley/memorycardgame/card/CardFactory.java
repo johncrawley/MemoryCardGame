@@ -15,6 +15,7 @@ public class CardFactory {
     private static List<Card> cards;
     private static Suit suit;
 
+
     public static Map<Integer, List<Card>> createDeck(){
         Map<Integer, List<Card>> deckMap = new HashMap<>(4);
         deckMap.put(8, create8Cards());
@@ -32,10 +33,10 @@ public class CardFactory {
         add(FOUR, R.drawable.card_diamonds_4);
         add(FIVE, R.drawable.card_diamonds_5);
         suit = CLUBS;
-        add(TWO, R.drawable.card_clubs_2);
-        add(THREE, R.drawable.card_clubs_3);
-        add(FOUR, R.drawable.card_clubs_4);
-        add(FIVE, R.drawable.card_clubs_5);
+        add(TWO, R.drawable.card_clubs_2_mirror);
+        add(THREE, R.drawable.card_clubs_3_mirror);
+        add(FOUR, R.drawable.card_clubs_4_mirror);
+        add(FIVE, R.drawable.card_clubs_5_mirror);
         return cards;
     }
 
@@ -68,58 +69,23 @@ public class CardFactory {
 
     public static List<Card> create26Cards(){
         cards = new ArrayList<>(26);
-        suit = CLUBS;
-        add(TWO, R.drawable.card_clubs_2);
-        add(THREE,R.drawable.card_clubs_3);
-        add(FOUR,R.drawable.card_clubs_4);
-        add(FIVE,R.drawable.card_clubs_5);
-        add(SIX,R.drawable.card_clubs_6);
-        add(SEVEN,R.drawable.card_clubs_7);
-        add(EIGHT,R.drawable.card_clubs_8);
-        add(NINE,R.drawable.card_clubs_9);
-        add(TEN,R.drawable.card_clubs_10);
-        add(JACK,R.drawable.card_clubs_jack);
-        add(QUEEN,R.drawable.card_clubs_queen);
-        add(KING,R.drawable.card_clubs_king);
-        add(ACE,R.drawable.card_clubs_ace);
-
-        suit = DIAMONDS;
-        add(TWO, R.drawable.card_diamonds_2);
-        add(THREE,R.drawable.card_diamonds_3);
-        add(FOUR,R.drawable.card_diamonds_4);
-        add(FIVE,R.drawable.card_diamonds_5);
-        add(SIX,R.drawable.card_diamonds_6);
-        add(SEVEN,R.drawable.card_diamonds_7);
-        add(EIGHT,R.drawable.card_diamonds_8);
-        add(NINE,R.drawable.card_diamonds_9);
-        add(TEN,R.drawable.card_diamonds_10);
-        add(JACK,R.drawable.card_diamonds_jack);
-        add(QUEEN,R.drawable.card_diamonds_queen);
-        add(KING,R.drawable.card_diamonds_king);
-        add(ACE,R.drawable.card_diamonds_ace);
+        addClubs();
+        addDiamonds();
         return cards;
     }
 
 
-
-
     public static List<Card> create52Cards(){
         cards = new ArrayList<>(52);
-        suit = CLUBS;
-        add(TWO, R.drawable.card_clubs_2);
-        add(THREE,R.drawable.card_clubs_3);
-        add(FOUR,R.drawable.card_clubs_4);
-        add(FIVE,R.drawable.card_clubs_5);
-        add(SIX,R.drawable.card_clubs_6);
-        add(SEVEN,R.drawable.card_clubs_7);
-        add(EIGHT,R.drawable.card_clubs_8);
-        add(NINE,R.drawable.card_clubs_9);
-        add(TEN,R.drawable.card_clubs_10);
-        add(JACK,R.drawable.card_clubs_jack);
-        add(QUEEN,R.drawable.card_clubs_queen);
-        add(KING,R.drawable.card_clubs_king);
-        add(ACE,R.drawable.card_clubs_ace);
+        addClubs();
+        addDiamonds();
+        addSpades();
+        addHearts();
+        return new ArrayList<>(cards);
+    }
 
+
+    private static void addDiamonds(){
         suit = DIAMONDS;
         add(TWO, R.drawable.card_diamonds_2);
         add(THREE,R.drawable.card_diamonds_3);
@@ -134,7 +100,28 @@ public class CardFactory {
         add(QUEEN,R.drawable.card_diamonds_queen);
         add(KING,R.drawable.card_diamonds_king);
         add(ACE,R.drawable.card_diamonds_ace);
+    }
 
+
+    private static void addClubs(){
+        suit = CLUBS;
+        add(TWO, R.drawable.card_clubs_2);
+        add(THREE,R.drawable.card_clubs_3);
+        add(FOUR,R.drawable.card_clubs_4);
+        add(FIVE,R.drawable.card_clubs_5);
+        add(SIX,R.drawable.card_clubs_6);
+        add(SEVEN,R.drawable.card_clubs_7);
+        add(EIGHT,R.drawable.card_clubs_8);
+        add(NINE,R.drawable.card_clubs_9);
+        add(TEN,R.drawable.card_clubs_10);
+        add(JACK,R.drawable.card_clubs_jack);
+        add(QUEEN,R.drawable.card_clubs_queen);
+        add(KING,R.drawable.card_clubs_king);
+        add(ACE,R.drawable.card_clubs_ace);
+    }
+
+
+    private static void addSpades(){
         suit = SPADES;
         add(TWO, R.drawable.card_spades_2);
         add(THREE,R.drawable.card_spades_3);
@@ -149,7 +136,10 @@ public class CardFactory {
         add(QUEEN,R.drawable.card_spades_queen);
         add(KING,R.drawable.card_spades_king);
         add(ACE,R.drawable.card_spades_ace);
+    }
 
+
+    private static void addHearts(){
         suit = HEARTS;
         add(TWO, R.drawable.card_hearts_2);
         add(THREE,R.drawable.card_hearts_3);
@@ -164,8 +154,8 @@ public class CardFactory {
         add(QUEEN,R.drawable.card_hearts_queen);
         add(KING,R.drawable.card_hearts_king);
         add(ACE,R.drawable.card_hearts_ace);
-        return new ArrayList<>(cards);
     }
+
     
     
     private static void add(Rank rank, int id){

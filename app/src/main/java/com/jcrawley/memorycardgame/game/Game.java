@@ -1,11 +1,9 @@
 package com.jcrawley.memorycardgame.game;
 
+import android.animation.Animator;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
-import android.view.animation.Animation;
-import android.view.animation.ScaleAnimation;
-import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 
 import com.jcrawley.memorycardgame.BitmapLoader;
@@ -36,6 +34,7 @@ public class Game {
     private final MainActivity mainActivity;
     private final Context context;
     private final Map<Integer, List<Card>> deck;
+    private int currentPosition;
 
 
     public Game(MainActivity mainActivity, int screenWidth){
@@ -87,7 +86,7 @@ public class Game {
         gameState = GameState.FIRST_CARD_SELECTED;
         firstSelectedPosition = position;
         firstSelectedCard = view;
-        bitmapLoader.setBitmap(firstSelectedCard, cards.get(firstSelectedPosition).getImageId());
+        flipOver(firstSelectedCard, position, false);
     }
 
 
@@ -98,14 +97,7 @@ public class Game {
             gameState = GameState.SECOND_CARD_SELECTED;
             secondSelectedPosition = position;
             secondSelectedCard = view;
-            bitmapLoader.setBitmap(secondSelectedCard, cards.get(secondSelectedPosition).getImageId());
-
-            if(matches()){
-                removeCards();
-            }
-            else{
-                turnOverCards();
-            }
+            flipOver(secondSelectedCard, position, true);
     }
 
 
@@ -175,8 +167,10 @@ public class Game {
     private void turnOverCards(){
         Handler handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(() -> {
-            setCardFaceDown(firstSelectedCard);
-            setCardFaceDown(secondSelectedCard);
+            //setCardFaceDown(firstSelectedCard);
+            flipBack(firstSelectedCard);
+            flipBack(secondSelectedCard);
+            //setCardFaceDown(secondSelectedCard);
             gameState = GameState.NOTHING_SELECTED;
         }, 1000);
     }
@@ -201,28 +195,100 @@ public class Game {
     }
 
 
-    private Animation flipOverAnimation;
-
-    private void setupFlipAnimations(ImageView card, int position){
-        flipOverAnimation = new ScaleAnimation(0f, 1f, 0f, 1f,
-                Animation.RELATIVE_TO_SELF,
-                0.5f,
-                Animation.RELATIVE_TO_SELF,
-                0.5f);
-
-        flipOverAnimation.setAnimationListener(new Animation.AnimationListener(){
-            public void onAnimationStart(Animation arg0) { }
-            public void onAnimationRepeat(Animation arg0) {}
-            @Override
-            public void onAnimationEnd(Animation arg0) {
-                Handler handler = new Handler(Looper.getMainLooper());
-              //  handler.postDelayed(() -> isReadyToDismissResults=true, 800);
-                bitmapLoader.setBitmap(card, cards.get(position).getImageId());
-            }
-        });
+    private void flipOver(ImageView card, int position, boolean isSecondCardSelected){
+        currentPosition = position;
+        flipCard(card, isSecondCardSelected);
     }
 
 
+    private void flipBack(ImageView card){
+        flipCardBack(card);
+    }
+
+
+    private void checkCards(boolean hasSecondCardBeenTurnedOver){
+        if(!hasSecondCardBeenTurnedOver || firstSelectedCard == null || secondSelectedCard == null){
+            return;
+        }
+        if(matches()){
+            removeCards();
+        }
+        else{
+            turnOverCards();
+        }
+    }
+
+
+    private void flipCard(ImageView card, boolean isSecondCard) {
+        long duration = 130;
+        float halfRotation = 90;
+
+        Animator.AnimatorListener fullWayDone = new Animator.AnimatorListener() {
+            public void onAnimationEnd(Animator animator) {
+                card.clearAnimation();
+                checkCards(isSecondCard);
+            }
+            public void onAnimationCancel(Animator animator) {}
+            public void onAnimationRepeat(Animator animator) {}
+            public void onAnimationStart(Animator animator) {}
+        };
+
+        Animator.AnimatorListener halfWayDone = new Animator.AnimatorListener() {
+            public void onAnimationEnd(Animator animator) {
+                Handler handler = new Handler(Looper.getMainLooper());
+                handler.postDelayed(() -> {
+                    card.clearAnimation();
+                    int imageId = cards.get(currentPosition).getImageId();
+                    bitmapLoader.setBitmap(card, imageId);
+                    System.out.println("^^^ Running onAnimationEnd for HalfWayDone listener! " + System.currentTimeMillis());
+                    card.animate().rotationY(halfRotation * 2).setDuration(duration).setListener(fullWayDone).start();
+                },10);
+            }
+            public void onAnimationStart(Animator animator) {}
+            public void onAnimationCancel(Animator animator) {}
+            public void onAnimationRepeat(Animator animator) {}
+        };
+
+        card.animate().rotationY(halfRotation).setDuration(duration).setListener(halfWayDone).start();
+    }
+
+
+    private void flipCardBack(ImageView card) {
+        long duration = 160;
+        float halfRotation = 90;
+
+        Animator.AnimatorListener fullWayDone = new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animator) {}
+            @Override
+            public void onAnimationEnd(Animator animator) {
+                card.clearAnimation();
+            }
+            public void onAnimationCancel(Animator animator) {}
+            public void onAnimationRepeat(Animator animator) { }
+        };
+
+
+        Animator.AnimatorListener halfWayDone = new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animator) {}
+            @Override
+            public void onAnimationEnd(Animator animator) {
+                int imageId = cards.get(currentPosition).getImageId();
+                bitmapLoader.setBitmap(card, imageId);
+
+                Handler handler = new Handler(Looper.getMainLooper());
+                handler.postDelayed(() -> {
+                    setCardFaceDown(card);
+                    card.animate().rotationY(0).setDuration(duration).setListener(fullWayDone).start();
+                },10);
+            }
+            public void onAnimationCancel(Animator animator) {}
+            public void onAnimationRepeat(Animator animator) { }
+        };
+
+        card.animate().rotationY(halfRotation).setDuration(duration).setListener(halfWayDone).start();
+    }
 
 
 }
