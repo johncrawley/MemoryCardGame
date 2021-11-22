@@ -113,7 +113,7 @@ public class Game {
     }
 
 
-    private void removeCards(){
+    private void removeSelectedCards(){
         Handler handler = new Handler(Looper.getMainLooper());
         cardAnimator.addSwipeAnimationTo(firstSelectedCard);
         cardAnimator.addSwipeAnimationTo(secondSelectedCard);
@@ -159,6 +159,14 @@ public class Game {
     }
 
 
+    private void reset(){
+        gameState = GameState.NOTHING_SELECTED;
+        remainingCards = numberOfCards;
+        setAllCardsFaceDown();
+        cardAnimator.swipeInAll(cardLayoutPopulator.getImageViews());
+    }
+
+
     private void resetNumberOfTurns(){
         numberOfTurns = 0;
     }
@@ -167,19 +175,10 @@ public class Game {
     private void turnOverCards(){
         Handler handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(() -> {
-            //setCardFaceDown(firstSelectedCard);
             flipBack(firstSelectedCard);
             flipBack(secondSelectedCard);
-            //setCardFaceDown(secondSelectedCard);
             gameState = GameState.NOTHING_SELECTED;
         }, 1000);
-    }
-
-
-    private void reset(){
-        remainingCards = numberOfCards;
-        setAllCardsFaceDown();
-        cardAnimator.swipeInAll(cardLayoutPopulator.getImageViews());
     }
 
 
@@ -211,7 +210,7 @@ public class Game {
             return;
         }
         if(matches()){
-            removeCards();
+            removeSelectedCards();
         }
         else{
             turnOverCards();
@@ -240,7 +239,6 @@ public class Game {
                     card.clearAnimation();
                     int imageId = cards.get(currentPosition).getImageId();
                     bitmapLoader.setBitmap(card, imageId);
-                    System.out.println("^^^ Running onAnimationEnd for HalfWayDone listener! " + System.currentTimeMillis());
                     card.animate().rotationY(halfRotation * 2).setDuration(duration).setListener(fullWayDone).start();
                 },10);
             }
@@ -274,6 +272,9 @@ public class Game {
             public void onAnimationStart(Animator animator) {}
             @Override
             public void onAnimationEnd(Animator animator) {
+                if(cards == null){
+                    return;
+                }
                 int imageId = cards.get(currentPosition).getImageId();
                 bitmapLoader.setBitmap(card, imageId);
 

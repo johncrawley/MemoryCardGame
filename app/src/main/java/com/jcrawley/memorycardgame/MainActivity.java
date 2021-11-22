@@ -7,8 +7,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.DisplayMetrics;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
@@ -27,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
     private Animation dropInAnimation, dropOutAnimation, newGameDropInAnimation, newGameDropOutAnimation;
     private ActionBar actionBar;
     private int numberOfCards;
+    private LinearLayout cardLayout;
+    private int currentCardCount;
+    private int currentFadeOutCount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,13 +46,71 @@ public class MainActivity extends AppCompatActivity {
         initAnimations();
         initButtons();
         game = new Game(this, screenWidth);
-        final LinearLayout linearLayout = findViewById(R.id.cardLayout);
+        cardLayout = findViewById(R.id.cardLayout);
         newGameLayout = findViewById(R.id.newGameLayout);
-        CardLayoutPopulator cardLayoutPopulator = new CardLayoutPopulator(this, linearLayout, game);
+        CardLayoutPopulator cardLayoutPopulator = new CardLayoutPopulator(this, cardLayout, game);
         game.setCardLayoutPopulator(cardLayoutPopulator);
-        linearLayout.getViewTreeObserver().addOnGlobalLayoutListener(cardLayoutPopulator::addCardViews);
-
+        cardLayout.getViewTreeObserver().addOnGlobalLayoutListener(cardLayoutPopulator::addCardViews);
     }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menuitems, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if(id == R.id.action_new){
+            removeAllCards();
+            showNewGameLayout();
+        }
+        else if( id == R.id.action_about){
+            showAboutView();
+        }
+        return true;
+    }
+
+
+    private void showAboutView(){
+        
+    }
+
+
+    private void checkToRemoveAllCardsFromLayout(){
+        if(currentFadeOutCount >= currentCardCount){
+            cardLayout.removeAllViewsInLayout();
+        }
+    }
+
+
+    private void removeAllCards(){
+        int cardCount = cardLayout.getChildCount();
+        currentFadeOutCount = 0;
+        currentCardCount = cardCount;
+        for(int i=0; i< cardCount; i++){
+            View v = cardLayout.getChildAt(i);
+            Animation fadeOutCardsAnimation = new AlphaAnimation(1, 0);
+            fadeOutCardsAnimation.setInterpolator(new AccelerateInterpolator());
+            fadeOutCardsAnimation.setStartOffset(200);
+            fadeOutCardsAnimation.setDuration(1100);
+            fadeOutCardsAnimation.setAnimationListener(new Animation.AnimationListener() {
+                public void onAnimationEnd(Animation animation) {
+                    v.setVisibility(View.GONE);
+                    v.clearAnimation();
+                    currentFadeOutCount++;
+                    checkToRemoveAllCardsFromLayout();
+                }
+                public void onAnimationStart(Animation animation) { }
+                public void onAnimationRepeat(Animation animation) { }
+            });
+            v.startAnimation(fadeOutCardsAnimation);
+        }
+    }
+
 
     private void initButtons(){
         setupButton(R.id.cards8Button, 8);
@@ -60,11 +125,14 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(v -> startNewGame(cardCount));
     }
 
+
     private void startNewGame(int numberOfCards){
         this.numberOfCards = numberOfCards;
         newGameLayout.clearAnimation();
+        newGameLayout.setVisibility(View.VISIBLE);
         newGameLayout.startAnimation(newGameDropOutAnimation);
     }
+
 
     private void initAnimations(){
         setupDropInAnimation();
@@ -111,8 +179,7 @@ public class MainActivity extends AppCompatActivity {
             public void onAnimationEnd(Animation arg0) {
                 resultsLayout.clearAnimation();
                 resultsLayout.setVisibility(View.GONE);
-                newGameLayout.setVisibility(View.VISIBLE);
-                newGameLayout.startAnimation(newGameDropInAnimation);
+                showNewGameLayout();
             }
         });
     }
@@ -152,9 +219,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void showNewGame(){
-
-
+    private void showNewGameLayout(){
+        newGameLayout.setVisibility(View.VISIBLE);
+        newGameLayout.startAnimation(newGameDropInAnimation);
     }
 
 
@@ -204,8 +271,6 @@ public class MainActivity extends AppCompatActivity {
     public void setPlainTitle(){
         actionBar.setTitle(getString(R.string.title));
     }
-
-
 
 
     private void dismissResults(){

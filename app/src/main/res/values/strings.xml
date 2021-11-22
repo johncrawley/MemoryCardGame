@@ -15,4 +15,6 @@
     <string name="results_status_matching_record">Matching The Current Record!</string>
     <string name="results_status_new_record">Congratulations! A New Record!</string>
     <string name="results_status_turns_taken">&#160;turns taken</string>
+    <string name="menu_action_new_game">New Game</string>
+    <string name="menu_action_about">About</string>
 </resources>
