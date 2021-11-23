@@ -28,12 +28,13 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout resultsLayout, newGameLayout;
     private Game game;
     private boolean isReadyToDismissResults = false;
-    private Animation dropInAnimation, dropOutAnimation, newGameDropInAnimation, newGameDropOutAnimation;
+    private Animation resultsDropInAnimation, resultsDropOutAnimation, newGameDropInAnimation, newGameDropOutAnimation;
     private ActionBar actionBar;
     private int numberOfCards;
     private LinearLayout cardLayout;
     private int currentCardCount;
     private int currentFadeOutCount = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,53 +136,60 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void initAnimations(){
-        setupDropInAnimation();
-        setupDropOutAnimation();
+        setupResultsDropInAnimation();
+        setupResultsDropOutAnimation();
         setupNewGameDropInAnimation();
         setupNewGameDropOutAnimation();
     }
 
 
-    private void setupDropInAnimation(){
-        dropInAnimation = new TranslateAnimation(
+    private void setupResultsDropInAnimation(){
+        resultsDropInAnimation = new TranslateAnimation(
                 0,
                 0,
                 -screenHeight,
                 0);
-        dropInAnimation.setDuration(800);
-        dropInAnimation.setFillAfter(true);
+        resultsDropInAnimation.setDuration(800);
+        resultsDropInAnimation.setFillAfter(true);
 
-        dropInAnimation.setAnimationListener(new Animation.AnimationListener(){
+        resultsDropInAnimation.setAnimationListener(new Animation.AnimationListener(){
             public void onAnimationStart(Animation arg0) { }
             public void onAnimationRepeat(Animation arg0) {}
             @Override
             public void onAnimationEnd(Animation arg0) {
                 Handler handler = new Handler(Looper.getMainLooper());
-                handler.postDelayed(() -> isReadyToDismissResults=true, 800);
+                handler.postDelayed(() -> isReadyToDismissResults=true, 500);
             }
         });
     }
 
 
-    public void setupDropOutAnimation(){
-        dropOutAnimation = new TranslateAnimation(
-                0,
-                0,
-                 0,
-                screenHeight);
-        dropOutAnimation.setDuration(500);
-        dropOutAnimation.setFillAfter(true);
+    public void setupResultsDropOutAnimation(){
+        resultsDropOutAnimation = createDropOutAnimation(500, () -> {
+            resultsLayout.clearAnimation();
+            resultsLayout.setVisibility(View.GONE);
+            showNewGameLayout();
+        });
+    }
 
-        dropOutAnimation.setAnimationListener(new Animation.AnimationListener(){
+
+    private Animation createDropOutAnimation(int duration, Runnable runnable){
+        Animation dropOutAnimation = new TranslateAnimation(
+                0,
+                0,
+                0,
+                screenHeight);
+        dropOutAnimation.setDuration(duration);
+        dropOutAnimation.setFillAfter(true);
+         dropOutAnimation.setAnimationListener(new Animation.AnimationListener(){
             public void onAnimationStart(Animation arg0) { }
             public void onAnimationRepeat(Animation arg0) { }
             @Override
             public void onAnimationEnd(Animation arg0) {
-                resultsLayout.clearAnimation();
-                resultsLayout.setVisibility(View.GONE);
-                showNewGameLayout();
-            }
-        });
+                runnable.run();
+            }});
+
+        return dropOutAnimation;
     }
 
 
@@ -197,29 +205,22 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void setupNewGameDropOutAnimation(){
-        newGameDropOutAnimation = new TranslateAnimation(
-                0,
-                0,
-                0,
-                screenHeight);
-        newGameDropOutAnimation.setDuration(500);
-        newGameDropOutAnimation.setFillAfter(true);
-
-        newGameDropOutAnimation.setAnimationListener(new Animation.AnimationListener(){
-            public void onAnimationStart(Animation arg0) { }
-            public void onAnimationRepeat(Animation arg0) { }
-            @Override
-            public void onAnimationEnd(Animation arg0) {
-                newGameLayout.clearAnimation();
-                newGameLayout.setVisibility(View.GONE);
-                game.startAgain(numberOfCards);
-                setPlainTitle();
-            }
+        newGameDropOutAnimation = createDropOutAnimation(500, ()-> {
+            newGameLayout.clearAnimation();
+            newGameLayout.setVisibility(View.GONE);
+            game.startAgain(numberOfCards);
+            setPlainTitle();
         });
     }
 
 
     private void showNewGameLayout(){
+        if(resultsLayout.getVisibility() == View.VISIBLE){
+            resultsLayout.startAnimation(createDropOutAnimation(500, ()-> {
+                    resultsLayout.clearAnimation();
+                    resultsLayout.setVisibility(View.GONE);
+                    }));
+        }
         newGameLayout.setVisibility(View.VISIBLE);
         newGameLayout.startAnimation(newGameDropInAnimation);
     }
@@ -253,7 +254,7 @@ public class MainActivity extends AppCompatActivity {
         resultsTextView.setText(resultsText);
         recordTextView.setText(recordText);
         resultsLayout.setVisibility(View.VISIBLE);
-        resultsLayout.startAnimation(dropInAnimation);
+        resultsLayout.startAnimation(resultsDropInAnimation);
     }
 
 
@@ -277,7 +278,7 @@ public class MainActivity extends AppCompatActivity {
         if(isReadyToDismissResults) {
             isReadyToDismissResults = false;
             resultsLayout.clearAnimation();
-            resultsLayout.startAnimation(dropOutAnimation);
+            resultsLayout.startAnimation(resultsDropOutAnimation);
         }
     }
 

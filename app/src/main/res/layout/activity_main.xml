@@ -169,12 +169,16 @@
 
         <Button
             android:id="@+id/cards8Button"
+            android:backgroundTint="@color/button_tint"
+            android:textColor="@color/button_text"
             android:layout_width="match_parent"
             android:text="@string/button_8_cards_text"
             android:layout_height="wrap_content"/>
 
         <Button
             android:id="@+id/cards16Button"
+            android:backgroundTint="@color/button_tint"
+            android:textColor="@color/button_text"
             android:layout_width="match_parent"
             android:text="@string/button_16_cards_text"
             android:layout_height="wrap_content"/>
@@ -182,6 +186,8 @@
 
         <Button
             android:id="@+id/cards26Button"
+            android:backgroundTint="@color/button_tint"
+            android:textColor="@color/button_text"
             android:layout_width="match_parent"
             android:text="@string/button_26_cards_text"
             android:layout_height="wrap_content"/>
@@ -189,6 +195,8 @@
 
         <Button
             android:id="@+id/cards52Button"
+            android:backgroundTint="@color/button_tint"
+            android:textColor="@color/button_text"
             android:layout_width="match_parent"
             android:text="@string/button_52_cards_text"
             android:layout_height="wrap_content"/>

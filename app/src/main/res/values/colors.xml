@@ -17,4 +17,6 @@
     <color name="game_complete_text_color">#F57F17</color>
     <color name="game_complete_text_shadow_color">#2B231A</color>
     <color name="results_details_text_color">#164A1A</color>
+    <color name="button_tint">#90CAF9</color>
+    <color name="button_text">#1A237E</color>
 </resources>

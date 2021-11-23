@@ -146,29 +146,24 @@ public class Game {
 
 
     public void startAgain(int numberOfCards){
-        resetNumberOfTurns();
+        numberOfTurns = 0;
         this.numberOfCards = numberOfCards;
+        remainingCards = numberOfCards;
         cards = deck.get(numberOfCards);
         cardLayoutPopulator.addCardViews(numberOfCards);
+        gameState = GameState.NOTHING_SELECTED;
         if(cards == null){
             return;
         }
         Collections.shuffle(cards);
-        Handler handler = new Handler(Looper.getMainLooper());
-        handler.postDelayed(this::reset, 500);
-    }
-
-
-    private void reset(){
-        gameState = GameState.NOTHING_SELECTED;
-        remainingCards = numberOfCards;
         setAllCardsFaceDown();
-        cardAnimator.swipeInAll(cardLayoutPopulator.getImageViews());
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.postDelayed(this::swipeInCards, 500);
     }
 
 
-    private void resetNumberOfTurns(){
-        numberOfTurns = 0;
+    private void swipeInCards(){
+        cardAnimator.swipeInAll(cardLayoutPopulator.getImageViews());
     }
 
 
