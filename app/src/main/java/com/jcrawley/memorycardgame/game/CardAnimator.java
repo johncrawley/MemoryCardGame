@@ -67,19 +67,12 @@ public class CardAnimator {
                 screenWidth + 100,
                 0,
                 0);
-        animation.setDuration(1100);
+        animation.setDuration(700);
         animation.setStartOffset(400);
 
         animation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation arg0) {
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation arg0) {
-            }
-
-            @Override
+            public void onAnimationStart(Animation arg0) { }
+            public void onAnimationRepeat(Animation arg0) { }
             public void onAnimationEnd(Animation arg0) {
                 card.setVisibility(View.INVISIBLE);
                 card.clearAnimation();
