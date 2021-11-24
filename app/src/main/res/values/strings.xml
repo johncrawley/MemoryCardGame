@@ -6,6 +6,8 @@
     <string name="position_tag">positionTag</string>
     <string name="default_turn_text">Turn 1</string>
     <string name="new_game_text">New Game</string>
+    <string name="about_text">Memory - 2021, created by John Crawley</string>
+    <string name="dismiss_about_button">OK!</string>
     <string name="button_8_cards_text">8 Cards</string>
     <string name="button_16_cards_text">16 Cards</string>
     <string name="button_26_cards_text">26 Cards</string>
