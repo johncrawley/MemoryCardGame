@@ -131,7 +131,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void dismissAboutDialog(){
+    public void dismissAboutDialog(){
+        if(!isShowingAboutDialogue){
+            return;
+        }
         isShowingAboutDialogue = false;
         aboutLayout.clearAnimation();
 

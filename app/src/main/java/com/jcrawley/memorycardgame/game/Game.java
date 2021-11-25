@@ -36,11 +36,13 @@ public class Game {
     private final Context context;
     private final Map<DeckSize, List<Card>> deck;
     private int currentPosition;
+    private Handler handler;
 
 
     public Game(MainActivity mainActivity, int screenWidth){
         this.mainActivity = mainActivity;
         context = mainActivity.getApplicationContext();
+        initHandler();
         this.recordKeeper = new RecordKeeper(mainActivity.getApplicationContext());
         bitmapLoader = new BitmapLoader(mainActivity.getApplicationContext());
         gameState = GameState.NOTHING_SELECTED;
@@ -71,7 +73,7 @@ public class Game {
 
     public void notifyClickOnPosition(ImageView view){
         int position = (int)view.getTag(R.string.position_tag);
-
+        mainActivity.dismissAboutDialog();
         if(gameState == GameState.NOTHING_SELECTED){
             handleFirstSelection(view, position);
         }
@@ -170,10 +172,10 @@ public class Game {
     private void turnOverCards(){
         Handler handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(() -> {
-            flipBack(firstSelectedCard);
-            flipBack(secondSelectedCard);
+            flipCardBack(firstSelectedCard);
+            flipCardBack(secondSelectedCard);
             gameState = GameState.NOTHING_SELECTED;
-        }, 1000);
+        }, getInt(R.integer.flip_cards_back_delay));
     }
 
 
@@ -195,11 +197,6 @@ public class Game {
     }
 
 
-    private void flipBack(ImageView card){
-        flipCardBack(card);
-    }
-
-
     private void checkCards(boolean hasSecondCardBeenTurnedOver){
         if(!hasSecondCardBeenTurnedOver || firstSelectedCard == null || secondSelectedCard == null){
             return;
@@ -212,77 +209,73 @@ public class Game {
         }
     }
 
-    private int getInt(int resId){
-        return mainActivity.getResources().getInteger(resId);
+
+    private void flipCard(ImageView card, boolean isSecondCard) {
+        Animator.AnimatorListener halfWayFlip = createAnimatorListener(() -> onFinishedHalfFlip(card, isSecondCard));
+        animateCardFlip(card, 1, halfWayFlip);
     }
 
 
-    private void flipCard(ImageView card, boolean isSecondCard) {
+    private void animateCardFlip(ImageView card, int rotationMultiplier, Animator.AnimatorListener onFinishedListener){
         long duration = getInt(R.integer.flip_card_duration);
         float halfRotation = getInt(R.integer.flip_card_half_rotation);
+        card.animate()
+                .rotationY(halfRotation * rotationMultiplier)
+                .setDuration(duration)
+                .setListener(onFinishedListener)
+                .start();
+    }
 
-        Animator.AnimatorListener fullWayDone = new Animator.AnimatorListener() {
-            public void onAnimationEnd(Animator animator) {
-                card.clearAnimation();
-                checkCards(isSecondCard);
-            }
-            public void onAnimationCancel(Animator animator) {}
-            public void onAnimationRepeat(Animator animator) {}
-            public void onAnimationStart(Animator animator) {}
-        };
 
-        Animator.AnimatorListener halfWayDone = new Animator.AnimatorListener() {
-            public void onAnimationEnd(Animator animator) {
-                new Handler(Looper.getMainLooper()).post(() -> {
-                    card.clearAnimation();
-                    int imageId = cards.get(currentPosition).getImageId();
-                    bitmapLoader.setBitmap(card, imageId);
-                    card.animate().rotationY(halfRotation * 2).setDuration(duration).setListener(fullWayDone).start();
-                });
-            }
-            public void onAnimationStart(Animator animator) {}
-            public void onAnimationCancel(Animator animator) {}
-            public void onAnimationRepeat(Animator animator) {}
-        };
-
-        card.animate().rotationY(halfRotation).setDuration(duration).setListener(halfWayDone).start();
+    private void onFinishedHalfFlip(ImageView card, boolean isSecondCard){
+        Animator.AnimatorListener fullWayFlippedListener = createAnimatorListener(() ->{
+            card.clearAnimation();
+            checkCards(isSecondCard);
+        });
+        card.clearAnimation();
+        int imageId = cards.get(currentPosition).getImageId();
+        bitmapLoader.setBitmap(card, imageId);
+        animateCardFlip(card, 2, fullWayFlippedListener);
     }
 
 
     private void flipCardBack(ImageView card) {
-        long duration =  getInt(R.integer.flip_card_duration);
-        float halfRotation = getInt(R.integer.flip_card_half_rotation);;
-
-        Animator.AnimatorListener fullWayDone = new Animator.AnimatorListener() {
-            public void onAnimationEnd(Animator animator) {
-                card.clearAnimation();
-            }
-            public void onAnimationCancel(Animator animator) {}
-            public void onAnimationRepeat(Animator animator) {}
-            public void onAnimationStart(Animator animator)  {}
-        };
-
-
-        Animator.AnimatorListener halfWayDone = new Animator.AnimatorListener() {
-            public void onAnimationEnd(Animator animator) {
-                if(cards == null){
-                    return;
-                }
-                int imageId = cards.get(currentPosition).getImageId();
-                bitmapLoader.setBitmap(card, imageId);
-
-                new Handler(Looper.getMainLooper()).post(() -> {
-                    setCardFaceDown(card);
-                    card.animate().rotationY(0).setDuration(duration).setListener(fullWayDone).start();
-                });
-            }
-            public void onAnimationCancel(Animator animator) {}
-            public void onAnimationRepeat(Animator animator) {}
-            public void onAnimationStart(Animator animator)  {}
-        };
-
-        card.animate().rotationY(halfRotation).setDuration(duration).setListener(halfWayDone).start();
+        Animator.AnimatorListener onFullWayFlippedBack =createAnimatorListener(card::clearAnimation);
+        Animator.AnimatorListener onHalfWayFlippedBack = createAnimatorListener( () -> onHalfWayFlippedBack(card, onFullWayFlippedBack));
+        animateCardFlip(card, 1, onHalfWayFlippedBack);
     }
 
+
+    private void onHalfWayFlippedBack(ImageView card, Animator.AnimatorListener fullWayFlippedBackListener){
+        if(cards == null){
+            return;
+        }
+        int imageId = cards.get(currentPosition).getImageId();
+        bitmapLoader.setBitmap(card, imageId);
+        setCardFaceDown(card);
+        animateCardFlip(card, 0, fullWayFlippedBackListener);
+    }
+
+
+    private void initHandler(){
+        handler = new Handler(Looper.getMainLooper());
+    }
+
+
+    private Animator.AnimatorListener createAnimatorListener(Runnable onFinished){
+        return new Animator.AnimatorListener() {
+            public void onAnimationEnd(Animator animator) {
+                handler.post(onFinished);
+            }
+            public void onAnimationStart(Animator animator) {}
+            public void onAnimationCancel(Animator animator) {}
+            public void onAnimationRepeat(Animator animator) {}
+        };
+    }
+
+
+    private int getInt(int resId){
+        return mainActivity.getResources().getInteger(resId);
+    }
 
 }

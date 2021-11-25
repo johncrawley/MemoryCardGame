@@ -28,6 +28,7 @@ public class CardLayoutPopulator {
     private int numberOfCardsPerRow;
     private int numberOfRows;
     private boolean isFirstRun = true;
+    private int padding;
 
     @SuppressLint("UseCompatLoadingForDrawables")
     public CardLayoutPopulator(Activity activity, LinearLayout parentLayout, Game game){
@@ -53,6 +54,11 @@ public class CardLayoutPopulator {
     }
 
 
+    private int getInt(int resId){
+        return activity.getResources().getInteger(resId);
+    }
+
+
     public void addCardViews(int numberOfCards){
         hasRun = false;
         parentLayout.removeAllViewsInLayout();
@@ -71,11 +77,11 @@ public class CardLayoutPopulator {
             reductionOffset += 3;
         }
         while(numberOfCardsPerRow * numberOfRows < numberOfCards);
+        createPadding();
     }
 
 
     private void calculateCardAndGridDimensions(int parentWidth, int parentHeight, int reductionOffset){
-
         float parentArea = parentWidth * parentHeight;
         float maxAreaPerCard = parentArea / numberOfCards;
         cardWidth = (int)Math.floor(Math.sqrt(maxAreaPerCard/ 2f)) + 10;
@@ -117,7 +123,6 @@ public class CardLayoutPopulator {
         imageView.setId(id);
         imageViews.add(imageView);
         imageView.setImageBitmap(cardBack);
-        int padding = (int) (5 + (cardWidth / 12f));
         imageView.setPadding(padding, padding, padding, padding);
         LinearLayout.LayoutParams layoutParams =  new LinearLayout.LayoutParams(cardWidth, cardHeight);
         imageView.setTag(R.string.position_tag, cardsAdded);
@@ -126,6 +131,11 @@ public class CardLayoutPopulator {
         imageView.setVisibility(isFirstRun ? View.VISIBLE : View.GONE);
         cardsAdded++;
         return  imageView;
+    }
+
+
+    private void createPadding(){
+        padding = getInt(R.integer.minimum_card_padding) + (cardWidth / getInt(R.integer.card_width_padding_divisor));
     }
 
 
