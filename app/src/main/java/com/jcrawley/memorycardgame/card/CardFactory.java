@@ -16,12 +16,12 @@ public class CardFactory {
     private static Suit suit;
 
 
-    public static Map<Integer, List<Card>> createDeck(){
-        Map<Integer, List<Card>> deckMap = new HashMap<>(4);
-        deckMap.put(8, create8Cards());
-        deckMap.put(16, create16Cards());
-        deckMap.put(26, create26Cards());
-        deckMap.put(52, create52Cards());
+    public static Map<DeckSize, List<Card>> createDecks(){
+        Map<DeckSize, List<Card>> deckMap = new HashMap<>(4);
+        deckMap.put(DeckSize.EIGHT, create8Cards());
+        deckMap.put(DeckSize.SIXTEEN, create16Cards());
+        deckMap.put(DeckSize.TWENTY_SIX, create26Cards());
+        deckMap.put(DeckSize.FIFTY_TWO, create52Cards());
         return deckMap;
     }
 

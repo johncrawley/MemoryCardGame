@@ -11,6 +11,7 @@ import com.jcrawley.memorycardgame.MainActivity;
 import com.jcrawley.memorycardgame.R;
 import com.jcrawley.memorycardgame.card.Card;
 import com.jcrawley.memorycardgame.card.CardFactory;
+import com.jcrawley.memorycardgame.card.DeckSize;
 
 import java.util.Collections;
 import java.util.List;
@@ -33,7 +34,7 @@ public class Game {
     private final RecordKeeper recordKeeper;
     private final MainActivity mainActivity;
     private final Context context;
-    private final Map<Integer, List<Card>> deck;
+    private final Map<DeckSize, List<Card>> deck;
     private int currentPosition;
 
 
@@ -43,9 +44,8 @@ public class Game {
         this.recordKeeper = new RecordKeeper(mainActivity.getApplicationContext());
         bitmapLoader = new BitmapLoader(mainActivity.getApplicationContext());
         gameState = GameState.NOTHING_SELECTED;
-        deck = CardFactory.createDeck();
-        cards = deck.get(8);
-        //cards = CardFactory.createCards();
+        deck = CardFactory.createDecks();
+        cards = deck.get(DeckSize.SIXTEEN);
         assert cards != null;
         numberOfCards = cards.size();
         remainingCards = numberOfCards;
@@ -145,11 +145,11 @@ public class Game {
     }
 
 
-    public void startAgain(int numberOfCards){
+    public void startAgain(DeckSize deckSize){
         numberOfTurns = 0;
-        this.numberOfCards = numberOfCards;
+        this.numberOfCards = deckSize.getValue();
         remainingCards = numberOfCards;
-        cards = deck.get(numberOfCards);
+        cards = deck.get(deckSize);
         cardLayoutPopulator.addCardViews(numberOfCards);
         gameState = GameState.NOTHING_SELECTED;
         if(cards == null){
@@ -157,8 +157,8 @@ public class Game {
         }
         Collections.shuffle(cards);
         setAllCardsFaceDown();
-        Handler handler = new Handler(Looper.getMainLooper());
-        handler.postDelayed(this::swipeInCards, 500);
+        int initialDelay = mainActivity.getResources().getInteger(R.integer.swipe_in_cards_initial_delay);
+        new Handler(Looper.getMainLooper()).postDelayed(this::swipeInCards, initialDelay);
     }
 
 
@@ -212,10 +212,14 @@ public class Game {
         }
     }
 
+    private int getInt(int resId){
+        return mainActivity.getResources().getInteger(resId);
+    }
+
 
     private void flipCard(ImageView card, boolean isSecondCard) {
-        long duration = 130;
-        float halfRotation = 90;
+        long duration = getInt(R.integer.flip_card_duration);
+        float halfRotation = getInt(R.integer.flip_card_half_rotation);
 
         Animator.AnimatorListener fullWayDone = new Animator.AnimatorListener() {
             public void onAnimationEnd(Animator animator) {
@@ -229,13 +233,12 @@ public class Game {
 
         Animator.AnimatorListener halfWayDone = new Animator.AnimatorListener() {
             public void onAnimationEnd(Animator animator) {
-                Handler handler = new Handler(Looper.getMainLooper());
-                handler.postDelayed(() -> {
+                new Handler(Looper.getMainLooper()).post(() -> {
                     card.clearAnimation();
                     int imageId = cards.get(currentPosition).getImageId();
                     bitmapLoader.setBitmap(card, imageId);
                     card.animate().rotationY(halfRotation * 2).setDuration(duration).setListener(fullWayDone).start();
-                },10);
+                });
             }
             public void onAnimationStart(Animator animator) {}
             public void onAnimationCancel(Animator animator) {}
@@ -247,25 +250,20 @@ public class Game {
 
 
     private void flipCardBack(ImageView card) {
-        long duration = 160;
-        float halfRotation = 90;
+        long duration =  getInt(R.integer.flip_card_duration);
+        float halfRotation = getInt(R.integer.flip_card_half_rotation);;
 
         Animator.AnimatorListener fullWayDone = new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animator) {}
-            @Override
             public void onAnimationEnd(Animator animator) {
                 card.clearAnimation();
             }
             public void onAnimationCancel(Animator animator) {}
-            public void onAnimationRepeat(Animator animator) { }
+            public void onAnimationRepeat(Animator animator) {}
+            public void onAnimationStart(Animator animator)  {}
         };
 
 
         Animator.AnimatorListener halfWayDone = new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animator) {}
-            @Override
             public void onAnimationEnd(Animator animator) {
                 if(cards == null){
                     return;
@@ -273,14 +271,14 @@ public class Game {
                 int imageId = cards.get(currentPosition).getImageId();
                 bitmapLoader.setBitmap(card, imageId);
 
-                Handler handler = new Handler(Looper.getMainLooper());
-                handler.postDelayed(() -> {
+                new Handler(Looper.getMainLooper()).post(() -> {
                     setCardFaceDown(card);
                     card.animate().rotationY(0).setDuration(duration).setListener(fullWayDone).start();
-                },10);
+                });
             }
             public void onAnimationCancel(Animator animator) {}
-            public void onAnimationRepeat(Animator animator) { }
+            public void onAnimationRepeat(Animator animator) {}
+            public void onAnimationStart(Animator animator)  {}
         };
 
         card.animate().rotationY(halfRotation).setDuration(duration).setListener(halfWayDone).start();

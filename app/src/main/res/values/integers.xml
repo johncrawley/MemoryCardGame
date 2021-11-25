@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="view_drop_duration">740</integer>
+    <integer name="enable_dismiss_results_delay">400</integer>
+    <integer name="fade_out_cards_start_offset">200</integer>
+    <integer name="fade_out_cards_duration">900</integer>
+    <integer name="swipe_in_cards_initial_delay">200</integer>
+    <integer name="flip_card_duration">120</integer>
+    <integer name="flip_card_half_rotation">90</integer>
+
+</resources>

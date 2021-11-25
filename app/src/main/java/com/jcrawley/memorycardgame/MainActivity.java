@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.jcrawley.memorycardgame.card.DeckSize;
 import com.jcrawley.memorycardgame.game.CardLayoutPopulator;
 import com.jcrawley.memorycardgame.game.Game;
 
@@ -30,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean isReadyToDismissResults = false;
     private Animation resultsDropInAnimation, resultsDropOutAnimation, newGameDropInAnimation, newGameDropOutAnimation;
     private ActionBar actionBar;
-    private int numberOfCards;
+    private DeckSize deckSize;
     private int currentCardCount;
     private int currentFadeOutCount = 0;
     private boolean isShowingNewGameDialogue;
@@ -104,8 +105,8 @@ public class MainActivity extends AppCompatActivity {
             View v = cardLayout.getChildAt(i);
             Animation fadeOutCardsAnimation = new AlphaAnimation(1, 0);
             fadeOutCardsAnimation.setInterpolator(new AccelerateInterpolator());
-            fadeOutCardsAnimation.setStartOffset(200);
-            fadeOutCardsAnimation.setDuration(1100);
+            fadeOutCardsAnimation.setStartOffset(getInt(R.integer.fade_out_cards_start_offset));
+            fadeOutCardsAnimation.setDuration(getInt(R.integer.fade_out_cards_duration));
             fadeOutCardsAnimation.setAnimationListener(new Animation.AnimationListener() {
                 public void onAnimationEnd(Animation animation) {
                     v.setVisibility(View.GONE);
@@ -122,10 +123,10 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void initButtons(){
-        setupButton(R.id.cards8Button, 8);
-        setupButton(R.id.cards16Button, 16);
-        setupButton(R.id.cards26Button, 26);
-        setupButton(R.id.cards52Button, 52);
+        setupButton(R.id.cards8Button, DeckSize.EIGHT);
+        setupButton(R.id.cards16Button, DeckSize.SIXTEEN);
+        setupButton(R.id.cards26Button, DeckSize.TWENTY_SIX);
+        setupButton(R.id.cards52Button, DeckSize.FIFTY_TWO);
         findViewById(R.id.dismissAboutButton).setOnClickListener((View v)-> dismissAboutDialog());
     }
 
@@ -141,14 +142,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void setupButton(int buttonId, int cardCount){
+    private void setupButton(int buttonId, DeckSize deck_size){
         Button button = findViewById(buttonId);
-        button.setOnClickListener(v -> startNewGame(cardCount));
+        button.setOnClickListener(v -> startNewGame(deck_size));
     }
 
 
-    private void startNewGame(int numberOfCards){
-        this.numberOfCards = numberOfCards;
+    private void startNewGame(DeckSize deckSize){
+        this.deckSize = deckSize;
         isShowingNewGameDialogue = false;
         newGameLayout.clearAnimation();
         newGameLayout.setVisibility(View.VISIBLE);
@@ -167,8 +168,13 @@ public class MainActivity extends AppCompatActivity {
     private void setupResultsDropInAnimation(){
         resultsDropInAnimation = createDropAnimation(AnimationDirection.DROP_IN, () -> {
             Handler handler = new Handler(Looper.getMainLooper());
-            handler.postDelayed(() -> isReadyToDismissResults=true, 500);
+            handler.postDelayed(() -> isReadyToDismissResults=true,
+                    getInt(R.integer.enable_dismiss_results_delay));
         });
+    }
+
+    private int getInt(int resId){
+        return getResources().getInteger(resId);
     }
 
 
@@ -181,13 +187,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public void setupNewGameDropInAnimation(){
+        newGameDropInAnimation = createDropAnimation(AnimationDirection.DROP_IN, ()->{});
+    }
+
+
+    public void setupNewGameDropOutAnimation(){
+        newGameDropOutAnimation = createDropAnimation(AnimationDirection.DROP_OUT, ()-> {
+            newGameLayout.clearAnimation();
+            newGameLayout.setVisibility(View.GONE);
+            game.startAgain(deckSize);
+            setPlainTitle();
+        });
+    }
+
+
     private Animation createDropAnimation(AnimationDirection direction, Runnable onAnimationEnd ){
         Animation dropOutAnimation = new TranslateAnimation(
                 0,
                 0,
                 direction == AnimationDirection.DROP_IN ? -screenHeight : 0,
                 direction == AnimationDirection.DROP_OUT ? screenHeight : 0);
-        dropOutAnimation.setDuration(700);
+        dropOutAnimation.setDuration(getResources().getInteger(R.integer.view_drop_duration));
         dropOutAnimation.setFillAfter(true);
          dropOutAnimation.setAnimationListener(new Animation.AnimationListener(){
             public void onAnimationStart(Animation arg0) { }
@@ -198,21 +219,6 @@ public class MainActivity extends AppCompatActivity {
             }});
 
         return dropOutAnimation;
-    }
-
-
-    public void setupNewGameDropInAnimation(){
-        newGameDropInAnimation = createDropAnimation(AnimationDirection.DROP_IN, ()->{});
-    }
-
-
-    public void setupNewGameDropOutAnimation(){
-        newGameDropOutAnimation = createDropAnimation(AnimationDirection.DROP_OUT, ()-> {
-            newGameLayout.clearAnimation();
-            newGameLayout.setVisibility(View.GONE);
-            game.startAgain(numberOfCards);
-            setPlainTitle();
-        });
     }
 
 
