@@ -4,22 +4,29 @@ public class Card {
     private final Rank rank;
     private final Suit suit;
     private final int imageId;
-    private boolean isDisplayed;
+    private boolean isVisible;
     private boolean isFaceDown;
 
     public Card(Rank rank, Suit suit, int imageId){
         this.rank = rank;
         this.suit = suit;
         this.imageId = imageId;
+        init();
+    }
+
+
+    public void init(){
+        this.isVisible = true;
         this.isFaceDown = true;
     }
+
 
     public Rank getRank(){
         return rank;
     }
 
-    public void setDisplayed(boolean displayed){
-        this.isDisplayed = displayed;
+    public void setVisible(boolean visible){
+        this.isVisible = visible;
     }
 
 
@@ -28,8 +35,8 @@ public class Card {
     }
 
 
-    public boolean isDisplayed(){
-        return isDisplayed;
+    public boolean isVisible(){
+        return isVisible;
     }
 
 

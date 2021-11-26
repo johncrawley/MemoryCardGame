@@ -2,6 +2,7 @@ package com.jcrawley.memorycardgame;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean isShowingNewGameDialogue;
     private boolean isShowingAboutDialogue;
     private enum AnimationDirection {DROP_IN, DROP_OUT}
+    private MainViewModel viewModel;
 
 
     @Override
@@ -49,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         assignScreenDimensions();
         initAnimations();
         initButtons();
+        viewModel  = new ViewModelProvider(this).get(MainViewModel.class);
         game = new Game(this, screenWidth);
         cardLayout = findViewById(R.id.cardLayout);
         newGameLayout = findViewById(R.id.newGameLayout);
@@ -56,6 +59,10 @@ public class MainActivity extends AppCompatActivity {
         CardLayoutPopulator cardLayoutPopulator = new CardLayoutPopulator(this, cardLayout, game);
         game.setCardLayoutPopulator(cardLayoutPopulator);
         cardLayout.getViewTreeObserver().addOnGlobalLayoutListener(cardLayoutPopulator::addCardViews);
+    }
+
+    public MainViewModel getViewModel(){
+        return viewModel;
     }
 
 

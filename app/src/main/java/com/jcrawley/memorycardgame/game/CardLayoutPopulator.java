@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.jcrawley.memorycardgame.MainActivity;
+import com.jcrawley.memorycardgame.MainViewModel;
 import com.jcrawley.memorycardgame.R;
 
 import java.util.ArrayList;
@@ -29,10 +31,12 @@ public class CardLayoutPopulator {
     private int numberOfRows;
     private boolean isFirstRun = true;
     private int padding;
+    private final MainViewModel viewModel;
 
     @SuppressLint("UseCompatLoadingForDrawables")
-    public CardLayoutPopulator(Activity activity, LinearLayout parentLayout, Game game){
+    public CardLayoutPopulator(MainActivity activity, LinearLayout parentLayout, Game game){
         this.activity = activity;
+        this.viewModel = activity.getViewModel();
         this.parentLayout = parentLayout;
         this.game = game;
         numberOfCards = game.getNumberOfCards();
@@ -128,9 +132,15 @@ public class CardLayoutPopulator {
         imageView.setTag(R.string.position_tag, cardsAdded);
         imageView.setOnClickListener(onClickListener);
         imageView.setLayoutParams(layoutParams);
-        imageView.setVisibility(isFirstRun ? View.VISIBLE : View.GONE);
+        setVisibility(imageView);
         cardsAdded++;
         return  imageView;
+    }
+
+
+    private void setVisibility(ImageView cardView){
+        boolean isVisible = viewModel.cards.get(cardsAdded).isVisible() && isFirstRun;
+        cardView.setVisibility(isVisible ? View.VISIBLE : View.GONE);
     }
 
 

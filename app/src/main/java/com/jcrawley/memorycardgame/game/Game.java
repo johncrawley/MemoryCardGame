@@ -8,61 +8,67 @@ import android.widget.ImageView;
 
 import com.jcrawley.memorycardgame.BitmapLoader;
 import com.jcrawley.memorycardgame.MainActivity;
+import com.jcrawley.memorycardgame.MainViewModel;
 import com.jcrawley.memorycardgame.R;
 import com.jcrawley.memorycardgame.card.Card;
 import com.jcrawley.memorycardgame.card.CardFactory;
 import com.jcrawley.memorycardgame.card.DeckSize;
 
 import java.util.Collections;
-import java.util.List;
-import java.util.Map;
 
 public class Game {
 
-    private List<Card> cards;
-    private int firstSelectedPosition = -1;
-    private int secondSelectedPosition = -1;
     private ImageView firstSelectedCard, secondSelectedCard;
-    private enum GameState { NOTHING_SELECTED, FIRST_CARD_SELECTED, SECOND_CARD_SELECTED}
-    private GameState gameState;
     private final BitmapLoader bitmapLoader;
     private CardLayoutPopulator cardLayoutPopulator;
-    private int numberOfCards;
-    private int remainingCards;
-    private int numberOfTurns;
     private final CardAnimator cardAnimator;
     private final RecordKeeper recordKeeper;
     private final MainActivity mainActivity;
     private final Context context;
-    private final Map<DeckSize, List<Card>> deck;
-    private int currentPosition;
     private Handler handler;
+    private final MainViewModel viewModel;
 
 
     public Game(MainActivity mainActivity, int screenWidth){
         this.mainActivity = mainActivity;
+        viewModel = mainActivity.getViewModel();
         context = mainActivity.getApplicationContext();
         initHandler();
-        this.recordKeeper = new RecordKeeper(mainActivity.getApplicationContext());
-        bitmapLoader = new BitmapLoader(mainActivity.getApplicationContext());
-        gameState = GameState.NOTHING_SELECTED;
-        deck = CardFactory.createDecks();
-        cards = deck.get(DeckSize.SIXTEEN);
-        assert cards != null;
-        numberOfCards = cards.size();
-        remainingCards = numberOfCards;
-        shuffleCards();
+        this.recordKeeper = new RecordKeeper(context);
+        bitmapLoader = new BitmapLoader(context, viewModel);
+        initModel();
         cardAnimator = new CardAnimator(screenWidth);
     }
 
 
+    private void initModel(){
+        if(viewModel.isAlreadyInitialised){
+            mainActivity.setTitleWithTurns(viewModel.numberOfTurns);
+            return;
+        }
+        viewModel.isAlreadyInitialised = true;
+        viewModel.deck = CardFactory.createDecks();
+        viewModel.cards = viewModel.deck.get(DeckSize.SIXTEEN);
+        viewModel.gameState = GameState.NOTHING_SELECTED;
+        assert viewModel.cards != null;
+        viewModel.numberOfCards = viewModel.cards.size();
+        viewModel.remainingCards = viewModel.numberOfCards;
+        shuffleCards();
+    }
+
+
     public void shuffleCards(){
-        Collections.shuffle(cards);
+        log("Entered shuffleCards()");
+        Collections.shuffle(viewModel.cards);
+    }
+
+    private void log(String msg){
+        System.out.println("^^^ Game: " + msg);
     }
 
 
     public int getNumberOfCards(){
-        return numberOfCards;
+        return viewModel.numberOfCards;
     }
 
 
@@ -74,38 +80,45 @@ public class Game {
     public void notifyClickOnPosition(ImageView view){
         int position = (int)view.getTag(R.string.position_tag);
         mainActivity.dismissAboutDialog();
-        if(gameState == GameState.NOTHING_SELECTED){
+        if(viewModel.gameState == GameState.NOTHING_SELECTED){
             handleFirstSelection(view, position);
         }
-        else if(gameState == GameState.FIRST_CARD_SELECTED) {
+        else if(viewModel.gameState == GameState.FIRST_CARD_SELECTED) {
             handleSecondSelection(view, position);
         }
     }
 
 
     private void handleFirstSelection(ImageView view, int position){
-        mainActivity.setTitleWithTurns(++numberOfTurns);
-        gameState = GameState.FIRST_CARD_SELECTED;
-        firstSelectedPosition = position;
+        mainActivity.setTitleWithTurns(++viewModel.numberOfTurns);
+        viewModel.gameState = GameState.FIRST_CARD_SELECTED;
+        viewModel.firstSelectedPosition = position;
         firstSelectedCard = view;
+        flipCard(position);
         flipOver(firstSelectedCard, position, false);
     }
 
 
     private void handleSecondSelection(ImageView view, int position){
-            if(position == firstSelectedPosition){
+            if(position == viewModel.firstSelectedPosition){
                 return;
             }
-            gameState = GameState.SECOND_CARD_SELECTED;
-            secondSelectedPosition = position;
+            viewModel.gameState = GameState.SECOND_CARD_SELECTED;
+            viewModel.secondSelectedPosition = position;
+            flipCard(position);
             secondSelectedCard = view;
             flipOver(secondSelectedCard, position, true);
     }
 
 
+    private void flipCard(int position){
+        viewModel.cards.get(position).flipCard();
+    }
+
+
     private boolean matches(){
-        Card card1 = cards.get(firstSelectedPosition);
-        Card card2 = cards.get(secondSelectedPosition);
+        Card card1 = viewModel.cards.get(viewModel.firstSelectedPosition);
+        Card card2 = viewModel.cards.get(viewModel.secondSelectedPosition);
         return card1.getRank() == card2.getRank();
     }
 
@@ -119,10 +132,12 @@ public class Game {
         Handler handler = new Handler(Looper.getMainLooper());
         cardAnimator.addSwipeAnimationTo(firstSelectedCard);
         cardAnimator.addSwipeAnimationTo(secondSelectedCard);
+        viewModel.cards.get(viewModel.firstSelectedPosition).setVisible(false);
+        viewModel.cards.get(viewModel.secondSelectedPosition).setVisible(false);
         handler.postDelayed(() -> {
-            remainingCards -=2;
-            gameState = GameState.NOTHING_SELECTED;
-            if(remainingCards <= 0){
+            viewModel.remainingCards -=2;
+            viewModel.gameState = GameState.NOTHING_SELECTED;
+            if(viewModel.remainingCards <= 0){
                 displayResults();
             }
         }, 1000);
@@ -131,13 +146,13 @@ public class Game {
 
     private void displayResults(){
         String recordText;
-        String numberOfTurnsStr = numberOfTurns + getStr(R.string.results_status_turns_taken);
-        int currentRecord = recordKeeper.getCurrentTurnsRecordFromPreferences(numberOfCards);
-        if(numberOfTurns < currentRecord){
+        String numberOfTurnsStr = viewModel.numberOfTurns + getStr(R.string.results_status_turns_taken);
+        int currentRecord = recordKeeper.getCurrentTurnsRecordFromPreferences(viewModel.numberOfCards);
+        if(viewModel.numberOfTurns < currentRecord){
             recordText = getStr(R.string.results_status_new_record);
-            recordKeeper.saveNewTurnsRecord(numberOfTurns, numberOfCards);
+            recordKeeper.saveNewTurnsRecord(viewModel.numberOfTurns, viewModel.numberOfCards);
         }
-        else if(numberOfTurns == currentRecord){
+        else if(viewModel.numberOfTurns == currentRecord){
             recordText = getStr(R.string.results_status_matching_record);
         }
         else{
@@ -148,16 +163,19 @@ public class Game {
 
 
     public void startAgain(DeckSize deckSize){
-        numberOfTurns = 0;
-        this.numberOfCards = deckSize.getValue();
-        remainingCards = numberOfCards;
-        cards = deck.get(deckSize);
-        cardLayoutPopulator.addCardViews(numberOfCards);
-        gameState = GameState.NOTHING_SELECTED;
-        if(cards == null){
+        viewModel.numberOfTurns = 0;
+        viewModel.numberOfCards = deckSize.getValue();
+        viewModel.remainingCards = viewModel.numberOfCards;
+        viewModel.cards = viewModel.deck.get(deckSize);
+        cardLayoutPopulator.addCardViews(viewModel.numberOfCards);
+        viewModel.gameState = GameState.NOTHING_SELECTED;
+        if(viewModel.cards == null){
             return;
         }
-        Collections.shuffle(cards);
+        Collections.shuffle(viewModel.cards);
+        for(Card card : viewModel.cards){
+            card.init();
+        }
         setAllCardsFaceDown();
         int initialDelay = mainActivity.getResources().getInteger(R.integer.swipe_in_cards_initial_delay);
         new Handler(Looper.getMainLooper()).postDelayed(this::swipeInCards, initialDelay);
@@ -174,7 +192,7 @@ public class Game {
         handler.postDelayed(() -> {
             flipCardBack(firstSelectedCard);
             flipCardBack(secondSelectedCard);
-            gameState = GameState.NOTHING_SELECTED;
+            viewModel.gameState = GameState.NOTHING_SELECTED;
         }, getInt(R.integer.flip_cards_back_delay));
     }
 
@@ -191,9 +209,9 @@ public class Game {
     }
 
 
-    private void flipOver(ImageView card, int position, boolean isSecondCardSelected){
-        currentPosition = position;
-        flipCard(card, isSecondCardSelected);
+    private void flipOver(ImageView cardView, int position, boolean isSecondCardSelected){
+        viewModel.currentPosition = position;
+        flipCardView(cardView, isSecondCardSelected);
     }
 
 
@@ -210,16 +228,16 @@ public class Game {
     }
 
 
-    private void flipCard(ImageView card, boolean isSecondCard) {
-        Animator.AnimatorListener halfWayFlip = createAnimatorListener(() -> onFinishedHalfFlip(card, isSecondCard));
-        animateCardFlip(card, 1, halfWayFlip);
+    private void flipCardView(ImageView cardView, boolean isSecondCard) {
+        Animator.AnimatorListener halfWayFlip = createAnimatorListener(() -> onFinishedHalfFlip(cardView, isSecondCard));
+        animateCardFlip(cardView, 1, halfWayFlip);
     }
 
 
-    private void animateCardFlip(ImageView card, int rotationMultiplier, Animator.AnimatorListener onFinishedListener){
+    private void animateCardFlip(ImageView cardView, int rotationMultiplier, Animator.AnimatorListener onFinishedListener){
         long duration = getInt(R.integer.flip_card_duration);
         float halfRotation = getInt(R.integer.flip_card_half_rotation);
-        card.animate()
+        cardView.animate()
                 .rotationY(halfRotation * rotationMultiplier)
                 .setDuration(duration)
                 .setListener(onFinishedListener)
@@ -227,33 +245,41 @@ public class Game {
     }
 
 
-    private void onFinishedHalfFlip(ImageView card, boolean isSecondCard){
+    private void onFinishedHalfFlip(ImageView cardView, boolean isSecondCard){
         Animator.AnimatorListener fullWayFlippedListener = createAnimatorListener(() ->{
-            card.clearAnimation();
+            cardView.clearAnimation();
             checkCards(isSecondCard);
         });
-        card.clearAnimation();
-        int imageId = cards.get(currentPosition).getImageId();
-        bitmapLoader.setBitmap(card, imageId);
-        animateCardFlip(card, 2, fullWayFlippedListener);
+        cardView.clearAnimation();
+        setBitmapForCard(cardView, viewModel.currentPosition);
+        animateCardFlip(cardView, 2, fullWayFlippedListener);
     }
 
 
-    private void flipCardBack(ImageView card) {
-        Animator.AnimatorListener onFullWayFlippedBack =createAnimatorListener(card::clearAnimation);
-        Animator.AnimatorListener onHalfWayFlippedBack = createAnimatorListener( () -> onHalfWayFlippedBack(card, onFullWayFlippedBack));
-        animateCardFlip(card, 1, onHalfWayFlippedBack);
+    private void flipCardBack(ImageView cardView) {
+        Animator.AnimatorListener onFullWayFlippedBack =createAnimatorListener(cardView::clearAnimation);
+        Animator.AnimatorListener onHalfWayFlippedBack = createAnimatorListener( () -> onHalfWayFlippedBack(cardView, onFullWayFlippedBack));
+        animateCardFlip(cardView, 1, onHalfWayFlippedBack);
     }
 
 
-    private void onHalfWayFlippedBack(ImageView card, Animator.AnimatorListener fullWayFlippedBackListener){
-        if(cards == null){
+    private void onHalfWayFlippedBack(ImageView cardView, Animator.AnimatorListener fullWayFlippedBackListener){
+        if(viewModel.cards == null){
             return;
         }
-        int imageId = cards.get(currentPosition).getImageId();
-        bitmapLoader.setBitmap(card, imageId);
-        setCardFaceDown(card);
-        animateCardFlip(card, 0, fullWayFlippedBackListener);
+        setBitmapForCard(cardView, viewModel.currentPosition);
+        setCardFaceDown(cardView);
+        animateCardFlip(cardView, 0, fullWayFlippedBackListener);
+    }
+
+
+    private void setBitmapForCard(ImageView cardView, int position){
+        bitmapLoader.setBitmap(cardView, getImageIdAt(position));
+    }
+
+
+    private int getImageIdAt(int position){
+       return viewModel.cards.get(position).getImageId();
     }
 
 

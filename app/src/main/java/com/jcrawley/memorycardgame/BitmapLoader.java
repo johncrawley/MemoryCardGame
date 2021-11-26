@@ -11,19 +11,22 @@ import java.util.Map;
 public class BitmapLoader {
 
     private final Context context;
-    private final Map<Integer, Bitmap> bitmapMap;
+    private final MainViewModel viewModel;
 
-    public BitmapLoader(Context context){
+    public BitmapLoader(Context context, MainViewModel viewModel){
         this.context = context;
-        bitmapMap = new HashMap<>();
+        this.viewModel = viewModel;
+        if(viewModel.bitmapMap == null){
+            viewModel.bitmapMap = new HashMap<>();
+        }
     }
 
     public void setBitmap(ImageView imageView, int bitmapId){
 
-        if(!bitmapMap.containsKey(bitmapId)){
-            bitmapMap.put(bitmapId, BitmapFactory.decodeResource(context.getResources(), bitmapId));
+        if(!viewModel.bitmapMap.containsKey(bitmapId)){
+            viewModel.bitmapMap.put(bitmapId, BitmapFactory.decodeResource(context.getResources(), bitmapId));
         }
-        imageView.setImageBitmap(bitmapMap.get(bitmapId));
+        imageView.setImageBitmap(viewModel.bitmapMap.get(bitmapId));
     }
 
 
