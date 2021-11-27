@@ -140,7 +140,7 @@ public class CardLayoutPopulator {
 
     private void setVisibility(ImageView cardView){
         boolean isVisible = viewModel.cards.get(cardsAdded).isVisible() && isFirstRun;
-        cardView.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+        cardView.setVisibility(isVisible ? View.VISIBLE : View.INVISIBLE);
     }
 
 
