@@ -28,16 +28,18 @@ public class Game {
     private Handler handler;
     private final MainViewModel viewModel;
     private boolean isFirstRunSinceCreate;
+    private final CardBackManager cardBackManager;
 
 
-    public Game(MainActivity mainActivity, int screenWidth){
+    public Game(MainActivity mainActivity, CardBackManager cardBackManager, BitmapLoader bitmapLoader, int screenWidth){
         this.mainActivity = mainActivity;
+        this.cardBackManager = cardBackManager;
         isFirstRunSinceCreate = true;
         viewModel = mainActivity.getViewModel();
         context = mainActivity.getApplicationContext();
         initHandler();
         this.recordKeeper = new RecordKeeper(context);
-        bitmapLoader = new BitmapLoader(context, viewModel);
+        this.bitmapLoader = bitmapLoader;
         initModel();
         cardAnimator = new CardAnimator(screenWidth);
     }
@@ -220,7 +222,7 @@ public class Game {
 
 
     private void setCardFaceDown(ImageView imageView){
-        bitmapLoader.setBitmap(imageView, R.drawable.card_back_2);
+        cardBackManager.setCardBackTo(imageView);
     }
 
 

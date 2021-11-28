@@ -21,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jcrawley.memorycardgame.card.DeckSize;
+import com.jcrawley.memorycardgame.game.CardBackManager;
 import com.jcrawley.memorycardgame.game.CardLayoutPopulator;
 import com.jcrawley.memorycardgame.game.Game;
 
@@ -52,13 +53,16 @@ public class MainActivity extends AppCompatActivity {
         initAnimations();
         initButtons();
         viewModel  = new ViewModelProvider(this).get(MainViewModel.class);
-        game = new Game(this, screenWidth);
+        BitmapLoader bitmapLoader = new BitmapLoader(MainActivity.this, viewModel);
+        CardBackManager cardBackManager = new CardBackManager(viewModel, bitmapLoader);
+        game = new Game(this, cardBackManager, bitmapLoader, screenWidth);
         cardLayout = findViewById(R.id.cardLayout);
         newGameLayout = findViewById(R.id.newGameLayout);
         aboutLayout = findViewById(R.id.aboutLayout);
-        CardLayoutPopulator cardLayoutPopulator = new CardLayoutPopulator(this, cardLayout, game);
+        CardLayoutPopulator cardLayoutPopulator = new CardLayoutPopulator(this, cardLayout, game, cardBackManager);
         cardLayout.getViewTreeObserver().addOnGlobalLayoutListener(()-> game.initCards(cardLayoutPopulator));
     }
+
 
     public MainViewModel getViewModel(){
         return viewModel;

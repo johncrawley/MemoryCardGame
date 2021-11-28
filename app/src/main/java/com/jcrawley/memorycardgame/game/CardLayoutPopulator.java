@@ -19,7 +19,6 @@ public class CardLayoutPopulator {
 
     private int cardWidth, cardHeight;
     private final Activity activity;
-    private Bitmap cardBack;
     private View.OnClickListener onClickListener;
     private int numberOfCards;
     private int cardsAdded;
@@ -32,13 +31,15 @@ public class CardLayoutPopulator {
     private boolean isFirstRun = true;
     private int padding;
     private final MainViewModel viewModel;
+    private final CardBackManager cardBackManager;
 
     @SuppressLint("UseCompatLoadingForDrawables")
-    public CardLayoutPopulator(MainActivity activity, LinearLayout parentLayout, Game game){
+    public CardLayoutPopulator(MainActivity activity, LinearLayout parentLayout, Game game, CardBackManager cardBackManager){
         this.activity = activity;
         this.viewModel = activity.getViewModel();
         this.parentLayout = parentLayout;
         this.game = game;
+        this.cardBackManager = cardBackManager;
         numberOfCards = game.getNumberOfCards();
         imageViews = new ArrayList<>(numberOfCards);
         createClickListener();
@@ -51,7 +52,6 @@ public class CardLayoutPopulator {
         }
         hasRun = true;
         cardsAdded = 0;
-        cardBack = BitmapFactory.decodeResource(activity.getResources(), R.drawable.card_back_2);
         setDimensions();
         addCardsToParent();
         isFirstRun = false;
@@ -126,7 +126,7 @@ public class CardLayoutPopulator {
         int id = View.generateViewId();
         imageView.setId(id);
         imageViews.add(imageView);
-        imageView.setImageBitmap(cardBack);
+        cardBackManager.setCardBackTo(imageView);
         imageView.setPadding(padding, padding, padding, padding);
         LinearLayout.LayoutParams layoutParams =  new LinearLayout.LayoutParams(cardWidth, cardHeight);
         imageView.setTag(R.string.position_tag, cardsAdded);

@@ -25,4 +25,6 @@ public class MainViewModel extends ViewModel {
     public int firstSelectedPosition = -1;
     public int secondSelectedPosition = -1;
 
+    public int currentCardBackKey = 1;
+
 }
