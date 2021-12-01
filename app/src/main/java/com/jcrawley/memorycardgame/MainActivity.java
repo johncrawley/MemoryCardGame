@@ -57,8 +57,8 @@ public class MainActivity extends AppCompatActivity {
         CardBackManager cardBackManager = new CardBackManager(viewModel, bitmapLoader);
         game = new Game(this, cardBackManager, bitmapLoader, screenWidth);
         cardLayout = findViewById(R.id.cardLayout);
-        newGameLayout = findViewById(R.id.newGameLayout);
-        aboutLayout = findViewById(R.id.aboutLayout);
+        newGameLayout = findViewById(R.id.new_game_include);
+        aboutLayout = findViewById(R.id.about_include);
         CardLayoutPopulator cardLayoutPopulator = new CardLayoutPopulator(this, cardLayout, game, cardBackManager);
         cardLayout.getViewTreeObserver().addOnGlobalLayoutListener(()-> game.initCards(cardLayoutPopulator));
     }
@@ -162,11 +162,15 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void startNewGame(DeckSize deckSize){
+        if(isShowingAboutDialogue){
+            return;
+        }
         this.deckSize = deckSize;
         isShowingNewGameDialogue = false;
         newGameLayout.clearAnimation();
         newGameLayout.setVisibility(View.VISIBLE);
         newGameLayout.startAnimation(newGameDropOutAnimation);
+
     }
 
 
@@ -261,7 +265,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void setupResultsLayout(){
-        resultsLayout = findViewById(R.id.resultsLayout);
+        resultsLayout = findViewById(R.id.game_over_include);
         resultsLayout.setOnClickListener(view -> dismissResults());
     }
 
