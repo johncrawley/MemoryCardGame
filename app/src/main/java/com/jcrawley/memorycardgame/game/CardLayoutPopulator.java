@@ -2,8 +2,8 @@ package com.jcrawley.memorycardgame.game;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.graphics.Color;
-import android.os.Build;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -14,8 +14,6 @@ import com.jcrawley.memorycardgame.R;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import androidx.annotation.RequiresApi;
 
 public class CardLayoutPopulator {
 
@@ -123,7 +121,6 @@ public class CardLayoutPopulator {
     }
 
 
-
     private ImageView createCard(){
         ImageView imageView = new ImageView(activity);
         int id = View.generateViewId();
@@ -135,6 +132,7 @@ public class CardLayoutPopulator {
         imageView.setTag(R.string.position_tag, cardsAdded);
         imageView.setOnClickListener(onClickListener);
         imageView.setLayoutParams(layoutParams);
+        setVisibility(imageView);
         cardsAdded++;
         return  imageView;
     }
