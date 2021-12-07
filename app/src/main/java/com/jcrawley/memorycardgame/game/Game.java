@@ -163,7 +163,6 @@ public class Game {
 
     private void displayResults(){
         String recordText;
-        String numberOfTurnsStr = viewModel.numberOfTurns + getStr(R.string.results_status_turns_taken);
         int currentRecord = recordKeeper.getCurrentTurnsRecordFromPreferences(viewModel.numberOfCards);
         if(viewModel.numberOfTurns < currentRecord){
             recordText = getStr(R.string.results_status_new_record);
@@ -175,7 +174,7 @@ public class Game {
         else{
             recordText = getStr(R.string.results_status_current_record) + currentRecord;
         }
-        mainActivity.displayResults(numberOfTurnsStr, recordText);
+        mainActivity.displayResults(viewModel.numberOfTurns, recordText);
     }
 
 

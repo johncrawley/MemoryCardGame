@@ -4,7 +4,8 @@
     <string name="turn">: Turn&#160;</string>
     <string name="game_over">Game Over</string>
     <string name="position_tag">positionTag</string>
-    <string name="default_turn_text">Turn 1</string>
+    <string name="default_turn_text">Turns Taken</string>
+    <string name="number_of_turns_taken_text">100</string>
     <string name="new_game_text">New Game</string>
     <string name="about_text">Memory - 2021, created by John Crawley</string>
     <string name="dismiss_about_button">OK!</string>

@@ -39,8 +39,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         layout="@layout/dialog_game_over" />
-<!--
-    app:layout_constraintBottom_toTopOf="@+id/cardLayout" -->
+
 
     <include
         android:id="@+id/new_game_include"

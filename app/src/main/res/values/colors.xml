@@ -19,4 +19,5 @@
     <color name="results_details_text_color">#164A1A</color>
     <color name="button_tint">#90CAF9</color>
     <color name="button_text">#1A237E</color>
+    <color name="number_of_turns_taken_text">#FFB300</color>
 </resources>

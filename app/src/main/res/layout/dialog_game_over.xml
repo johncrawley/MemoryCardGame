@@ -30,12 +30,28 @@
 
 
     <TextView
-        android:id="@+id/finalNumberOfTurnsTextView"
+        android:id="@+id/numberOfTurnsTakenTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/number_of_turns_taken_text"
+        android:textAlignment="center"
+        android:paddingHorizontal="@dimen/turns_text_padding_horizontal"
+        android:paddingBottom="@dimen/turns_text_padding_bottom"
+        android:shadowRadius="3"
+        android:shadowDy="3"
+        android:shadowDx="3"
+        android:shadowColor="@color/text_shadow_color"
+        android:textColor="@color/number_of_turns_taken_text"
+        android:textSize="@dimen/results_number_of_turns_taken_text"/>
+
+    <TextView
+        android:id="@+id/turnsTakenTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/default_turn_text"
         android:paddingHorizontal="@dimen/turns_text_padding_horizontal"
         android:paddingBottom="@dimen/turns_text_padding_bottom"
+        android:textAlignment="center"
         android:shadowRadius="3"
         android:shadowDy="3"
         android:shadowDx="3"

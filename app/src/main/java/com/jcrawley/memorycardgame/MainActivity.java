@@ -190,6 +190,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
     private int getInt(int resId){
         return getResources().getInteger(resId);
     }
@@ -285,11 +286,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void displayResults(String resultsText, String recordText){
+    public void displayResults(int numberOfTurns, String recordText){
         setGameOverTitle();
-        TextView resultsTextView = findViewById(R.id.finalNumberOfTurnsTextView);
+        TextView resultsTextView = findViewById(R.id.numberOfTurnsTakenTextView);
         TextView recordTextView = findViewById(R.id.currentRecordTurnsTextView);
-        resultsTextView.setText(resultsText);
+
+        resultsTextView.setText(String.valueOf(numberOfTurns));
         recordTextView.setText(recordText);
         resultsLayout.setVisibility(View.VISIBLE);
         resultsLayout.startAnimation(resultsDropInAnimation);
