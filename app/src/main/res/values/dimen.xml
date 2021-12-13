@@ -6,6 +6,9 @@
     <dimen name="main_layout_padding">8dp</dimen>
     <dimen name="card_layout_margin">0dp</dimen>
     <dimen name="game_complete_text_size">44sp</dimen>
+    <dimen name="about_game_text_size">24sp</dimen>
+    <dimen name="about_game_ok_button_horizontal_padding">36dp</dimen>
+    <dimen name="created_by_text_size">18sp</dimen>
     <dimen name="results_number_of_turns_taken_text">52sp</dimen>
 
 </resources>
