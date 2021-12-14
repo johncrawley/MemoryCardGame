@@ -11,6 +11,7 @@
         <entry key="app/src/main/res/drawable/background_with_shadow.xml" value="0.20208333333333334" />
         <entry key="app/src/main/res/layout/about_dialog.xml" value="0.20572916666666666" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/dialog_about.xml" value="0.23854166666666668" />
         <entry key="app/src/main/res/layout/dialog_game_over.xml" value="0.20364583333333333" />
         <entry key="app/src/main/res/layout/new_game.xml" value="0.20572916666666666" />
         <entry key="app/src/main/res/layout/results_dialog.xml" value="0.20572916666666666" />

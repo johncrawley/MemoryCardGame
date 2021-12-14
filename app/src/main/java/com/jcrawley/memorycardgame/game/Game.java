@@ -41,7 +41,7 @@ public class Game {
         this.recordKeeper = new RecordKeeper(context);
         this.bitmapLoader = bitmapLoader;
         initModel();
-        cardAnimator = new CardAnimator(screenWidth);
+        cardAnimator = new CardAnimator(screenWidth, context);
     }
 
 
@@ -147,8 +147,8 @@ public class Game {
 
     private void removeSelectedCards(){
         Handler handler = new Handler(Looper.getMainLooper());
-        cardAnimator.addSwipeAnimationTo(firstSelectedCard);
-        cardAnimator.addSwipeAnimationTo(secondSelectedCard);
+        cardAnimator.addSwipeOutAnimationTo(firstSelectedCard);
+        cardAnimator.addSwipeOutAnimationTo(secondSelectedCard);
         viewModel.cards.get(viewModel.firstSelectedPosition).setVisible(false);
         viewModel.cards.get(viewModel.secondSelectedPosition).setVisible(false);
         handler.postDelayed(() -> {
