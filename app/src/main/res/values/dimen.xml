@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="turns_text_padding_horizontal">18dp</dimen>
+    <dimen name="turns_text_padding_top">14dp</dimen>
     <dimen name="turns_text_padding_bottom">8dp</dimen>
     <dimen name="card_layout_padding">0dp</dimen>
     <dimen name="main_layout_padding">8dp</dimen>
     <dimen name="card_layout_margin">0dp</dimen>
     <dimen name="game_complete_text_size">44sp</dimen>
     <dimen name="about_game_text_size">24sp</dimen>
+    <dimen name="version_text_size">16sp</dimen>
+    <dimen name="version_padding_top">0dp</dimen>
+    <dimen name="version_padding_bottom">14dp</dimen>
     <dimen name="about_game_ok_button_horizontal_padding">36dp</dimen>
     <dimen name="created_by_text_size">18sp</dimen>
     <dimen name="results_number_of_turns_taken_text">52sp</dimen>
+    <dimen name="results_turns_taken_text">16sp</dimen>
+    <dimen name="results_current_record_text">20sp</dimen>
 
 </resources>

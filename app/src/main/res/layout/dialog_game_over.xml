@@ -28,7 +28,6 @@
         android:textColor="@color/game_complete_text_color"
         android:textSize="@dimen/game_complete_text_size" />
 
-
     <TextView
         android:id="@+id/numberOfTurnsTakenTextView"
         android:layout_width="match_parent"
@@ -56,8 +55,8 @@
         android:shadowDy="3"
         android:shadowDx="3"
         android:shadowColor="@color/text_shadow_color"
-        android:textColor="#7CB342"
-        android:textSize="24sp"/>
+        android:textColor="@color/number_of_turns_taken_text"
+        android:textSize="@dimen/created_by_text_size"/>
 
 
     <TextView
@@ -66,13 +65,15 @@
         android:layout_height="wrap_content"
         android:text="@string/default_turn_text"
         android:paddingHorizontal="@dimen/turns_text_padding_horizontal"
+        android:paddingTop="@dimen/turns_text_padding_top"
         android:paddingBottom="@dimen/turns_text_padding_bottom"
         android:shadowRadius="3"
+        android:textAlignment="center"
         android:shadowDy="3"
         android:shadowDx="3"
         android:shadowColor="@color/text_shadow_color"
         android:textColor="#7CB342"
-        android:textSize="24sp" />
+        android:textSize="@dimen/created_by_text_size" />
 
 </LinearLayout>
 

@@ -21,5 +21,5 @@
     <color name="button_text">#1A237E</color>
     <color name="number_of_turns_taken_text">#FFB300</color>
     <color name="about_game_title_text">#F57F17</color>
-    <color name="about_game_created_by_text">#FFC107</color>
+    <color name="about_game_created_by_text">#FFB300</color>
 </resources>

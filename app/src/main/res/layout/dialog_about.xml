@@ -36,6 +36,23 @@
 
 
     <TextView
+        android:id="@+id/versionTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/version"
+        android:paddingHorizontal="@dimen/turns_text_padding_horizontal"
+        android:paddingTop="@dimen/version_padding_top"
+        android:paddingBottom="@dimen/version_padding_bottom"
+        android:shadowRadius="3"
+        android:shadowDy="3"
+        android:shadowDx="3"
+        android:shadowColor="@color/text_shadow_color"
+        android:textColor="@color/about_game_title_text"
+        android:textAlignment="center"
+        android:textSize="@dimen/version_text_size" />
+
+
+    <TextView
         android:id="@+id/createdByTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
