@@ -8,7 +8,7 @@
     <integer name="flip_card_duration">120</integer>
     <integer name="flip_card_half_rotation">90</integer>
     <integer name="minimum_card_padding">5</integer>
-    <integer name="card_width_padding_divisor">25</integer>
+    <integer name="card_width_padding_divisor">18</integer>
     <integer name="flip_cards_back_delay">1000</integer>
     <integer name="card_elevation">15</integer>
     <integer name="swipe_card_out_animation_duration">750</integer>

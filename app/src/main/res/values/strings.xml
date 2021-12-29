@@ -1,8 +1,7 @@
 <resources>
-    <string name="app_name">Memory Card Game</string>
+    <string name="app_name">Memory Match Cards</string>
     <string name="version">Version 1.0</string>
-    <string name="title">Memory</string>
-    <string name="turn">: Turn&#160;</string>
+    <string name="turn">Turn&#160;</string>
     <string name="game_over">Game Over</string>
     <string name="position_tag">positionTag</string>
     <string name="default_turn_text">Turns Taken</string>

@@ -144,6 +144,9 @@ public class CardLayoutPopulator {
 
     private void createPadding(){
         padding = getInt(R.integer.minimum_card_padding) + (cardWidth / getInt(R.integer.card_width_padding_divisor));
+        if(numberOfCards < 10){
+            padding += 10;
+        }
     }
 
 

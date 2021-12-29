@@ -299,7 +299,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void setTitleWithTurns(int turn){
-        String turnsWithTitle = getString(R.string.title) + getString(R.string.turn) + turn;
+        String turnsWithTitle = getString(R.string.turn) + turn;
        actionBar.setTitle(turnsWithTitle);
     }
 
@@ -310,7 +310,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void setPlainTitle(){
-        actionBar.setTitle(getString(R.string.title));
+        actionBar.setTitle(getString(R.string.app_name));
     }
 
 
