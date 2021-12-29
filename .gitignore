@@ -12,4 +12,7 @@
 /captures
 .externalNativeBuild
 .cxx
+*.aab
+*.zip
+*.apk
 local.properties
