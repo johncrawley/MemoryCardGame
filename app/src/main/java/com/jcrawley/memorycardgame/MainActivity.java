@@ -4,6 +4,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -40,13 +41,14 @@ public class MainActivity extends AppCompatActivity {
     private boolean isShowingAboutDialogue;
     private enum AnimationDirection {DROP_IN, DROP_OUT}
     private MainViewModel viewModel;
-
+    private RecordKeeper recordKeeper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setStatusBarColor();
         setContentView(R.layout.activity_main);
+        recordKeeper = new RecordKeeper(MainActivity.this);
         actionBar = getSupportActionBar();
         setupResultsLayout();
         assignScreenDimensions();
@@ -87,6 +89,11 @@ public class MainActivity extends AppCompatActivity {
             showAboutView();
         }
         return true;
+    }
+
+
+    public RecordKeeper getRecordKeeper(){
+        return this.recordKeeper;
     }
 
 
@@ -166,6 +173,8 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         this.deckSize = deckSize;
+        recordKeeper.saveLastUsedNumberOfCards(deckSize.name());
+        System.out.println("MainActivity: last number of cards used : " + recordKeeper.getLastUsedNumberOfCards());
         isShowingNewGameDialogue = false;
         newGameLayout.clearAnimation();
         newGameLayout.setVisibility(View.VISIBLE);
@@ -228,7 +237,7 @@ public class MainActivity extends AppCompatActivity {
                 direction == AnimationDirection.DROP_OUT ? screenHeight : 0);
         dropOutAnimation.setDuration(getResources().getInteger(R.integer.view_drop_duration));
         dropOutAnimation.setFillAfter(true);
-         dropOutAnimation.setAnimationListener(new Animation.AnimationListener(){
+        dropOutAnimation.setAnimationListener(new Animation.AnimationListener(){
             public void onAnimationStart(Animation arg0) { }
             public void onAnimationRepeat(Animation arg0) { }
             @Override
@@ -273,8 +282,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void setStatusBarColor(){
         Window window = getWindow();
-        if(window != null){
-            window.setStatusBarColor(getResources().getColor(R.color.status_bar_color, getTheme()));        }
+        if(window != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            window.setStatusBarColor(getResources().getColor(R.color.status_bar_color, getTheme()));
+        }
     }
 
 

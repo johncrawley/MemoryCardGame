@@ -10,6 +10,7 @@ import com.jcrawley.memorycardgame.BitmapLoader;
 import com.jcrawley.memorycardgame.MainActivity;
 import com.jcrawley.memorycardgame.MainViewModel;
 import com.jcrawley.memorycardgame.R;
+import com.jcrawley.memorycardgame.RecordKeeper;
 import com.jcrawley.memorycardgame.card.Card;
 import com.jcrawley.memorycardgame.card.CardFactory;
 import com.jcrawley.memorycardgame.card.DeckSize;
@@ -38,7 +39,7 @@ public class Game {
         viewModel = mainActivity.getViewModel();
         context = mainActivity.getApplicationContext();
         initHandler();
-        this.recordKeeper = new RecordKeeper(context);
+        this.recordKeeper = mainActivity.getRecordKeeper();
         this.bitmapLoader = bitmapLoader;
         initModel();
         cardAnimator = new CardAnimator(screenWidth, context);
@@ -113,7 +114,8 @@ public class Game {
         }
         viewModel.isAlreadyInitialised = true;
         viewModel.deck = CardFactory.createDecks();
-        viewModel.cards = viewModel.deck.get(DeckSize.SIXTEEN);
+        DeckSize initialDeckSize = DeckSize.valueOf(recordKeeper.getLastUsedNumberOfCards());
+        viewModel.cards = viewModel.deck.get(initialDeckSize);
         viewModel.gameState = GameState.NOTHING_SELECTED;
         assert viewModel.cards != null;
         viewModel.numberOfCards = viewModel.cards.size();
