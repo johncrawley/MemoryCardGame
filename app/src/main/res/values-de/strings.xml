@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Gedächtnis Karten</string>
+    <string name="version">Version 1.01</string>
+    <string name="turn">Drehen&#160;</string>
+    <string name="game_over">Spielende</string>
+    <string name="default_turn_text">Abbiegungen</string>
+    <string name="number_of_turns_taken_text">100</string>
+    <string name="new_game_text">Neues Spiel</string>
+    <string name="created_by_text">Erstellt von John Crawley, 2021</string>
+    <string name="dismiss_about_button">OK!</string>
+    <string name="button_8_cards_text">8 Karten</string>
+    <string name="button_16_cards_text">16 Karten</string>
+    <string name="button_26_cards_text">26 Karten</string>
+    <string name="button_52_cards_text">52 Karten</string>
+    <string name="game_complete_text">GUT GEMACHT!</string>
+    <string name="results_status_current_record">Aktuelle Rekord:&#160;</string>
+    <string name="results_status_matching_record">Gleich dem Rekord!</string>
+    <string name="results_status_new_record">Herzlichen Glückwunsch! Ein neuer Rekord!</string>
+    <string name="results_status_turns_taken">&#160;turns taken</string>
+    <string name="menu_action_new_game">Neues Spiel</string>
+    <string name="menu_action_about">Über</string>
+    <string name="position_tag">positionTag</string>
+</resources>
