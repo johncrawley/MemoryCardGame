@@ -300,7 +300,6 @@ public class MainActivity extends AppCompatActivity {
         setGameOverTitle();
         TextView resultsTextView = findViewById(R.id.numberOfTurnsTakenTextView);
         TextView recordTextView = findViewById(R.id.currentRecordTurnsTextView);
-
         resultsTextView.setText(String.valueOf(numberOfTurns));
         recordTextView.setText(recordText);
         resultsLayout.setVisibility(View.VISIBLE);

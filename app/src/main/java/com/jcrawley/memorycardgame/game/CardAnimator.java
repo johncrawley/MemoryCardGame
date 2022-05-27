@@ -1,6 +1,7 @@
 package com.jcrawley.memorycardgame.game;
 
 import android.content.Context;
+import android.os.Build;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
@@ -10,10 +11,12 @@ import com.jcrawley.memorycardgame.R;
 
 import java.util.List;
 
+
 public class CardAnimator {
 
     private final int screenWidth;
     private final Context context;
+    private float previousElevation;
 
 
     public CardAnimator(int screenWidth, Context context){
@@ -34,8 +37,8 @@ public class CardAnimator {
 
 
     private void swipeIn(View card, int delay){
-        float previousElevation = card.getElevation();
-        card.setElevation(15);
+        savePreviousElevation(card);
+        setHighElevation(card);
         Animation animation = new TranslateAnimation(
                 screenWidth + 10,
                 0,
@@ -56,7 +59,7 @@ public class CardAnimator {
             @Override
             public void onAnimationEnd(Animation arg0) {
                 card.clearAnimation();
-                card.setElevation(previousElevation);
+                setToPreviousElevation(card);
             }
         });
         card.startAnimation(animation);
@@ -64,10 +67,11 @@ public class CardAnimator {
 
 
     void addSwipeOutAnimationTo(View card){
-        float previousElevation = card.getElevation();
+
+        savePreviousElevation(card);
         int duration = getInt(R.integer.swipe_card_out_animation_duration);
         int intitialOffset = getInt(R.integer.swipe_card_out_animation_initial_offset);
-        card.setElevation(getInt(R.integer.card_elevation));
+        setHighElevation(card);
         Animation animation = new TranslateAnimation(
                 0,
                 screenWidth + 100,
@@ -82,7 +86,7 @@ public class CardAnimator {
             public void onAnimationEnd(Animation arg0) {
                 card.setVisibility(View.INVISIBLE);
                 card.clearAnimation();
-                card.setElevation(previousElevation);
+                setToPreviousElevation(card);
             }
         });
         card.startAnimation(animation);
@@ -91,6 +95,25 @@ public class CardAnimator {
 
     public int getInt(int resId){
         return context.getResources().getInteger(resId);
+    }
+
+
+    private void setToPreviousElevation(View card){
+        if(android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+            card.setElevation(previousElevation);
+        }
+    }
+
+    private void savePreviousElevation(View card){
+        if(android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+            previousElevation = card.getElevation();
+        }
+    }
+
+    private void setHighElevation(View card){
+        if(android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+            card.setElevation(getInt(R.integer.card_elevation));
+        }
     }
 
 }
