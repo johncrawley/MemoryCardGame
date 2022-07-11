@@ -105,6 +105,24 @@ public class CardFactory {
 
     private static void addClubs(){
         suit = CLUBS;
+        add(TWO,  R.drawable.card_clubs_2_2);
+        add(THREE,R.drawable.card_clubs_3_2);
+        add(FOUR, R.drawable.card_clubs_4_2);
+        add(FIVE, R.drawable.card_clubs_5_2);
+        add(SIX,  R.drawable.card_clubs_6_2);
+        add(SEVEN,R.drawable.card_clubs_7_2);
+        add(EIGHT,R.drawable.card_clubs_8_2);
+        add(NINE, R.drawable.card_clubs_9_2);
+        add(TEN,  R.drawable.card_clubs_10_2);
+        add(JACK, R.drawable.card_clubs_jack_2);
+        add(QUEEN,R.drawable.card_clubs_queen_2);
+        add(KING, R.drawable.card_clubs_king_2);
+        add(ACE,  R.drawable.card_clubs_ace_2);
+    }
+
+
+    private static void addClubsOld(){
+        suit = CLUBS;
         add(TWO, R.drawable.card_clubs_2_mirror);
         add(THREE,R.drawable.card_clubs_3_mirror);
         add(FOUR,R.drawable.card_clubs_4_mirror);
