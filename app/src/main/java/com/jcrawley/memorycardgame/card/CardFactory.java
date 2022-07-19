@@ -28,6 +28,7 @@ public class CardFactory {
 
     public static List<Card> create8Cards(){
         cards = new ArrayList<>(8);
+        suit = DIAMONDS;
         add(TWO, R.drawable.card_diamonds_2_mirror);
         add(THREE, R.drawable.card_diamonds_3_mirror);
         add(FOUR, R.drawable.card_diamonds_4_mirror);
