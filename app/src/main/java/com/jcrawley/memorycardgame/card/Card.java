@@ -3,14 +3,13 @@ package com.jcrawley.memorycardgame.card;
 public class Card {
     private final Rank rank;
     private final Suit suit;
-    private final int imageId;
     private boolean isVisible;
     private boolean isFaceDown;
 
-    public Card(Rank rank, Suit suit, int imageId){
+
+    public Card(Rank rank, Suit suit){
         this.rank = rank;
         this.suit = suit;
-        this.imageId = imageId;
         init();
     }
 
@@ -47,10 +46,5 @@ public class Card {
     public Suit getSuit(){
         return suit;
     }
-
-    public int getImageId(){
-        return imageId;
-    }
-
 
 }

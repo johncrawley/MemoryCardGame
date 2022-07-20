@@ -298,7 +298,7 @@ public class Game {
 
 
     private int getImageIdAt(int position){
-       return viewModel.cards.get(position).getImageId();
+        return viewModel.cardDeckImages.getImageIdFor(viewModel.cards.get(position));
     }
 
 

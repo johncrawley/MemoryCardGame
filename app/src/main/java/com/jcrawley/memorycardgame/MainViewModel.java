@@ -3,6 +3,7 @@ package com.jcrawley.memorycardgame;
 import android.graphics.Bitmap;
 
 import com.jcrawley.memorycardgame.card.Card;
+import com.jcrawley.memorycardgame.card.CardDeckImages;
 import com.jcrawley.memorycardgame.card.DeckSize;
 import com.jcrawley.memorycardgame.game.GameState;
 
@@ -24,6 +25,7 @@ public class MainViewModel extends ViewModel {
     public List<Card> cards;
     public int firstSelectedPosition = -1;
     public int secondSelectedPosition = -1;
+    public CardDeckImages cardDeckImages = new CardDeckImages();
 
     public int currentCardBackKey = 1;
 

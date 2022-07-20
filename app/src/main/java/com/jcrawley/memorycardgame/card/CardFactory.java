@@ -1,7 +1,5 @@
 package com.jcrawley.memorycardgame.card;
 
-import com.jcrawley.memorycardgame.R;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,15 +27,15 @@ public class CardFactory {
     public static List<Card> create8Cards(){
         cards = new ArrayList<>(8);
         suit = DIAMONDS;
-        add(TWO, R.drawable.card_diamonds_2_mirror);
-        add(THREE, R.drawable.card_diamonds_3_mirror);
-        add(FOUR, R.drawable.card_diamonds_4_mirror);
-        add(FIVE, R.drawable.card_diamonds_5_mirror);
+        add(TWO);
+        add(THREE);
+        add(FOUR);
+        add(FIVE);
         suit = CLUBS;
-        add(TWO, R.drawable.card_clubs_2_mirror);
-        add(THREE, R.drawable.card_clubs_3_mirror);
-        add(FOUR, R.drawable.card_clubs_4_mirror);
-        add(FIVE, R.drawable.card_clubs_5_mirror);
+        add(TWO);
+        add(THREE);
+        add(FOUR);
+        add(FIVE);
         return cards;
     }
 
@@ -46,191 +44,67 @@ public class CardFactory {
 
         cards = new ArrayList<>(16);
         suit = HEARTS;
-        add(TWO, R.drawable.card_diamonds_2_mirror);
-        add(THREE, R.drawable.card_diamonds_3_mirror);
-        add(FOUR, R.drawable.card_diamonds_4_mirror);
-        add(FIVE, R.drawable.card_diamonds_5_mirror);
-        add(SIX, R.drawable.card_diamonds_6_mirror);
-        add(SEVEN, R.drawable.card_diamonds_7_mirror);
-        add(EIGHT, R.drawable.card_diamonds_8_mirror);
-        add(NINE, R.drawable.card_diamonds_9_mirror);
+        add(TWO);
+        add(THREE);
+        add(FOUR);
+        add(FIVE);
+        add(SIX);
+        add(SEVEN);
+        add(EIGHT);
+        add(NINE);
 
         suit = SPADES;
-        add(TWO, R.drawable.card_clubs_2_mirror);
-        add(THREE, R.drawable.card_clubs_3_mirror);
-        add(FOUR, R.drawable.card_clubs_4_mirror);
-        add(FIVE, R.drawable.card_clubs_5_mirror);
-        add(SIX, R.drawable.card_clubs_6_mirror);
-        add(SEVEN, R.drawable.card_clubs_7_mirror);
-        add(EIGHT, R.drawable.card_clubs_8_mirror);
-        add(NINE, R.drawable.card_clubs_9_mirror);
+        add(TWO);
+        add(THREE);
+        add(FOUR);
+        add(FIVE);
+        add(SIX);
+        add(SEVEN);
+        add(EIGHT);
+        add(NINE);
         return cards;
     }
 
 
     public static List<Card> create26Cards(){
         cards = new ArrayList<>(26);
-        addClubs();
-        addDiamonds();
+        addAllRanks(CLUBS);
+        addAllRanks(DIAMONDS);
         return cards;
     }
 
 
     public static List<Card> create52Cards(){
         cards = new ArrayList<>(52);
-        addClubs();
-        addDiamonds();
-        addSpades();
-        addHearts();
+        addAllRanks(HEARTS);
+        addAllRanks(CLUBS);
+        addAllRanks(SPADES);
+        addAllRanks(DIAMONDS);
         return new ArrayList<>(cards);
     }
 
 
-    private static void addDiamonds(){
-        suit = DIAMONDS;
-        add(TWO, R.drawable.card_diamonds_2_2);
-        add(THREE,R.drawable.card_diamonds_3_2);
-        add(FOUR,R.drawable.card_diamonds_4_2);
-        add(FIVE,R.drawable.card_diamonds_5_2);
-        add(SIX,R.drawable.card_diamonds_6_2);
-        add(SEVEN,R.drawable.card_diamonds_7_2);
-        add(EIGHT,R.drawable.card_diamonds_8_2);
-        add(NINE,R.drawable.card_diamonds_9_2);
-        add(TEN,R.drawable.card_diamonds_10_2);
-        add(JACK,R.drawable.card_diamonds_jack_2);
-        add(QUEEN,R.drawable.card_diamonds_queen_2);
-        add(KING,R.drawable.card_diamonds_king_2);
-        add(ACE,R.drawable.card_diamonds_ace_2);
-    }
 
-    private static void addDiamondsOld(){
-        suit = DIAMONDS;
-        add(TWO, R.drawable.card_diamonds_2_mirror);
-        add(THREE,R.drawable.card_diamonds_3_mirror);
-        add(FOUR,R.drawable.card_diamonds_4_mirror);
-        add(FIVE,R.drawable.card_diamonds_5_mirror);
-        add(SIX,R.drawable.card_diamonds_6_mirror);
-        add(SEVEN,R.drawable.card_diamonds_7_mirror);
-        add(EIGHT,R.drawable.card_diamonds_8_mirror);
-        add(NINE,R.drawable.card_diamonds_9_mirror);
-        add(TEN,R.drawable.card_diamonds_10_mirror);
-        add(JACK,R.drawable.card_diamonds_jack_mirror);
-        add(QUEEN,R.drawable.card_diamonds_queen_mirror);
-        add(KING,R.drawable.card_diamonds_king_mirror);
-        add(ACE,R.drawable.card_diamonds_ace_mirror);
+    private static void addAllRanks(Suit suit1){
+        suit = suit1;
+        add(TWO);
+        add(THREE);
+        add(FOUR);
+        add(FIVE);
+        add(SIX);
+        add(SEVEN);
+        add(EIGHT);
+        add(NINE);
+        add(TEN);
+        add(JACK);
+        add(QUEEN);
+        add(KING);
+        add(ACE);
     }
 
 
-    private static void addClubs(){
-        suit = CLUBS;
-        add(TWO,  R.drawable.card_clubs_2_2);
-        add(THREE,R.drawable.card_clubs_3_2);
-        add(FOUR, R.drawable.card_clubs_4_2);
-        add(FIVE, R.drawable.card_clubs_5_2);
-        add(SIX,  R.drawable.card_clubs_6_2);
-        add(SEVEN,R.drawable.card_clubs_7_2);
-        add(EIGHT,R.drawable.card_clubs_8_2);
-        add(NINE, R.drawable.card_clubs_9_2);
-        add(TEN,  R.drawable.card_clubs_10_2);
-        add(JACK, R.drawable.card_clubs_jack_2);
-        add(QUEEN,R.drawable.card_clubs_queen_2);
-        add(KING, R.drawable.card_clubs_king_2);
-        add(ACE,  R.drawable.card_clubs_ace_2);
-    }
-
-
-    private static void addClubsOld(){
-        suit = CLUBS;
-        add(TWO, R.drawable.card_clubs_2_mirror);
-        add(THREE,R.drawable.card_clubs_3_mirror);
-        add(FOUR,R.drawable.card_clubs_4_mirror);
-        add(FIVE,R.drawable.card_clubs_5_mirror);
-        add(SIX,R.drawable.card_clubs_6_mirror);
-        add(SEVEN,R.drawable.card_clubs_7_mirror);
-        add(EIGHT,R.drawable.card_clubs_8_mirror);
-        add(NINE,R.drawable.card_clubs_9_mirror);
-        add(TEN,R.drawable.card_clubs_10_mirror);
-        add(JACK,R.drawable.card_clubs_jack_mirror);
-        add(QUEEN,R.drawable.card_clubs_queen_mirror);
-        add(KING,R.drawable.card_clubs_king_mirror);
-        add(ACE,R.drawable.card_clubs_ace_mirror);
-    }
-
-
-    private static void addSpades(){
-        suit = SPADES;
-        add(TWO, R.drawable.card_spades_2_2);
-        add(THREE,R.drawable.card_spades_3_2);
-        add(FOUR,R.drawable.card_spades_4_2);
-        add(FIVE,R.drawable.card_spades_5_2);
-        add(SIX,R.drawable.card_spades_6_2);
-        add(SEVEN,R.drawable.card_spades_7_2);
-        add(EIGHT,R.drawable.card_spades_8_2);
-        add(NINE,R.drawable.card_spades_9_2);
-        add(TEN,R.drawable.card_spades_10_2);
-        add(JACK,R.drawable.card_spades_jack_2);
-        add(QUEEN,R.drawable.card_spades_queen_2);
-        add(KING,R.drawable.card_spades_king_2);
-        add(ACE,R.drawable.card_spades_ace_2);
-    }
-
-
-    private static void addSpadesOld(){
-        suit = SPADES;
-        add(TWO, R.drawable.card_spades_2_mirror);
-        add(THREE,R.drawable.card_spades_3_mirror);
-        add(FOUR,R.drawable.card_spades_4_mirror);
-        add(FIVE,R.drawable.card_spades_5_mirror);
-        add(SIX,R.drawable.card_spades_6_mirror);
-        add(SEVEN,R.drawable.card_spades_7_mirror);
-        add(EIGHT,R.drawable.card_spades_8_mirror);
-        add(NINE,R.drawable.card_spades_9_mirror);
-        add(TEN,R.drawable.card_spades_10_mirror);
-        add(JACK,R.drawable.card_spades_jack_mirror);
-        add(QUEEN,R.drawable.card_spades_queen_mirror);
-        add(KING,R.drawable.card_spades_king_mirror);
-        add(ACE,R.drawable.card_spades_ace_mirror);
-    }
-
-
-    private static void addHearts(){
-        suit = HEARTS;
-        add(TWO, R.drawable.card_hearts_2_2);
-        add(THREE,R.drawable.card_hearts_3_2);
-        add(FOUR,R.drawable.card_hearts_4_2);
-        add(FIVE,R.drawable.card_hearts_5_2);
-        add(SIX,R.drawable.card_hearts_6_2);
-        add(SEVEN,R.drawable.card_hearts_7_2);
-        add(EIGHT,R.drawable.card_hearts_8_2);
-        add(NINE,R.drawable.card_hearts_9_2);
-        add(TEN,R.drawable.card_hearts_10_2);
-        add(JACK,R.drawable.card_hearts_jack_2);
-        add(QUEEN,R.drawable.card_hearts_queen_2);
-        add(KING,R.drawable.card_hearts_king_2);
-        add(ACE,R.drawable.card_hearts_ace_2);
-    }
-
-
-    private static void addHeartsOld(){
-        suit = HEARTS;
-        add(TWO, R.drawable.card_hearts_2_mirror);
-        add(THREE,R.drawable.card_hearts_3_mirror);
-        add(FOUR,R.drawable.card_hearts_4_mirror);
-        add(FIVE,R.drawable.card_hearts_5_mirror);
-        add(SIX,R.drawable.card_hearts_6_mirror);
-        add(SEVEN,R.drawable.card_hearts_7_mirror);
-        add(EIGHT,R.drawable.card_hearts_8_mirror);
-        add(NINE,R.drawable.card_hearts_9_mirror);
-        add(TEN,R.drawable.card_hearts_10_mirror);
-        add(JACK,R.drawable.card_hearts_jack_mirror);
-        add(QUEEN,R.drawable.card_hearts_queen_mirror);
-        add(KING,R.drawable.card_hearts_king_mirror);
-        add(ACE,R.drawable.card_hearts_ace_mirror);
-    }
-
-
-    private static void add(Rank rank, int id){
-        cards.add(new Card(rank,suit, id));
+    private static void add(Rank rank){
+        cards.add(new Card(rank,suit));
     }
     
 }
