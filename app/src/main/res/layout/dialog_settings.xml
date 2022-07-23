@@ -2,7 +2,7 @@
 
 <app:LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/aboutLayout"
+    android:id="@+id/settingsLayout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:visibility="gone"
@@ -20,10 +20,10 @@
 
 
     <TextView
-        android:id="@+id/aboutTextView"
-        android:layout_width="match_parent"
+        android:id="@+id/settingsTextView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/app_name"
+        android:text="@string/menu_action_settings"
         android:paddingHorizontal="@dimen/turns_text_padding_horizontal"
         android:paddingBottom="@dimen/turns_text_padding_bottom"
         android:shadowRadius="3"
@@ -36,10 +36,10 @@
 
 
     <TextView
-        android:id="@+id/versionTextView"
+        android:id="@+id/cardFaceStyleText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/version"
+        android:text="@string/card_face_style_settings"
         android:paddingHorizontal="@dimen/turns_text_padding_horizontal"
         android:paddingTop="@dimen/version_padding_top"
         android:paddingBottom="@dimen/version_padding_bottom"
@@ -52,27 +52,32 @@
         android:textSize="@dimen/version_text_size" />
 
 
-    <TextView
-        android:id="@+id/createdByTextView"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/created_by_text"
-        android:paddingHorizontal="@dimen/turns_text_padding_horizontal"
-        android:paddingBottom="@dimen/turns_text_padding_bottom"
-        android:shadowRadius="3"
-        android:textAlignment="center"
-        android:shadowDy="3"
-        android:shadowDx="3"
-        android:shadowColor="@color/text_shadow_color"
-        android:textColor="@color/about_game_created_by_text"
-        android:textSize="@dimen/created_by_text_size" />
+        android:orientation="horizontal">
 
+        <ImageButton
+            android:id="@+id/standardCardFaceSetting"
+            android:layout_width="40dp"
+            android:layout_height="80dp"
+            android:background="@drawable/card_diamonds_king_2"
+            android:contentDescription="@string/card_face_standard_option_description" />
+
+
+        <ImageButton
+            android:id="@+id/simpleCardFaceSetting"
+            android:layout_width="40dp"
+            android:layout_height="80dp"
+            android:background="@drawable/card_diamonds_king_mirror"
+            android:contentDescription="@string/card_face_simple_option_description" />
+    </LinearLayout>
 
     <Button
-        android:id="@+id/dismissAboutButton"
+        android:id="@+id/dismissSettingsButton"
         android:textColor="@color/button_text"
         android:layout_width="match_parent"
-        android:text="@string/dismiss_about_button"
+        android:text="@android:string/ok"
         android:paddingHorizontal="@dimen/about_game_ok_button_horizontal_padding"
         android:layout_height="wrap_content"/>
 </app:LinearLayout>

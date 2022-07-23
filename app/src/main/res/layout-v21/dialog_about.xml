@@ -70,6 +70,7 @@
 
     <Button
         android:id="@+id/dismissAboutButton"
+        android:backgroundTint="@color/button_tint"
         android:textColor="@color/button_text"
         android:layout_width="match_parent"
         android:text="@string/dismiss_about_button"

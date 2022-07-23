@@ -28,12 +28,16 @@ public class CardBackManager {
         viewModel.currentCardBackKey = key;
     }
 
-    public int getCurrentCardBack(){
-        Integer drawableId = cardBackMap.get(viewModel.currentCardBackKey);
-        return drawableId == null ?  R.drawable.card_back_1 : drawableId;
-    }
 
     public void setCardBackTo(ImageView imageView){
         bitmapLoader.setBitmap(imageView, getCurrentCardBack());
     }
+
+
+    private int getCurrentCardBack(){
+        Integer drawableId = cardBackMap.get(viewModel.currentCardBackKey);
+        return drawableId == null ?  R.drawable.card_back_1 : drawableId;
+    }
+
+
 }

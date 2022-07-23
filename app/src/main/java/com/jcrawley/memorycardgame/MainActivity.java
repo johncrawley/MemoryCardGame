@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.jcrawley.memorycardgame.card.CardDeckImages;
 import com.jcrawley.memorycardgame.card.DeckSize;
 import com.jcrawley.memorycardgame.game.CardBackManager;
 import com.jcrawley.memorycardgame.game.CardLayoutPopulator;
@@ -29,7 +30,7 @@ import com.jcrawley.memorycardgame.game.Game;
 public class MainActivity extends AppCompatActivity {
 
     private int screenWidth, screenHeight;
-    private LinearLayout resultsLayout, newGameLayout, cardLayout, aboutLayout;
+    private LinearLayout resultsLayout, newGameLayout, cardLayout, aboutLayout, settingsLayout;
     private Game game;
     private boolean isReadyToDismissResults = false;
     private Animation resultsDropInAnimation, resultsDropOutAnimation, newGameDropInAnimation, newGameDropOutAnimation;
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private int currentFadeOutCount = 0;
     private boolean isShowingNewGameDialogue;
     private boolean isShowingAboutDialogue;
+    private boolean isShowingSettingsDialogue;
     private enum AnimationDirection {DROP_IN, DROP_OUT}
     private MainViewModel viewModel;
     private RecordKeeper recordKeeper;
@@ -61,7 +63,9 @@ public class MainActivity extends AppCompatActivity {
         cardLayout = findViewById(R.id.cardLayout);
         newGameLayout = findViewById(R.id.new_game_include);
         aboutLayout = findViewById(R.id.about_include);
+        settingsLayout = findViewById(R.id.settings_include);
         CardLayoutPopulator cardLayoutPopulator = new CardLayoutPopulator(this, cardLayout, game, cardBackManager);
+        setupSettings();
         cardLayout.getViewTreeObserver().addOnGlobalLayoutListener(()-> game.initCards(cardLayoutPopulator));
     }
 
@@ -88,12 +92,20 @@ public class MainActivity extends AppCompatActivity {
         else if( id == R.id.action_about){
             showAboutView();
         }
+        else if( id == R.id.action_settings){
+          showSettingsView();
+        }
         return true;
     }
 
 
     public RecordKeeper getRecordKeeper(){
         return this.recordKeeper;
+    }
+
+    private void setupSettings(){
+        findViewById(R.id.standardCardFaceSetting).setOnClickListener((View v)-> viewModel.cardDeckImages.setDeckType(CardDeckImages.DeckType.STANDARD));
+        findViewById(R.id.simpleCardFaceSetting).setOnClickListener((View v)-> viewModel.cardDeckImages.setDeckType(CardDeckImages.DeckType.EASY_READ));
     }
 
 
@@ -104,6 +116,18 @@ public class MainActivity extends AppCompatActivity {
         aboutLayout.setVisibility(View.VISIBLE);
         isShowingAboutDialogue = true;
         aboutLayout.startAnimation(createDropAnimation(AnimationDirection.DROP_IN, () -> {}));
+    }
+
+
+    private void showSettingsView(){
+
+        if(isShowingSettingsDialogue){
+            return;
+        }
+        settingsLayout.setVisibility(View.VISIBLE);
+        isShowingSettingsDialogue = true;
+        settingsLayout.startAnimation(createDropAnimation(AnimationDirection.DROP_IN, () -> {}));
+
     }
 
 
@@ -145,6 +169,7 @@ public class MainActivity extends AppCompatActivity {
         setupButton(R.id.cards26Button, DeckSize.TWENTY_SIX);
         setupButton(R.id.cards52Button, DeckSize.FIFTY_TWO);
         findViewById(R.id.dismissAboutButton).setOnClickListener((View v)-> dismissAboutDialog());
+        findViewById(R.id.dismissSettingsButton).setOnClickListener((View v)-> dismissSettingsDialog());
     }
 
 
@@ -158,6 +183,20 @@ public class MainActivity extends AppCompatActivity {
         aboutLayout.startAnimation(createDropAnimation(AnimationDirection.DROP_OUT, ()-> {
             aboutLayout.clearAnimation();
             aboutLayout.setVisibility(View.INVISIBLE);
+        }));
+    }
+
+
+    public void dismissSettingsDialog(){
+        if(!isShowingSettingsDialogue){
+            return;
+        }
+        isShowingSettingsDialogue = false;
+        settingsLayout.clearAnimation();
+
+        settingsLayout.startAnimation(createDropAnimation(AnimationDirection.DROP_OUT, ()-> {
+            settingsLayout.clearAnimation();
+            settingsLayout.setVisibility(View.INVISIBLE);
         }));
     }
 

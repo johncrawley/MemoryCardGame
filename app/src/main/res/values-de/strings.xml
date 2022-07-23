@@ -21,4 +21,8 @@
     <string name="menu_action_new_game">Neues Spiel</string>
     <string name="menu_action_about">Über</string>
     <string name="position_tag">positionTag</string>
+    <string name="menu_action_settings">Einstellungen</string>
+    <string name="card_face_style_settings">Kartenvorderseite</string>
+    <string name="card_face_standard_option_description">Standard Kartenvorderseite</string>
+    <string name="card_face_simple_option_description">Einfach Kartenvorderseite</string>
 </resources>
