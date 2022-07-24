@@ -39,38 +39,67 @@
         android:id="@+id/cardFaceStyleText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/card_face_style_settings"
+        android:gravity="start"
         android:paddingHorizontal="@dimen/turns_text_padding_horizontal"
         android:paddingTop="@dimen/version_padding_top"
-        android:paddingBottom="@dimen/version_padding_bottom"
-        android:shadowRadius="3"
-        android:shadowDy="3"
-        android:shadowDx="3"
+        android:paddingBottom="4dp"
         android:shadowColor="@color/text_shadow_color"
+        android:shadowDx="3"
+        android:shadowDy="3"
+        android:shadowRadius="3"
+        android:text="@string/card_face_style_settings"
+        android:textAlignment="viewStart"
         android:textColor="@color/about_game_title_text"
-        android:textAlignment="center"
         android:textSize="@dimen/version_text_size" />
 
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:paddingEnd="36dp"
+        android:paddingStart="0dp"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingVertical="12dp"
+        android:gravity="center"
         android:orientation="horizontal">
 
-        <ImageButton
-            android:id="@+id/standardCardFaceSetting"
-            android:layout_width="40dp"
-            android:layout_height="80dp"
-            android:background="@drawable/card_diamonds_king_2"
-            android:contentDescription="@string/card_face_standard_option_description" />
+        <LinearLayout
+            android:id="@+id/standardCardFaceSettingLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@color/about_game_title_text"
+            android:padding="5dp"
+            android:orientation="horizontal">
 
+            <ImageButton
+                android:id="@+id/standardCardFaceSetting"
+                android:layout_width="40dp"
+                android:layout_height="65dp"
+                android:background="@drawable/card_diamonds_king_2"
+                android:contentDescription="@string/card_face_standard_option_description" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/simpleCardFaceSettingLayout"
+            android:layout_width="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_height="wrap_content"
+            android:background="@color/button_tint"
+            android:padding="5dp"
+            android:orientation="horizontal">
 
-        <ImageButton
-            android:id="@+id/simpleCardFaceSetting"
-            android:layout_width="40dp"
-            android:layout_height="80dp"
-            android:background="@drawable/card_diamonds_king_mirror"
-            android:contentDescription="@string/card_face_simple_option_description" />
+            <ImageButton
+                android:id="@+id/simpleCardFaceSetting"
+                android:layout_width="40dp"
+                android:layout_height="65dp"
+                android:background="@drawable/card_diamonds_king_mirror"
+                android:contentDescription="@string/card_face_simple_option_description" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
     <Button
