@@ -1,21 +1,21 @@
 package com.jcrawley.memorycardgame.card;
 
 import com.jcrawley.memorycardgame.R;
+import com.jcrawley.memorycardgame.card.cardType.CardType;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class CardDeckImages {
 
-    public enum DeckType { STANDARD, EASY_READ }
-    private final Map<DeckType, Map<String, Integer>> decksMap;
+    private final Map<CardType, Map<String, Integer>> decksMap;
     private Map<String, Integer> currentDeckMap;
 
     public CardDeckImages(){
         decksMap = new HashMap<>();
         addStandardDeck();
         addEasyReadDeck();
-        currentDeckMap = decksMap.get(DeckType.STANDARD);
+        currentDeckMap = decksMap.get(CardType.STANDARD);
     }
 
 
@@ -29,8 +29,8 @@ public class CardDeckImages {
     }
 
 
-    public void setDeckType(DeckType deckType){
-        currentDeckMap = decksMap.get(deckType);
+    public void setDeckType(CardType cardType){
+        currentDeckMap = decksMap.get(cardType);
     }
 
     private void addStandardDeck(){
@@ -92,7 +92,7 @@ public class CardDeckImages {
         add(deckMap, suit, Rank.KING, R.drawable.card_clubs_king_2);
         add(deckMap, suit, Rank.ACE, R.drawable.card_clubs_ace_2);
 
-        decksMap.put(DeckType.STANDARD, deckMap);
+        decksMap.put(CardType.STANDARD, deckMap);
     }
 
 
@@ -155,7 +155,7 @@ public class CardDeckImages {
         add(deckMap, suit, Rank.KING, R.drawable.card_clubs_king_mirror);
         add(deckMap, suit, Rank.ACE, R.drawable.card_clubs_ace_mirror);
 
-        decksMap.put(DeckType.EASY_READ, deckMap);
+        decksMap.put(CardType.SIMPLE, deckMap);
     }
 
     private void add(Map<String, Integer> deckMap, Suit suit, Rank rank, int id){

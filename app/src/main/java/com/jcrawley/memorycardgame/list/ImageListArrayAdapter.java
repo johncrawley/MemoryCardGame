@@ -20,10 +20,12 @@ public class ImageListArrayAdapter extends ArrayAdapter<CardType> {
     private final Context context;
     private final List<CardType> items;
     private final BitmapLoader bitmapLoader;
+    private final int itemViewId;
 
-    public ImageListArrayAdapter(Context context, int viewResourceId, List<CardType> items, BitmapLoader bitmapLoader){
-        super(context, viewResourceId, items);
+    public ImageListArrayAdapter(Context context, int itemViewId, List<CardType> items, BitmapLoader bitmapLoader){
+        super(context, itemViewId, items);
         this.context = context;
+        this.itemViewId = itemViewId;
         this.items = items;
         this.bitmapLoader = bitmapLoader;
     }
@@ -34,7 +36,7 @@ public class ImageListArrayAdapter extends ArrayAdapter<CardType> {
     public View getView(int position, View view, @NonNull ViewGroup parent){
         if(view == null){
             LayoutInflater vi = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = vi.inflate(R.layout.image_list_item,null);
+            view = vi.inflate(itemViewId,null);
             ImageView imageView = view.findViewById(R.id.itemImage);
             CardType cardType = items.get(position);
             bitmapLoader.setBitmap(imageView, cardType.getResourceId());

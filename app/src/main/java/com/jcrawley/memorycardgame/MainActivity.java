@@ -3,6 +3,9 @@ package com.jcrawley.memorycardgame;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -19,13 +22,19 @@ import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
-import com.jcrawley.memorycardgame.card.CardDeckImages;
 import com.jcrawley.memorycardgame.card.DeckSize;
+import com.jcrawley.memorycardgame.card.cardType.CardType;
 import com.jcrawley.memorycardgame.game.CardBackManager;
 import com.jcrawley.memorycardgame.game.CardLayoutPopulator;
 import com.jcrawley.memorycardgame.game.Game;
+import com.jcrawley.memorycardgame.list.CardTypeRecyclerAdapter;
+import com.jcrawley.memorycardgame.list.ImageListHelper;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,6 +53,9 @@ public class MainActivity extends AppCompatActivity {
     private enum AnimationDirection {DROP_IN, DROP_OUT}
     private MainViewModel viewModel;
     private RecordKeeper recordKeeper;
+    private BitmapLoader bitmapLoader;
+    private RecyclerView cardFacesRecyclerView;
+    private RecyclerView cardBacksRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         initAnimations();
         initButtons();
         viewModel  = new ViewModelProvider(this).get(MainViewModel.class);
-        BitmapLoader bitmapLoader = new BitmapLoader(MainActivity.this, viewModel);
+        bitmapLoader = new BitmapLoader(MainActivity.this, viewModel);
         CardBackManager cardBackManager = new CardBackManager(viewModel, bitmapLoader);
         game = new Game(this, cardBackManager, bitmapLoader, screenWidth);
         cardLayout = findViewById(R.id.cardLayout);
@@ -104,10 +116,38 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupSettings(){
-        findViewById(R.id.standardCardFaceSetting).setOnClickListener((View v)-> viewModel.cardDeckImages.setDeckType(CardDeckImages.DeckType.STANDARD));
-        findViewById(R.id.simpleCardFaceSetting).setOnClickListener((View v)-> viewModel.cardDeckImages.setDeckType(CardDeckImages.DeckType.EASY_READ));
+       // findViewById(R.id.standardCardFaceSetting).setOnClickListener((View v)-> viewModel.cardDeckImages.setDeckType(CardDeckImages.DeckType.STANDARD));
+       // findViewById(R.id.simpleCardFaceSetting).setOnClickListener((View v)-> viewModel.cardDeckImages.setDeckType(CardDeckImages.DeckType.EASY_READ));
+        /*
+        ListView cardFaceTypesList = findViewById(R.id.cardFaceTypesList);
+        ImageListHelper imageListHelper = new ImageListHelper(MainActivity.this,
+                cardFaceTypesList,
+                this::setCardDeckImage,
+                (CardType cardType)->{});
+
+        imageListHelper.setupList(Arrays.asList(CardType.STANDARD, CardType.SIMPLE), bitmapLoader);
+
+         */
+        setupRecyclerView();
     }
 
+
+
+    private void setupRecyclerView(){
+        cardFacesRecyclerView = findViewById(R.id.cardTypeRecycleView);
+        CardTypeRecyclerAdapter cardTypeRecyclerAdapter = new CardTypeRecyclerAdapter(Arrays.asList(CardType.STANDARD, CardType.SIMPLE), bitmapLoader);
+        LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
+        cardFacesRecyclerView.setLayoutManager(horizontalLayoutManager);
+        cardFacesRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        cardFacesRecyclerView.setAdapter(cardTypeRecyclerAdapter);
+    }
+
+
+
+
+    private void setCardDeckImage(CardType cardType){
+        viewModel.cardDeckImages.setDeckType(cardType);
+    }
 
     private void showAboutView(){
         if(isShowingAboutDialogue){
