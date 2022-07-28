@@ -22,19 +22,16 @@ import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.jcrawley.memorycardgame.card.DeckSize;
 import com.jcrawley.memorycardgame.card.cardType.CardType;
-import com.jcrawley.memorycardgame.game.CardBackManager;
+import com.jcrawley.memorycardgame.card.CardBackManager;
 import com.jcrawley.memorycardgame.game.CardLayoutPopulator;
 import com.jcrawley.memorycardgame.game.Game;
 import com.jcrawley.memorycardgame.list.CardTypeRecyclerAdapter;
-import com.jcrawley.memorycardgame.list.ImageListHelper;
 
 import java.util.Arrays;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -135,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupRecyclerView(){
         cardFacesRecyclerView = findViewById(R.id.cardTypeRecycleView);
-        CardTypeRecyclerAdapter cardTypeRecyclerAdapter = new CardTypeRecyclerAdapter(Arrays.asList(CardType.STANDARD, CardType.SIMPLE), bitmapLoader);
+        CardTypeRecyclerAdapter cardTypeRecyclerAdapter = new CardTypeRecyclerAdapter(Arrays.asList(CardType.STANDARD, CardType.SIMPLE), bitmapLoader, getViewModel().cardDeckImages);
         LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
         cardFacesRecyclerView.setLayoutManager(horizontalLayoutManager);
         cardFacesRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -146,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void setCardDeckImage(CardType cardType){
-        viewModel.cardDeckImages.setDeckType(cardType);
+        viewModel.cardDeckImages.setCardType(cardType);
     }
 
     private void showAboutView(){

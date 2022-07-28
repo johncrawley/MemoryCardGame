@@ -6,7 +6,7 @@ import com.jcrawley.memorycardgame.card.cardType.CardType;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CardDeckImages {
+public class CardDeckImages implements CardTypeSetter{
 
     private final Map<CardType, Map<String, Integer>> decksMap;
     private Map<String, Integer> currentDeckMap;
@@ -29,7 +29,7 @@ public class CardDeckImages {
     }
 
 
-    public void setDeckType(CardType cardType){
+    public void setCardType(CardType cardType){
         currentDeckMap = decksMap.get(cardType);
     }
 

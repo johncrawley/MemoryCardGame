@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import com.jcrawley.memorycardgame.MainActivity;
 import com.jcrawley.memorycardgame.MainViewModel;
 import com.jcrawley.memorycardgame.R;
+import com.jcrawley.memorycardgame.card.CardBackManager;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -12,6 +12,7 @@ import com.jcrawley.memorycardgame.MainViewModel;
 import com.jcrawley.memorycardgame.R;
 import com.jcrawley.memorycardgame.RecordKeeper;
 import com.jcrawley.memorycardgame.card.Card;
+import com.jcrawley.memorycardgame.card.CardBackManager;
 import com.jcrawley.memorycardgame.card.CardFactory;
 import com.jcrawley.memorycardgame.card.DeckSize;
 

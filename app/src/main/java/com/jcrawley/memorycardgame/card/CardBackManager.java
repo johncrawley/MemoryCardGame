@@ -1,16 +1,16 @@
-package com.jcrawley.memorycardgame.game;
+package com.jcrawley.memorycardgame.card;
 
-import android.graphics.Bitmap;
 import android.widget.ImageView;
 
 import com.jcrawley.memorycardgame.BitmapLoader;
 import com.jcrawley.memorycardgame.MainViewModel;
 import com.jcrawley.memorycardgame.R;
+import com.jcrawley.memorycardgame.card.cardType.CardType;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class CardBackManager {
+public class CardBackManager implements CardTypeSetter {
 
     private final MainViewModel viewModel;
     private final Map<Integer, Integer> cardBackMap;
@@ -24,8 +24,8 @@ public class CardBackManager {
     }
 
 
-    public void setCurrentCardBackId(int key){
-        viewModel.currentCardBackKey = key;
+    public void setCardType(CardType cardType){
+        viewModel.currentCardBackKey = cardType.getResourceId();
     }
 
 

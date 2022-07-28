@@ -1,5 +1,6 @@
 package com.jcrawley.memorycardgame.list;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,6 +8,7 @@ import android.widget.ImageView;
 
 import com.jcrawley.memorycardgame.BitmapLoader;
 import com.jcrawley.memorycardgame.R;
+import com.jcrawley.memorycardgame.card.CardTypeSetter;
 import com.jcrawley.memorycardgame.card.cardType.CardType;
 
 import java.util.ArrayList;
@@ -22,11 +24,14 @@ public class CardTypeRecyclerAdapter extends RecyclerView.Adapter<CardTypeRecycl
     private View currentlySelectedView;
     private int indexToScrollTo = -1;
     private final BitmapLoader bitmapLoader;
+    private final CardTypeSetter cardTypeSetter;
+    private final int HIGHLIGHTED_COLOR;
 
 
     class CardTypeViewHolder extends RecyclerView.ViewHolder {
 
         ImageView cardTypeImageView;
+        CardType cardType;
 
         CardTypeViewHolder(View view) {
             super(view);
@@ -35,19 +40,24 @@ public class CardTypeRecyclerAdapter extends RecyclerView.Adapter<CardTypeRecycl
             view.setOnClickListener(v -> {
                 if(currentlySelectedView != null){
                     currentlySelectedView.setSelected(false);
+                    currentlySelectedView.setBackgroundColor(Color.TRANSPARENT);
                 }
+
                 currentlySelectedView = v;
                 currentlySelectedView.setSelected(true);
-                setIndexToScrollTo(getLayoutPosition());
-                currentlySelectedView.setSelected(true);
+                currentlySelectedView.setBackgroundColor(HIGHLIGHTED_COLOR);
+                cardTypeImageView = view.findViewById(R.id.itemImage);
+                cardTypeSetter.setCardType(cardType);
             });
         }
     }
 
 
-    public CardTypeRecyclerAdapter(List<CardType> cardTypes, BitmapLoader bitmapLoader){
+    public CardTypeRecyclerAdapter(List<CardType> cardTypes, BitmapLoader bitmapLoader, CardTypeSetter cardTypeSetter){
         this.cardTypes = new ArrayList<>(cardTypes);
         this.bitmapLoader = bitmapLoader;
+        this.cardTypeSetter = cardTypeSetter;
+        HIGHLIGHTED_COLOR = Color.parseColor("#F57F17");
     }
 
 
@@ -69,8 +79,11 @@ public class CardTypeRecyclerAdapter extends RecyclerView.Adapter<CardTypeRecycl
 
     @Override
     public void onBindViewHolder(@NonNull CardTypeViewHolder holder, int position){
-        bitmapLoader.setBitmap(holder.cardTypeImageView, cardTypes.get(position).getResourceId());
+        CardType cardType = cardTypes.get(position);
+        holder.cardType = cardTypes.get(position);
+        bitmapLoader.setBitmap(holder.cardTypeImageView, cardType.getResourceId());
         holder.itemView.setSelected(selectedPosition == position);
+
 
         if(position == indexToScrollTo){
             deselectCurrentlySelectedItem();
