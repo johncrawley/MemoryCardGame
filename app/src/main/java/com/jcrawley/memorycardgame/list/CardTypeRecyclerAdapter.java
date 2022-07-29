@@ -1,5 +1,6 @@
 package com.jcrawley.memorycardgame.list;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.jcrawley.memorycardgame.BitmapLoader;
+import com.jcrawley.memorycardgame.MainActivity;
 import com.jcrawley.memorycardgame.R;
 import com.jcrawley.memorycardgame.card.CardTypeSetter;
 import com.jcrawley.memorycardgame.card.cardType.CardType;
@@ -15,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class CardTypeRecyclerAdapter extends RecyclerView.Adapter<CardTypeRecyclerAdapter.CardTypeViewHolder> {
@@ -50,6 +54,13 @@ public class CardTypeRecyclerAdapter extends RecyclerView.Adapter<CardTypeRecycl
                 cardTypeSetter.setCardType(cardType);
             });
         }
+    }
+
+    public void init(RecyclerView recyclerView, Context context){
+        LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(horizontalLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(this);
     }
 
 

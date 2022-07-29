@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     private BitmapLoader bitmapLoader;
     private RecyclerView cardFacesRecyclerView;
     private RecyclerView cardBacksRecyclerView;
+    private CardBackManager cardBackManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         initButtons();
         viewModel  = new ViewModelProvider(this).get(MainViewModel.class);
         bitmapLoader = new BitmapLoader(MainActivity.this, viewModel);
-        CardBackManager cardBackManager = new CardBackManager(viewModel, bitmapLoader);
+        cardBackManager = new CardBackManager(viewModel, bitmapLoader);
         game = new Game(this, cardBackManager, bitmapLoader, screenWidth);
         cardLayout = findViewById(R.id.cardLayout);
         newGameLayout = findViewById(R.id.new_game_include);
@@ -133,12 +134,15 @@ public class MainActivity extends AppCompatActivity {
     private void setupRecyclerView(){
         cardFacesRecyclerView = findViewById(R.id.cardTypeRecycleView);
         CardTypeRecyclerAdapter cardTypeRecyclerAdapter = new CardTypeRecyclerAdapter(Arrays.asList(CardType.STANDARD, CardType.SIMPLE), bitmapLoader, getViewModel().cardDeckImages);
-        LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
-        cardFacesRecyclerView.setLayoutManager(horizontalLayoutManager);
-        cardFacesRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        cardFacesRecyclerView.setAdapter(cardTypeRecyclerAdapter);
+        cardTypeRecyclerAdapter.init(cardFacesRecyclerView, MainActivity.this);
+        setupCardBackRecyclerView();
     }
 
+    private void setupCardBackRecyclerView(){
+        cardBacksRecyclerView = findViewById(R.id.cardBackRecycleView);
+        CardTypeRecyclerAdapter cardTypeRecyclerAdapter = new CardTypeRecyclerAdapter(Arrays.asList(CardType.BACK_1, CardType.BACK_2), bitmapLoader, cardBackManager);
+        cardTypeRecyclerAdapter.init(cardBacksRecyclerView, MainActivity.this);
+    }
 
 
 

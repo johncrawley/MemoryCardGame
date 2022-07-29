@@ -60,18 +60,6 @@
         android:paddingEnd="36dp"
         android:paddingStart="0dp"/>
 
-    <!--
-    <ListView
-        android:id="@+id/cardFaceTypesList"
-        android:isScrollContainer="false"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"/>
-        -->
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/cardTypeRecycleView"
         android:layout_width="match_parent"
@@ -87,51 +75,44 @@
         app:layout_constraintTop_toBottomOf="@+id/albumTextView"
         />
 
-    <!--
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/cardBackStyleText"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingVertical="12dp"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:gravity="start"
+        android:paddingHorizontal="@dimen/turns_text_padding_horizontal"
+        android:paddingTop="@dimen/version_padding_top"
+        android:paddingBottom="4dp"
+        android:shadowColor="@color/text_shadow_color"
+        android:shadowDx="3"
+        android:shadowDy="3"
+        android:shadowRadius="3"
+        android:text="@string/card_back_style_settings"
+        android:textAlignment="viewStart"
+        android:textColor="@color/about_game_title_text"
+        android:textSize="@dimen/version_text_size" />
 
-        <LinearLayout
-            android:id="@+id/standardCardFaceSettingLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:background="@color/about_game_title_text"
-            android:padding="5dp"
-            android:orientation="horizontal">
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/cardBackdivider"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:paddingEnd="36dp"
+        android:paddingStart="0dp"/>
 
-            <ImageButton
-                android:id="@+id/standardCardFaceSetting"
-                android:layout_width="40dp"
-                android:layout_height="65dp"
-                android:background="@drawable/card_diamonds_king_2"
-                android:contentDescription="@string/card_face_standard_option_description" />
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/simpleCardFaceSettingLayout"
-            android:layout_width="wrap_content"
-            android:layout_margin="8dp"
-            android:layout_height="wrap_content"
-            android:background="@color/button_tint"
-            android:padding="5dp"
-            android:orientation="horizontal">
-
-            <ImageButton
-                android:id="@+id/simpleCardFaceSetting"
-                android:layout_width="40dp"
-                android:layout_height="65dp"
-                android:background="@drawable/card_diamonds_king_mirror"
-                android:contentDescription="@string/card_face_simple_option_description" />
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-    -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/cardBackRecycleView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginHorizontal="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="18dp"
+        android:fadeScrollbars="true"
+        app:layout_constraintBottom_toTopOf="@+id/playButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/albumTextView"
+        />
 
     <Button
         android:id="@+id/dismissSettingsButton"
