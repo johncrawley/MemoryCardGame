@@ -16,5 +16,7 @@
     <dimen name="results_number_of_turns_taken_text">52sp</dimen>
     <dimen name="results_turns_taken_text">16sp</dimen>
     <dimen name="results_current_record_text">20sp</dimen>
+    <dimen name="recycler_view_margin">8dp</dimen>
+    <dimen name="recycler_image_item_margin">3dp</dimen>
 
 </resources>
