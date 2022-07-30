@@ -27,6 +27,6 @@ public class MainViewModel extends ViewModel {
     public int secondSelectedPosition = -1;
     public CardDeckImages cardDeckImages = new CardDeckImages();
 
-    public int currentCardBackResourceId = R.drawable.card_back_2;
+    public int currentCardBackResourceId = R.drawable.card_back_2_resized;
 
 }

@@ -5,10 +5,10 @@ import com.jcrawley.memorycardgame.R;
 
 public enum CardType {
 
-    STANDARD(R.drawable.card_diamonds_king_2),
-    SIMPLE(R.drawable.card_diamonds_king_mirror),
+    STANDARD(R.drawable.card_face_standard),
+    SIMPLE(R.drawable.card_face_simple),
     BACK_1(R.drawable.card_back_1),
-    BACK_2(R.drawable.card_back_2);
+    BACK_2(R.drawable.card_back_2_resized);
 
 
     private final int resourceId;
