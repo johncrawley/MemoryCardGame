@@ -92,6 +92,7 @@ public class Game {
     public void notifyClickOnPosition(ImageView view){
         int position = (int)view.getTag(R.string.position_tag);
         mainActivity.dismissAboutDialog();
+        mainActivity.dismissSettingsDialog();
         if(viewModel.gameState == GameState.NOTHING_SELECTED){
             handleFirstSelection(view, position);
         }

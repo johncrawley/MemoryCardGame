@@ -3,8 +3,6 @@ package com.jcrawley.memorycardgame;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Build;
@@ -51,8 +49,6 @@ public class MainActivity extends AppCompatActivity {
     private MainViewModel viewModel;
     private RecordKeeper recordKeeper;
     private BitmapLoader bitmapLoader;
-    private RecyclerView cardFacesRecyclerView;
-    private RecyclerView cardBacksRecyclerView;
     private CardBackManager cardBackManager;
 
     @Override
@@ -114,41 +110,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupSettings(){
-       // findViewById(R.id.standardCardFaceSetting).setOnClickListener((View v)-> viewModel.cardDeckImages.setDeckType(CardDeckImages.DeckType.STANDARD));
-       // findViewById(R.id.simpleCardFaceSetting).setOnClickListener((View v)-> viewModel.cardDeckImages.setDeckType(CardDeckImages.DeckType.EASY_READ));
-        /*
-        ListView cardFaceTypesList = findViewById(R.id.cardFaceTypesList);
-        ImageListHelper imageListHelper = new ImageListHelper(MainActivity.this,
-                cardFaceTypesList,
-                this::setCardDeckImage,
-                (CardType cardType)->{});
-
-        imageListHelper.setupList(Arrays.asList(CardType.STANDARD, CardType.SIMPLE), bitmapLoader);
-
-         */
-        setupRecyclerView();
+        setupFaceTypesRecyclerView();
+        setupBackTypesRecyclerView();
     }
 
 
-
-    private void setupRecyclerView(){
-        cardFacesRecyclerView = findViewById(R.id.cardTypeRecycleView);
+    private void setupFaceTypesRecyclerView(){
+        RecyclerView cardFacesRecyclerView = findViewById(R.id.cardTypeRecycleView);
         CardTypeRecyclerAdapter cardTypeRecyclerAdapter = new CardTypeRecyclerAdapter(Arrays.asList(CardType.STANDARD, CardType.SIMPLE), bitmapLoader, getViewModel().cardDeckImages);
         cardTypeRecyclerAdapter.init(cardFacesRecyclerView, MainActivity.this);
-        setupCardBackRecyclerView();
+
     }
 
-    private void setupCardBackRecyclerView(){
-        cardBacksRecyclerView = findViewById(R.id.cardBackRecycleView);
+
+    private void setupBackTypesRecyclerView(){
+        RecyclerView cardBacksRecyclerView = findViewById(R.id.cardBackRecycleView);
         CardTypeRecyclerAdapter cardTypeRecyclerAdapter = new CardTypeRecyclerAdapter(Arrays.asList(CardType.BACK_1, CardType.BACK_2), bitmapLoader, cardBackManager);
         cardTypeRecyclerAdapter.init(cardBacksRecyclerView, MainActivity.this);
     }
 
-
-
-    private void setCardDeckImage(CardType cardType){
-        viewModel.cardDeckImages.setCardType(cardType);
-    }
 
     private void showAboutView(){
         if(isShowingAboutDialogue){
@@ -161,7 +141,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void showSettingsView(){
-
         if(isShowingSettingsDialogue){
             return;
         }
