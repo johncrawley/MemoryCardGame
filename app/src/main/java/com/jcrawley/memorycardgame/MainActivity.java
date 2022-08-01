@@ -2,6 +2,7 @@ package com.jcrawley.memorycardgame;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,7 +35,8 @@ import java.util.Arrays;
 public class MainActivity extends AppCompatActivity {
 
     private int screenWidth, screenHeight;
-    private LinearLayout resultsLayout, newGameLayout, cardLayout, aboutLayout, settingsLayout;
+    private LinearLayout resultsLayout, newGameLayout, cardLayout, aboutLayout;//, settingsLayout;
+    private ConstraintLayout settingsLayout;
     private Game game;
     private boolean isReadyToDismissResults = false;
     private Animation resultsDropInAnimation, resultsDropOutAnimation, newGameDropInAnimation, newGameDropOutAnimation;
@@ -110,8 +112,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupSettings(){
+        setupSettingsView();
         setupFaceTypesRecyclerView();
         setupBackTypesRecyclerView();
+    }
+
+
+    private void setupSettingsView(){
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(screenWidth - 100, screenHeight - 300);
+        ConstraintLayout.LayoutParams constraintLayoutParams = new ConstraintLayout.LayoutParams(screenWidth-150, screenHeight - 250);
+        settingsLayout.setLayoutParams(constraintLayoutParams);
     }
 
 
