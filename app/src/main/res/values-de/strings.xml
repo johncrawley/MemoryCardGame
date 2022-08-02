@@ -26,4 +26,9 @@
     <string name="card_back_style_settings">Kartenrückseite</string>
     <string name="card_face_standard_option_description">Standard Kartenvorderseite</string>
     <string name="card_face_simple_option_description">Einfach Kartenvorderseite</string>
+    <string name="about_cards_text"> Standard graphical cards provided by
+        https://totalnonsense.com/open-source-vector-playing-cards/
+    Copyright 2011,2021 – Chris Aguilar – conjurenation@gmail.com
+    Licensed under: LGPL 3.0 – https://www.gnu.org/licenses/lgpl-3.0.html
+    </string>
 </resources>

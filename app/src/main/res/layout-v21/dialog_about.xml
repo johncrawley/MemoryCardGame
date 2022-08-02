@@ -68,6 +68,26 @@
         android:textSize="@dimen/created_by_text_size" />
 
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+        <TextView
+            android:id="@+id/cardMessageTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/about_cards_text"
+            android:paddingHorizontal="@dimen/turns_text_padding_horizontal"
+            android:paddingBottom="@dimen/turns_text_padding_bottom"
+            android:shadowRadius="3"
+            android:textAlignment="center"
+            android:shadowDy="3"
+            android:shadowDx="3"
+            android:shadowColor="@color/text_shadow_color"
+            android:textColor="@color/about_game_created_by_text"
+            android:textSize="@dimen/imported_cards_info_text_size" />
+    </ScrollView>
+
+
     <Button
         android:id="@+id/dismissAboutButton"
         android:backgroundTint="@color/button_tint"

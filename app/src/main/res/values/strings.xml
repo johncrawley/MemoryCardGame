@@ -25,4 +25,10 @@
     <string name="card_back_style_settings">Card Back</string>
     <string name="card_face_standard_option_description">Standard Card Face</string>
     <string name="card_face_simple_option_description">Simple Card Face</string>
+    <string name="about_cards_text"> Traditional card graphics provided by \n
+        https://totalnonsense.com/open-source-vector-playing-cards/ \n
+    Copyright 2011,2021 – Chris Aguilar – conjurenation@gmail.com \n
+    Licensed under: LGPL 3.0 – https://www.gnu.org/licenses/lgpl-3.0.html
+    </string>
+
 </resources>
