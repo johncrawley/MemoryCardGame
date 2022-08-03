@@ -41,6 +41,7 @@ public class CardLayoutPopulator {
         this.cardBackManager = cardBackManager;
         numberOfCards = game.getNumberOfCards();
         imageViews = new ArrayList<>(numberOfCards);
+
         createClickListener();
     }
 

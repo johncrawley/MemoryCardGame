@@ -31,6 +31,7 @@ import com.jcrawley.memorycardgame.game.Game;
 import com.jcrawley.memorycardgame.list.CardTypeRecyclerAdapter;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -127,7 +128,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupFaceTypesRecyclerView(){
         RecyclerView cardFacesRecyclerView = findViewById(R.id.cardTypeRecycleView);
-        CardTypeRecyclerAdapter cardTypeRecyclerAdapter = new CardTypeRecyclerAdapter(Arrays.asList(CardType.STANDARD, CardType.SIMPLE), bitmapLoader, getViewModel().cardDeckImages);
+        List<CardType> cardTypes = Arrays.asList(CardType.STANDARD, CardType.SIMPLE);
+        CardTypeRecyclerAdapter cardTypeRecyclerAdapter = new CardTypeRecyclerAdapter(cardTypes, bitmapLoader, getViewModel().cardDeckImages, ()->{});
         cardTypeRecyclerAdapter.init(cardFacesRecyclerView, MainActivity.this);
 
     }
@@ -135,7 +137,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupBackTypesRecyclerView(){
         RecyclerView cardBacksRecyclerView = findViewById(R.id.cardBackRecycleView);
-        CardTypeRecyclerAdapter cardTypeRecyclerAdapter = new CardTypeRecyclerAdapter(Arrays.asList(CardType.BACK_1, CardType.BACK_2), bitmapLoader, cardBackManager);
+        List<CardType> cardTypes = Arrays.asList(CardType.BACK_1, CardType.BACK_2);
+        CardTypeRecyclerAdapter cardTypeRecyclerAdapter = new CardTypeRecyclerAdapter(cardTypes, bitmapLoader, cardBackManager, ()-> game.switchBacksOnFaceDownCards());
         cardTypeRecyclerAdapter.init(cardBacksRecyclerView, MainActivity.this);
     }
 

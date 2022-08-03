@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.jcrawley.memorycardgame.BitmapLoader;
-import com.jcrawley.memorycardgame.MainActivity;
 import com.jcrawley.memorycardgame.R;
 import com.jcrawley.memorycardgame.card.CardTypeSetter;
 import com.jcrawley.memorycardgame.card.cardType.CardType;
@@ -30,6 +29,7 @@ public class CardTypeRecyclerAdapter extends RecyclerView.Adapter<CardTypeRecycl
     private final BitmapLoader bitmapLoader;
     private final CardTypeSetter cardTypeSetter;
     private final int HIGHLIGHTED_COLOR;
+    private final Runnable extaWork;
 
 
     class CardTypeViewHolder extends RecyclerView.ViewHolder {
@@ -42,19 +42,31 @@ public class CardTypeRecyclerAdapter extends RecyclerView.Adapter<CardTypeRecycl
             cardTypeImageView = view.findViewById(R.id.itemImage);
 
             view.setOnClickListener(v -> {
-                if(currentlySelectedView != null){
-                    currentlySelectedView.setSelected(false);
-                    currentlySelectedView.setBackgroundColor(Color.TRANSPARENT);
-                }
-
-                currentlySelectedView = v;
-                currentlySelectedView.setSelected(true);
-                currentlySelectedView.setBackgroundColor(HIGHLIGHTED_COLOR);
+                deselectPreviouslySelectedView();
+                select(v);
                 cardTypeImageView = view.findViewById(R.id.itemImage);
                 cardTypeSetter.setCardType(cardType);
+                extaWork.run();
             });
         }
+
+
+        private void deselectPreviouslySelectedView(){
+            if(currentlySelectedView != null){
+                currentlySelectedView.setSelected(false);
+                currentlySelectedView.setBackgroundColor(Color.TRANSPARENT);
+            }
+        }
+
+
+        private void select(View v){
+            currentlySelectedView = v;
+            currentlySelectedView.setSelected(true);
+            currentlySelectedView.setBackgroundColor(HIGHLIGHTED_COLOR);
+        }
     }
+
+
 
     public void init(RecyclerView recyclerView, Context context){
         LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
@@ -64,11 +76,12 @@ public class CardTypeRecyclerAdapter extends RecyclerView.Adapter<CardTypeRecycl
     }
 
 
-    public CardTypeRecyclerAdapter(List<CardType> cardTypes, BitmapLoader bitmapLoader, CardTypeSetter cardTypeSetter){
+    public CardTypeRecyclerAdapter(List<CardType> cardTypes, BitmapLoader bitmapLoader, CardTypeSetter cardTypeSetter, Runnable extraWork){
         this.cardTypes = new ArrayList<>(cardTypes);
         this.bitmapLoader = bitmapLoader;
         this.cardTypeSetter = cardTypeSetter;
         HIGHLIGHTED_COLOR = Color.parseColor("#F57F17");
+        this.extaWork = extraWork;
     }
 
 
@@ -82,7 +95,6 @@ public class CardTypeRecyclerAdapter extends RecyclerView.Adapter<CardTypeRecycl
 
     public void deselectCurrentlySelectedItem(){
         if(currentlySelectedView != null){
-            System.out.println("TrackListAdapter.deselectCurrentlySelectedItem() - setting to false");
             currentlySelectedView.setSelected(false);
         }
     }

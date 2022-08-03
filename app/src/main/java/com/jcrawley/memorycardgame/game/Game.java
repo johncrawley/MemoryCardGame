@@ -17,6 +17,7 @@ import com.jcrawley.memorycardgame.card.CardFactory;
 import com.jcrawley.memorycardgame.card.DeckSize;
 
 import java.util.Collections;
+import java.util.List;
 
 public class Game {
 
@@ -106,6 +107,18 @@ public class Game {
         firstSelectedCard = cardLayoutPopulator.getImageViews().get(viewModel.firstSelectedPosition);
         setBitmapForCard(firstSelectedCard, viewModel.firstSelectedPosition);
         firstSelectedCard.animate().rotationY(180).setDuration(1).start();
+    }
+
+
+    public void switchBacksOnFaceDownCards(){
+        List<ImageView> cards = cardLayoutPopulator.getImageViews();
+        for(ImageView card: cards){
+            if(firstSelectedCard == card){
+                continue;
+            }
+            setCardFaceDown(card);
+        }
+
     }
 
 
