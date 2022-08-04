@@ -222,6 +222,7 @@ public class Game {
             flipCardBack(firstSelectedCard, 0 );
             flipCardBack(secondSelectedCard, 200);
             viewModel.gameState = GameState.NOTHING_SELECTED;
+            firstSelectedCard = null;
         }, getInt(R.integer.flip_cards_back_delay));
     }
 

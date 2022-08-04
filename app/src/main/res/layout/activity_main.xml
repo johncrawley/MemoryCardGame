@@ -6,6 +6,7 @@
     android:background="@color/background_color"
     android:layout_height="match_parent"
     android:padding="@dimen/main_layout_padding"
+    android:id="@+id/mainLayout"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -70,7 +71,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        layout="@layout/dialog_settings" />
+        layout="@layout/dialog_settings_constraint" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

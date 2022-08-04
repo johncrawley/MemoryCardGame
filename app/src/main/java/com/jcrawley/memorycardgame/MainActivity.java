@@ -2,6 +2,7 @@ package com.jcrawley.memorycardgame;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
@@ -76,6 +77,11 @@ public class MainActivity extends AppCompatActivity {
         CardLayoutPopulator cardLayoutPopulator = new CardLayoutPopulator(this, cardLayout, game, cardBackManager);
         setupSettings();
         cardLayout.getViewTreeObserver().addOnGlobalLayoutListener(()-> game.initCards(cardLayoutPopulator));
+        View cardLayout = findViewById(R.id.cardLayout);
+        // int drawableId = R.drawable.black_to_dark_green;
+        int drawableId = R.drawable.tablecloth_green_tiled;
+        cardLayout.setBackground(AppCompatResources.getDrawable(MainActivity.this, drawableId));
+
     }
 
 
