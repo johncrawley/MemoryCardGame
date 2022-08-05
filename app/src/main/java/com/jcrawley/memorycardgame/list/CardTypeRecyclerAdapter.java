@@ -1,8 +1,6 @@
 package com.jcrawley.memorycardgame.list;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -16,87 +14,56 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class CardTypeRecyclerAdapter extends RecyclerView.Adapter<CardTypeRecyclerAdapter.CardTypeViewHolder> {
 
     private final List<CardType> cardTypes;
-    private int selectedPosition = RecyclerView.NO_POSITION;
-    private View currentlySelectedView;
-    private int indexToScrollTo = -1;
     private final BitmapLoader bitmapLoader;
     private final CardTypeSetter cardTypeSetter;
-    private final int HIGHLIGHTED_COLOR;
-    private final Runnable extaWork;
+    private final Runnable onClickExtra;
+    private final RecyclerHelper recyclerHelper;
 
 
     class CardTypeViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView cardTypeImageView;
+        ImageView imageView;
         CardType cardType;
 
         CardTypeViewHolder(View view) {
             super(view);
-            cardTypeImageView = view.findViewById(R.id.itemImage);
+            imageView = view.findViewById(R.id.itemImage);
 
             view.setOnClickListener(v -> {
-                deselectPreviouslySelectedView();
-                select(v);
-                cardTypeImageView = view.findViewById(R.id.itemImage);
+                recyclerHelper.deselectPreviouslySelectedView();
+                recyclerHelper.select(v);
+                imageView = view.findViewById(R.id.itemImage);
                 cardTypeSetter.setCardType(cardType);
-                extaWork.run();
+                onClickExtra.run();
             });
-        }
-
-
-        private void deselectPreviouslySelectedView(){
-            if(currentlySelectedView != null){
-                currentlySelectedView.setSelected(false);
-                currentlySelectedView.setBackgroundColor(Color.TRANSPARENT);
-            }
-        }
-
-
-        private void select(View v){
-            currentlySelectedView = v;
-            currentlySelectedView.setSelected(true);
-            currentlySelectedView.setBackgroundColor(HIGHLIGHTED_COLOR);
         }
     }
 
 
 
     public void init(RecyclerView recyclerView, Context context){
-        LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
-        recyclerView.setLayoutManager(horizontalLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(this);
+        recyclerHelper.init(this, recyclerView, context);
     }
 
 
-    public CardTypeRecyclerAdapter(List<CardType> cardTypes, BitmapLoader bitmapLoader, CardTypeSetter cardTypeSetter, Runnable extraWork){
+    public CardTypeRecyclerAdapter(List<CardType> cardTypes, BitmapLoader bitmapLoader, CardTypeSetter cardTypeSetter, Runnable onClickExtra){
+        recyclerHelper = new RecyclerHelper();
         this.cardTypes = new ArrayList<>(cardTypes);
         this.bitmapLoader = bitmapLoader;
         this.cardTypeSetter = cardTypeSetter;
-        HIGHLIGHTED_COLOR = Color.parseColor("#F57F17");
-        this.extaWork = extraWork;
+        this.onClickExtra = onClickExtra;
     }
 
 
     @Override
     @NonNull
     public CardTypeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.image_list_item, parent,false);
-        return new CardTypeViewHolder(view);
-    }
-
-
-    public void deselectCurrentlySelectedItem(){
-        if(currentlySelectedView != null){
-            currentlySelectedView.setSelected(false);
-        }
+        return new CardTypeViewHolder(recyclerHelper.createViewForHolder(parent, R.layout.image_list_item));
     }
 
 
@@ -104,15 +71,8 @@ public class CardTypeRecyclerAdapter extends RecyclerView.Adapter<CardTypeRecycl
     public void onBindViewHolder(@NonNull CardTypeViewHolder holder, int position){
         CardType cardType = cardTypes.get(position);
         holder.cardType = cardTypes.get(position);
-        bitmapLoader.setBitmap(holder.cardTypeImageView, cardType.getResourceId());
-        holder.itemView.setSelected(selectedPosition == position);
-
-
-        if(position == indexToScrollTo){
-            deselectCurrentlySelectedItem();
-            currentlySelectedView = holder.itemView;
-            currentlySelectedView.setSelected(true);
-        }
+        bitmapLoader.setBitmap(holder.imageView, cardType.getResourceId());
+        recyclerHelper.selectItem(holder, position);
     }
 
 
@@ -123,14 +83,12 @@ public class CardTypeRecyclerAdapter extends RecyclerView.Adapter<CardTypeRecycl
 
 
     private void changePositionTo(int newPosition){
-        notifyItemChanged(selectedPosition);
-        selectedPosition = newPosition;
-        notifyItemChanged(selectedPosition);
+        recyclerHelper.changePositionTo(this,newPosition);
     }
 
 
     public void setIndexToScrollTo(int index){
-        this.indexToScrollTo = index;
+        recyclerHelper.setIndexToScrollTo(index);
     }
 
 

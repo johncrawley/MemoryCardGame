@@ -29,6 +29,8 @@ import com.jcrawley.memorycardgame.card.cardType.CardType;
 import com.jcrawley.memorycardgame.card.CardBackManager;
 import com.jcrawley.memorycardgame.game.CardLayoutPopulator;
 import com.jcrawley.memorycardgame.game.Game;
+import com.jcrawley.memorycardgame.list.Background;
+import com.jcrawley.memorycardgame.list.BackgroundRecyclerAdapter;
 import com.jcrawley.memorycardgame.list.CardTypeRecyclerAdapter;
 
 import java.util.Arrays;
@@ -70,18 +72,23 @@ public class MainActivity extends AppCompatActivity {
         bitmapLoader = new BitmapLoader(MainActivity.this, viewModel);
         cardBackManager = new CardBackManager(viewModel, bitmapLoader);
         game = new Game(this, cardBackManager, bitmapLoader, screenWidth);
+        setupLayouts();
+        CardLayoutPopulator cardLayoutPopulator = new CardLayoutPopulator(this, cardLayout, game, cardBackManager);
+        setupSettings();
+        cardLayout.getViewTreeObserver().addOnGlobalLayoutListener(()-> game.initCards(cardLayoutPopulator));
+    }
+
+
+    public void setBackground(int drawableId){
+        cardLayout.setBackground(AppCompatResources.getDrawable(MainActivity.this, drawableId));
+    }
+
+
+    private void setupLayouts(){
         cardLayout = findViewById(R.id.cardLayout);
         newGameLayout = findViewById(R.id.new_game_include);
         aboutLayout = findViewById(R.id.about_include);
         settingsLayout = findViewById(R.id.settings_include);
-        CardLayoutPopulator cardLayoutPopulator = new CardLayoutPopulator(this, cardLayout, game, cardBackManager);
-        setupSettings();
-        cardLayout.getViewTreeObserver().addOnGlobalLayoutListener(()-> game.initCards(cardLayoutPopulator));
-        View cardLayout = findViewById(R.id.cardLayout);
-        // int drawableId = R.drawable.black_to_dark_green;
-        int drawableId = R.drawable.tablecloth_green_tiled;
-        cardLayout.setBackground(AppCompatResources.getDrawable(MainActivity.this, drawableId));
-
     }
 
 
@@ -122,11 +129,11 @@ public class MainActivity extends AppCompatActivity {
         setupSettingsView();
         setupFaceTypesRecyclerView();
         setupBackTypesRecyclerView();
+        setupBackgroundRecyclerView();
     }
 
 
     private void setupSettingsView(){
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(screenWidth - 100, screenHeight - 300);
         ConstraintLayout.LayoutParams constraintLayoutParams = new ConstraintLayout.LayoutParams(screenWidth-150, screenHeight - 250);
         settingsLayout.setLayoutParams(constraintLayoutParams);
     }
@@ -146,6 +153,14 @@ public class MainActivity extends AppCompatActivity {
         List<CardType> cardTypes = Arrays.asList(CardType.BACK_1, CardType.BACK_2);
         CardTypeRecyclerAdapter cardTypeRecyclerAdapter = new CardTypeRecyclerAdapter(cardTypes, bitmapLoader, cardBackManager, ()-> game.switchBacksOnFaceDownCards());
         cardTypeRecyclerAdapter.init(cardBacksRecyclerView, MainActivity.this);
+    }
+
+
+    private void setupBackgroundRecyclerView(){
+        RecyclerView backgroundRecyclerView = settingsLayout.findViewById(R.id.backgroundRecyclerView);
+        List<Background> backgrounds = Arrays.asList(new Background(R.drawable.background_black_to_dark_green), new Background(R.drawable.tablecloth_green_tiled));
+        BackgroundRecyclerAdapter backgroundRecyclerAdapter = new BackgroundRecyclerAdapter(backgrounds, bitmapLoader);
+        backgroundRecyclerAdapter.init(backgroundRecyclerView, MainActivity.this);
     }
 
 

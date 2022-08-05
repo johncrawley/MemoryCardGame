@@ -23,6 +23,7 @@
     <string name="menu_action_settings">Settings</string>
     <string name="card_face_style_settings">Card Face</string>
     <string name="card_back_style_settings">Card Back</string>
+    <string name="background_style_settings">Background</string>
     <string name="card_face_standard_option_description">Standard Card Face</string>
     <string name="card_face_simple_option_description">Simple Card Face</string>
     <string name="about_cards_text"> Traditional card graphics provided by \n

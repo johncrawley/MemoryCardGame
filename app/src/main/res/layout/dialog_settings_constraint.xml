@@ -123,6 +123,38 @@
                 android:fadeScrollbars="true"
                 android:orientation="horizontal" />
 
+            <TextView
+                android:id="@+id/backgroundSettingsText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:paddingHorizontal="@dimen/turns_text_padding_horizontal"
+                android:paddingTop="@dimen/version_padding_top"
+                android:paddingBottom="4dp"
+                android:shadowColor="@color/text_shadow_color"
+                android:shadowDx="3"
+                android:shadowDy="3"
+                android:shadowRadius="3"
+                android:text="@string/background_style_settings"
+                android:textAlignment="viewStart"
+                android:textColor="@color/about_game_title_text"
+                android:textSize="@dimen/version_text_size" />
+
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/backgroundDivider"
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:paddingEnd="36dp"
+                android:paddingStart="0dp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/backgroundRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="@dimen/recycler_view_margin"
+                android:fadeScrollbars="true"
+                />
         </LinearLayout>
     </ScrollView>
 
