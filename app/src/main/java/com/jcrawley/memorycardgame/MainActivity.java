@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
 
     private int screenWidth, screenHeight;
     private LinearLayout resultsLayout, newGameLayout, cardLayout, aboutLayout;//, settingsLayout;
-    private ConstraintLayout settingsLayout;
     private Game game;
     private boolean isReadyToDismissResults = false;
     private Animation resultsDropInAnimation, resultsDropOutAnimation, newGameDropInAnimation, newGameDropOutAnimation;
@@ -56,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
     private RecordKeeper recordKeeper;
     private BitmapLoader bitmapLoader;
     private CardBackManager cardBackManager;
+    private ConstraintLayout settingsLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,11 +69,11 @@ public class MainActivity extends AppCompatActivity {
         assignScreenDimensions();
         initAnimations();
         initButtons();
+        setupLayouts();
         viewModel  = new ViewModelProvider(this).get(MainViewModel.class);
         bitmapLoader = new BitmapLoader(MainActivity.this, viewModel);
         cardBackManager = new CardBackManager(viewModel, bitmapLoader);
         game = new Game(this, cardBackManager, bitmapLoader, screenWidth);
-        setupLayouts();
         CardLayoutPopulator cardLayoutPopulator = new CardLayoutPopulator(this, cardLayout, game, cardBackManager);
         setupSettings();
         cardLayout.getViewTreeObserver().addOnGlobalLayoutListener(()-> game.initCards(cardLayoutPopulator));
@@ -125,17 +126,11 @@ public class MainActivity extends AppCompatActivity {
         return this.recordKeeper;
     }
 
+
     private void setupSettings(){
-        setupSettingsView();
         setupFaceTypesRecyclerView();
         setupBackTypesRecyclerView();
         setupBackgroundRecyclerView();
-    }
-
-
-    private void setupSettingsView(){
-        ConstraintLayout.LayoutParams constraintLayoutParams = new ConstraintLayout.LayoutParams(screenWidth-150, screenHeight - 250);
-        settingsLayout.setLayoutParams(constraintLayoutParams);
     }
 
 
@@ -159,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
     private void setupBackgroundRecyclerView(){
         RecyclerView backgroundRecyclerView = settingsLayout.findViewById(R.id.backgroundRecyclerView);
         List<Background> backgrounds = Arrays.asList(new Background(R.drawable.background_black_to_dark_green), new Background(R.drawable.tablecloth_green_tiled));
-        BackgroundRecyclerAdapter backgroundRecyclerAdapter = new BackgroundRecyclerAdapter(backgrounds, bitmapLoader);
+        BackgroundRecyclerAdapter backgroundRecyclerAdapter = new BackgroundRecyclerAdapter(backgrounds);
         backgroundRecyclerAdapter.init(backgroundRecyclerView, MainActivity.this);
     }
 
