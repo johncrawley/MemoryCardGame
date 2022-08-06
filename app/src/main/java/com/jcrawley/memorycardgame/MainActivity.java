@@ -160,6 +160,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void showAboutView(){
+        dismissSettingsDialog();
         if(isShowingAboutDialogue){
             return;
         }
@@ -173,6 +174,7 @@ public class MainActivity extends AppCompatActivity {
         if(isShowingSettingsDialogue){
             return;
         }
+        dismissAboutDialog();
         settingsLayout.setVisibility(View.VISIBLE);
         isShowingSettingsDialogue = true;
         settingsLayout.startAnimation(createDropAnimation(AnimationDirection.DROP_IN, () -> {}));
@@ -338,9 +340,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void showNewGameLayout(){
-        if(isShowingAboutDialogue){
-            dismissAboutDialog();
-        }
+        dismissAboutDialog();
+        dismissSettingsDialog();
         if(isShowingNewGameDialogue){
             return;
         }
