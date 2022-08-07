@@ -1,4 +1,4 @@
-package com.jcrawley.memorycardgame.list;
+package com.jcrawley.memorycardgame.background;
 
 public class Background {
 

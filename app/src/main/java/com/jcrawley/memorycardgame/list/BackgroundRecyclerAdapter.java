@@ -1,13 +1,12 @@
 package com.jcrawley.memorycardgame.list;
 
-import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.jcrawley.memorycardgame.BitmapLoader;
 import com.jcrawley.memorycardgame.MainActivity;
 import com.jcrawley.memorycardgame.R;
+import com.jcrawley.memorycardgame.background.Background;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 public class BackgroundRecyclerAdapter extends RecyclerView.Adapter<BackgroundRecyclerAdapter.BackgroundViewHolder> {
 
     private final List<Background> backgrounds;
-    private final BitmapLoader bitmapLoader;
     private final RecyclerHelper recyclerHelper;
     private MainActivity mainActivity;
 
@@ -43,10 +41,9 @@ public class BackgroundRecyclerAdapter extends RecyclerView.Adapter<BackgroundRe
     }
 
 
-    public BackgroundRecyclerAdapter(List<Background> backgrounds, BitmapLoader bitmapLoader){
+    public BackgroundRecyclerAdapter(List<Background> backgrounds){
         recyclerHelper = new RecyclerHelper();
         this.backgrounds = new ArrayList<>(backgrounds);
-        this.bitmapLoader = bitmapLoader;
     }
 
 
@@ -59,7 +56,7 @@ public class BackgroundRecyclerAdapter extends RecyclerView.Adapter<BackgroundRe
     @Override
     @NonNull
     public BackgroundRecyclerAdapter.BackgroundViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
-        return new BackgroundRecyclerAdapter.BackgroundViewHolder(recyclerHelper.createViewForHolder(parent, R.layout.image_list_item));
+        return new BackgroundRecyclerAdapter.BackgroundViewHolder(recyclerHelper.createViewForHolder(parent, R.layout.list_item_background));
     }
 
 

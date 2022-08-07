@@ -63,7 +63,7 @@ public class CardTypeRecyclerAdapter extends RecyclerView.Adapter<CardTypeRecycl
     @Override
     @NonNull
     public CardTypeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
-        return new CardTypeViewHolder(recyclerHelper.createViewForHolder(parent, R.layout.image_list_item));
+        return new CardTypeViewHolder(recyclerHelper.createViewForHolder(parent, R.layout.list_item_card));
     }
 
 

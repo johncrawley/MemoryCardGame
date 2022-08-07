@@ -6,6 +6,7 @@
         <item name="colorPrimaryDark">@color/default_color_primary</item>
         <item name="colorPrimaryVariant">@color/default_color_primary_variant</item>
         <item name="colorOnPrimary">@color/default_colorOnPrimary</item>
+        <!-- <item name="colorOnPrimary">@color/default_colorOnPrimary</item> -->
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
         <item name="colorSecondaryVariant">@color/teal_700</item>

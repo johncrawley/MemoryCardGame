@@ -9,7 +9,23 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable-v24/background_black_to_dark_green.xml" value="0.128" />
+        <entry key="app/src/main/res/drawable-v24/background_gradient_green_to_black.xml" value="0.128" />
+        <entry key="app/src/main/res/drawable/background_black.xml" value="0.128" />
+        <entry key="app/src/main/res/drawable/background_black_green_black.xml" value="0.128" />
         <entry key="app/src/main/res/drawable/background_dark_grey_to_grey.xml" value="0.128" />
+        <entry key="app/src/main/res/drawable/background_gradient_black_green_black.xml" value="0.128" />
+        <entry key="app/src/main/res/drawable/background_gradient_blue_to_black.xml" value="0.128" />
+        <entry key="app/src/main/res/drawable/background_gradient_dark_grey_to_grey.xml" value="0.128" />
+        <entry key="app/src/main/res/drawable/background_gradient_peach_to_orange.xml" value="0.128" />
+        <entry key="app/src/main/res/drawable/background_green.xml" value="0.128" />
+        <entry key="app/src/main/res/drawable/background_plain_black.xml" value="0.128" />
+        <entry key="app/src/main/res/drawable/background_plain_green.xml" value="0.128" />
+        <entry key="app/src/main/res/drawable/background_plain_lilac.xml" value="0.128" />
+        <entry key="app/src/main/res/drawable/background_plain_navy.xml" value="0.128" />
+        <entry key="app/src/main/res/drawable/background_plain_sand.xml" value="0.128" />
+        <entry key="app/src/main/res/drawable/background_tiled_grey_cross.xml" value="0.128" />
+        <entry key="app/src/main/res/drawable/background_tiled_grey_cross_small.xml" value="0.128" />
+        <entry key="app/src/main/res/drawable/background_tiled_pale_green_dots.xml" value="0.128" />
         <entry key="app/src/main/res/drawable/background_with_shadow.xml" value="0.20208333333333334" />
         <entry key="app/src/main/res/drawable/tablecloth_green.xml" value="0.128" />
         <entry key="app/src/main/res/drawable/tablecloth_green_tiled.xml" value="0.128" />
@@ -22,6 +38,7 @@
         <entry key="app/src/main/res/layout/dialog_settings.xml" value="0.1328125" />
         <entry key="app/src/main/res/layout/dialog_settings_constraint.xml" value="0.2375" />
         <entry key="app/src/main/res/layout/image_list_item.xml" value="0.1816123188405797" />
+        <entry key="app/src/main/res/layout/list_item_background.xml" value="0.2203125" />
         <entry key="app/src/main/res/layout/new_game.xml" value="0.20572916666666666" />
         <entry key="app/src/main/res/layout/results_dialog.xml" value="0.20572916666666666" />
         <entry key="app/src/main/res/menu/menuitems.xml" value="0.165625" />

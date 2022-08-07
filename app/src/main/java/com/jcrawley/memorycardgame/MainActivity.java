@@ -24,12 +24,12 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.jcrawley.memorycardgame.background.BackgroundFactory;
 import com.jcrawley.memorycardgame.card.DeckSize;
 import com.jcrawley.memorycardgame.card.cardType.CardType;
 import com.jcrawley.memorycardgame.card.CardBackManager;
 import com.jcrawley.memorycardgame.game.CardLayoutPopulator;
 import com.jcrawley.memorycardgame.game.Game;
-import com.jcrawley.memorycardgame.list.Background;
 import com.jcrawley.memorycardgame.list.BackgroundRecyclerAdapter;
 import com.jcrawley.memorycardgame.list.CardTypeRecyclerAdapter;
 
@@ -153,8 +153,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupBackgroundRecyclerView(){
         RecyclerView backgroundRecyclerView = settingsLayout.findViewById(R.id.backgroundRecyclerView);
-        List<Background> backgrounds = Arrays.asList(new Background(R.drawable.background_black_to_dark_green), new Background(R.drawable.tablecloth_green_tiled));
-        BackgroundRecyclerAdapter backgroundRecyclerAdapter = new BackgroundRecyclerAdapter(backgrounds);
+
+        BackgroundRecyclerAdapter backgroundRecyclerAdapter = new BackgroundRecyclerAdapter(BackgroundFactory.getAll());
         backgroundRecyclerAdapter.init(backgroundRecyclerView, MainActivity.this);
     }
 
