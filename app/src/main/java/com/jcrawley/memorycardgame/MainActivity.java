@@ -148,6 +148,7 @@ public class MainActivity extends AppCompatActivity {
         List<CardType> cardTypes = Arrays.asList(CardType.BACK_1,
                 CardType.BACK_2,
                 CardType.BACK_GREEN_DIAGONALS,
+                CardType.BACK_CRISSCROSS_RED_BLUE,
                 CardType.BACK_GREEN_DIAGONALS_LIGHT);
         CardTypeRecyclerAdapter cardTypeRecyclerAdapter = new CardTypeRecyclerAdapter(cardTypes, bitmapLoader, cardBackManager, ()-> game.switchBacksOnFaceDownCards());
         cardTypeRecyclerAdapter.init(cardBacksRecyclerView, MainActivity.this);

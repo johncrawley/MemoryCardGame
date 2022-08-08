@@ -36,7 +36,7 @@ public class CardTypeRecyclerAdapter extends RecyclerView.Adapter<CardTypeRecycl
 
             view.setOnClickListener(v -> {
                 recyclerHelper.deselectPreviouslySelectedView();
-                recyclerHelper.select(v);
+                recyclerHelper.select(v, getAbsoluteAdapterPosition());
                 imageView = view.findViewById(R.id.itemImage);
                 cardTypeSetter.setCardType(cardType);
                 onClickExtra.run();

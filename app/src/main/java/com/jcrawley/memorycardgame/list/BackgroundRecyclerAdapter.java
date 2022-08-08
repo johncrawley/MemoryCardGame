@@ -33,7 +33,7 @@ public class BackgroundRecyclerAdapter extends RecyclerView.Adapter<BackgroundRe
 
             view.setOnClickListener(v -> {
                 recyclerHelper.deselectPreviouslySelectedView();
-                recyclerHelper.select(v);
+                recyclerHelper.select(v, this.getAbsoluteAdapterPosition());
                 imageView = view.findViewById(R.id.itemImage);
                 mainActivity.setBackground(background.getResourceId());
             });

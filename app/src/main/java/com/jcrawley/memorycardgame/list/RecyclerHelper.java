@@ -6,8 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.jcrawley.memorycardgame.BitmapLoader;
-import com.jcrawley.memorycardgame.card.CardTypeSetter;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -26,20 +24,19 @@ public class RecyclerHelper {
     }
 
 
-
-
     void deselectPreviouslySelectedView(){
         if(currentlySelectedView != null){
             currentlySelectedView.setSelected(false);
-            currentlySelectedView.setBackgroundColor(Color.TRANSPARENT);
+            unhighlight(currentlySelectedView);
         }
     }
 
 
-    void select(View v){
+    void select(View v, int position){
         currentlySelectedView = v;
         currentlySelectedView.setSelected(true);
-        currentlySelectedView.setBackgroundColor(HIGHLIGHTED_COLOR);
+        highlight(currentlySelectedView);
+        selectedPosition = position;
     }
 
 
@@ -73,6 +70,12 @@ public class RecyclerHelper {
 
     public void selectItem(RecyclerView.ViewHolder holder, int position){
         holder.itemView.setSelected(selectedPosition == position);
+        if(selectedPosition == position){
+            highlight(holder.itemView);
+        }
+        else{
+            unhighlight(holder.itemView);
+        }
         if(position == indexToScrollTo){
             deselectCurrentlySelectedItem();
             currentlySelectedView = holder.itemView;
@@ -84,6 +87,17 @@ public class RecyclerHelper {
     public void setIndexToScrollTo(int index){
         this.indexToScrollTo = index;
     }
+
+
+    private void highlight(View view){
+        view.setBackgroundColor(HIGHLIGHTED_COLOR);
+    }
+
+
+    private void unhighlight(View view){
+        view.setBackgroundColor(Color.TRANSPARENT);
+    }
+
 
 
 }

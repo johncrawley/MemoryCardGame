@@ -10,6 +10,7 @@ public enum CardType {
     BACK_1(R.drawable.card_back_1),
     BACK_2(R.drawable.card_back_2_resized),
     BACK_GREEN_DIAGONALS(R.drawable.card_back_green_diagonals),
+    BACK_CRISSCROSS_RED_BLUE(R.drawable.card_back_crisscross_red_blue),
     BACK_GREEN_DIAGONALS_LIGHT(R.drawable.card_back_green_diag_light);
 
 
