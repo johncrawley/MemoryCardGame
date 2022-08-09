@@ -45,7 +45,6 @@ public class CardTypeRecyclerAdapter extends RecyclerView.Adapter<CardTypeRecycl
     }
 
 
-
     public void init(RecyclerView recyclerView, Context context){
         recyclerHelper.init(this, recyclerView, context);
     }
