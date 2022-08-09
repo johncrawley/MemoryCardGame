@@ -1,110 +1,103 @@
 package com.jcrawley.memorycardgame.card;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
+import java.util.Set;
 
-import static com.jcrawley.memorycardgame.card.Rank.*;
-import static com.jcrawley.memorycardgame.card.Suit.*;
 
 public class CardFactory {
-    
-    private static List<Card> cards;
-    private static Suit suit;
+
+    private final List<Card> allCards;
+    private Map<Rank, List<Card>> rankMap;
+    private Random random;
+    private final static Rank[] ranks = Rank.values();
 
 
-    public static Map<DeckSize, List<Card>> createDecks(){
-        Map<DeckSize, List<Card>> deckMap = new HashMap<>(4);
-        deckMap.put(DeckSize.EIGHT, create8Cards());
-        deckMap.put(DeckSize.SIXTEEN, create16Cards());
-        deckMap.put(DeckSize.TWENTY_SIX, create26Cards());
-        deckMap.put(DeckSize.FIFTY_TWO, create52Cards());
-        return deckMap;
+    public CardFactory(){
+       allCards = new ArrayList<>(52);
+       setupCardMap();
+    }
+
+    private void setupCardMap(){
+        rankMap = new HashMap<>(14);
+        Rank[] ranks = Rank.values();
+        for(Rank rank : ranks){
+            List<Card> cards = new ArrayList<>();
+            for(Suit suit : Suit.values()){
+                Card card = new Card(rank, suit);
+                cards.add(card);
+                allCards.add(card);
+            }
+            rankMap.put(rank, cards);
+        }
     }
 
 
-    public static List<Card> create8Cards(){
-        cards = new ArrayList<>(8);
-        suit = DIAMONDS;
-        add(TWO);
-        add(THREE);
-        add(FOUR);
-        add(FIVE);
-        suit = CLUBS;
-        add(TWO);
-        add(THREE);
-        add(FOUR);
-        add(FIVE);
+    public List<Card> getCards(int number){
+        List<Card> listToAdd = number == allCards.size() ? allCards : getRandomCardsFromSuits(number);
+        List<Card> cards = new ArrayList<>(listToAdd);
+        Collections.shuffle(cards);
         return cards;
     }
 
 
-    public static List<Card> create16Cards(){
+    private List<Card> getRandomCardsFromSuits(int number){
+        List<Card> cards = new ArrayList<>();
+        int numberOfPairs = number / 2;
+        for(Rank rank : getRandomRanks(numberOfPairs)){
+            List<Card> cardsInRank = rankMap.get(rank);
+            assert(cardsInRank != null);
+            if(number > 26){
+                cards.addAll(cardsInRank);
+                continue;
+            }
+            cards.addAll(getTwoRandomCardsFrom(cardsInRank));
 
-        cards = new ArrayList<>(16);
-        suit = HEARTS;
-        add(TWO);
-        add(THREE);
-        add(FOUR);
-        add(FIVE);
-        add(SIX);
-        add(SEVEN);
-        add(EIGHT);
-        add(NINE);
-
-        suit = SPADES;
-        add(TWO);
-        add(THREE);
-        add(FOUR);
-        add(FIVE);
-        add(SIX);
-        add(SEVEN);
-        add(EIGHT);
-        add(NINE);
+            if(cards.size() == number){
+                break;
+            }
+        }
         return cards;
     }
 
 
-    public static List<Card> create26Cards(){
-        cards = new ArrayList<>(26);
-        addAllRanks(CLUBS);
-        addAllRanks(DIAMONDS);
+    private Set<Rank> getRandomRanks(int number){
+        Set<Rank> rankSet = new HashSet<>(number);
+        initRandom();
+
+        while(rankSet.size() < number && rankSet.size() < ranks.length){
+            rankSet.add(ranks[getRandomRankIndex()]);
+        }
+        return rankSet;
+    }
+
+
+    private Set<Card> getTwoRandomCardsFrom(List<Card> cardsToChooseFrom){
+        initRandom();
+        Set<Card> cards = new HashSet<>();
+        while(cards.size() < 2){
+            cards.add(cardsToChooseFrom.get(getRandomSuitIndex()));
+        }
         return cards;
     }
 
 
-    public static List<Card> create52Cards(){
-        cards = new ArrayList<>(52);
-        addAllRanks(HEARTS);
-        addAllRanks(CLUBS);
-        addAllRanks(SPADES);
-        addAllRanks(DIAMONDS);
-        return new ArrayList<>(cards);
+
+    private void initRandom(){
+        random = new Random(System.currentTimeMillis());
     }
 
 
-
-    private static void addAllRanks(Suit suit1){
-        suit = suit1;
-        add(TWO);
-        add(THREE);
-        add(FOUR);
-        add(FIVE);
-        add(SIX);
-        add(SEVEN);
-        add(EIGHT);
-        add(NINE);
-        add(TEN);
-        add(JACK);
-        add(QUEEN);
-        add(KING);
-        add(ACE);
+    private int getRandomRankIndex(){
+        return random.nextInt(Rank.values().length);
     }
 
-
-    private static void add(Rank rank){
-        cards.add(new Card(rank,suit));
+    private int getRandomSuitIndex(){
+        return random.nextInt(Suit.values().length);
     }
-    
 }

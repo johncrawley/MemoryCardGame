@@ -21,7 +21,6 @@ public class MainViewModel extends ViewModel {
     public int numberOfTurns;
     public GameState gameState;
     public int currentPosition;
-    public Map<DeckSize, List<Card>> deck;
     public List<Card> cards;
     public int firstSelectedPosition = -1;
     public int secondSelectedPosition = -1;

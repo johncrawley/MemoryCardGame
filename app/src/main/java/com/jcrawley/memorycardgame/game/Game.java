@@ -32,11 +32,13 @@ public class Game {
     private final MainViewModel viewModel;
     private boolean isFirstRunSinceCreate;
     private final CardBackManager cardBackManager;
+    private final CardFactory cardFactory;
 
 
     public Game(MainActivity mainActivity, CardBackManager cardBackManager, BitmapLoader bitmapLoader, int screenWidth){
         this.mainActivity = mainActivity;
         this.cardBackManager = cardBackManager;
+        cardFactory = new CardFactory();
         isFirstRunSinceCreate = true;
         viewModel = mainActivity.getViewModel();
         context = mainActivity.getApplicationContext();
@@ -52,7 +54,7 @@ public class Game {
         viewModel.numberOfTurns = 0;
         viewModel.numberOfCards = deckSize.getValue();
         viewModel.remainingCards = viewModel.numberOfCards;
-        viewModel.cards = viewModel.deck.get(deckSize);
+        viewModel.cards = cardFactory.getCards(deckSize.getValue());
         cardLayoutPopulator.addCardViews(viewModel.numberOfCards);
         viewModel.gameState = GameState.NOTHING_SELECTED;
         if(viewModel.cards == null){
@@ -128,9 +130,7 @@ public class Game {
             return;
         }
         viewModel.isAlreadyInitialised = true;
-        viewModel.deck = CardFactory.createDecks();
-        DeckSize initialDeckSize = DeckSize.valueOf(recordKeeper.getLastUsedNumberOfCards());
-        viewModel.cards = viewModel.deck.get(initialDeckSize);
+        viewModel.cards = cardFactory.getCards(recordKeeper.getNumberOfCards());
         viewModel.gameState = GameState.NOTHING_SELECTED;
         assert viewModel.cards != null;
         viewModel.numberOfCards = viewModel.cards.size();
@@ -295,6 +295,7 @@ public class Game {
     private void animateCardFlip(ImageView cardView, int rotationMultiplier, Animator.AnimatorListener onFinishedListener) {
         animateCardFlip(cardView, rotationMultiplier, onFinishedListener, 0);
     }
+
 
     private void animateCardFlip(ImageView cardView, int rotationMultiplier, Animator.AnimatorListener onFinishedListener, int startDelay){
         long duration = getInt(R.integer.flip_card_duration);

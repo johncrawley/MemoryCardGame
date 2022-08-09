@@ -8,7 +8,7 @@ public class RecordKeeper {
     private final Context context;
     private final String PREFERENCES_NAME = "memoryCardGamePreferences";
     private final String PREF_NAME_TURNS_RECORD= "numberOfTurnsCurrentRecord_";
-    private final String PREF_NAME_LAST_USED_NUMBER_OF_CARDS= "lastUsedNumberOfCards_";
+    private final String PREF_NAME_NUMBER_OF_CARDS= "numberOfCards_";
 
 
     RecordKeeper(Context context){
@@ -28,15 +28,15 @@ public class RecordKeeper {
     }
 
 
-    public void saveLastUsedNumberOfCards(String numberOfCards){
+    public void saveNumberOfCards(int numberOfCards){
         SharedPreferences.Editor editor = getEditor();
-        editor.putString(PREF_NAME_LAST_USED_NUMBER_OF_CARDS, numberOfCards );
+        editor.putInt(PREF_NAME_NUMBER_OF_CARDS, numberOfCards);
         editor.apply();
     }
 
 
-    public  String getLastUsedNumberOfCards(){
-       return getPrefs().getString(PREF_NAME_LAST_USED_NUMBER_OF_CARDS, "SIXTEEN");
+    public int getNumberOfCards(){
+        return getPrefs().getInt(PREF_NAME_NUMBER_OF_CARDS, 26);
     }
 
 

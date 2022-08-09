@@ -37,7 +37,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.jcrawley.memorycardgame.card.cardType.CardType.BACK_WIDGETS_BLUE_GREEN;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -158,7 +157,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupBackgroundRecyclerView(){
         RecyclerView backgroundRecyclerView = settingsLayout.findViewById(R.id.backgroundRecyclerView);
-
         BackgroundRecyclerAdapter backgroundRecyclerAdapter = new BackgroundRecyclerAdapter(BackgroundFactory.getAll());
         backgroundRecyclerAdapter.init(backgroundRecyclerView, MainActivity.this);
     }
@@ -268,13 +266,11 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         this.deckSize = deckSize;
-        recordKeeper.saveLastUsedNumberOfCards(deckSize.name());
-        System.out.println("MainActivity: last number of cards used : " + recordKeeper.getLastUsedNumberOfCards());
+        recordKeeper.saveNumberOfCards(deckSize.getValue());
         isShowingNewGameDialogue = false;
         newGameLayout.clearAnimation();
         newGameLayout.setVisibility(View.VISIBLE);
         newGameLayout.startAnimation(newGameDropOutAnimation);
-
     }
 
 
