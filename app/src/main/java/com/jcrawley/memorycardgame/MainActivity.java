@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean isShowingSettingsDialogue;
     private enum AnimationDirection {DROP_IN, DROP_OUT}
     private MainViewModel viewModel;
-    private RecordKeeper recordKeeper;
+    private GamePreferences gamePreferences;
     private BitmapLoader bitmapLoader;
     private CardBackManager cardBackManager;
     private ConstraintLayout settingsLayout;
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setStatusBarColor();
         setContentView(R.layout.activity_main);
-        recordKeeper = new RecordKeeper(MainActivity.this);
+        gamePreferences = new GamePreferences(MainActivity.this);
         actionBar = getSupportActionBar();
         setupResultsLayout();
         assignScreenDimensions();
@@ -82,8 +82,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void setBackground(int drawableId){
+    public void setBackground(int drawableId, int backgroundIndex){
         cardLayout.setBackground(AppCompatResources.getDrawable(MainActivity.this, drawableId));
+        gamePreferences.saveBackgroundIndex(backgroundIndex);
     }
 
 
@@ -124,8 +125,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public RecordKeeper getRecordKeeper(){
-        return this.recordKeeper;
+    public GamePreferences getGamePreferences(){
+        return this.gamePreferences;
     }
 
 
@@ -158,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
     private void setupBackgroundRecyclerView(){
         RecyclerView backgroundRecyclerView = settingsLayout.findViewById(R.id.backgroundRecyclerView);
         BackgroundRecyclerAdapter backgroundRecyclerAdapter = new BackgroundRecyclerAdapter(BackgroundFactory.getAll());
-        backgroundRecyclerAdapter.init(backgroundRecyclerView, MainActivity.this);
+        backgroundRecyclerAdapter.init(backgroundRecyclerView, MainActivity.this, gamePreferences.getBackgroundIndex());
     }
 
 
@@ -266,7 +267,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         this.deckSize = deckSize;
-        recordKeeper.saveNumberOfCards(deckSize.getValue());
+        gamePreferences.saveNumberOfCards(deckSize.getValue());
         isShowingNewGameDialogue = false;
         newGameLayout.clearAnimation();
         newGameLayout.setVisibility(View.VISIBLE);

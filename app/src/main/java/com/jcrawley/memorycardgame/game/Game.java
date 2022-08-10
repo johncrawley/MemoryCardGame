@@ -10,7 +10,7 @@ import com.jcrawley.memorycardgame.BitmapLoader;
 import com.jcrawley.memorycardgame.MainActivity;
 import com.jcrawley.memorycardgame.MainViewModel;
 import com.jcrawley.memorycardgame.R;
-import com.jcrawley.memorycardgame.RecordKeeper;
+import com.jcrawley.memorycardgame.GamePreferences;
 import com.jcrawley.memorycardgame.card.Card;
 import com.jcrawley.memorycardgame.card.CardBackManager;
 import com.jcrawley.memorycardgame.card.CardFactory;
@@ -25,7 +25,7 @@ public class Game {
     private final BitmapLoader bitmapLoader;
     private CardLayoutPopulator cardLayoutPopulator;
     private final CardAnimator cardAnimator;
-    private final RecordKeeper recordKeeper;
+    private final GamePreferences recordKeeper;
     private final MainActivity mainActivity;
     private final Context context;
     private Handler handler;
@@ -43,7 +43,7 @@ public class Game {
         viewModel = mainActivity.getViewModel();
         context = mainActivity.getApplicationContext();
         initHandler();
-        this.recordKeeper = mainActivity.getRecordKeeper();
+        this.recordKeeper = mainActivity.getGamePreferences();
         this.bitmapLoader = bitmapLoader;
         initModel();
         cardAnimator = new CardAnimator(screenWidth, context);
