@@ -9,9 +9,9 @@ public class GamePreferences {
     private final String PREFERENCES_NAME = "memoryCardGamePreferences";
     private final String PREF_NAME_TURNS_RECORD= "numberOfTurnsCurrentRecord_";
     private final String PREF_NAME_NUMBER_OF_CARDS= "numberOfCards_";
-    private final String PREF_NAME_BACKGROUND_INDEX= "backgroundIndex";
-    private final String PREF_NAME_CARD_FACE_INDEX= "cardFaceIndex";
-    private final String PREF_NAME_CARD_BACK_INDEX= "cardBackIndex";
+    public final static String PREF_NAME_BACKGROUND_INDEX= "backgroundIndex";
+    public final static String PREF_NAME_CARD_FACE_INDEX= "cardFaceIndex";
+    public final static String PREF_NAME_CARD_BACK_INDEX= "cardBackIndex";
 
 
     GamePreferences(Context context){
@@ -32,11 +32,11 @@ public class GamePreferences {
 
 
     public void saveNumberOfCards(int numberOfCards){
-        setInt(PREF_NAME_NUMBER_OF_CARDS, numberOfCards);
+        saveInt(PREF_NAME_NUMBER_OF_CARDS, numberOfCards);
     }
 
 
-    private void setInt(String prefName, int value){
+    public void saveInt(String prefName, int value){
         SharedPreferences.Editor editor = getEditor();
         editor.putInt(prefName, value);
         editor.apply();
@@ -58,13 +58,8 @@ public class GamePreferences {
     }
 
 
-    public int getBackgroundIndex(){
-        return getPrefs().getInt(PREF_NAME_BACKGROUND_INDEX, 0);
+    public int getInt(String prefName){
+        return getPrefs().getInt(prefName, 0);
     }
-
-    public void saveBackgroundIndex(int index){
-        setInt(PREF_NAME_BACKGROUND_INDEX, index);
-    }
-
 
 }

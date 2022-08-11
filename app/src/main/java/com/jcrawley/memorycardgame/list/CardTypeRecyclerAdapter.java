@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.jcrawley.memorycardgame.BitmapLoader;
+import com.jcrawley.memorycardgame.GamePreferences;
 import com.jcrawley.memorycardgame.R;
 import com.jcrawley.memorycardgame.card.CardTypeSetter;
 import com.jcrawley.memorycardgame.card.cardType.CardType;
@@ -23,7 +24,8 @@ public class CardTypeRecyclerAdapter extends RecyclerView.Adapter<CardTypeRecycl
     private final CardTypeSetter cardTypeSetter;
     private final Runnable onClickExtra;
     private final RecyclerHelper recyclerHelper;
-
+    private String preferenceName;
+    private GamePreferences gamePreferences;
 
     class CardTypeViewHolder extends RecyclerView.ViewHolder {
 
@@ -35,18 +37,15 @@ public class CardTypeRecyclerAdapter extends RecyclerView.Adapter<CardTypeRecycl
             imageView = view.findViewById(R.id.itemImage);
 
             view.setOnClickListener(v -> {
+                int position = getAbsoluteAdapterPosition();
                 recyclerHelper.deselectPreviouslySelectedView();
-                recyclerHelper.select(v, getAbsoluteAdapterPosition());
+                recyclerHelper.select(v, position);
                 imageView = view.findViewById(R.id.itemImage);
                 cardTypeSetter.setCardType(cardType);
+                gamePreferences.saveInt(preferenceName, position);
                 onClickExtra.run();
             });
         }
-    }
-
-
-    public void init(RecyclerView recyclerView, Context context){
-        recyclerHelper.init(this, recyclerView, context);
     }
 
 
@@ -56,6 +55,24 @@ public class CardTypeRecyclerAdapter extends RecyclerView.Adapter<CardTypeRecycl
         this.bitmapLoader = bitmapLoader;
         this.cardTypeSetter = cardTypeSetter;
         this.onClickExtra = onClickExtra;
+    }
+
+
+    public void init(RecyclerView recyclerView, Context context, GamePreferences gamePreferences, String preferenceName){
+        this.preferenceName = preferenceName;
+        this.gamePreferences = gamePreferences;
+        int savedPosition = gamePreferences.getInt(preferenceName);
+        recyclerHelper.init(this, recyclerView, context, savedPosition);
+        changePositionTo(savedPosition);
+        setIndexToScrollTo(savedPosition);
+        setSavedCardType(savedPosition);
+        recyclerView.scrollToPosition(savedPosition);
+    }
+
+
+    private void setSavedCardType(int savedPosition){
+        CardType savedCardType = cardTypes.get(savedPosition);
+        cardTypeSetter.setCardType(savedCardType);
     }
 
 

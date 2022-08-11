@@ -19,6 +19,7 @@ public class RecyclerHelper {
     private final int HIGHLIGHTED_COLOR;
 
 
+
     public RecyclerHelper(){
         HIGHLIGHTED_COLOR = Color.parseColor("#F57F17");
     }
@@ -40,11 +41,13 @@ public class RecyclerHelper {
     }
 
 
-    public void init(RecyclerView.Adapter<?> adapter, RecyclerView recyclerView, Context context){
+    public void init(RecyclerView.Adapter<?> adapter, RecyclerView recyclerView, Context context, int savedPosition){
         LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(horizontalLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
+        //changePositionTo(adapter, savedPosition);
+        //setIndexToScrollTo(savedPosition);
     }
 
 
@@ -65,6 +68,7 @@ public class RecyclerHelper {
         adapter.notifyItemChanged(selectedPosition);
         selectedPosition = newPosition;
         adapter.notifyItemChanged(selectedPosition);
+
     }
 
 

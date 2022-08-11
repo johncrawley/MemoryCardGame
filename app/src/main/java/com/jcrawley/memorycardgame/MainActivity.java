@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void setBackground(int drawableId, int backgroundIndex){
         cardLayout.setBackground(AppCompatResources.getDrawable(MainActivity.this, drawableId));
-        gamePreferences.saveBackgroundIndex(backgroundIndex);
+        gamePreferences.saveInt(GamePreferences.PREF_NAME_BACKGROUND_INDEX, backgroundIndex);
     }
 
 
@@ -141,8 +141,7 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView cardFacesRecyclerView = findViewById(R.id.cardTypeRecycleView);
         List<CardType> cardTypes = Arrays.asList(CardType.STANDARD, CardType.SIMPLE);
         CardTypeRecyclerAdapter cardTypeRecyclerAdapter = new CardTypeRecyclerAdapter(cardTypes, bitmapLoader, getViewModel().cardDeckImages, ()->{});
-        cardTypeRecyclerAdapter.init(cardFacesRecyclerView, MainActivity.this);
-
+        cardTypeRecyclerAdapter.init(cardFacesRecyclerView, MainActivity.this, gamePreferences, GamePreferences.PREF_NAME_CARD_FACE_INDEX);
     }
 
 
@@ -151,15 +150,18 @@ public class MainActivity extends AppCompatActivity {
         List<CardType> cardTypes = new ArrayList<>(Arrays.asList(CardType.values()));
         cardTypes.remove(CardType.SIMPLE);
         cardTypes.remove(CardType.STANDARD);
-        CardTypeRecyclerAdapter cardTypeRecyclerAdapter = new CardTypeRecyclerAdapter(cardTypes, bitmapLoader, cardBackManager, ()-> game.switchBacksOnFaceDownCards());
-        cardTypeRecyclerAdapter.init(cardBacksRecyclerView, MainActivity.this);
+        CardTypeRecyclerAdapter cardTypeRecyclerAdapter = new CardTypeRecyclerAdapter(cardTypes,
+                bitmapLoader,
+                cardBackManager,
+                ()-> game.switchBacksOnFaceDownCards());
+        cardTypeRecyclerAdapter.init(cardBacksRecyclerView, MainActivity.this, gamePreferences, GamePreferences.PREF_NAME_CARD_BACK_INDEX);
     }
 
 
     private void setupBackgroundRecyclerView(){
         RecyclerView backgroundRecyclerView = settingsLayout.findViewById(R.id.backgroundRecyclerView);
         BackgroundRecyclerAdapter backgroundRecyclerAdapter = new BackgroundRecyclerAdapter(BackgroundFactory.getAll());
-        backgroundRecyclerAdapter.init(backgroundRecyclerView, MainActivity.this, gamePreferences.getBackgroundIndex());
+        backgroundRecyclerAdapter.init(backgroundRecyclerView, MainActivity.this, gamePreferences.getInt(GamePreferences.PREF_NAME_BACKGROUND_INDEX));
     }
 
 

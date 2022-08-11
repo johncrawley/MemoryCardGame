@@ -32,10 +32,10 @@ public class BackgroundRecyclerAdapter extends RecyclerView.Adapter<BackgroundRe
             imageView = view.findViewById(R.id.itemImage);
 
             view.setOnClickListener(v -> {
+                int position = this.getAbsoluteAdapterPosition();
                 recyclerHelper.deselectPreviouslySelectedView();
-                recyclerHelper.select(v, this.getAbsoluteAdapterPosition());
-                imageView = view.findViewById(R.id.itemImage);
-                mainActivity.setBackground(background.getResourceId());
+                recyclerHelper.select(v, position);
+                mainActivity.setBackground(background.getResourceId(), position);
             });
         }
     }
@@ -47,9 +47,13 @@ public class BackgroundRecyclerAdapter extends RecyclerView.Adapter<BackgroundRe
     }
 
 
-    public void init(RecyclerView recyclerView, MainActivity mainActivity){
-        recyclerHelper.init(this, recyclerView, mainActivity);
+    public void init(RecyclerView recyclerView, MainActivity mainActivity, int savedPosition){
+        recyclerHelper.init(this, recyclerView, mainActivity, savedPosition);
         this.mainActivity = mainActivity;
+        mainActivity.setBackground(backgrounds.get(savedPosition).getResourceId(), savedPosition);
+        changePositionTo( savedPosition);
+        setIndexToScrollTo(savedPosition);
+        recyclerView.scrollToPosition(savedPosition);
     }
 
 
@@ -77,6 +81,7 @@ public class BackgroundRecyclerAdapter extends RecyclerView.Adapter<BackgroundRe
 
     private void changePositionTo(int newPosition){
         recyclerHelper.changePositionTo(this,newPosition);
+
     }
 
 
