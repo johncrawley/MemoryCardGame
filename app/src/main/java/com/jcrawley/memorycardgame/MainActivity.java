@@ -184,7 +184,6 @@ public class MainActivity extends AppCompatActivity {
         settingsLayout.setVisibility(View.VISIBLE);
         isShowingSettingsDialogue = true;
         settingsLayout.startAnimation(createDropAnimation(AnimationDirection.DROP_IN, () -> {}));
-
     }
 
 

@@ -8,6 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="background_color">#1B5E20</color>
+    <color name="scroll_view_background_color">#227528</color>
     <color name="text_shadow_color">#0B270D</color>
     <color name="default_color_primary">#051106</color>
     <color name="default_color_primary_variant">#216326</color>

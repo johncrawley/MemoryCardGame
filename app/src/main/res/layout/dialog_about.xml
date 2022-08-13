@@ -5,7 +5,7 @@
     android:id="@+id/aboutLayout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:visibility="visible"
+    android:visibility="gone"
     android:background="@drawable/background_with_shadow"
     app:layout_constraintTop_toTopOf="parent"
     android:shadowDx="5"
@@ -17,7 +17,6 @@
     app:layout_constraintRight_toRightOf="parent"
     app:layout_constraintLeft_toLeftOf="parent"
     android:orientation="vertical">
-
 
     <TextView
         android:id="@+id/aboutTextView"
@@ -33,7 +32,6 @@
         android:textColor="@color/about_game_title_text"
         android:textAlignment="center"
         android:textSize="@dimen/about_game_text_size" />
-
 
     <TextView
         android:id="@+id/versionTextView"
@@ -52,36 +50,49 @@
         android:textSize="@dimen/version_text_size" />
 
 
-    <TextView
-        android:id="@+id/createdByTextView"
+    <ScrollView
+        android:background="@color/scroll_view_background_color"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/created_by_text"
-        android:paddingHorizontal="@dimen/turns_text_padding_horizontal"
-        android:paddingBottom="@dimen/turns_text_padding_bottom"
-        android:shadowRadius="3"
-        android:textAlignment="center"
-        android:shadowDy="3"
-        android:shadowDx="3"
-        android:shadowColor="@color/text_shadow_color"
-        android:textColor="@color/about_game_created_by_text"
-        android:textSize="@dimen/created_by_text_size" />
+        android:layout_height="80dp"
+        android:requiresFadingEdge="vertical"
+        android:fadingEdgeLength="10dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/createdByTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/created_by_text"
+                android:paddingHorizontal="@dimen/turns_text_padding_horizontal"
+                android:paddingBottom="@dimen/turns_text_padding_bottom"
+                android:shadowRadius="3"
+                android:textAlignment="center"
+                android:shadowDy="3"
+                android:shadowDx="3"
+                android:shadowColor="@color/text_shadow_color"
+                android:textColor="@color/about_game_created_by_text"
+                android:textSize="@dimen/created_by_text_size" />
 
+            <TextView
+                android:id="@+id/cardMessageTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/about_cards_text"
+                android:paddingHorizontal="@dimen/turns_text_padding_horizontal"
+                android:paddingBottom="@dimen/turns_text_padding_bottom"
+                android:shadowRadius="3"
+                android:textAlignment="center"
+                android:shadowDy="3"
+                android:shadowDx="3"
+                android:shadowColor="@color/text_shadow_color"
+                android:textColor="@color/about_game_created_by_text"
+                android:textSize="@dimen/imported_cards_info_text_size" />
 
-    <TextView
-        android:id="@+id/cardMessageTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/about_cards_text"
-        android:paddingHorizontal="@dimen/turns_text_padding_horizontal"
-        android:paddingBottom="@dimen/turns_text_padding_bottom"
-        android:shadowRadius="3"
-        android:textAlignment="center"
-        android:shadowDy="3"
-        android:shadowDx="3"
-        android:shadowColor="@color/text_shadow_color"
-        android:textColor="@color/about_game_created_by_text"
-        android:textSize="@dimen/created_by_text_size" />
+        </LinearLayout>
+
+    </ScrollView>
 
 
     <Button

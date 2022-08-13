@@ -7,7 +7,9 @@ public enum CardType {
 
     STANDARD(R.drawable.card_face_standard),
     SIMPLE(R.drawable.card_face_simple),
-    BACK_2(R.drawable.card_back_2_resized),
+    BACK_KALEIDOSCOPE_RED(R.drawable.card_back_kaleidoscope_red),
+    BACK_KALEIDOSCOPE_BLUE(R.drawable.card_back_kaleidoscope_blue),
+    BACK_KALEIDOSCOPE_GREEN(R.drawable.card_back_kaleidoscope_green),
     BACK_GREEN_DIAGONALS_LIGHT(R.drawable.card_back_green_diag_light),
     BACK_YELLOW_DIAGONALS_LIGHT(R.drawable.card_back_yellow_diagonals),
     BACK_CRISSCROSS_RED_BLUE(R.drawable.card_back_crisscross_red_blue),

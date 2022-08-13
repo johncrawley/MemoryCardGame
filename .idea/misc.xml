@@ -14,6 +14,7 @@
         <entry key="app/src/main/res/drawable/background_black_green_black.xml" value="0.128" />
         <entry key="app/src/main/res/drawable/background_dark_grey_to_grey.xml" value="0.128" />
         <entry key="app/src/main/res/drawable/background_gradient_black_green_black.xml" value="0.128" />
+        <entry key="app/src/main/res/drawable/background_gradient_black_red_black.xml" value="0.128" />
         <entry key="app/src/main/res/drawable/background_gradient_blue_to_black.xml" value="0.128" />
         <entry key="app/src/main/res/drawable/background_gradient_dark_grey_to_grey.xml" value="0.128" />
         <entry key="app/src/main/res/drawable/background_gradient_peach_to_orange.xml" value="0.128" />
@@ -23,6 +24,8 @@
         <entry key="app/src/main/res/drawable/background_plain_lilac.xml" value="0.128" />
         <entry key="app/src/main/res/drawable/background_plain_navy.xml" value="0.128" />
         <entry key="app/src/main/res/drawable/background_plain_sand.xml" value="0.128" />
+        <entry key="app/src/main/res/drawable/background_tiled_dark_grey_cross.xml" value="0.128" />
+        <entry key="app/src/main/res/drawable/background_tiled_fake_wood.xml" value="0.128" />
         <entry key="app/src/main/res/drawable/background_tiled_grey_cross.xml" value="0.128" />
         <entry key="app/src/main/res/drawable/background_tiled_grey_cross_small.xml" value="0.128" />
         <entry key="app/src/main/res/drawable/background_tiled_pale_green_dots.xml" value="0.128" />
