@@ -33,7 +33,8 @@ public enum CardType {
     BACK_PLAIN_RED(R.drawable.card_back_plain_red),
     BACK_PLAIN_GREEN(R.drawable.card_back_plain_green),
     BACK_PLAIN_YELLOW(R.drawable.card_back_plain_yellow),
-    BACK_PLAIN_BLACK(R.drawable.card_back_plain_black),;
+    BACK_PLAIN_BLACK(R.drawable.card_back_plain_black),
+    BACK_RANDOM(R.drawable.card_back_random);
 
 
     private final int resourceId;

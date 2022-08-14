@@ -50,6 +50,7 @@ public class CardLayoutPopulator {
         if(hasRun){
             return;
         }
+        cardBackManager.refreshCardBackType();
         hasRun = true;
         cardsAdded = 0;
         setDimensions();
