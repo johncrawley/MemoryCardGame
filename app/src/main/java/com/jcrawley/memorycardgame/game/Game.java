@@ -82,7 +82,6 @@ public class Game {
 
     public void initCards(CardLayoutPopulator cardLayoutPopulator){
         if(isFirstRunSinceCreate){
-            System.out.println("Game.initCards() isFirstRunSinceCreate = true");
             this.cardLayoutPopulator = cardLayoutPopulator;
             boolean shouldCardBackBeRefreshed = !viewModel.isAlreadyInitialised;
             cardLayoutPopulator.addCardViews(shouldCardBackBeRefreshed);

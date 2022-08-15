@@ -46,8 +46,7 @@ public class CardLayoutPopulator {
 
 
     public void addCardViews(){
-        System.out.println("Entered addCardViews()");
-     addCardViews(true);
+        addCardViews(true);
     }
 
 
@@ -56,7 +55,6 @@ public class CardLayoutPopulator {
             return;
         }
         if(shouldCardBackTypeBeRefreshed) {
-            System.out.println("addCardViews(true)");
             cardBackManager.refreshCardBackType();
         }
         hasRun = true;

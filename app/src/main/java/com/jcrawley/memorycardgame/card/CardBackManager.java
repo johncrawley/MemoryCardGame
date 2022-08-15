@@ -44,13 +44,12 @@ public class CardBackManager implements CardTypeSetter {
 
 
     public void setCardType(CardType cardType){
-        System.out.println("Entered setCardType()");
         if(cardType == CardType.BACK_RANDOM){
             if(!viewModel.isAlreadyInitialised || viewModel.previouslySelectedCardTypeBack != CardType.BACK_RANDOM) {
                 setRandomCardBackType();
-                isRandomEnabled = true;
                 viewModel.previouslySelectedCardTypeBack  = CardType.BACK_RANDOM;
             }
+            isRandomEnabled = true;
             return;
         }
         viewModel.currentCardBackResourceId = cardType.getResourceId();
@@ -60,7 +59,6 @@ public class CardBackManager implements CardTypeSetter {
 
 
     public void refreshCardBackType(){
-        System.out.println("Entered refreshCardBackType()");
         if(!isRandomEnabled){
             return;
         }
@@ -69,14 +67,12 @@ public class CardBackManager implements CardTypeSetter {
 
 
     private void setRandomCardBackType(){
-        System.out.println("setRandomCardBackType() - Previously selected CardBackType: " + viewModel.previouslySelectedCardTypeBack.toString());
         CardType randomCardType = viewModel.previouslySelectedCardTypeBack ;
         while(randomCardType == viewModel.previouslySelectedCardTypeBack ){
             int randomIndex = random.nextInt(usableCardBackTypes.size());
            randomCardType = usableCardBackTypes.get(randomIndex);
         }
         viewModel.currentCardBackResourceId = randomCardType.getResourceId();
-        System.out.println("New random CardBackType: " + randomCardType);
     }
 
 
