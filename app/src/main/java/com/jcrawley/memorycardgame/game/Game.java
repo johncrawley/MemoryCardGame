@@ -82,8 +82,10 @@ public class Game {
 
     public void initCards(CardLayoutPopulator cardLayoutPopulator){
         if(isFirstRunSinceCreate){
+            System.out.println("Game.initCards() isFirstRunSinceCreate = true");
             this.cardLayoutPopulator = cardLayoutPopulator;
-            cardLayoutPopulator.addCardViews();
+            boolean shouldCardBackBeRefreshed = !viewModel.isAlreadyInitialised;
+            cardLayoutPopulator.addCardViews(shouldCardBackBeRefreshed);
             if(viewModel.gameState == GameState.FIRST_CARD_SELECTED){
                 quickFlipFirstSelectedCard();
             }

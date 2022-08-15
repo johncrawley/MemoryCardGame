@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import com.jcrawley.memorycardgame.card.Card;
 import com.jcrawley.memorycardgame.card.CardDeckImages;
 import com.jcrawley.memorycardgame.card.DeckSize;
+import com.jcrawley.memorycardgame.card.cardType.CardType;
 import com.jcrawley.memorycardgame.game.GameState;
 
 import java.util.List;
@@ -25,6 +26,7 @@ public class MainViewModel extends ViewModel {
     public int firstSelectedPosition = -1;
     public int secondSelectedPosition = -1;
     public CardDeckImages cardDeckImages = new CardDeckImages();
+    public CardType previouslySelectedCardTypeBack = CardType.BACK_KALEIDOSCOPE_RED;
 
     public int currentCardBackResourceId = R.drawable.card_back_kaleidoscope_red;
 

@@ -41,16 +41,24 @@ public class CardLayoutPopulator {
         this.cardBackManager = cardBackManager;
         numberOfCards = game.getNumberOfCards();
         imageViews = new ArrayList<>(numberOfCards);
-
         createClickListener();
     }
 
 
     public void addCardViews(){
+        System.out.println("Entered addCardViews()");
+     addCardViews(true);
+    }
+
+
+    public void addCardViews(boolean shouldCardBackTypeBeRefreshed){
         if(hasRun){
             return;
         }
-        cardBackManager.refreshCardBackType();
+        if(shouldCardBackTypeBeRefreshed) {
+            System.out.println("addCardViews(true)");
+            cardBackManager.refreshCardBackType();
+        }
         hasRun = true;
         cardsAdded = 0;
         setDimensions();

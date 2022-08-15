@@ -19,7 +19,6 @@ public class CardBackManager implements CardTypeSetter {
     private List<CardType> selectableCardBackTypes;
     private boolean isRandomEnabled;
     private final Random random;
-    private CardType previouslySelectedCardType = CardType.BACK_PLAIN_RED;
 
     public CardBackManager(MainViewModel viewModel, BitmapLoader bitmapLoader) {
         this.viewModel = viewModel;
@@ -45,18 +44,23 @@ public class CardBackManager implements CardTypeSetter {
 
 
     public void setCardType(CardType cardType){
+        System.out.println("Entered setCardType()");
         if(cardType == CardType.BACK_RANDOM){
-            setRandomCardBackType();
-            isRandomEnabled = true;
+            if(!viewModel.isAlreadyInitialised || viewModel.previouslySelectedCardTypeBack != CardType.BACK_RANDOM) {
+                setRandomCardBackType();
+                isRandomEnabled = true;
+                viewModel.previouslySelectedCardTypeBack  = CardType.BACK_RANDOM;
+            }
             return;
         }
         viewModel.currentCardBackResourceId = cardType.getResourceId();
-        previouslySelectedCardType = cardType;
+        viewModel.previouslySelectedCardTypeBack  = cardType;
         isRandomEnabled = false;
     }
 
 
     public void refreshCardBackType(){
+        System.out.println("Entered refreshCardBackType()");
         if(!isRandomEnabled){
             return;
         }
@@ -65,12 +69,14 @@ public class CardBackManager implements CardTypeSetter {
 
 
     private void setRandomCardBackType(){
-        CardType randomCardType = previouslySelectedCardType;
-        while(randomCardType == previouslySelectedCardType){
+        System.out.println("setRandomCardBackType() - Previously selected CardBackType: " + viewModel.previouslySelectedCardTypeBack.toString());
+        CardType randomCardType = viewModel.previouslySelectedCardTypeBack ;
+        while(randomCardType == viewModel.previouslySelectedCardTypeBack ){
             int randomIndex = random.nextInt(usableCardBackTypes.size());
            randomCardType = usableCardBackTypes.get(randomIndex);
         }
         viewModel.currentCardBackResourceId = randomCardType.getResourceId();
+        System.out.println("New random CardBackType: " + randomCardType);
     }
 
 
