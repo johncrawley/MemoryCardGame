@@ -16,10 +16,13 @@ public class BackgroundFactory {
             R.drawable.background_gradient_green_to_black,
             R.drawable.background_gradient_blue_to_black,
             R.drawable.background_gradient_black_green_black,
+            R.drawable.background_gradient_black_red_black,
             R.drawable.background_gradient_dark_grey_to_grey,
             R.drawable.background_gradient_peach_to_orange,
             R.drawable.background_tiled_tablecloth_green,
             R.drawable.background_tiled_grey_cross_small,
+            R.drawable.background_tiled_fake_wood,
+            R.drawable.background_tiled_dark_grey_cross,
             R.drawable.background_tiled_grey_cross);
 
 
