@@ -4,6 +4,7 @@
     android:id="@+id/resultsLayout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_margin="10dp"
     android:visibility="gone"
     android:background="@drawable/background_with_shadow"
     android:shadowDx="5"
@@ -73,7 +74,7 @@
         android:shadowDx="3"
         android:shadowColor="@color/text_shadow_color"
         android:textColor="#7CB342"
-        android:textSize="@dimen/created_by_text_size" />
+        android:textSize="@dimen/results_current_record_text" />
 
 </LinearLayout>
 

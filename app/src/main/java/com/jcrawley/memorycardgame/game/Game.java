@@ -214,7 +214,6 @@ public class Game {
 
     private void swipeInCards(){
         cardAnimator.swipeInAll(cardLayoutPopulator.getImageViews());
-        setAllCardsFaceUp();
     }
 
 
@@ -232,15 +231,6 @@ public class Game {
     private void setAllCardsFaceDown(){
         for(ImageView card : cardLayoutPopulator.getImageViews()){
             setCardFaceDown(card);
-        }
-    }
-
-
-    private void setAllCardsFaceUp(){
-        int index = 0;
-        for(ImageView card : cardLayoutPopulator.getImageViews()){
-            setBitmapForCard(card, index);
-            index++;
         }
     }
 
