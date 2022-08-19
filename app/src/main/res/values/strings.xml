@@ -1,13 +1,13 @@
 <resources>
     <string name="app_name">Memory Match Cards</string>
-    <string name="version">Version 2.0</string>
+    <string name="version">Version 2.0,  2021,2022</string>
     <string name="turn">Turn&#160;</string>
     <string name="game_over">Game Over</string>
     <string name="position_tag">positionTag</string>
     <string name="default_turn_text">Turns Taken</string>
     <string name="number_of_turns_taken_text">100</string>
     <string name="new_game_text">New Game</string>
-    <string name="created_by_text">Created by John Crawley, 2021</string>
+    <string name="created_by_text">Created by John Crawley</string>
     <string name="dismiss_about_button">OK!</string>
     <string name="button_8_cards_text">8 Cards</string>
     <string name="button_16_cards_text">16 Cards</string>
@@ -26,7 +26,7 @@
     <string name="background_style_settings">Background</string>
     <string name="card_face_standard_option_description">Standard Card Face</string>
     <string name="card_face_simple_option_description">Simple Card Face</string>
-    <string name="about_cards_text"> Traditional card graphics provided by \n
+    <string name="about_cards_text"> Contains card graphics produced or derived from:
         https://totalnonsense.com/open-source-vector-playing-cards/ \n
     Copyright 2011,2021 – Chris Aguilar – conjurenation@gmail.com \n
     Licensed under: LGPL 3.0 – https://www.gnu.org/licenses/lgpl-3.0.html

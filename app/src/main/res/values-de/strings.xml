@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Gedächtnis Karten</string>
-    <string name="version">Version 1.01</string>
+    <string name="version">Version 1.01, 2021,2022</string>
     <string name="turn">Drehen&#160;</string>
     <string name="game_over">Spielende</string>
     <string name="default_turn_text">Abbiegungen</string>
     <string name="number_of_turns_taken_text">100</string>
     <string name="new_game_text">Neues Spiel</string>
-    <string name="created_by_text">Erstellt von John Crawley, 2021</string>
+    <string name="created_by_text">Erstellt von John Crawley</string>
     <string name="dismiss_about_button">OK!</string>
     <string name="button_8_cards_text">8 Karten</string>
     <string name="button_16_cards_text">16 Karten</string>
@@ -25,11 +25,11 @@
     <string name="card_face_style_settings">Kartenvorderseite</string>
     <string name="card_back_style_settings">Kartenrückseite</string>
     <string name="background_style_settings">Tapete</string>
-    <string name="card_face_standard_option_description">Standard Kartenvorderseite</string>
+    <string name="card_face_standard_option_description">Norm Kartenvorderseite</string>
     <string name="card_face_simple_option_description">Einfach Kartenvorderseite</string>
-    <string name="about_cards_text"> Standard graphical cards provided by
-        https://totalnonsense.com/open-source-vector-playing-cards/
-    Copyright 2011,2021 – Chris Aguilar – conjurenation@gmail.com
+    <string name="about_cards_text"> Viele Kartenressourcen, die von oder abgeleitet von \n
+        https://totalnonsense.com/open-source-vector-playing-cards/ \n
+    Copyright 2011,2021 – Chris Aguilar – conjurenation@gmail.com \n
     Licensed under: LGPL 3.0 – https://www.gnu.org/licenses/lgpl-3.0.html
     </string>
 </resources>
