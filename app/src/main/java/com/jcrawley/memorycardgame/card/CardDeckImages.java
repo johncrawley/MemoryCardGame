@@ -23,7 +23,7 @@ public class CardDeckImages implements CardTypeSetter{
         String key = card.getSuit() + "_" + card.getRank();
         Integer imageId = currentDeckMap.get(key);
         if(imageId == null){
-            return R.drawable.card_back_1;
+            return R.drawable.card_back_kaleidoscope_red;
         }
         return imageId;
     }

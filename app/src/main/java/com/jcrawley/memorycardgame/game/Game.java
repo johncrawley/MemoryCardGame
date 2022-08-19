@@ -311,11 +311,18 @@ public class Game {
 
 
     private void setBitmapForCard(ImageView cardView, int position){
+        int imageId = getImageIdAt(position);
+        if(imageId == -1){
+            return;
+        }
         bitmapLoader.setCardFace(cardView, getImageIdAt(position));
     }
 
 
     private int getImageIdAt(int position){
+        if(position > viewModel.cards.size()-1){
+            return -1;
+        }
         return viewModel.cardDeckImages.getImageIdFor(viewModel.cards.get(position));
     }
 

@@ -23,11 +23,12 @@ public class BackgroundFactory {
             R.drawable.background_gradient_peach_to_orange,
             R.drawable.background_tiled_horizontal_lines_red,
             R.drawable.background_tiled_horizontal_lines_brown,
-            R.drawable.background_tiled_grey_cross_small,
-            R.drawable.background_tiled_dark_grey_cross,
+            R.drawable.background_tiled_cross_grey_small,
+            R.drawable.background_tiled_cross_dark_grey,
             R.drawable.background_tiled_black_diagonal,
             R.drawable.background_tiled_black_diagonal_mirrored,
-            R.drawable.background_tiled_green_diagonal_lines,
+            R.drawable.background_tiled_diagonal_lines_green,
+            R.drawable.background_tiled_diagonal_lines_green_brown,
             R.drawable.background_tiled_fake_wood);
 
 

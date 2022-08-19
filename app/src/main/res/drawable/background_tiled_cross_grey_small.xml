@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <bitmap xmlns:android="http://schemas.android.com/apk/res/android"
-    android:src="@drawable/bg_tile_green_diagonal_lines"
+    android:src="@drawable/bg_tile_cross_small_grey"
     android:tileMode="repeat" />
