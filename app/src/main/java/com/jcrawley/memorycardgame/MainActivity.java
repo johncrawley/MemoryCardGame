@@ -144,7 +144,10 @@ public class MainActivity extends AppCompatActivity {
     private void setupFaceTypesRecyclerView(){
         RecyclerView cardFacesRecyclerView = findViewById(R.id.cardTypeRecycleView);
         List<CardType> cardTypes = Arrays.asList(CardType.STANDARD, CardType.SIMPLE);
-        CardTypeRecyclerAdapter cardTypeRecyclerAdapter = new CardTypeRecyclerAdapter(cardTypes, bitmapLoader, getViewModel().cardDeckImages, ()->{});
+        CardTypeRecyclerAdapter cardTypeRecyclerAdapter = new CardTypeRecyclerAdapter(cardTypes,
+                bitmapLoader,
+                getViewModel().cardDeckImages,
+                ()-> bitmapLoader.clearCardFaceCache());
         cardTypeRecyclerAdapter.init(cardFacesRecyclerView, MainActivity.this, gamePreferences, GamePreferences.PREF_NAME_CARD_FACE_INDEX);
     }
 
@@ -155,7 +158,10 @@ public class MainActivity extends AppCompatActivity {
         CardTypeRecyclerAdapter cardTypeRecyclerAdapter = new CardTypeRecyclerAdapter(cardBackManager.getSelectableCardBackTypes(),
                 bitmapLoader,
                 cardBackManager,
-                ()-> game.switchBacksOnFaceDownCards());
+                ()->{
+                    game.switchBacksOnFaceDownCards();
+                    bitmapLoader.clearCardBackCache();
+                } );
         cardTypeRecyclerAdapter.init(cardBacksRecyclerView, MainActivity.this, gamePreferences, GamePreferences.PREF_NAME_CARD_BACK_INDEX);
     }
 

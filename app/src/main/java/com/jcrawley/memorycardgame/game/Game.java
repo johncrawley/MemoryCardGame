@@ -311,7 +311,7 @@ public class Game {
 
 
     private void setBitmapForCard(ImageView cardView, int position){
-        bitmapLoader.setBitmap(cardView, getImageIdAt(position));
+        bitmapLoader.setCardFace(cardView, getImageIdAt(position));
     }
 
 

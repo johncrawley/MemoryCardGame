@@ -16,7 +16,7 @@ import androidx.lifecycle.ViewModel;
 public class MainViewModel extends ViewModel {
 
     public boolean isAlreadyInitialised = false;
-    public Map<Integer, Bitmap> bitmapMap;
+    public Map<Integer, Bitmap> cardFaceMap,cardBackMap;
     public int numberOfCards;
     public int remainingCards;
     public int numberOfTurns;

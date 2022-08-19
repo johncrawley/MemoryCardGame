@@ -77,7 +77,7 @@ public class CardBackManager implements CardTypeSetter {
 
 
     public void setCardBackTo(ImageView imageView){
-        bitmapLoader.setBitmap(imageView, viewModel.currentCardBackResourceId);
+        bitmapLoader.setCardBack(imageView, viewModel.currentCardBackResourceId);
     }
 
 }

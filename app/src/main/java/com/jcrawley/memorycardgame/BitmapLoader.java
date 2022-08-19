@@ -16,19 +16,55 @@ public class BitmapLoader {
     public BitmapLoader(Context context, MainViewModel viewModel){
         this.context = context;
         this.viewModel = viewModel;
-        if(viewModel.bitmapMap == null){
-            viewModel.bitmapMap = new HashMap<>();
+        initMaps();
+    }
+
+
+    private void initMaps(){
+        if(viewModel.cardFaceMap == null){
+            viewModel.cardFaceMap = new HashMap<>();
+        }
+        if(viewModel.cardBackMap == null){
+            viewModel.cardBackMap = new HashMap<>();
         }
     }
+
 
     public void setBitmap(ImageView imageView, int bitmapId){
-
-        if(!viewModel.bitmapMap.containsKey(bitmapId)){
-            viewModel.bitmapMap.put(bitmapId, BitmapFactory.decodeResource(context.getResources(), bitmapId));
-        }
-        imageView.setImageBitmap(viewModel.bitmapMap.get(bitmapId));
+        imageView.setImageBitmap(decode(bitmapId));
     }
 
+
+    public void setCardFace(ImageView imageView, int bitmapId){
+        setImage(imageView, bitmapId, viewModel.cardFaceMap);
+    }
+
+
+    public void setCardBack(ImageView imageView, int bitmapId){
+        setImage(imageView, bitmapId, viewModel.cardBackMap);
+    }
+
+
+    private void setImage(ImageView imageView, int bitmapId, Map<Integer, Bitmap> bitmapMap){
+        if(!bitmapMap.containsKey(bitmapId)){
+            bitmapMap.put(bitmapId, decode(bitmapId));
+        }
+        imageView.setImageBitmap(bitmapMap.get(bitmapId));
+    }
+
+    public void clearCardFaceCache(){
+        viewModel.cardFaceMap.clear();
+    }
+
+
+    public void clearCardBackCache(){
+        viewModel.cardBackMap.clear();
+    }
+
+
+    private Bitmap decode(int bitmapId){
+        return BitmapFactory.decodeResource(context.getResources(), bitmapId);
+    }
 
 
 }

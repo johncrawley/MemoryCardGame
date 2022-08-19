@@ -28,6 +28,7 @@ public class CardAnimator {
     void swipeInAll(List<ImageView> cards){
         int delay = getInt(R.integer.swipe_in_all_cards_initial_delay);
         int delayIncrement = getInt(R.integer.swipe_in_all_cards_delay_offset);
+        delayIncrement -= cards.size();
         for(View card : cards){
             card.setVisibility(View.VISIBLE);
             swipeIn(card, delay);
