@@ -3,6 +3,8 @@
     <dimen name="turns_text_padding_horizontal">18dp</dimen>
     <dimen name="settings_section_text_padding_start">2dp</dimen>
     <dimen name="settings_section_text_padding_end">18dp</dimen>
+    <dimen name="settings_category_heading_padding_top">4dp</dimen>
+    <dimen name="settings_category_heading_padding_bottom">4dp</dimen>
     <dimen name="turns_text_padding_top">14dp</dimen>
     <dimen name="turns_text_padding_bottom">8dp</dimen>
     <dimen name="card_layout_padding">2dp</dimen>
@@ -21,5 +23,6 @@
     <dimen name="results_current_record_text">20sp</dimen>
     <dimen name="recycler_view_margin_vertical">8dp</dimen>
     <dimen name="recycler_image_item_margin">3dp</dimen>
+    <dimen name="dialog_ok_button_layout_padding_vertical">12dp</dimen>
 
 </resources>

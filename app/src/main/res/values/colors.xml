@@ -18,8 +18,12 @@
     <color name="game_complete_text_color">#F57F17</color>
     <color name="game_complete_text_shadow_color">#2B231A</color>
     <color name="results_details_text_color">#164A1A</color>
-    <color name="button_tint">#90CAF9</color>
-    <color name="button_text">#1A237E</color>
+    <color name="bright_primary">#A2A8A2</color>
+    <color name="material_divider_background">#31B3BDB3</color>
+    <color name="button_tint_old">#90CAF9</color>
+    <color name="button_text_old">#1A237E</color>
+    <color name="button_tint">#7DAED5</color>
+    <color name="button_text">#DBDDEF</color>
     <color name="number_of_turns_taken_text">#FFB300</color>
     <color name="about_game_title_text">#F57F17</color>
     <color name="about_game_created_by_text">#FFB300</color>

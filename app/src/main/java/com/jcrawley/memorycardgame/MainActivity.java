@@ -40,7 +40,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private int screenWidth, screenHeight;
-    private LinearLayout resultsLayout, newGameLayout, cardLayout, aboutLayout;//, settingsLayout;
+    private LinearLayout resultsLayout, newGameLayout, cardLayout;
+    private ConstraintLayout settingsLayout, aboutLayout;
     private Game game;
     private boolean isReadyToDismissResults = false;
     private Animation resultsDropInAnimation, resultsDropOutAnimation, newGameDropInAnimation, newGameDropOutAnimation;
@@ -56,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
     private GamePreferences gamePreferences;
     private BitmapLoader bitmapLoader;
     private CardBackManager cardBackManager;
-    private ConstraintLayout settingsLayout;
 
 
     @Override

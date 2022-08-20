@@ -40,7 +40,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@+id/settingsTextView"
-        app:layout_constraintBottom_toTopOf="@+id/dismissSettingsButton"
+        app:layout_constraintBottom_toTopOf="@+id/dialogSettingsOkButtonInclude"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
@@ -56,8 +56,8 @@
                 android:gravity="start"
                 android:paddingStart="@dimen/settings_section_text_padding_start"
                 android:paddingEnd="@dimen/settings_section_text_padding_end"
-                android:paddingTop="@dimen/version_padding_top"
-                android:paddingBottom="4dp"
+                android:paddingTop="@dimen/settings_category_heading_padding_top"
+                android:paddingBottom="@dimen/settings_category_heading_padding_bottom"
                 android:shadowColor="@color/text_shadow_color"
                 android:shadowDx="3"
                 android:shadowDy="3"
@@ -73,7 +73,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="4dp"
                 android:paddingStart="0dp"
-                android:paddingEnd="36dp" />
+                android:paddingEnd="36dp"
+                android:background="@color/material_divider_background" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/cardTypeRecycleView"
@@ -95,8 +96,8 @@
                 android:gravity="start"
                 android:paddingStart="@dimen/settings_section_text_padding_start"
                 android:paddingEnd="@dimen/settings_section_text_padding_end"
-                android:paddingTop="@dimen/version_padding_top"
-                android:paddingBottom="4dp"
+                android:paddingTop="@dimen/settings_category_heading_padding_top"
+                android:paddingBottom="@dimen/settings_category_heading_padding_bottom"
                 android:shadowColor="@color/text_shadow_color"
                 android:shadowDx="3"
                 android:shadowDy="3"
@@ -111,7 +112,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="4dp"
                 android:paddingStart="0dp"
-                android:paddingEnd="36dp" />
+                android:paddingEnd="36dp"
+                android:background="@color/material_divider_background" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/cardBackRecycleView"
@@ -132,8 +134,8 @@
                 android:gravity="start"
                 android:paddingStart="@dimen/settings_section_text_padding_start"
                 android:paddingEnd="@dimen/settings_section_text_padding_end"
-                android:paddingTop="@dimen/version_padding_top"
-                android:paddingBottom="4dp"
+                android:paddingTop="@dimen/settings_category_heading_padding_top"
+                android:paddingBottom="@dimen/settings_category_heading_padding_bottom"
                 android:shadowColor="@color/text_shadow_color"
                 android:shadowDx="3"
                 android:shadowDy="3"
@@ -148,7 +150,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="4dp"
                 android:paddingEnd="36dp"
-                android:paddingStart="0dp"/>
+                android:paddingStart="0dp"
+                android:background="@color/material_divider_background"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/backgroundRecyclerView"
@@ -161,16 +164,14 @@
         </LinearLayout>
     </ScrollView>
 
-    <Button
-        android:id="@+id/dismissSettingsButton"
-        android:textColor="@color/button_text"
-        android:layout_width="match_parent"
-        android:text="@android:string/ok"
-        android:paddingHorizontal="@dimen/about_game_ok_button_horizontal_padding"
+    <include
+        android:id="@+id/dialogSettingsOkButtonInclude"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/scrollView2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        layout="@layout/dialog_settings_ok_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
