@@ -242,23 +242,23 @@ public class Game {
 
     private void flipOver(ImageView cardView, int position, boolean isSecondCardSelected){
         viewModel.currentPosition = position;
-        flipCardView(cardView, isSecondCardSelected);
+        flipCardView(cardView, isSecondCardSelected, position);
     }
 
 
-    private void flipCardView(ImageView cardView, boolean isSecondCard) {
-        Animator.AnimatorListener halfWayFlip = createAnimatorListener(() -> onFinishedHalfFlip(cardView, isSecondCard));
+    private void flipCardView(ImageView cardView, boolean isSecondCard, int position) {
+        Animator.AnimatorListener halfWayFlip = createAnimatorListener(() -> onFinishedHalfFlip(cardView, isSecondCard, position));
         animateCardFlip(cardView, 1, halfWayFlip);
     }
 
 
-    private void onFinishedHalfFlip(ImageView cardView, boolean isSecondCard){
+    private void onFinishedHalfFlip(ImageView cardView, boolean isSecondCard, int position){
         Animator.AnimatorListener fullWayFlippedListener = createAnimatorListener(() ->{
             cardView.clearAnimation();
             checkCards(isSecondCard);
         });
         cardView.clearAnimation();
-        setBitmapForCard(cardView, viewModel.currentPosition);
+        setBitmapForCard(cardView, position);
         animateCardFlip(cardView, 2, fullWayFlippedListener);
     }
 
