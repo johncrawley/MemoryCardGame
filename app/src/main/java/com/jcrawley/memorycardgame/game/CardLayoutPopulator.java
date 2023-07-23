@@ -80,11 +80,9 @@ public class CardLayoutPopulator {
 
 
     private void setDimensions(){
-        int parentWidth = parentLayout.getWidth();
-        int parentHeight = parentLayout.getHeight();
         int reductionOffset = 0;
         do {
-            calculateCardAndGridDimensions(parentWidth, parentHeight, reductionOffset);
+            calculateCardAndGridDimensions( parentLayout.getWidth(), parentLayout.getHeight(), reductionOffset);
             reductionOffset += 3;
         }
         while(numberOfCardsPerRow * numberOfRows < numberOfCards);

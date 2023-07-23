@@ -82,7 +82,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void initCardsAfterLayoutCreation(){
         CardLayoutPopulator cardLayoutPopulator = new CardLayoutPopulator(this, cardLayout, game, cardBackManager);
-        cardLayout.getViewTreeObserver().addOnGlobalLayoutListener(()-> game.initCards(cardLayoutPopulator));
+        cardLayout.getViewTreeObserver().addOnGlobalLayoutListener(()-> {
+            game.initCards(cardLayoutPopulator);
+            System.out.println("MainActivity.initCardsAfterLayoutCreation() returned from game.initCards();");
+        });
     }
 
 
@@ -143,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupFaceTypesRecyclerView(){
         RecyclerView cardFacesRecyclerView = findViewById(R.id.cardTypeRecycleView);
-        List<CardType> cardTypes = Arrays.asList(CardType.STANDARD, CardType.SIMPLE);
+        List<CardType> cardTypes = Arrays.asList(CardType.STANDARD, CardType.SIMPLE, CardType.CAT);
         CardTypeRecyclerAdapter cardTypeRecyclerAdapter = new CardTypeRecyclerAdapter(cardTypes,
                 bitmapLoader,
                 getViewModel().cardDeckImages,

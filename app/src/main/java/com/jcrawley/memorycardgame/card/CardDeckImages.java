@@ -15,6 +15,7 @@ public class CardDeckImages implements CardTypeSetter{
         decksMap = new HashMap<>();
         addStandardDeck();
         addEasyReadDeck();
+        addCatDeck();
         currentDeckMap = decksMap.get(CardType.STANDARD);
     }
 
@@ -156,6 +157,69 @@ public class CardDeckImages implements CardTypeSetter{
         add(deckMap, suit, Rank.ACE,    R.drawable.card_face_simple_clubs_ace);
 
         decksMap.put(CardType.SIMPLE, deckMap);
+    }
+
+
+    private void addCatDeck(){
+        Map<String, Integer> deckMap = new HashMap<>();
+        Suit suit = Suit.DIAMONDS;
+        add(deckMap, suit, Rank.TWO,    R.drawable.card_face_cat_2);
+        add(deckMap, suit, Rank.THREE,  R.drawable.card_face_cat_3);
+        add(deckMap, suit, Rank.FOUR,   R.drawable.card_face_cat_4);
+        add(deckMap, suit, Rank.FIVE,   R.drawable.card_face_cat_5);
+        add(deckMap, suit, Rank.SIX,    R.drawable.card_face_cat_6);
+        add(deckMap, suit, Rank.SEVEN,  R.drawable.card_face_cat_7);
+        add(deckMap, suit, Rank.EIGHT,  R.drawable.card_face_cat_8);
+        add(deckMap, suit, Rank.NINE,   R.drawable.card_face_cat_9);
+        add(deckMap, suit, Rank.TEN,    R.drawable.card_face_cat_10);
+        add(deckMap, suit, Rank.JACK,   R.drawable.card_face_cat_jack);
+        add(deckMap, suit, Rank.QUEEN,  R.drawable.card_face_cat_queen);
+        add(deckMap, suit, Rank.KING,   R.drawable.card_face_cat_king);
+        add(deckMap, suit, Rank.ACE,    R.drawable.card_face_cat_ace);
+        suit = Suit.SPADES;
+        add(deckMap, suit, Rank.TWO,    R.drawable.card_face_cat_2);
+        add(deckMap, suit, Rank.THREE,  R.drawable.card_face_cat_3);
+        add(deckMap, suit, Rank.FOUR,   R.drawable.card_face_cat_4);
+        add(deckMap, suit, Rank.FIVE,   R.drawable.card_face_cat_5);
+        add(deckMap, suit, Rank.SIX,    R.drawable.card_face_cat_6);
+        add(deckMap, suit, Rank.SEVEN,  R.drawable.card_face_cat_7);
+        add(deckMap, suit, Rank.EIGHT,  R.drawable.card_face_cat_8);
+        add(deckMap, suit, Rank.NINE,   R.drawable.card_face_cat_9);
+        add(deckMap, suit, Rank.TEN,    R.drawable.card_face_cat_10);
+        add(deckMap, suit, Rank.JACK,   R.drawable.card_face_cat_jack);
+        add(deckMap, suit, Rank.QUEEN,  R.drawable.card_face_cat_queen);
+        add(deckMap, suit, Rank.KING,   R.drawable.card_face_cat_king);
+        add(deckMap, suit, Rank.ACE,    R.drawable.card_face_cat_ace);
+        suit = Suit.HEARTS;
+        add(deckMap, suit, Rank.TWO,    R.drawable.card_face_cat_2);
+        add(deckMap, suit, Rank.THREE,  R.drawable.card_face_cat_3);
+        add(deckMap, suit, Rank.FOUR,   R.drawable.card_face_cat_4);
+        add(deckMap, suit, Rank.FIVE,   R.drawable.card_face_cat_5);
+        add(deckMap, suit, Rank.SIX,    R.drawable.card_face_cat_6);
+        add(deckMap, suit, Rank.SEVEN,  R.drawable.card_face_cat_7);
+        add(deckMap, suit, Rank.EIGHT,  R.drawable.card_face_cat_8);
+        add(deckMap, suit, Rank.NINE,   R.drawable.card_face_cat_9);
+        add(deckMap, suit, Rank.TEN,    R.drawable.card_face_cat_10);
+        add(deckMap, suit, Rank.JACK,   R.drawable.card_face_cat_jack);
+        add(deckMap, suit, Rank.QUEEN,  R.drawable.card_face_cat_queen);
+        add(deckMap, suit, Rank.KING,   R.drawable.card_face_cat_king);
+        add(deckMap, suit, Rank.ACE,    R.drawable.card_face_cat_ace);
+        suit = Suit.CLUBS;
+        add(deckMap, suit, Rank.TWO,    R.drawable.card_face_cat_2);
+        add(deckMap, suit, Rank.THREE,  R.drawable.card_face_cat_3);
+        add(deckMap, suit, Rank.FOUR,   R.drawable.card_face_cat_4);
+        add(deckMap, suit, Rank.FIVE,   R.drawable.card_face_cat_5);
+        add(deckMap, suit, Rank.SIX,    R.drawable.card_face_cat_6);
+        add(deckMap, suit, Rank.SEVEN,  R.drawable.card_face_cat_7);
+        add(deckMap, suit, Rank.EIGHT,  R.drawable.card_face_cat_8);
+        add(deckMap, suit, Rank.NINE,   R.drawable.card_face_cat_9);
+        add(deckMap, suit, Rank.TEN,    R.drawable.card_face_cat_10);
+        add(deckMap, suit, Rank.JACK,   R.drawable.card_face_cat_jack);
+        add(deckMap, suit, Rank.QUEEN,  R.drawable.card_face_cat_queen);
+        add(deckMap, suit, Rank.KING,   R.drawable.card_face_cat_king);
+        add(deckMap, suit, Rank.ACE,    R.drawable.card_face_cat_ace);
+
+        decksMap.put(CardType.CAT, deckMap);
     }
 
     private void add(Map<String, Integer> deckMap, Suit suit, Rank rank, int id){

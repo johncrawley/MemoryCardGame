@@ -99,7 +99,7 @@ public class CardTypeRecyclerAdapter extends RecyclerView.Adapter<CardTypeRecycl
 
 
     private void changePositionTo(int newPosition){
-        recyclerHelper.changePositionTo(this,newPosition);
+        recyclerHelper.changePositionTo(this, newPosition);
     }
 
 
