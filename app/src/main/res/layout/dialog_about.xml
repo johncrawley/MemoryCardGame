@@ -1,85 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-android:id="@+id/settingsLayout"
-android:layout_width="wrap_content"
-android:layout_height="0dp"
-android:layout_gravity="center"
-android:visibility="gone"
-android:background="@drawable/background_with_shadow"
-android:shadowDx="5"
-android:shadowDy="4"
-android:shadowRadius="2"
-android:padding="12dp"
-android:shadowColor="@color/default_color_primary">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/settingsLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:layout_margin="12dp"
+    android:background="@drawable/background_with_shadow"
+    android:padding="12dp"
+    android:shadowColor="@color/default_color_primary"
+    android:shadowDx="5"
+    android:shadowDy="4"
+    android:shadowRadius="2"
+    android:visibility="gone"
+    tools:visibility="visible">
 
     <TextView
         android:id="@+id/aboutTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/app_name"
         android:paddingHorizontal="@dimen/turns_text_padding_horizontal"
         android:paddingBottom="@dimen/turns_text_padding_bottom"
-        android:shadowRadius="3"
-        android:shadowDy="3"
-        android:shadowDx="3"
         android:shadowColor="@color/text_shadow_color"
-        android:textColor="@color/about_game_title_text"
+        android:shadowDx="3"
+        android:shadowDy="3"
+        android:shadowRadius="3"
+        android:text="@string/app_name"
         android:textAlignment="center"
+        android:textColor="@color/about_game_title_text"
         android:textSize="@dimen/about_game_text_size"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/versionTextView"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/versionTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/version"
         android:paddingHorizontal="@dimen/turns_text_padding_horizontal"
         android:paddingTop="@dimen/version_padding_top"
         android:paddingBottom="@dimen/version_padding_bottom"
-        android:shadowRadius="3"
-        android:shadowDy="3"
-        android:shadowDx="3"
         android:shadowColor="@color/text_shadow_color"
-        android:textColor="@color/about_game_title_text"
+        android:shadowDx="3"
+        android:shadowDy="3"
+        android:shadowRadius="3"
+        android:text="@string/version"
         android:textAlignment="center"
+        android:textColor="@color/about_game_title_text"
         android:textSize="@dimen/version_text_size"
-        app:layout_constraintTop_toTopOf="@+id/aboutTextView"
         app:layout_constraintBottom_toTopOf="@+id/aboutInfoScrollView"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toTopOf="@+id/aboutTextView" />
 
 
     <ScrollView
         android:id="@+id/aboutInfoScrollView"
-        android:background="@color/scroll_view_background_color"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:requiresFadingEdge="vertical"
+        android:minHeight="80dp"
+        android:background="@color/scroll_view_background_color"
         android:fadingEdgeLength="10dp"
+        android:requiresFadingEdge="vertical"
         app:layout_constraintTop_toBottomOf="@id/versionTextView"
         app:layout_constraintBottom_toTopOf="@+id/dialogAboutOkButtonInclude"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <TextView
                 android:id="@+id/createdByTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/created_by_text"
                 android:paddingHorizontal="@dimen/turns_text_padding_horizontal"
                 android:paddingBottom="@dimen/turns_text_padding_bottom"
-                android:shadowRadius="3"
-                android:textAlignment="center"
-                android:shadowDy="3"
-                android:shadowDx="3"
                 android:shadowColor="@color/text_shadow_color"
+                android:shadowDx="3"
+                android:shadowDy="3"
+                android:shadowRadius="3"
+                android:text="@string/created_by_text"
+                android:textAlignment="center"
                 android:textColor="@color/about_game_created_by_text"
                 android:textSize="@dimen/created_by_text_size" />
 
@@ -87,14 +93,14 @@ android:shadowColor="@color/default_color_primary">
                 android:id="@+id/cardMessageTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/about_cards_text"
                 android:paddingHorizontal="@dimen/turns_text_padding_horizontal"
                 android:paddingBottom="@dimen/turns_text_padding_bottom"
-                android:shadowRadius="3"
-                android:textAlignment="center"
-                android:shadowDy="3"
-                android:shadowDx="3"
                 android:shadowColor="@color/text_shadow_color"
+                android:shadowDx="3"
+                android:shadowDy="3"
+                android:shadowRadius="3"
+                android:text="@string/about_cards_text"
+                android:textAlignment="center"
                 android:textColor="@color/about_game_created_by_text"
                 android:textSize="@dimen/imported_cards_info_text_size" />
 
@@ -104,11 +110,11 @@ android:shadowColor="@color/default_color_primary">
 
     <include
         android:id="@+id/dialogAboutOkButtonInclude"
+        layout="@layout/dialog_about_ok_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        layout="@layout/dialog_about_ok_button"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
