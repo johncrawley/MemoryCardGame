@@ -7,6 +7,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,6 +17,8 @@ import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
@@ -168,6 +172,41 @@ public class MainActivity extends AppCompatActivity {
         cardTypeRecyclerAdapter.init(cardBacksRecyclerView, MainActivity.this, gamePreferences, GamePreferences.PREF_NAME_CARD_BACK_INDEX);
     }
 
+    private void setupAboutDimensions(){
+        ViewGroup aboutView = findViewById(R.id.about_include);
+        aboutView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                aboutView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                setupCreditsScrollView();
+            }
+        });
+    }
+
+    private void setupCreditsScrollView(){
+        if(isInLandscapeOrientation()){
+            ViewGroup creditsScrollView = findViewById(R.id.creditsScrollView);
+            if(creditsScrollView == null){
+                return;
+            }
+            int creditsHeight = getScreenHeight() / 2;
+            int creditsWidth = creditsHeight * 2;
+            creditsScrollView.setLayoutParams(new ViewGroup.LayoutParams(creditsWidth, creditsHeight));
+        }
+    }
+
+
+    private int getScreenHeight(){
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        return displayMetrics.heightPixels;
+    }
+
+
+
+    private boolean isInLandscapeOrientation(){
+        return Configuration.ORIENTATION_LANDSCAPE == getResources().getConfiguration().orientation;
+    }
 
     private void setupBackgroundRecyclerView(){
         RecyclerView backgroundRecyclerView = settingsLayout.findViewById(R.id.backgroundRecyclerView);
