@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Gedächtnis Karten</string>
-    <string name="version">Version 2.01,  2021,2022</string>
+    <string name="version">Version 2.4,  2021 – 2023</string>
     <string name="turn">Drehen&#160;</string>
     <string name="game_over">Spielende</string>
     <string name="default_turn_text">Abbiegungen</string>
@@ -17,7 +17,7 @@
     <string name="results_status_current_record">Aktuelle Rekord:&#160;</string>
     <string name="results_status_matching_record">Gleich dem Rekord!</string>
     <string name="results_status_new_record">Herzlichen Glückwunsch! Ein neuer Rekord!</string>
-    <string name="results_status_turns_taken">&#160;turns taken</string>
+    <string name="results_status_turns_taken">Drehungen: &#160;</string>
     <string name="menu_action_new_game">Neues Spiel</string>
     <string name="menu_action_about">Über</string>
     <string name="position_tag">positionTag</string>
@@ -30,6 +30,8 @@
     <string name="about_cards_text"> Viele Kartenressourcen, die von oder abgeleitet von \n
         https://totalnonsense.com/open-source-vector-playing-cards/ \n
     Copyright 2011,2021 – Chris Aguilar – conjurenation@gmail.com \n
-    Licensed under: LGPL 3.0 – https://www.gnu.org/licenses/lgpl-3.0.html
+    Licensed under: LGPL 3.0 – https://www.gnu.org/licenses/lgpl-3.0.html \n \n
+        Kartendesigns mit Katzen wurden mit Mage Space erstellt, https://www.mage.space \n
+
     </string>
 </resources>

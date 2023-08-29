@@ -12,6 +12,10 @@
     <dimen name="card_layout_margin">0dp</dimen>
     <dimen name="game_complete_text_size">44sp</dimen>
     <dimen name="about_game_text_size">24sp</dimen>
+    <dimen name="about_info_scroll_view_margin_top">8dp</dimen>
+    <dimen name="about_info_scroll_view_margin_bottom">0dp</dimen>
+    <dimen name="about_info_layout_margin">24dp</dimen>
+    <dimen name="about_info_layout_padding">12dp</dimen>
     <dimen name="version_text_size">16sp</dimen>
     <dimen name="version_padding_top">0dp</dimen>
     <dimen name="version_padding_bottom">0dp</dimen>
@@ -23,6 +27,6 @@
     <dimen name="results_current_record_text">20sp</dimen>
     <dimen name="recycler_view_margin_vertical">8dp</dimen>
     <dimen name="recycler_image_item_margin">3dp</dimen>
-    <dimen name="dialog_ok_button_layout_padding_vertical">12dp</dimen>
+    <dimen name="dialog_ok_button_layout_padding_vertical">6dp</dimen>
 
 </resources>

@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/settingsLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:layout_margin="12dp"
     android:background="@drawable/background_with_shadow"
-    android:padding="12dp"
+    android:padding="@dimen/about_info_layout_padding"
     android:shadowColor="@color/default_color_primary"
     android:shadowDx="5"
     android:shadowDy="4"
     android:shadowRadius="2"
-    android:visibility="visible"
-    tools:visibility="visible">
+    android:visibility="gone">
 
     <TextView
         android:id="@+id/aboutTextView"
@@ -50,10 +47,9 @@
         android:textAlignment="center"
         android:textColor="@color/about_game_title_text"
         android:textSize="@dimen/version_text_size"
-        app:layout_constraintBottom_toTopOf="@+id/aboutInfoScrollView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/aboutTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/aboutTextView" />
 
 
     <ScrollView
@@ -63,6 +59,8 @@
         android:background="@color/scroll_view_background_color"
         android:minHeight="80dp"
 
+        android:layout_marginTop="@dimen/about_info_scroll_view_margin_top"
+        android:layout_marginBottom="@dimen/about_info_scroll_view_margin_bottom"
         app:layout_constraintTop_toBottomOf="@id/versionTextView"
         app:layout_constraintBottom_toTopOf="@+id/dialogAboutOkButtonInclude"
         app:layout_constraintStart_toStartOf="parent"
@@ -112,8 +110,11 @@
         layout="@layout/dialog_about_ok_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingVertical="@dimen/dialog_ok_button_layout_padding_vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
