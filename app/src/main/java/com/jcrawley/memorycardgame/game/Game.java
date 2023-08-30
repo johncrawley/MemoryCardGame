@@ -4,7 +4,10 @@ import android.animation.Animator;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+
+import androidx.annotation.NonNull;
 
 import com.jcrawley.memorycardgame.BitmapLoader;
 import com.jcrawley.memorycardgame.MainActivity;
@@ -18,6 +21,10 @@ import com.jcrawley.memorycardgame.card.DeckSize;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Game {
 
@@ -33,6 +40,9 @@ public class Game {
     private boolean isFirstRunSinceCreate;
     private final CardBackManager cardBackManager;
     private final CardFactory cardFactory;
+    private final ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
+    private final AtomicBoolean hasFlipBackAlreadyBeenInitiated = new AtomicBoolean();
+
 
 
     public Game(MainActivity mainActivity, CardBackManager cardBackManager, BitmapLoader bitmapLoader, int screenWidth){
@@ -47,6 +57,7 @@ public class Game {
         this.bitmapLoader = bitmapLoader;
         initModel();
         cardAnimator = new CardAnimator(screenWidth, context);
+        initBackgroundClickListener();
     }
 
 
@@ -103,8 +114,22 @@ public class Game {
         else if(viewModel.gameState == GameState.FIRST_CARD_SELECTED) {
             handleSecondSelection(view, position);
         }
+        else if(viewModel.gameState == GameState.SECOND_CARD_SELECTED){
+            immediatelyFlipBackBothCardsIfNoMatch();
+        }
     }
 
+    public void initBackgroundClickListener(){
+        ViewGroup background = mainActivity.findViewById(R.id.cardLayoutHolder);
+        if(background == null){
+            return;
+        }
+        background.setOnClickListener(v -> {
+            if(viewModel.gameState == GameState.SECOND_CARD_SELECTED){
+                immediatelyFlipBackBothCardsIfNoMatch();
+            }
+        });
+    }
 
     private void quickFlipFirstSelectedCard(){
         firstSelectedCard = cardLayoutPopulator.getImageViews().get(viewModel.firstSelectedPosition);
@@ -121,7 +146,6 @@ public class Game {
             }
             setCardFaceDown(card);
         }
-
     }
 
 
@@ -158,6 +182,7 @@ public class Game {
             viewModel.secondSelectedPosition = position;
             flipCard(position);
             secondSelectedCard = view;
+            hasFlipBackAlreadyBeenInitiated.set(false);
             flipOver(secondSelectedCard, position, true);
     }
 
@@ -166,12 +191,6 @@ public class Game {
         viewModel.cards.get(position).flipCard();
     }
 
-
-    private boolean matches(){
-        Card card1 = viewModel.cards.get(viewModel.firstSelectedPosition);
-        Card card2 = viewModel.cards.get(viewModel.secondSelectedPosition);
-        return card1.getRank() == card2.getRank();
-    }
 
 
     private String getStr(int resId){
@@ -217,16 +236,6 @@ public class Game {
     }
 
 
-    private void turnOverCards(){
-        Handler handler = new Handler(Looper.getMainLooper());
-        handler.postDelayed(() -> {
-            flipCardBack(firstSelectedCard, 0 );
-            flipCardBack(secondSelectedCard, 200);
-            viewModel.gameState = GameState.NOTHING_SELECTED;
-            firstSelectedCard = null;
-        }, getInt(R.integer.flip_cards_back_delay));
-    }
-
 
     private void setAllCardsFaceDown(){
         for(ImageView card : cardLayoutPopulator.getImageViews()){
@@ -267,16 +276,57 @@ public class Game {
         if(!hasSecondCardBeenTurnedOver || firstSelectedCard == null || secondSelectedCard == null){
             return;
         }
-        if(matches()){
+        if(cardsMatch()){
             removeSelectedCards();
         }
         else{
-            turnOverCards();
+            flipBothCardsBackAfterDelay();
+        }
+    }
+
+
+    private boolean cardsMatch(){
+        Card card1 = viewModel.cards.get(viewModel.firstSelectedPosition);
+        Card card2 = viewModel.cards.get(viewModel.secondSelectedPosition);
+        return card1.getRank() == card2.getRank();
+    }
+
+
+    private void flipBothCardsBackAfterDelay(){
+        scheduledExecutorService.schedule(()-> {
+            flipBothCardsBackImmediately(200);
+        }, getInt(R.integer.flip_cards_back_delay), TimeUnit.MILLISECONDS);
+    }
+
+
+    private void flipBothCardsBackImmediately(int secondFlipBackDelay){
+        if(hasFlipBackAlreadyBeenInitiated.get()){
+            return;
+        }
+        hasFlipBackAlreadyBeenInitiated.set(true);
+        mainActivity.runOnUiThread(()->{
+            flipCardBack(firstSelectedCard, 0 );
+            flipCardBack(secondSelectedCard, secondFlipBackDelay);
+            viewModel.gameState = GameState.NOTHING_SELECTED;
+            firstSelectedCard = null;
+        });
+    }
+
+
+    private void immediatelyFlipBackBothCardsIfNoMatch(){
+        if(firstSelectedCard == null || secondSelectedCard == null){
+            return;
+        }
+        if(!cardsMatch()){
+            flipBothCardsBackImmediately(0);
         }
     }
 
 
     private void flipCardBack(ImageView cardView, int delay) {
+        if(cardView == null){
+            return;
+        }
         Animator.AnimatorListener onFullWayFlippedBack = createAnimatorListener(cardView::clearAnimation);
         Animator.AnimatorListener onHalfWayFlippedBack = createAnimatorListener( () -> onHalfWayFlippedBack(cardView, onFullWayFlippedBack));
         animateCardFlip(cardView, 1, onHalfWayFlippedBack, delay);
@@ -334,12 +384,12 @@ public class Game {
 
     private Animator.AnimatorListener createAnimatorListener(Runnable onFinished){
         return new Animator.AnimatorListener() {
-            public void onAnimationEnd(Animator animator) {
+            public void onAnimationEnd(@NonNull Animator animator) {
                 handler.post(onFinished);
             }
-            public void onAnimationStart(Animator animator) {}
-            public void onAnimationCancel(Animator animator) {}
-            public void onAnimationRepeat(Animator animator) {}
+            public void onAnimationStart(@NonNull Animator animator) {}
+            public void onAnimationCancel(@NonNull Animator animator) {}
+            public void onAnimationRepeat(@NonNull Animator animator) {}
         };
     }
 
