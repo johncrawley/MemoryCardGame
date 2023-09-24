@@ -5,9 +5,9 @@ import com.jcrawley.memorycardgame.R;
 
 public enum CardType {
 
-    STANDARD(R.drawable.card_face_standard),
-    SIMPLE(R.drawable.card_face_simple),
-    CAT(R.drawable.card_face_cat_2),
+    STANDARD(R.drawable.card_face_standard, false),
+    SIMPLE(R.drawable.card_face_simple, false),
+    CAT(R.drawable.card_face_cat_2, false),
     BACK_KALEIDOSCOPE_RED(R.drawable.card_back_kaleidoscope_red),
     BACK_KALEIDOSCOPE_BLUE(R.drawable.card_back_kaleidoscope_blue),
     BACK_KALEIDOSCOPE_GREEN(R.drawable.card_back_kaleidoscope_green),
@@ -40,18 +40,40 @@ public enum CardType {
     BACK_PLAIN_GREEN(R.drawable.card_back_plain_green),
     BACK_PLAIN_YELLOW(R.drawable.card_back_plain_yellow),
     BACK_PLAIN_BLACK(R.drawable.card_back_plain_black),
-    BACK_RANDOM(R.drawable.card_back_random);
+    BACK_RANDOM(R.drawable.card_back_random, true, false);
 
 
     private final int resourceId;
+    private final boolean isCardBack;
+    private final boolean isUsable;
+
 
     CardType(int resId){
-        resourceId = resId;
+      this(resId, true);
     }
+
+
+    CardType(int resId, boolean isBackOfCard){
+      this(resId, isBackOfCard, true);
+    }
+
+
+    CardType(int resId, boolean isBackOfCard, boolean isUsable){
+        resourceId = resId;
+        isCardBack = isBackOfCard;
+        this.isUsable = isUsable;
+    }
+
 
     public int getResourceId(){
         return resourceId;
     }
+
+
+    public boolean isCardBack(){ return isCardBack; }
+
+
+    public boolean isUsable(){ return isUsable; }
 
 
 }

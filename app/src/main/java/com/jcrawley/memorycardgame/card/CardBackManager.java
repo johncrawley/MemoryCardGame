@@ -7,7 +7,6 @@ import com.jcrawley.memorycardgame.MainViewModel;
 import com.jcrawley.memorycardgame.card.cardType.CardType;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -29,12 +28,27 @@ public class CardBackManager implements CardTypeSetter {
 
 
     private void setupCardBackTypes(){
-        selectableCardBackTypes = new ArrayList<>(Arrays.asList(CardType.values()));
-        selectableCardBackTypes.remove(CardType.SIMPLE);
-        selectableCardBackTypes.remove(CardType.STANDARD);
+        CardType[] cardTypes = CardType.values();
+        selectableCardBackTypes = new ArrayList<>(cardTypes.length);
+        usableCardBackTypes = new ArrayList<>(cardTypes.length);
 
-        usableCardBackTypes = new ArrayList<>(selectableCardBackTypes);
-        usableCardBackTypes.remove(CardType.BACK_RANDOM);
+        for (CardType cardType : cardTypes) {
+            addCardBackToLists(cardType);
+        }
+        log("selectedableCardBackTypes size: " + selectableCardBackTypes.size() + " usuableCardBAck types size: " + usableCardBackTypes.size());
+    }
+
+    private void log(String msg){
+        System.out.println("^^^ CardBackManager: " + msg);
+    }
+
+    private void addCardBackToLists(CardType cardType){
+        if(cardType.isCardBack()){
+            selectableCardBackTypes.add(cardType);
+            if(cardType.isUsable()){
+                usableCardBackTypes.add(cardType);
+            }
+        }
     }
 
 
