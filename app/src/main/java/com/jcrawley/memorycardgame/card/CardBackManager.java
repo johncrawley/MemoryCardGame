@@ -35,12 +35,8 @@ public class CardBackManager implements CardTypeSetter {
         for (CardType cardType : cardTypes) {
             addCardBackToLists(cardType);
         }
-        log("selectedableCardBackTypes size: " + selectableCardBackTypes.size() + " usuableCardBAck types size: " + usableCardBackTypes.size());
     }
 
-    private void log(String msg){
-        System.out.println("^^^ CardBackManager: " + msg);
-    }
 
     private void addCardBackToLists(CardType cardType){
         if(cardType.isCardBack()){

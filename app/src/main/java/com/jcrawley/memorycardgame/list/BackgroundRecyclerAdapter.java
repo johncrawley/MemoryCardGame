@@ -48,7 +48,7 @@ public class BackgroundRecyclerAdapter extends RecyclerView.Adapter<BackgroundRe
 
 
     public void init(RecyclerView recyclerView, MainActivity mainActivity, int savedPosition){
-        recyclerHelper.init(this, recyclerView, mainActivity, savedPosition);
+        recyclerHelper.init(this, recyclerView, mainActivity);
         this.mainActivity = mainActivity;
         mainActivity.setBackground(backgrounds.get(savedPosition).getResourceId(), savedPosition);
         changePositionTo( savedPosition);

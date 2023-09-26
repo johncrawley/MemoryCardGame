@@ -11,18 +11,13 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+
 public class RecyclerHelper {
 
     private int selectedPosition = RecyclerView.NO_POSITION;
     private View currentlySelectedView;
     private int indexToScrollTo = -1;
-    private final int HIGHLIGHTED_COLOR;
-
-
-
-    public RecyclerHelper(){
-        HIGHLIGHTED_COLOR = Color.parseColor("#F57F17");
-    }
+    private int HIGHLIGHTED_COLOR;
 
 
     void deselectPreviouslySelectedView(){
@@ -41,13 +36,12 @@ public class RecyclerHelper {
     }
 
 
-    public void init(RecyclerView.Adapter<?> adapter, RecyclerView recyclerView, Context context, int savedPosition){
+    public void init(RecyclerView.Adapter<?> adapter, RecyclerView recyclerView, Context context){
         LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(horizontalLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
-        //changePositionTo(adapter, savedPosition);
-        //setIndexToScrollTo(savedPosition);
+        HIGHLIGHTED_COLOR = Color.parseColor("#F57F17"); //can't get color from context because min sdk is 19
     }
 
 

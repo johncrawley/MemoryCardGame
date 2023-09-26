@@ -61,8 +61,8 @@ public class CardTypeRecyclerAdapter extends RecyclerView.Adapter<CardTypeRecycl
     public void init(RecyclerView recyclerView, Context context, GamePreferences gamePreferences, String preferenceName){
         this.preferenceName = preferenceName;
         this.gamePreferences = gamePreferences;
-        int savedPosition = gamePreferences.getInt(preferenceName);
-        recyclerHelper.init(this, recyclerView, context, savedPosition);
+        int savedPosition = getSavedPosition();
+        recyclerHelper.init(this, recyclerView, context);
         changePositionTo(savedPosition);
         setIndexToScrollTo(savedPosition);
         setSavedCardType(savedPosition);
@@ -73,6 +73,11 @@ public class CardTypeRecyclerAdapter extends RecyclerView.Adapter<CardTypeRecycl
     private void setSavedCardType(int savedPosition){
         CardType savedCardType = cardTypes.get(savedPosition);
         cardTypeSetter.setCardType(savedCardType);
+    }
+
+
+    public int getSavedPosition(){
+        return Math.min(gamePreferences.getInt(preferenceName), cardTypes.size()-1);
     }
 
 

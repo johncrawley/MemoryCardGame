@@ -34,7 +34,7 @@ import com.jcrawley.memorycardgame.game.Game;
 import com.jcrawley.memorycardgame.list.BackgroundRecyclerAdapter;
 import com.jcrawley.memorycardgame.list.CardTypeRecyclerAdapter;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -147,12 +147,26 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupFaceTypesRecyclerView(){
         RecyclerView cardFacesRecyclerView = findViewById(R.id.cardTypeRecycleView);
-        List<CardType> cardTypes = Arrays.asList(CardType.STANDARD, CardType.SIMPLE, CardType.CAT);
-        CardTypeRecyclerAdapter cardTypeRecyclerAdapter = new CardTypeRecyclerAdapter(cardTypes,
+        CardTypeRecyclerAdapter cardTypeRecyclerAdapter = new CardTypeRecyclerAdapter(getCardFaceTypes(),
                 bitmapLoader,
                 getViewModel().cardDeckImages,
                 ()-> bitmapLoader.clearCardFaceCache());
-        cardTypeRecyclerAdapter.init(cardFacesRecyclerView, MainActivity.this, gamePreferences, GamePreferences.PREF_NAME_CARD_FACE_INDEX);
+
+        cardTypeRecyclerAdapter.init(cardFacesRecyclerView,
+                MainActivity.this,
+                gamePreferences,
+                GamePreferences.PREF_NAME_CARD_FACE_INDEX);
+    }
+
+
+    private List<CardType> getCardFaceTypes(){
+        List<CardType> cardFaceTypes = new ArrayList<>();
+        for(CardType cardType : CardType.values()){
+            if(!cardType.isCardBack()){
+                cardFaceTypes.add(cardType);
+            }
+        }
+        return cardFaceTypes;
     }
 
 
