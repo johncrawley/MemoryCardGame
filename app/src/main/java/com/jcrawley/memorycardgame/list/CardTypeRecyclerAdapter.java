@@ -17,6 +17,7 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+
 public class CardTypeRecyclerAdapter extends RecyclerView.Adapter<CardTypeRecyclerAdapter.CardTypeViewHolder> {
 
     private final List<CardType> cardTypes;
