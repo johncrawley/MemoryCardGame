@@ -44,7 +44,6 @@ public class Game {
     private final AtomicBoolean hasFlipBackAlreadyBeenInitiated = new AtomicBoolean();
 
 
-
     public Game(MainActivity mainActivity, CardBackManager cardBackManager, BitmapLoader bitmapLoader, int screenWidth){
         this.mainActivity = mainActivity;
         this.cardBackManager = cardBackManager;
@@ -105,7 +104,7 @@ public class Game {
 
 
     public void notifyClickOnPosition(ImageView view){
-        int position = (int)view.getTag(R.string.position_tag);
+        int position = getPositionTag(view);
         mainActivity.dismissAboutDialog();
         mainActivity.dismissSettingsDialog();
         if(viewModel.gameState == GameState.NOTHING_SELECTED){
@@ -115,9 +114,24 @@ public class Game {
             handleSecondSelection(view, position);
         }
         else if(viewModel.gameState == GameState.SECOND_CARD_SELECTED){
-            immediatelyFlipBackBothCardsIfNoMatch();
+           handleClickAfterSecondSelection(view, position);
         }
     }
+
+
+    private int getPositionTag(ImageView view){
+       return (int)view.getTag(R.string.position_tag);
+    }
+
+
+    private void handleClickAfterSecondSelection(ImageView view, int position){
+        immediatelyFlipBackBothCardsIfNoMatch();
+        if(position != viewModel.firstSelectedPosition && position != viewModel.secondSelectedPosition){
+            viewModel.gameState = GameState.NOTHING_SELECTED;
+            notifyClickOnPosition(view);
+        }
+    }
+
 
     public void initBackgroundClickListener(){
         ViewGroup background = mainActivity.findViewById(R.id.cardLayoutHolder);
@@ -130,6 +144,7 @@ public class Game {
             }
         });
     }
+
 
     private void quickFlipFirstSelectedCard(){
         firstSelectedCard = cardLayoutPopulator.getImageViews().get(viewModel.firstSelectedPosition);
@@ -192,21 +207,19 @@ public class Game {
     }
 
 
-
     private String getStr(int resId){
         return context.getString(resId);
     }
 
 
     private void removeSelectedCards(){
-        Handler handler = new Handler(Looper.getMainLooper());
-        cardAnimator.addSwipeOutAnimationTo(firstSelectedCard);
-        cardAnimator.addSwipeOutAnimationTo(secondSelectedCard);
+        cardAnimator.swipeOut(firstSelectedCard);
+        cardAnimator.swipeOut(secondSelectedCard);
         viewModel.cards.get(viewModel.firstSelectedPosition).setVisible(false);
         viewModel.cards.get(viewModel.secondSelectedPosition).setVisible(false);
-        handler.postDelayed(() -> {
-            viewModel.remainingCards -=2;
-            viewModel.gameState = GameState.NOTHING_SELECTED;
+        viewModel.gameState = GameState.NOTHING_SELECTED;
+        new Handler(Looper.getMainLooper()).postDelayed(() -> {
+            viewModel.remainingCards -= 2;
             if(viewModel.remainingCards <= 0){
                 displayResults();
             }
@@ -234,7 +247,6 @@ public class Game {
     private void swipeInCards(){
         cardAnimator.swipeInAll(cardLayoutPopulator.getImageViews());
     }
-
 
 
     private void setAllCardsFaceDown(){
@@ -293,14 +305,34 @@ public class Game {
 
 
     private void flipBothCardsBackAfterDelay(){
-        scheduledExecutorService.schedule(()-> {
-            flipBothCardsBackImmediately(200);
-        }, getInt(R.integer.flip_cards_back_delay), TimeUnit.MILLISECONDS);
+        int position1 = getPositionTag(firstSelectedCard);
+        int position2 = getPositionTag(secondSelectedCard);
+        scheduledExecutorService.schedule(
+                ()-> flipBothCardsBack(position1, position2, 200),
+                getInt(R.integer.flip_cards_back_delay),
+                TimeUnit.MILLISECONDS);
     }
 
 
-    private void flipBothCardsBackImmediately(int secondFlipBackDelay){
-        if(hasFlipBackAlreadyBeenInitiated.get()){
+    private boolean areCurrentCardsDifferent(int position1, int position2){
+        return position1 != getPositionTag(firstSelectedCard) && position2 != getPositionTag(secondSelectedCard);
+    }
+
+
+    private void immediatelyFlipBackBothCardsIfNoMatch(){
+        if(firstSelectedCard == null || secondSelectedCard == null){
+            return;
+        }
+        if(!cardsMatch()){
+            int position1 = getPositionTag(firstSelectedCard);
+            int position2 = getPositionTag(secondSelectedCard);
+            flipBothCardsBack(position1, position2, 0);
+        }
+    }
+
+
+    private void flipBothCardsBack(int position1, int position2, int secondFlipBackDelay){
+        if(hasFlipBackAlreadyBeenInitiated.get() || areCurrentCardsDifferent(position1, position2)){
             return;
         }
         hasFlipBackAlreadyBeenInitiated.set(true);
@@ -310,16 +342,6 @@ public class Game {
             viewModel.gameState = GameState.NOTHING_SELECTED;
             firstSelectedCard = null;
         });
-    }
-
-
-    private void immediatelyFlipBackBothCardsIfNoMatch(){
-        if(firstSelectedCard == null || secondSelectedCard == null){
-            return;
-        }
-        if(!cardsMatch()){
-            flipBothCardsBackImmediately(0);
-        }
     }
 
 

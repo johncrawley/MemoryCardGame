@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Gedächtnis Karten</string>
-    <string name="version">Version 2.4,  2021 – 2023</string>
+    <string name="version">Version 2.7,  2021 – 2024</string>
     <string name="turn">Drehen&#160;</string>
     <string name="game_over">Spielende</string>
     <string name="default_turn_text">Abbiegungen</string>
@@ -31,7 +31,7 @@
         https://totalnonsense.com/open-source-vector-playing-cards/ \n
     Copyright 2011,2021 – Chris Aguilar – conjurenation@gmail.com \n
     Licensed under: LGPL 3.0 – https://www.gnu.org/licenses/lgpl-3.0.html \n \n
-        Kartendesigns mit Katzen wurden mit Mage Space erstellt, https://www.mage.space \n
+        Kartendesigns mit Katzen und Hunde wurden mit Mage Space erstellt, https://www.mage.space \n
 
     </string>
 </resources>

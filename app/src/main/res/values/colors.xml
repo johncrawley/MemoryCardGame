@@ -22,7 +22,7 @@
     <color name="material_divider_background">#31B3BDB3</color>
     <color name="button_tint_old">#90CAF9</color>
     <color name="button_text_old">#1A237E</color>
-    <color name="button_tint">#7DAED5</color>
+    <color name="button_tint">#4988BA</color>
     <color name="button_text">#DBDDEF</color>
     <color name="number_of_turns_taken_text">#FFB300</color>
     <color name="about_game_title_text">#F57F17</color>

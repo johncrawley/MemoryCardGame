@@ -67,11 +67,10 @@ public class CardAnimator {
     }
 
 
-    void addSwipeOutAnimationTo(View card){
-
+    void swipeOut(View card){
         savePreviousElevation(card);
         int duration = getInt(R.integer.swipe_card_out_animation_duration);
-        int intitialOffset = getInt(R.integer.swipe_card_out_animation_initial_offset);
+        int initialOffset = getInt(R.integer.swipe_card_out_animation_initial_offset);
         setHighElevation(card);
         Animation animation = new TranslateAnimation(
                 0,
@@ -79,7 +78,7 @@ public class CardAnimator {
                 0,
                 0);
         animation.setDuration(duration);
-        animation.setStartOffset(intitialOffset);
+        animation.setStartOffset(initialOffset);
 
         animation.setAnimationListener(new Animation.AnimationListener() {
             public void onAnimationStart(Animation arg0) { }

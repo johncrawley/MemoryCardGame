@@ -83,10 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initCardsAfterLayoutCreation(){
         CardLayoutPopulator cardLayoutPopulator = new CardLayoutPopulator(this, cardLayout, game, cardBackManager);
-        cardLayout.getViewTreeObserver().addOnGlobalLayoutListener(()-> {
-            game.initCards(cardLayoutPopulator);
-            System.out.println("MainActivity.initCardsAfterLayoutCreation() returned from game.initCards();");
-        });
+        cardLayout.getViewTreeObserver().addOnGlobalLayoutListener(()-> game.initCards(cardLayoutPopulator));
     }
 
 
