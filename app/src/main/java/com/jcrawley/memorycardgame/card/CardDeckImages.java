@@ -5,7 +5,6 @@ import com.jcrawley.memorycardgame.card.cardType.CardType;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 public class CardDeckImages implements CardTypeSetter{
 
@@ -188,15 +187,15 @@ public class CardDeckImages implements CardTypeSetter{
         drawableMap.put(Rank.THREE,  R.drawable.card_face_dog_3);
         drawableMap.put(Rank.FOUR,   R.drawable.card_face_dog_4);
         drawableMap.put(Rank.FIVE,   R.drawable.card_face_dog_5);
-        drawableMap.put(Rank.SIX,    R.drawable.card_face_cat_6);
-        drawableMap.put(Rank.SEVEN,  R.drawable.card_face_cat_7);
-        drawableMap.put(Rank.EIGHT,  R.drawable.card_face_cat_8);
-        drawableMap.put(Rank.NINE,   R.drawable.card_face_cat_9);
-        drawableMap.put(Rank.TEN,    R.drawable.card_face_cat_10);
-        drawableMap.put(Rank.JACK,   R.drawable.card_face_cat_jack);
-        drawableMap.put(Rank.QUEEN,  R.drawable.card_face_cat_queen);
-        drawableMap.put(Rank.KING,   R.drawable.card_face_cat_king);
-        drawableMap.put(Rank.ACE,    R.drawable.card_face_cat_ace);
+        drawableMap.put(Rank.SIX,    R.drawable.card_face_dog_6);
+        drawableMap.put(Rank.SEVEN,  R.drawable.card_face_dog_7);
+        drawableMap.put(Rank.EIGHT,  R.drawable.card_face_dog_8);
+        drawableMap.put(Rank.NINE,   R.drawable.card_face_dog_9);
+        drawableMap.put(Rank.TEN,    R.drawable.card_face_dog_10);
+        drawableMap.put(Rank.JACK,   R.drawable.card_face_dog_jack);
+        drawableMap.put(Rank.QUEEN,  R.drawable.card_face_dog_queen);
+        drawableMap.put(Rank.KING,   R.drawable.card_face_dog_king);
+        drawableMap.put(Rank.ACE,    R.drawable.card_face_dog_ace);
         decksMap.put(CardType.DOG, addForAllSuits(drawableMap));
     }
 
