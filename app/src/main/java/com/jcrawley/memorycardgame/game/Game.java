@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
@@ -35,7 +36,6 @@ public class Game {
     private final GamePreferences recordKeeper;
     private final MainActivity mainActivity;
     private final Context context;
-    private Handler handler;
     private final MainViewModel viewModel;
     private boolean isFirstRunSinceCreate;
     private final CardBackManager cardBackManager;
@@ -51,12 +51,24 @@ public class Game {
         isFirstRunSinceCreate = true;
         viewModel = mainActivity.getViewModel();
         context = mainActivity.getApplicationContext();
-        initHandler();
+        ensureUnavailableCardsAreInvisible();
         this.recordKeeper = mainActivity.getGamePreferences();
         this.bitmapLoader = bitmapLoader;
         initModel();
         cardAnimator = new CardAnimator(screenWidth, context);
         initBackgroundClickListener();
+    }
+
+
+    private void ensureUnavailableCardsAreInvisible(){
+        if(viewModel.cards == null){
+            return;
+        }
+        for(Card card : viewModel.cards){
+            if(card.isUnavailable()){
+                card.setVisible(false);
+            }
+        }
     }
 
 
@@ -107,6 +119,13 @@ public class Game {
         int position = getPositionTag(view);
         mainActivity.dismissAboutDialog();
         mainActivity.dismissSettingsDialog();
+        if(viewModel.cards == null  || viewModel.cards.size() <= position){
+            return;
+        }
+        Card card = viewModel.cards.get(position);
+        if (card.isUnavailable()) {
+            return;
+        }
         if(viewModel.gameState == GameState.NOTHING_SELECTED){
             handleFirstSelection(view, position);
         }
@@ -216,10 +235,8 @@ public class Game {
 
 
     private void removeSelectedCards(){
-        cardAnimator.swipeOut(firstSelectedCard);
-        cardAnimator.swipeOut(secondSelectedCard);
-        viewModel.cards.get(viewModel.firstSelectedPosition).setVisible(false);
-        viewModel.cards.get(viewModel.secondSelectedPosition).setVisible(false);
+        removeCard(firstSelectedCard, viewModel.firstSelectedPosition);
+        removeCard(secondSelectedCard, viewModel.secondSelectedPosition);
         viewModel.gameState = GameState.NOTHING_SELECTED;
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
             viewModel.remainingCards -= 2;
@@ -227,6 +244,21 @@ public class Game {
                 displayResults();
             }
         }, 1000);
+    }
+
+
+    private void removeCard(View view, int position){
+        if(isCardsListValidFor(position)){
+            Card card = viewModel.cards.get(position);
+            card.setUnavailable();
+        }
+        cardAnimator.swipeOut(view);
+        viewModel.cards.get(viewModel.firstSelectedPosition).setVisible(false);
+    }
+
+
+    public boolean isCardsListValidFor(int position){
+        return viewModel.cards != null && viewModel.cards.size() > position;
     }
 
 
@@ -402,15 +434,10 @@ public class Game {
     }
 
 
-    private void initHandler(){
-        handler = new Handler(Looper.getMainLooper());
-    }
-
-
     private Animator.AnimatorListener createAnimatorListener(Runnable onFinished){
         return new Animator.AnimatorListener() {
             public void onAnimationEnd(@NonNull Animator animator) {
-                handler.post(onFinished);
+                new Handler(Looper.getMainLooper()).post(onFinished);
             }
             public void onAnimationStart(@NonNull Animator animator) {}
             public void onAnimationCancel(@NonNull Animator animator) {}

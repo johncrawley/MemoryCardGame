@@ -1,10 +1,13 @@
 package com.jcrawley.memorycardgame.card;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 public class Card {
     private final Rank rank;
     private final Suit suit;
     private boolean isVisible;
     private boolean isFaceDown;
+    private AtomicBoolean isAvailable = new AtomicBoolean(true);
 
 
     public Card(Rank rank, Suit suit){
@@ -17,6 +20,17 @@ public class Card {
     public void init(){
         this.isVisible = true;
         this.isFaceDown = true;
+        isAvailable.set(true);
+    }
+
+
+    public boolean isUnavailable(){
+        return !isAvailable.get();
+    }
+
+
+    public void setUnavailable(){
+        isAvailable.set(false);
     }
 
 
