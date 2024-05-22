@@ -16,6 +16,7 @@ import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
@@ -67,23 +68,44 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         gamePreferences = new GamePreferences(MainActivity.this);
         actionBar = getSupportActionBar();
-        setupResultsLayout();
-        assignScreenDimensions();
-        initAnimations();
         initButtons();
-        setupLayouts();
+        initLayouts();
         viewModel  = new ViewModelProvider(this).get(MainViewModel.class);
         bitmapLoader = new BitmapLoader(MainActivity.this, viewModel);
         cardBackManager = new CardBackManager(viewModel, bitmapLoader);
-        game = new Game(this, cardBackManager, bitmapLoader, screenWidth);
         setupSettings();
+       // initCardsAfterLayoutCreation();
+    }
+
+
+    @Override
+    public void onResume(){
+        super.onResume();
         initCardsAfterLayoutCreation();
+        log("Entered onResume()");
+    }
+
+
+
+    private void log(String msg){
+        System.out.println("^^^ MainActivity: " + msg);
     }
 
 
     private void initCardsAfterLayoutCreation(){
-        CardLayoutPopulator cardLayoutPopulator = new CardLayoutPopulator(this, cardLayout, game, cardBackManager);
-        cardLayout.getViewTreeObserver().addOnGlobalLayoutListener(()-> game.initCards(cardLayoutPopulator));
+
+        cardLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+        @Override
+        public void onGlobalLayout() {
+            cardLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            assignScreenDimensions();
+            initAnimations();
+            cardLayout.removeAllViewsInLayout();
+            game = new Game(MainActivity.this, cardBackManager, bitmapLoader, screenWidth);
+            CardLayoutPopulator cardLayoutPopulator = new CardLayoutPopulator(MainActivity.this, cardLayout, game, cardBackManager);
+            game.initCards(cardLayoutPopulator);
+        }
+                });
     }
 
 
@@ -93,11 +115,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void setupLayouts(){
+    private void initLayouts(){
         cardLayout = findViewById(R.id.cardLayout);
         newGameLayout = findViewById(R.id.new_game_include);
         aboutLayout = findViewById(R.id.about_include);
         settingsLayout = findViewById(R.id.settings_include);
+        resultsLayout = findViewById(R.id.game_over_include);
+        resultsLayout.setOnClickListener(view -> dismissResults());
     }
 
 
@@ -386,12 +410,6 @@ public class MainActivity extends AppCompatActivity {
                 resultsLayout.setVisibility(View.GONE);
             }));
         }
-    }
-
-
-    private void setupResultsLayout(){
-        resultsLayout = findViewById(R.id.game_over_include);
-        resultsLayout.setOnClickListener(view -> dismissResults());
     }
 
 
