@@ -92,13 +92,29 @@ public class CardLayoutPopulator {
 
     private void calculateCardAndGridDimensions(int parentWidth, int parentHeight, int reductionOffset){
         float parentArea = parentWidth * parentHeight;
+        if(numberOfCards == 0 || parentWidth == 0 || parentHeight == 0){
+            calculateDefaultCardAndGridDimensions(parentWidth, parentHeight);
+            return;
+        }
         float maxAreaPerCard = parentArea / numberOfCards;
-        cardWidth = (int)Math.floor(Math.sqrt(maxAreaPerCard/ 2f)) + 10;
+        float cardArea = maxAreaPerCard / 2f;
+        if(cardArea < 0){
+            cardArea = 180;
+        }
+        cardWidth = (int)Math.floor(Math.sqrt(cardArea)) + 10;
         cardWidth -= reductionOffset;
         cardHeight = (int)(cardWidth * 1.5);
 
         numberOfCardsPerRow = parentWidth / cardWidth;
         numberOfRows = (parentHeight / cardHeight);
+    }
+
+
+    private void calculateDefaultCardAndGridDimensions(int parentWidth, int parentHeight){
+        cardWidth = 70;
+        cardHeight = 40;
+        numberOfCardsPerRow = parentWidth > parentHeight ? 8 : 7;
+        numberOfRows = parentWidth > parentHeight ? 7 : 8;
     }
 
 

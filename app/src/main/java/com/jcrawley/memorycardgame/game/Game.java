@@ -203,6 +203,9 @@ public class Game {
 
 
     private void flipCard(int position){
+        if(viewModel.cards == null || position >= viewModel.cards.size()){
+            return;
+        }
         viewModel.cards.get(position).flipCard();
     }
 
