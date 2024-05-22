@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Gedächtnis Karten</string>
-    <string name="version">Version 2.7,  2021 – 2024</string>
+    <string name="version">Version 2.7.1,  2021 – 2024</string>
     <string name="turn">Drehen&#160;</string>
     <string name="game_over">Spielende</string>
     <string name="default_turn_text">Abbiegungen</string>

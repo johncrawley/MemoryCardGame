@@ -5,7 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.jcrawley.memorycardgame.BitmapLoader;
+import com.jcrawley.memorycardgame.utils.BitmapLoader;
 import com.jcrawley.memorycardgame.GamePreferences;
 import com.jcrawley.memorycardgame.R;
 import com.jcrawley.memorycardgame.card.CardTypeSetter;

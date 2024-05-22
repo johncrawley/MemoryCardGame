@@ -2,7 +2,7 @@ package com.jcrawley.memorycardgame.card;
 
 import android.widget.ImageView;
 
-import com.jcrawley.memorycardgame.BitmapLoader;
+import com.jcrawley.memorycardgame.utils.BitmapLoader;
 import com.jcrawley.memorycardgame.MainViewModel;
 import com.jcrawley.memorycardgame.card.cardType.CardType;
 

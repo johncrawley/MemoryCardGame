@@ -10,7 +10,7 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 
-import com.jcrawley.memorycardgame.BitmapLoader;
+import com.jcrawley.memorycardgame.utils.BitmapLoader;
 import com.jcrawley.memorycardgame.MainActivity;
 import com.jcrawley.memorycardgame.MainViewModel;
 import com.jcrawley.memorycardgame.R;

@@ -8,6 +8,7 @@ import com.jcrawley.memorycardgame.card.DeckSize;
 import com.jcrawley.memorycardgame.card.cardType.CardType;
 import com.jcrawley.memorycardgame.game.GameState;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -22,7 +23,7 @@ public class MainViewModel extends ViewModel {
     public int numberOfTurns;
     public GameState gameState;
     public int currentPosition;
-    public List<Card> cards;
+    public List<Card> cards = new ArrayList<>();
     public int firstSelectedPosition = -1;
     public int secondSelectedPosition = -1;
     public CardDeckImages cardDeckImages = new CardDeckImages();

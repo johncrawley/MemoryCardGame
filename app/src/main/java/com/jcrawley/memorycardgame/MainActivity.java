@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,15 +19,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.Window;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.jcrawley.memorycardgame.animation.AnimationManager;
 import com.jcrawley.memorycardgame.background.BackgroundFactory;
+import com.jcrawley.memorycardgame.card.Card;
 import com.jcrawley.memorycardgame.card.DeckSize;
 import com.jcrawley.memorycardgame.card.cardType.CardType;
 import com.jcrawley.memorycardgame.card.CardBackManager;
@@ -34,6 +33,7 @@ import com.jcrawley.memorycardgame.game.CardLayoutPopulator;
 import com.jcrawley.memorycardgame.game.Game;
 import com.jcrawley.memorycardgame.list.BackgroundRecyclerAdapter;
 import com.jcrawley.memorycardgame.list.CardTypeRecyclerAdapter;
+import com.jcrawley.memorycardgame.utils.BitmapLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,11 +42,10 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private int screenWidth, screenHeight;
-    private LinearLayout resultsLayout, newGameLayout, cardLayout;
+    private LinearLayout resultsLayout, newGameLayout, cardLayout, cardLayoutHolder;
     private ConstraintLayout settingsLayout, aboutLayout;
     private Game game;
     private boolean isReadyToDismissResults = false;
-    private Animation resultsDropInAnimation, resultsDropOutAnimation, newGameDropInAnimation, newGameDropOutAnimation;
     private ActionBar actionBar;
     private DeckSize deckSize;
     private int currentCardCount;
@@ -54,11 +53,11 @@ public class MainActivity extends AppCompatActivity {
     private boolean isShowingNewGameDialogue;
     private boolean isShowingAboutDialogue;
     private boolean isShowingSettingsDialogue;
-    private enum AnimationDirection {DROP_IN, DROP_OUT}
     private MainViewModel viewModel;
     private GamePreferences gamePreferences;
     private BitmapLoader bitmapLoader;
     private CardBackManager cardBackManager;
+    private AnimationManager animationManager;
 
 
     @Override
@@ -74,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
         bitmapLoader = new BitmapLoader(MainActivity.this, viewModel);
         cardBackManager = new CardBackManager(viewModel, bitmapLoader);
         setupSettings();
-       // initCardsAfterLayoutCreation();
     }
 
 
@@ -82,41 +80,50 @@ public class MainActivity extends AppCompatActivity {
     public void onResume(){
         super.onResume();
         initCardsAfterLayoutCreation();
-        log("Entered onResume()");
-    }
-
-
-
-    private void log(String msg){
-        System.out.println("^^^ MainActivity: " + msg);
     }
 
 
     private void initCardsAfterLayoutCreation(){
-
-        cardLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-        @Override
-        public void onGlobalLayout() {
-            cardLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-            assignScreenDimensions();
-            initAnimations();
-            cardLayout.removeAllViewsInLayout();
-            game = new Game(MainActivity.this, cardBackManager, bitmapLoader, screenWidth);
-            CardLayoutPopulator cardLayoutPopulator = new CardLayoutPopulator(MainActivity.this, cardLayout, game, cardBackManager);
-            game.initCards(cardLayoutPopulator);
-        }
-                });
+        cardLayout.getViewTreeObserver()
+                .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                cardLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                assignScreenDimensions();
+                animationManager = new AnimationManager(MainActivity.this, screenHeight);
+                cardLayout.removeAllViewsInLayout();
+                game = new Game(MainActivity.this, cardBackManager, bitmapLoader, screenWidth);
+                CardLayoutPopulator cardLayoutPopulator = new CardLayoutPopulator(MainActivity.this, cardLayout, game, cardBackManager);
+                game.initCards(cardLayoutPopulator);
+                showNewGameIfAllCardsGone();
+            }});
     }
 
 
     public void setBackground(int drawableId, int backgroundIndex){
-        cardLayout.setBackground(AppCompatResources.getDrawable(MainActivity.this, drawableId));
+        Drawable background = AppCompatResources.getDrawable(MainActivity.this, drawableId);
+        cardLayout.setBackground(background);
+        cardLayoutHolder.setBackground(background);
         gamePreferences.saveInt(GamePreferences.PREF_NAME_BACKGROUND_INDEX, backgroundIndex);
+    }
+
+
+    private void showNewGameIfAllCardsGone(){
+        if(viewModel.cards == null){
+            return;
+        }
+        for(Card card : viewModel.cards){
+            if(card.isVisible()){
+                return;
+            }
+        }
+        showNewGameLayout();
     }
 
 
     private void initLayouts(){
         cardLayout = findViewById(R.id.cardLayout);
+        cardLayoutHolder = findViewById(R.id.cardLayoutHolder);
         newGameLayout = findViewById(R.id.new_game_include);
         aboutLayout = findViewById(R.id.about_include);
         settingsLayout = findViewById(R.id.settings_include);
@@ -191,6 +198,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public void onResultsDialogShown(){
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.postDelayed(() -> isReadyToDismissResults=true, getResources().getInteger(R.integer.enable_dismiss_results_delay));
+    }
+
+
     private void setupBackTypesRecyclerView(){
         RecyclerView cardBacksRecyclerView = findViewById(R.id.cardBackRecycleView);
 
@@ -219,7 +232,7 @@ public class MainActivity extends AppCompatActivity {
         }
         aboutLayout.setVisibility(View.VISIBLE);
         isShowingAboutDialogue = true;
-        aboutLayout.startAnimation(createDropAnimation(AnimationDirection.DROP_IN, () -> {}));
+        aboutLayout.startAnimation(animationManager.getAboutDialogDropInAnimation());
     }
 
 
@@ -230,7 +243,7 @@ public class MainActivity extends AppCompatActivity {
         dismissAboutDialog();
         settingsLayout.setVisibility(View.VISIBLE);
         isShowingSettingsDialogue = true;
-        settingsLayout.startAnimation(createDropAnimation(AnimationDirection.DROP_IN, () -> {}));
+        settingsLayout.startAnimation(animationManager.getSettingsDropInAnimation());
     }
 
 
@@ -245,24 +258,18 @@ public class MainActivity extends AppCompatActivity {
         int cardCount = cardLayout.getChildCount();
         currentFadeOutCount = 0;
         currentCardCount = cardCount;
-        for(int i=0; i< cardCount; i++){
-            View v = cardLayout.getChildAt(i);
-            Animation fadeOutCardsAnimation = new AlphaAnimation(1, 0);
-            fadeOutCardsAnimation.setInterpolator(new AccelerateInterpolator());
-            fadeOutCardsAnimation.setStartOffset(getInt(R.integer.fade_out_cards_start_offset));
-            fadeOutCardsAnimation.setDuration(getInt(R.integer.fade_out_cards_duration));
-            fadeOutCardsAnimation.setAnimationListener(new Animation.AnimationListener() {
-                public void onAnimationEnd(Animation animation) {
-                    v.setVisibility(View.GONE);
-                    v.clearAnimation();
-                    currentFadeOutCount++;
-                    checkToRemoveAllCardsFromLayout();
-                }
-                public void onAnimationStart(Animation animation) { }
-                public void onAnimationRepeat(Animation animation) { }
-            });
-            v.startAnimation(fadeOutCardsAnimation);
+        cardLayout.startAnimation(animationManager.getCardsFadeOutAnimation());
+    }
+
+
+    public void onCardsFadedOut(){
+        for(View v : cardLayout.getTouchables()){
+            v.setVisibility(View.GONE);
         }
+        cardLayout.setVisibility(View.VISIBLE);
+        cardLayout.clearAnimation();
+        currentFadeOutCount++;
+        checkToRemoveAllCardsFromLayout();
     }
 
 
@@ -282,11 +289,7 @@ public class MainActivity extends AppCompatActivity {
         }
         isShowingAboutDialogue = false;
         aboutLayout.clearAnimation();
-
-        aboutLayout.startAnimation(createDropAnimation(AnimationDirection.DROP_OUT, ()-> {
-            aboutLayout.clearAnimation();
-            aboutLayout.setVisibility(View.INVISIBLE);
-        }));
+        aboutLayout.startAnimation(animationManager.getAboutDialogDropOutAnimation());
     }
 
 
@@ -296,11 +299,19 @@ public class MainActivity extends AppCompatActivity {
         }
         isShowingSettingsDialogue = false;
         settingsLayout.clearAnimation();
+        settingsLayout.startAnimation(animationManager.getSettingsDropOutAnimation());
+    }
 
-        settingsLayout.startAnimation(createDropAnimation(AnimationDirection.DROP_OUT, ()-> {
-            settingsLayout.clearAnimation();
-            settingsLayout.setVisibility(View.INVISIBLE);
-        }));
+
+    public void onSettingsDialogDismissed(){
+        settingsLayout.clearAnimation();
+        settingsLayout.setVisibility(View.INVISIBLE);
+    }
+
+
+    public void onAboutDialogDismissed(){
+        aboutLayout.clearAnimation();
+        aboutLayout.setVisibility(View.INVISIBLE);
     }
 
 
@@ -319,73 +330,22 @@ public class MainActivity extends AppCompatActivity {
         isShowingNewGameDialogue = false;
         newGameLayout.clearAnimation();
         newGameLayout.setVisibility(View.VISIBLE);
-        newGameLayout.startAnimation(newGameDropOutAnimation);
+        newGameLayout.startAnimation(animationManager.getNewGameDropOutAnimation());
     }
 
 
-    private void initAnimations(){
-        setupResultsDropInAnimation();
-        setupResultsDropOutAnimation();
-        setupNewGameDropInAnimation();
-        setupNewGameDropOutAnimation();
+    public void onResultsDismissed(){
+        resultsLayout.clearAnimation();
+        resultsLayout.setVisibility(View.GONE);
+        showNewGameLayout();
     }
 
 
-    private void setupResultsDropInAnimation(){
-        resultsDropInAnimation = createDropAnimation(AnimationDirection.DROP_IN, () -> {
-            Handler handler = new Handler(Looper.getMainLooper());
-            handler.postDelayed(() -> isReadyToDismissResults=true,
-                    getInt(R.integer.enable_dismiss_results_delay));
-        });
-    }
-
-
-    private int getInt(int resId){
-        return getResources().getInteger(resId);
-    }
-
-
-    public void setupResultsDropOutAnimation(){
-        resultsDropOutAnimation = createDropAnimation(AnimationDirection.DROP_OUT, () -> {
-            resultsLayout.clearAnimation();
-            resultsLayout.setVisibility(View.GONE);
-            showNewGameLayout();
-        });
-    }
-
-
-    public void setupNewGameDropInAnimation(){
-        newGameDropInAnimation = createDropAnimation(AnimationDirection.DROP_IN, ()->{});
-    }
-
-
-    public void setupNewGameDropOutAnimation(){
-        newGameDropOutAnimation = createDropAnimation(AnimationDirection.DROP_OUT, ()-> {
-            newGameLayout.clearAnimation();
-            newGameLayout.setVisibility(View.GONE);
-            game.startAgain(deckSize);
-            setPlainTitle();
-        });
-    }
-
-
-    private Animation createDropAnimation(AnimationDirection direction, Runnable onAnimationEnd ){
-        Animation dropOutAnimation = new TranslateAnimation(
-                0,
-                0,
-                direction == AnimationDirection.DROP_IN ? -screenHeight : 0,
-                direction == AnimationDirection.DROP_OUT ? screenHeight : 0);
-        dropOutAnimation.setDuration(getResources().getInteger(R.integer.view_drop_duration));
-        dropOutAnimation.setFillAfter(true);
-        dropOutAnimation.setAnimationListener(new Animation.AnimationListener(){
-            public void onAnimationStart(Animation arg0) { }
-            public void onAnimationRepeat(Animation arg0) { }
-            @Override
-            public void onAnimationEnd(Animation arg0) {
-                onAnimationEnd.run();
-            }});
-
-        return dropOutAnimation;
+    public void onNewGameScreenDismissed(){
+        newGameLayout.clearAnimation();
+        newGameLayout.setVisibility(View.GONE);
+        game.startAgain(deckSize);
+        setPlainTitle();
     }
 
 
@@ -399,16 +359,13 @@ public class MainActivity extends AppCompatActivity {
         isShowingNewGameDialogue = true;
         dismissResultsLayoutIfVisible();
         newGameLayout.setVisibility(View.VISIBLE);
-        newGameLayout.startAnimation(newGameDropInAnimation);
+        newGameLayout.startAnimation(animationManager.getNewGameDropInAnimation());
     }
 
 
     private void dismissResultsLayoutIfVisible(){
         if(resultsLayout.getVisibility() == View.VISIBLE){
-            resultsLayout.startAnimation(createDropAnimation(AnimationDirection.DROP_OUT, ()-> {
-                resultsLayout.clearAnimation();
-                resultsLayout.setVisibility(View.GONE);
-            }));
+            resultsLayout.startAnimation(animationManager.getResultsDropOutAnimation());
         }
     }
 
@@ -435,7 +392,7 @@ public class MainActivity extends AppCompatActivity {
         resultsTextView.setText(String.valueOf(numberOfTurns));
         recordTextView.setText(recordText);
         resultsLayout.setVisibility(View.VISIBLE);
-        resultsLayout.startAnimation(resultsDropInAnimation);
+        resultsLayout.startAnimation(animationManager.getResultsDropInAnimation());
     }
 
 
@@ -459,7 +416,7 @@ public class MainActivity extends AppCompatActivity {
         if(isReadyToDismissResults) {
             isReadyToDismissResults = false;
             resultsLayout.clearAnimation();
-            resultsLayout.startAnimation(resultsDropOutAnimation);
+            resultsLayout.startAnimation(animationManager.getResultsDropOutAnimation());
         }
     }
 
