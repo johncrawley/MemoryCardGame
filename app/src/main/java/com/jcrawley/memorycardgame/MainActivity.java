@@ -397,6 +397,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void setTitleWithTurns(int turn){
+
         String turnsWithTitle = getString(R.string.turn) + turn;
        actionBar.setTitle(turnsWithTitle);
     }
