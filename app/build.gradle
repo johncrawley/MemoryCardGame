@@ -22,9 +22,6 @@ android {
     }
     namespace 'com.jcrawley.memorycardgame'
     compileSdk 35
-    compileOptions {
-        targetCompatibility JavaVersion.VERSION_17
-    }
 }
 
 dependencies {
