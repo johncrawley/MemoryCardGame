@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
     private BitmapLoader bitmapLoader;
     private CardBackManager cardBackManager;
     private AnimationManager animationManager;
+    private TextView statusText;
 
 
     @Override
@@ -69,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         actionBar = getSupportActionBar();
         initButtons();
         initLayouts();
+        statusText = findViewById(R.id.statusText);
         viewModel  = new ViewModelProvider(this).get(MainViewModel.class);
         bitmapLoader = new BitmapLoader(MainActivity.this, viewModel);
         cardBackManager = new CardBackManager(viewModel, bitmapLoader);
@@ -397,7 +399,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void setTitleWithTurns(int turn){
-
         String turnsWithTitle = getString(R.string.turn) + turn;
        actionBar.setTitle(turnsWithTitle);
     }
