@@ -400,17 +400,19 @@ public class MainActivity extends AppCompatActivity {
 
     public void setTitleWithTurns(int turn){
         String turnsWithTitle = getString(R.string.turn) + turn;
-       actionBar.setTitle(turnsWithTitle);
+        statusText.setText(turnsWithTitle);
+       //actionBar.setTitle(turnsWithTitle);
     }
 
 
     public void setGameOverTitle(){
-        actionBar.setTitle(getString(R.string.game_over));
+        //actionBar.setTitle(getString(R.string.game_over));
     }
 
 
     public void setPlainTitle(){
-        actionBar.setTitle(getString(R.string.app_name));
+
+        //actionBar.setTitle(getString(R.string.app_name));
     }
 
 
