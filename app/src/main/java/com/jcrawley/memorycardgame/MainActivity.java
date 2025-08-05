@@ -4,6 +4,9 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -46,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
     private ConstraintLayout settingsLayout, aboutLayout;
     private Game game;
     private boolean isReadyToDismissResults = false;
-    private ActionBar actionBar;
     private DeckSize deckSize;
     private int currentCardCount;
     private int currentFadeOutCount = 0;
@@ -66,8 +68,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setStatusBarColor();
         setContentView(R.layout.activity_main);
+        setupMainLayout();
         gamePreferences = new GamePreferences(MainActivity.this);
-        actionBar = getSupportActionBar();
         initButtons();
         initLayouts();
         statusText = findViewById(R.id.statusText);
@@ -75,6 +77,15 @@ public class MainActivity extends AppCompatActivity {
         bitmapLoader = new BitmapLoader(MainActivity.this, viewModel);
         cardBackManager = new CardBackManager(viewModel, bitmapLoader);
         setupSettings();
+    }
+
+
+    private void setupMainLayout(){
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.mainLayout), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
     }
 
 
