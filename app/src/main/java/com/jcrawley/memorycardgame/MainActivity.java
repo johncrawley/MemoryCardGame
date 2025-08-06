@@ -1,6 +1,5 @@
 package com.jcrawley.memorycardgame;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -20,6 +19,7 @@ import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.widget.Button;
@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
     private CardBackManager cardBackManager;
     private AnimationManager animationManager;
     private TextView statusText;
+    private ViewGroup mainLayout;
 
 
     @Override
@@ -68,7 +69,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setStatusBarColor();
         setContentView(R.layout.activity_main);
-        setupMainLayout();
+        setupInsetPadding();
+        mainLayout = findViewById(R.id.mainLayout);
         gamePreferences = new GamePreferences(MainActivity.this);
         initButtons();
         initLayouts();
@@ -80,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void setupMainLayout(){
+    private void setupInsetPadding(){
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.mainLayout), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -115,8 +117,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void setBackground(int drawableId, int backgroundIndex){
         Drawable background = AppCompatResources.getDrawable(MainActivity.this, drawableId);
-        cardLayout.setBackground(background);
-        cardLayoutHolder.setBackground(background);
+        mainLayout.setBackground(background);
+       // cardLayoutHolder.setBackground(background);
         gamePreferences.saveInt(GamePreferences.PREF_NAME_BACKGROUND_INDEX, backgroundIndex);
     }
 
