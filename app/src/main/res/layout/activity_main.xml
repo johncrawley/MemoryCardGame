@@ -9,6 +9,15 @@
     android:id="@+id/mainLayout"
     tools:context=".MainActivity">
 
+    <Button
+        android:id="@+id/optionsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="test options"
+        android:background="@color/bright_primary"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
 
     <LinearLayout
         android:id="@+id/cardLayoutHolder"

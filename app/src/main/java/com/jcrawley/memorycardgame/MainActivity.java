@@ -37,6 +37,8 @@ import com.jcrawley.memorycardgame.game.Game;
 import com.jcrawley.memorycardgame.list.BackgroundRecyclerAdapter;
 import com.jcrawley.memorycardgame.list.CardTypeRecyclerAdapter;
 import com.jcrawley.memorycardgame.utils.BitmapLoader;
+import com.jcrawley.memorycardgame.dialog.FragmentManagerHelper;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +47,9 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private int screenWidth, screenHeight;
-    private LinearLayout resultsLayout, newGameLayout, cardLayout, cardLayoutHolder;
+    private LinearLayout resultsLayout;
+    private LinearLayout newGameLayout;
+    private LinearLayout cardLayout;
     private ConstraintLayout settingsLayout, aboutLayout;
     private Game game;
     private boolean isReadyToDismissResults = false;
@@ -79,6 +83,13 @@ public class MainActivity extends AppCompatActivity {
         bitmapLoader = new BitmapLoader(MainActivity.this, viewModel);
         cardBackManager = new CardBackManager(viewModel, bitmapLoader);
         setupSettings();
+        setupOptionsButton();
+    }
+
+
+    private void setupOptionsButton(){
+        Button optionsButton = findViewById(R.id.optionsButton);
+        optionsButton.setOnClickListener(v -> FragmentManagerHelper.showAboutDialog(MainActivity.this));
     }
 
 
@@ -138,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initLayouts(){
         cardLayout = findViewById(R.id.cardLayout);
-        cardLayoutHolder = findViewById(R.id.cardLayoutHolder);
+        LinearLayout cardLayoutHolder = findViewById(R.id.cardLayoutHolder);
         newGameLayout = findViewById(R.id.new_game_include);
         aboutLayout = findViewById(R.id.about_include);
         settingsLayout = findViewById(R.id.settings_include);
