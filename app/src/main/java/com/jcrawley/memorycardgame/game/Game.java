@@ -118,7 +118,7 @@ public class Game {
     public void notifyClickOnPosition(ImageView view){
         int position = getPositionTag(view);
         mainActivity.dismissAboutDialog();
-        mainActivity.dismissSettingsDialog();
+      //  mainActivity.dismissSettingsDialog();
         if(viewModel.cards == null  || viewModel.cards.size() <= position){
             return;
         }

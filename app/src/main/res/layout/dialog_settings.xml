@@ -3,9 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/settingsLayout"
     android:layout_width="wrap_content"
-    android:layout_height="0dp"
+    android:layout_height="300dp"
     android:layout_gravity="center"
-    android:visibility="gone"
     android:background="@drawable/background_with_shadow"
     android:shadowDx="5"
     android:shadowDy="4"
@@ -38,7 +37,7 @@
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="300dp"
         app:layout_constraintTop_toBottomOf="@+id/settingsTextView"
         app:layout_constraintBottom_toTopOf="@+id/dialogSettingsOkButtonInclude"
         app:layout_constraintStart_toStartOf="parent"
@@ -108,7 +107,7 @@
                 android:textSize="@dimen/version_text_size" />
 
             <com.google.android.material.divider.MaterialDivider
-                android:id="@+id/cardBackdivider"
+                android:id="@+id/cardBackDivider"
                 android:layout_width="match_parent"
                 android:layout_height="4dp"
                 android:paddingStart="0dp"
@@ -168,6 +167,7 @@
         android:id="@+id/dialogSettingsOkButtonInclude"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@+id/scrollView2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

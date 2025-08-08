@@ -11,7 +11,7 @@ public class AnimationManager {
 
     private Animation resultsDropInAnimation, resultsDropOutAnimation, newGameDropInAnimation, newGameDropOutAnimation;
     private Animation aboutDialogDropInAnimation, aboutDialogDropOutAnimation;
-    private Animation settingsDropInAnimation, settingsDropOutAnimation;
+    private Animation settingsDropInAnimation;//, settingsDropOutAnimation;
     private Animation cardsFadeOutAnimation;
     private int screenHeight;
     private Context context;
@@ -32,7 +32,7 @@ public class AnimationManager {
         aboutDialogDropInAnimation = createDropInAnimation(()->{});
         aboutDialogDropOutAnimation = createDropOutAnimation(mainActivity::onAboutDialogDismissed);
         settingsDropInAnimation = createDropInAnimation(() -> {});
-        settingsDropOutAnimation = createDropOutAnimation(mainActivity::onSettingsDialogDismissed);
+       // settingsDropOutAnimation = createDropOutAnimation(mainActivity::onSettingsDialogDismissed);
         cardsFadeOutAnimation= AnimationHelper.createFadeOutAnimationForCards(context, mainActivity::onCardsFadedOut);
     }
 
@@ -66,9 +66,9 @@ public class AnimationManager {
         return settingsDropInAnimation;
     }
 
-    public Animation getSettingsDropOutAnimation(){
-        return settingsDropOutAnimation;
-    }
+    //public Animation getSettingsDropOutAnimation(){
+    //    return settingsDropOutAnimation;
+    //}
 
 
     public Animation getCardsFadeOutAnimation(){

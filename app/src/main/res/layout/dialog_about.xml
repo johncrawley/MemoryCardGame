@@ -11,7 +11,7 @@
     android:shadowDx="5"
     android:shadowDy="4"
     android:shadowRadius="2"
-    android:visibility="gone">
+    android:visibility="visible">
 
     <TextView
         android:id="@+id/aboutTextView"
@@ -55,7 +55,7 @@
     <ScrollView
         android:id="@+id/aboutInfoScrollView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="200dp"
         android:background="@color/scroll_view_background_color"
         android:minHeight="80dp"
 
@@ -104,17 +104,5 @@
         </LinearLayout>
 
     </ScrollView>
-
-    <include
-        android:id="@+id/dialogAboutOkButtonInclude"
-        layout="@layout/dialog_about_ok_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingVertical="@dimen/dialog_ok_button_layout_padding_vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

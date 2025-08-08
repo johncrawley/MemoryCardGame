@@ -2,13 +2,11 @@ package com.jcrawley.memorycardgame;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
-
 
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -29,6 +27,7 @@ import android.widget.TextView;
 import com.jcrawley.memorycardgame.animation.AnimationManager;
 import com.jcrawley.memorycardgame.background.BackgroundFactory;
 import com.jcrawley.memorycardgame.card.Card;
+import com.jcrawley.memorycardgame.card.CardTypeSetter;
 import com.jcrawley.memorycardgame.card.DeckSize;
 import com.jcrawley.memorycardgame.card.cardType.CardType;
 import com.jcrawley.memorycardgame.card.CardBackManager;
@@ -50,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout resultsLayout;
     private LinearLayout newGameLayout;
     private LinearLayout cardLayout;
-    private ConstraintLayout settingsLayout, aboutLayout;
+     //private ConstraintLayout settingsLayout; //, aboutLayout;
     private Game game;
     private boolean isReadyToDismissResults = false;
     private DeckSize deckSize;
@@ -78,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
         gamePreferences = new GamePreferences(MainActivity.this);
         initButtons();
         initLayouts();
-        statusText = findViewById(R.id.statusText);
         viewModel  = new ViewModelProvider(this).get(MainViewModel.class);
         bitmapLoader = new BitmapLoader(MainActivity.this, viewModel);
         cardBackManager = new CardBackManager(viewModel, bitmapLoader);
@@ -89,9 +87,33 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupOptionsButton(){
         Button optionsButton = findViewById(R.id.optionsButton);
-        optionsButton.setOnClickListener(v -> FragmentManagerHelper.showAboutDialog(MainActivity.this));
+        optionsButton.setOnClickListener(v -> {
+            FragmentManagerHelper.showOptionsDialog(MainActivity.this);
+        });
     }
 
+
+    public CardBackManager getCardBackManager(){
+        return cardBackManager;
+    }
+
+    public BitmapLoader getBitmapLoader(){
+        return bitmapLoader;
+    }
+
+
+    public CardTypeSetter getCardTypeSetter(){
+        return viewModel.cardDeckImages;
+    }
+
+
+    public Game getGame(){
+        return game;
+    }
+
+    private static void log(String msg){
+        System.out.println("^^^ MainActivity : " + msg);
+    }
 
     private void setupInsetPadding(){
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.mainLayout), (v, insets) -> {
@@ -151,8 +173,8 @@ public class MainActivity extends AppCompatActivity {
         cardLayout = findViewById(R.id.cardLayout);
         LinearLayout cardLayoutHolder = findViewById(R.id.cardLayoutHolder);
         newGameLayout = findViewById(R.id.new_game_include);
-        aboutLayout = findViewById(R.id.about_include);
-        settingsLayout = findViewById(R.id.settings_include);
+       // aboutLayout = findViewById(R.id.about_include);
+      //  settingsLayout = findViewById(R.id.settings_include);
         resultsLayout = findViewById(R.id.game_over_include);
         resultsLayout.setOnClickListener(view -> dismissResults());
     }
@@ -174,16 +196,25 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if(id == R.id.action_new){
-            removeAllCards();
             showNewGameLayout();
         }
         else if( id == R.id.action_about){
             showAboutView();
         }
         else if( id == R.id.action_settings){
-          showSettingsView();
+        //  showSettingsView();
         }
         return true;
+    }
+
+
+    public void showNewGameDialog(){
+        removeAllCards();
+        showNewGameLayout();
+    }
+
+    public void showAboutDialog(){
+        FragmentManagerHelper.showAboutDialog(MainActivity.this);
     }
 
 
@@ -193,9 +224,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void setupSettings(){
-        setupFaceTypesRecyclerView();
-        setupBackTypesRecyclerView();
-        setupBackgroundRecyclerView();
+//        setupFaceTypesRecyclerView();
+ //       setupBackTypesRecyclerView();
+  //      setupBackgroundRecyclerView();
     }
 
 
@@ -245,23 +276,23 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void setupBackgroundRecyclerView(){
-        RecyclerView backgroundRecyclerView = settingsLayout.findViewById(R.id.backgroundRecyclerView);
+       // RecyclerView backgroundRecyclerView = settingsLayout.findViewById(R.id.backgroundRecyclerView);
         BackgroundRecyclerAdapter backgroundRecyclerAdapter = new BackgroundRecyclerAdapter(BackgroundFactory.getAll());
-        backgroundRecyclerAdapter.init(backgroundRecyclerView, MainActivity.this, gamePreferences.getInt(GamePreferences.PREF_NAME_BACKGROUND_INDEX));
+       // backgroundRecyclerAdapter.init(backgroundRecyclerView, MainActivity.this, gamePreferences.getInt(GamePreferences.PREF_NAME_BACKGROUND_INDEX));
     }
 
 
     private void showAboutView(){
-        dismissSettingsDialog();
+        //dismissSettingsDialog();
         if(isShowingAboutDialogue){
             return;
         }
-        aboutLayout.setVisibility(View.VISIBLE);
+       // aboutLayout.setVisibility(View.VISIBLE);
         isShowingAboutDialogue = true;
-        aboutLayout.startAnimation(animationManager.getAboutDialogDropInAnimation());
+       // aboutLayout.startAnimation(animationManager.getAboutDialogDropInAnimation());
     }
 
-
+/*
     private void showSettingsView(){
         if(isShowingSettingsDialogue){
             return;
@@ -271,7 +302,7 @@ public class MainActivity extends AppCompatActivity {
         isShowingSettingsDialogue = true;
         settingsLayout.startAnimation(animationManager.getSettingsDropInAnimation());
     }
-
+*/
 
     private void checkToRemoveAllCardsFromLayout(){
         if(currentFadeOutCount >= currentCardCount){
@@ -285,6 +316,11 @@ public class MainActivity extends AppCompatActivity {
         currentFadeOutCount = 0;
         currentCardCount = cardCount;
         cardLayout.startAnimation(animationManager.getCardsFadeOutAnimation());
+        if(viewModel.cards != null){
+            for(Card card : viewModel.cards){
+                card.setVisible(false);
+            }
+        }
     }
 
 
@@ -304,8 +340,8 @@ public class MainActivity extends AppCompatActivity {
         setupButton(R.id.cards16Button, DeckSize.SIXTEEN);
         setupButton(R.id.cards26Button, DeckSize.TWENTY_SIX);
         setupButton(R.id.cards52Button, DeckSize.FIFTY_TWO);
-        findViewById(R.id.dismissAboutButton).setOnClickListener((View v)-> dismissAboutDialog());
-        findViewById(R.id.dismissSettingsButton).setOnClickListener((View v)-> dismissSettingsDialog());
+        //findViewById(R.id.dismissAboutButton).setOnClickListener((View v)-> dismissAboutDialog());
+        //findViewById(R.id.dismissSettingsButton).setOnClickListener((View v)-> dismissSettingsDialog());
     }
 
 
@@ -314,11 +350,11 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         isShowingAboutDialogue = false;
-        aboutLayout.clearAnimation();
-        aboutLayout.startAnimation(animationManager.getAboutDialogDropOutAnimation());
+       // aboutLayout.clearAnimation();
+       // aboutLayout.startAnimation(animationManager.getAboutDialogDropOutAnimation());
     }
 
-
+/*
     public void dismissSettingsDialog(){
         if(!isShowingSettingsDialogue){
             return;
@@ -327,17 +363,17 @@ public class MainActivity extends AppCompatActivity {
         settingsLayout.clearAnimation();
         settingsLayout.startAnimation(animationManager.getSettingsDropOutAnimation());
     }
-
-
+*/
+/*
     public void onSettingsDialogDismissed(){
         settingsLayout.clearAnimation();
         settingsLayout.setVisibility(View.INVISIBLE);
     }
-
+*/
 
     public void onAboutDialogDismissed(){
-        aboutLayout.clearAnimation();
-        aboutLayout.setVisibility(View.INVISIBLE);
+      //  aboutLayout.clearAnimation();
+     //   aboutLayout.setVisibility(View.INVISIBLE);
     }
 
 
@@ -377,7 +413,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void showNewGameLayout(){
         dismissAboutDialog();
-        dismissSettingsDialog();
+       // dismissSettingsDialog();
         if(isShowingNewGameDialogue){
             return;
         }
@@ -423,6 +459,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void setTitleWithTurns(int turn){
+        if(statusText == null){
+            statusText = findViewById(R.id.statusText);
+        }
         String turnsWithTitle = getString(R.string.turn) + turn;
         statusText.setText(turnsWithTitle);
        //actionBar.setTitle(turnsWithTitle);

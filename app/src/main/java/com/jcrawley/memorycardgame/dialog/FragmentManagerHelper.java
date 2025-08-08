@@ -15,9 +15,25 @@ import com.jcrawley.memorycardgame.MainActivity;
 public class FragmentManagerHelper {
 
     public static void showAboutDialog(MainActivity mainActivity){
-        showDialog(mainActivity, new AboutDialogFragment(), "aboutDialogFragment");
+        log("entered showAboutDialog()");
+        showDialog(mainActivity, AboutDialogFragment.newInstance(), "aboutDialogFragment");
     }
 
+
+    public static void showSettingsDialog(MainActivity mainActivity){
+        log("entered showAboutDialog()");
+        showDialog(mainActivity, SettingsDialogFragment.newInstance(), "settingsDialogFragment");
+    }
+
+
+    public static void showOptionsDialog(MainActivity mainActivity){
+        log("entered showAboutDialog()");
+        showDialog(mainActivity, OptionsDialogFragment.newInstance(), "optionsDialogFragment");
+    }
+
+    private static void log(String msg){
+        System.out.println("^^^ FragmentManagerHelper : " + msg);
+    }
 
     public static void showDialog(Fragment parentFragment, DialogFragment dialogFragment, String tag, Bundle bundle){
         FragmentManager fragmentManager = parentFragment.getParentFragmentManager();
@@ -29,6 +45,9 @@ public class FragmentManagerHelper {
 
 
     public static void showDialog(AppCompatActivity activity, DialogFragment dialogFragment, String tag){
+        if(activity == null){
+            return;
+        }
         FragmentManager fragmentManager = activity.getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         removePreviousFragmentTransaction(fragmentManager, tag, fragmentTransaction);

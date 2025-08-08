@@ -19,6 +19,9 @@
     <string name="results_status_new_record">Herzlichen Glückwunsch! Ein neuer Rekord!</string>
     <string name="results_status_turns_taken">Drehungen: &#160;</string>
     <string name="menu_action_new_game">Neues Spiel</string>
+    <string name="button_options_about">About</string>
+    <string name="button_options_settings">Settings</string>
+    <string name="button_options_new_game">New Game</string>
     <string name="menu_action_about">Über</string>
     <string name="position_tag">positionTag</string>
     <string name="menu_action_settings">Einstellungen</string>

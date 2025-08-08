@@ -14,7 +14,7 @@ public class GamePreferences {
     public final static String PREF_NAME_CARD_BACK_INDEX= "cardBackIndex";
 
 
-    GamePreferences(Context context){
+    public GamePreferences(Context context){
         this.context = context;
     }
 
