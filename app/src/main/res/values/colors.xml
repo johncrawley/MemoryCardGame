@@ -28,4 +28,7 @@
     <color name="about_game_title_text">#F57F17</color>
     <color name="about_game_created_by_text">#FFB300</color>
     <color name="selected_settings_item">#f57f17</color>
+
+    <color name="panel_background">#015701</color>
+    <color name="panel_outline">#f57f17</color>
 </resources>

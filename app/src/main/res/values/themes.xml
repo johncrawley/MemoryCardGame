@@ -13,5 +13,8 @@
     <item name="android:statusBarColor" >?attr/colorPrimaryVariant</item>
     <!-- Customize your theme here. -->
 
+    <item name="turns_panel_background_color">@color/panel_background</item>
+    <item name="turns_panel_outline_color">@color/panel_outline</item>
+
 </style>
 </resources>
