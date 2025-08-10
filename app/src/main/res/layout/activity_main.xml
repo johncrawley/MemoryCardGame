@@ -9,36 +9,27 @@
     android:id="@+id/mainLayout"
     tools:context=".MainActivity">
 
+    <include layout="@layout/status_panel"
+        android:id="@+id/statusPanelInclude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_8sdp"
+        android:visibility="invisible"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
 
     <LinearLayout
         android:id="@+id/cardLayoutHolder"
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:layout_height="match_parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statusPanelInclude"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent">
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/statusTextLayout"
-            android:orientation="horizontal"
-            android:background="@drawable/turns_panel_background"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="32sp"
-                android:visibility="visible"
-                android:id="@+id/statusText"/>
-
-        </LinearLayout>
 
 
         <LinearLayout

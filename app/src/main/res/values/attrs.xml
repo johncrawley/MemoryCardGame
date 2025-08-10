@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <attr name="turns_panel_background_color" format="reference" />
-    <attr name="turns_panel_outline_color" format="reference" />
+    <attr name="status_panel_background_color" format="reference" />
+    <attr name="status_panel_outline_color" format="reference" />
+    <attr name="status_panel_text_color" format="reference" />
 </resources>
