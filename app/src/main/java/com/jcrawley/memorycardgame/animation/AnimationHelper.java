@@ -47,11 +47,21 @@ public class AnimationHelper {
         animation.setDuration(getInt(context, R.integer.fade_out_cards_duration));
         animation.setAnimationListener(new Animation.AnimationListener() {
             public void onAnimationEnd(Animation animation) {
-               onFinish.run();
+                onFinish.run();
             }
             public void onAnimationStart(Animation animation) { }
             public void onAnimationRepeat(Animation animation) { }
         });
+        return animation;
+    }
+
+
+
+    public static Animation createFadeInAnimation(Context context){
+        Animation animation = new AlphaAnimation(0, 1);
+        animation.setInterpolator(new AccelerateInterpolator());
+        animation.setStartOffset(getInt(context, R.integer.fade_out_cards_start_offset));
+        animation.setDuration(getInt(context, R.integer.fade_out_cards_duration));
         return animation;
     }
 

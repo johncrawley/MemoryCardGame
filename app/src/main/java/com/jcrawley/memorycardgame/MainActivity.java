@@ -1,5 +1,7 @@
 package com.jcrawley.memorycardgame;
 
+import static android.view.View.VISIBLE;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.graphics.Insets;
@@ -18,10 +20,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.Window;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.jcrawley.memorycardgame.animation.AnimationHelper;
 import com.jcrawley.memorycardgame.animation.AnimationManager;
 import com.jcrawley.memorycardgame.background.Background;
 import com.jcrawley.memorycardgame.background.BackgroundFactory;
@@ -56,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
     private AnimationManager animationManager;
     private TextView statusText;
     private ViewGroup mainLayout;
+    private ViewGroup statusPanel;
 
 
     @Override
@@ -65,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setupInsetPadding();
         mainLayout = findViewById(R.id.mainLayout);
+        statusPanel = findViewById(R.id.statusPanelInclude);
         gamePreferences = new GamePreferences(MainActivity.this);
         initButtons();
         initLayouts();
@@ -229,7 +235,7 @@ public class MainActivity extends AppCompatActivity {
         for(View v : cardLayout.getTouchables()){
             v.setVisibility(View.GONE);
         }
-        cardLayout.setVisibility(View.VISIBLE);
+        cardLayout.setVisibility(VISIBLE);
         cardLayout.clearAnimation();
         currentFadeOutCount++;
         checkToRemoveAllCardsFromLayout();
@@ -255,7 +261,7 @@ public class MainActivity extends AppCompatActivity {
         gamePreferences.saveNumberOfCards(deckSize.getValue());
         isShowingNewGameDialogue = false;
         newGameLayout.clearAnimation();
-        newGameLayout.setVisibility(View.VISIBLE);
+        newGameLayout.setVisibility(VISIBLE);
         newGameLayout.startAnimation(animationManager.getNewGameDropOutAnimation());
     }
 
@@ -282,13 +288,13 @@ public class MainActivity extends AppCompatActivity {
         setPlainTitle();
         isShowingNewGameDialogue = true;
         dismissResultsLayoutIfVisible();
-        newGameLayout.setVisibility(View.VISIBLE);
+        newGameLayout.setVisibility(VISIBLE);
         newGameLayout.startAnimation(animationManager.getNewGameDropInAnimation());
     }
 
 
     private void dismissResultsLayoutIfVisible(){
-        if(resultsLayout.getVisibility() == View.VISIBLE){
+        if(resultsLayout.getVisibility() == VISIBLE){
             resultsLayout.startAnimation(animationManager.getResultsDropOutAnimation());
         }
     }
@@ -314,7 +320,7 @@ public class MainActivity extends AppCompatActivity {
         TextView recordTextView = findViewById(R.id.currentRecordTurnsTextView);
         resultsTextView.setText(String.valueOf(numberOfTurns));
         recordTextView.setText(recordText);
-        resultsLayout.setVisibility(View.VISIBLE);
+        resultsLayout.setVisibility(VISIBLE);
         resultsLayout.startAnimation(animationManager.getResultsDropInAnimation());
     }
 
@@ -323,10 +329,21 @@ public class MainActivity extends AppCompatActivity {
         if(statusText == null){
             statusText = findViewById(R.id.statusText);
         }
-        String turnsWithTitle = getString(R.string.turn) + turn;
+        String turnsWithTitle = String.valueOf(turn);
         statusText.setText(turnsWithTitle);
+        if(turn > 0 && statusPanel.getVisibility() != VISIBLE){
+            fadeInStatusPanel();
+        }
     }
 
+
+    private void fadeInStatusPanel(){
+       Animation fadeInAnimation = AnimationHelper.createFadeInAnimation(MainActivity.this);
+       statusPanel.clearAnimation();
+       statusPanel.setAnimation(fadeInAnimation);
+       statusPanel.setVisibility(VISIBLE);
+       statusPanel.animate();
+    }
 
     public void setPlainTitle(){
 
