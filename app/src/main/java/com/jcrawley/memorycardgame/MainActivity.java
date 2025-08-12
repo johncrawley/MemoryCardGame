@@ -92,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
         return cardBackManager;
     }
 
+
     public BitmapLoader getBitmapLoader(){
         return bitmapLoader;
     }
@@ -106,9 +107,6 @@ public class MainActivity extends AppCompatActivity {
         return game;
     }
 
-    private static void log(String msg){
-        System.out.println("^^^ MainActivity : " + msg);
-    }
 
     private void setupInsetPadding(){
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.mainLayout), (v, insets) -> {
@@ -195,8 +193,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-
     public GamePreferences getGamePreferences(){
         return this.gamePreferences;
     }
@@ -274,7 +270,6 @@ public class MainActivity extends AppCompatActivity {
         newGameLayout.clearAnimation();
         newGameLayout.setVisibility(View.GONE);
         game.startAgain(deckSize);
-        setPlainTitle();
     }
 
 
@@ -282,7 +277,6 @@ public class MainActivity extends AppCompatActivity {
         if(isShowingNewGameDialogue){
             return;
         }
-        setPlainTitle();
         isShowingNewGameDialogue = true;
         dismissResultsLayoutIfVisible();
         newGameLayout.setVisibility(VISIBLE);
@@ -355,11 +349,6 @@ public class MainActivity extends AppCompatActivity {
         statusPanel.clearAnimation();
         statusPanel.setAnimation(fadeOutAnimation);
         statusPanel.animate();
-    }
-
-
-    public void setPlainTitle(){
-
     }
 
 
