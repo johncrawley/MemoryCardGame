@@ -1,4 +1,4 @@
-package com.jcrawley.memorycardgame.list;
+package com.jcrawley.memorycardgame.dialog.settings.list;
 
 import android.content.Context;
 import android.view.View;
@@ -66,14 +66,7 @@ public class CardTypeRecyclerAdapter extends RecyclerView.Adapter<CardTypeRecycl
         recyclerHelper.init(this, recyclerView, context);
         changePositionTo(savedPosition);
         setIndexToScrollTo(savedPosition);
-        setSavedCardType(savedPosition);
         recyclerView.scrollToPosition(savedPosition);
-    }
-
-
-    private void setSavedCardType(int savedPosition){
-        CardType savedCardType = cardTypes.get(savedPosition);
-        cardTypeSetter.setCardType(savedCardType);
     }
 
 

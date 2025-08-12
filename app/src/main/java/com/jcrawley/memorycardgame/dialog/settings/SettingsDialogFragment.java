@@ -1,12 +1,9 @@
-package com.jcrawley.memorycardgame.dialog;
+package com.jcrawley.memorycardgame.dialog.settings;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,12 +18,9 @@ import com.jcrawley.memorycardgame.card.CardBackManager;
 import com.jcrawley.memorycardgame.card.CardTypeSetter;
 import com.jcrawley.memorycardgame.card.cardType.CardType;
 import com.jcrawley.memorycardgame.game.Game;
-import com.jcrawley.memorycardgame.list.BackgroundRecyclerAdapter;
-import com.jcrawley.memorycardgame.list.CardTypeRecyclerAdapter;
+import com.jcrawley.memorycardgame.dialog.settings.list.BackgroundRecyclerAdapter;
+import com.jcrawley.memorycardgame.dialog.settings.list.CardTypeRecyclerAdapter;
 import com.jcrawley.memorycardgame.utils.BitmapLoader;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class SettingsDialogFragment extends DialogFragment {
 
@@ -50,7 +44,6 @@ public class SettingsDialogFragment extends DialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setupButtons(view);
         //DialogFragmentUtils.setScrollViewHeight(this, view, R.id.aboutInfoScrollView, R.id.aboutInfoLayout);
         //DialogFragmentUtils.setTransparentBackground(this);
         assignFields();
@@ -108,7 +101,7 @@ public class SettingsDialogFragment extends DialogFragment {
         }
         CardTypeSetter cardTypeSetter = mainActivity.getCardTypeSetter();
         RecyclerView cardFacesRecyclerView = parentView.findViewById(R.id.cardTypeRecycleView);
-        CardTypeRecyclerAdapter cardTypeRecyclerAdapter = new CardTypeRecyclerAdapter(getCardFaceTypes(),
+        CardTypeRecyclerAdapter cardTypeRecyclerAdapter = new CardTypeRecyclerAdapter(CardType.getCardFaces(),
                 bitmapLoader,
                 cardTypeSetter,
                 ()-> bitmapLoader.clearCardFaceCache());
@@ -119,56 +112,5 @@ public class SettingsDialogFragment extends DialogFragment {
                 GamePreferences.PREF_NAME_CARD_FACE_INDEX);
     }
 
-    private void setupButtons(View parentView) {
-        setupButton(parentView, R.id.aboutButton, this::showAboutDialog);
-        setupButton(parentView, R.id.settingsButton, this::showSettingsDialog);
-        setupButton(parentView, R.id.newGameButton, this::startNewGame);
-    }
-
-
-    private void showAboutDialog(){
-        dismiss();
-        FragmentManagerHelper.showAboutDialog((MainActivity) getActivity());
-    }
-
-
-    private List<CardType> getCardFaceTypes(){
-        List<CardType> cardFaceTypes = new ArrayList<>();
-        for(CardType cardType : CardType.values()){
-            if(!cardType.isCardBack()){
-                cardFaceTypes.add(cardType);
-            }
-        }
-        return cardFaceTypes;
-    }
-
-    private void showSettingsDialog(){
-
-    }
-
-
-
-    private void startNewGame(){
-        MainActivity mainActivity = (MainActivity) getActivity();
-        if(mainActivity != null){
-            mainActivity.showNewGameDialog();
-            dismissAfterDelay();
-        }
-    }
-
-
-    private void dismissAfterDelay(){
-        new Handler(Looper.getMainLooper()).postDelayed(this::dismiss, 200);
-    }
-
-
-    public static Button setupButton(View parentView, int id, Runnable onClickAction){
-        Button button = parentView.findViewById(id);
-        if(button == null){
-            return null;
-        }
-        button.setOnClickListener((View v)-> onClickAction.run());
-        return button;
-    }
 
 }

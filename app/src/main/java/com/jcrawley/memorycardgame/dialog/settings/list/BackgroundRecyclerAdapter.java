@@ -1,4 +1,4 @@
-package com.jcrawley.memorycardgame.list;
+package com.jcrawley.memorycardgame.dialog.settings.list;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +35,7 @@ public class BackgroundRecyclerAdapter extends RecyclerView.Adapter<BackgroundRe
                 int position = this.getAbsoluteAdapterPosition();
                 recyclerHelper.deselectPreviouslySelectedView();
                 recyclerHelper.select(v, position);
-                mainActivity.setBackground(background.getResourceId(), position);
+                mainActivity.setAndSaveBackground(background.getResourceId(), position);
             });
         }
     }
@@ -50,7 +50,6 @@ public class BackgroundRecyclerAdapter extends RecyclerView.Adapter<BackgroundRe
     public void init(RecyclerView recyclerView, MainActivity mainActivity, int savedPosition){
         recyclerHelper.init(this, recyclerView, mainActivity);
         this.mainActivity = mainActivity;
-        mainActivity.setBackground(backgrounds.get(savedPosition).getResourceId(), savedPosition);
         changePositionTo( savedPosition);
         setIndexToScrollTo(savedPosition);
         recyclerView.scrollToPosition(savedPosition);

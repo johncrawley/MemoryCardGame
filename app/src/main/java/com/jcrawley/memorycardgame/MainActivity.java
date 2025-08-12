@@ -28,18 +28,15 @@ import android.widget.TextView;
 
 import com.jcrawley.memorycardgame.animation.AnimationHelper;
 import com.jcrawley.memorycardgame.animation.AnimationManager;
-import com.jcrawley.memorycardgame.background.Background;
-import com.jcrawley.memorycardgame.background.BackgroundFactory;
 import com.jcrawley.memorycardgame.card.Card;
 import com.jcrawley.memorycardgame.card.CardTypeSetter;
 import com.jcrawley.memorycardgame.card.DeckSize;
 import com.jcrawley.memorycardgame.card.CardBackManager;
 import com.jcrawley.memorycardgame.game.CardLayoutPopulator;
 import com.jcrawley.memorycardgame.game.Game;
+import com.jcrawley.memorycardgame.utils.AppearanceSetter;
 import com.jcrawley.memorycardgame.utils.BitmapLoader;
 import com.jcrawley.memorycardgame.dialog.FragmentManagerHelper;
-
-import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -79,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         bitmapLoader = new BitmapLoader(MainActivity.this, viewModel);
         cardBackManager = new CardBackManager(viewModel, bitmapLoader);
         setupOptionsButton();
-        setSavedBackground();
+        AppearanceSetter.setSavedAppearance(MainActivity.this, cardBackManager, viewModel);
     }
 
 
@@ -141,28 +138,24 @@ public class MainActivity extends AppCompatActivity {
                 game = new Game(MainActivity.this, cardBackManager, bitmapLoader, screenWidth);
                 CardLayoutPopulator cardLayoutPopulator = new CardLayoutPopulator(MainActivity.this, cardLayout, game, cardBackManager);
                 game.initCards(cardLayoutPopulator);
-                showNewGameIfAllCardsGone();
+                showNewGameIfNoCardsRemain();
             }});
     }
 
 
-    private void setSavedBackground(){
-        List<Background> backgrounds = BackgroundFactory.getAll();
-        int savedBgIndex = gamePreferences.getInt(GamePreferences.PREF_NAME_BACKGROUND_INDEX);
-        Background savedBackground = backgrounds.get(savedBgIndex);
-        Drawable background = AppCompatResources.getDrawable(MainActivity.this, savedBackground.getResourceId());
-        mainLayout.setBackground(background);
-    }
-
-
-    public void setBackground(int drawableId, int backgroundIndex){
+    public void setAndSaveBackground(int drawableId, int backgroundIndex){
         Drawable background = AppCompatResources.getDrawable(MainActivity.this, drawableId);
         mainLayout.setBackground(background);
         gamePreferences.saveInt(GamePreferences.PREF_NAME_BACKGROUND_INDEX, backgroundIndex);
     }
 
 
-    private void showNewGameIfAllCardsGone(){
+    public void setBackground(Drawable drawable){
+        mainLayout.setBackground(drawable);
+    }
+
+
+    private void showNewGameIfNoCardsRemain(){
         if(viewModel.cards == null){
             return;
         }

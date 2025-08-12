@@ -290,7 +290,7 @@ public class Game {
 
 
     private void setCardFaceDown(ImageView imageView){
-        cardBackManager.setCardBackTo(imageView);
+        cardBackManager.setCardBackOf(imageView);
     }
 
 

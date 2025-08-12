@@ -150,7 +150,7 @@ public class CardLayoutPopulator {
         int id = View.generateViewId();
         imageView.setId(id);
         imageViews.add(imageView);
-        cardBackManager.setCardBackTo(imageView);
+        cardBackManager.setCardBackOf(imageView);
         imageView.setPadding(padding, padding, padding, padding);
         LinearLayout.LayoutParams layoutParams =  new LinearLayout.LayoutParams(cardWidth, cardHeight);
         imageView.setTag(R.string.position_tag, cardsAdded);

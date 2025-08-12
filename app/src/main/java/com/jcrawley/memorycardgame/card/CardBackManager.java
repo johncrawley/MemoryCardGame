@@ -53,6 +53,12 @@ public class CardBackManager implements CardTypeSetter {
     }
 
 
+    public void setCardType(int savedTypeIndex){
+       List<CardType> cardBackTypes = getSelectableCardBackTypes();
+       setCardType(cardBackTypes.get(savedTypeIndex));
+    }
+
+
     public void setCardType(CardType cardType){
         if(cardType == CardType.BACK_RANDOM){
             if(!viewModel.isAlreadyInitialised || viewModel.previouslySelectedCardTypeBack != CardType.BACK_RANDOM) {
@@ -86,7 +92,7 @@ public class CardBackManager implements CardTypeSetter {
     }
 
 
-    public void setCardBackTo(ImageView imageView){
+    public void setCardBackOf(ImageView imageView){
         bitmapLoader.setCardBack(imageView, viewModel.currentCardBackResourceId);
     }
 

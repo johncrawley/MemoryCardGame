@@ -3,6 +3,9 @@ package com.jcrawley.memorycardgame.card.cardType;
 
 import com.jcrawley.memorycardgame.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public enum CardType {
 
     STANDARD(R.drawable.card_face_standard, false),
@@ -65,6 +68,16 @@ public enum CardType {
         this.isUsable = isUsable;
     }
 
+
+   public static List<CardType> getCardFaces(){
+        List<CardType> cardFaceTypes = new ArrayList<>();
+        for(CardType cardType : CardType.values()){
+            if(!cardType.isCardBack()){
+                cardFaceTypes.add(cardType);
+            }
+        }
+        return cardFaceTypes;
+    }
 
     public int getResourceId(){
         return resourceId;
