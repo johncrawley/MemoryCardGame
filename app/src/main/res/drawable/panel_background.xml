@@ -5,7 +5,7 @@
     <solid android:color="?attr/status_panel_background_color" />
 
     <stroke
-        android:width="2dp"
+        android:width="@dimen/_1sdp"
         android:color="?attr/status_panel_outline_color" />
 
     <padding

@@ -28,6 +28,7 @@
     <string name="card_face_style_settings">Kartenvorderseite</string>
     <string name="card_back_style_settings">Kartenrückseite</string>
     <string name="background_style_settings">Tapete</string>
+    <string name="options_button_content_description">Options</string>
     <string name="card_face_standard_option_description">Norm Kartenvorderseite</string>
     <string name="card_face_simple_option_description">Einfach Kartenvorderseite</string>
     <string name="about_cards_text"> Viele Kartenressourcen, die von oder abgeleitet von \n

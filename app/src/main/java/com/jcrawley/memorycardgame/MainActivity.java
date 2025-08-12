@@ -23,6 +23,7 @@ import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.animation.Animation;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -64,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setStatusBarColor();
         setContentView(R.layout.activity_main);
         setupInsetPadding();
         mainLayout = findViewById(R.id.mainLayout);
@@ -81,10 +81,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void setupOptionsButton(){
-        Button optionsButton = findViewById(R.id.optionsButton);
-        optionsButton.setOnClickListener(v -> {
-            FragmentManagerHelper.showOptionsDialog(MainActivity.this);
-        });
+        ImageButton optionsButton = findViewById(R.id.optionsButton);
+        optionsButton.setOnClickListener(v -> FragmentManagerHelper.showOptionsDialog(MainActivity.this));
     }
 
 
@@ -287,14 +285,6 @@ public class MainActivity extends AppCompatActivity {
     private void dismissResultsLayoutIfVisible(){
         if(resultsLayout.getVisibility() == VISIBLE){
             resultsLayout.startAnimation(animationManager.getResultsDropOutAnimation());
-        }
-    }
-
-
-    private void setStatusBarColor(){
-        Window window = getWindow();
-        if(window != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            window.setStatusBarColor(getResources().getColor(R.color.status_bar_color, getTheme()));
         }
     }
 

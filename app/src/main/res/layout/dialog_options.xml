@@ -16,6 +16,7 @@
         android:id="@+id/newGameButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/button_text"
         android:layout_marginHorizontal="@dimen/_10sdp"
         android:layout_marginVertical="@dimen/_2sdp"
         android:text="@string/button_options_new_game" />
@@ -24,6 +25,7 @@
         android:id="@+id/settingsButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/button_text"
         android:layout_marginHorizontal="@dimen/_10sdp"
         android:layout_marginVertical="@dimen/_2sdp"
         android:text="@string/button_options_settings" />
@@ -32,6 +34,7 @@
         android:id="@+id/aboutButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/button_text"
         android:layout_marginHorizontal="@dimen/_10sdp"
         android:layout_marginVertical="@dimen/_2sdp"
         android:text="@string/button_options_about" />

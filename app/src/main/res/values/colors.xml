@@ -22,13 +22,15 @@
     <color name="material_divider_background">#31B3BDB3</color>
     <color name="button_tint_old">#90CAF9</color>
     <color name="button_text_old">#1A237E</color>
-    <color name="button_tint">#4988BA</color>
+    <color name="button_tint">#3972A0</color>
     <color name="button_text">#DBDDEF</color>
     <color name="number_of_turns_taken_text">#FFB300</color>
     <color name="about_game_title_text">#F57F17</color>
     <color name="about_game_created_by_text">#FFB300</color>
     <color name="selected_settings_item">#f57f17</color>
 
-    <color name="panel_background">#015701</color>
-    <color name="panel_outline">#f57f17</color>
+    <color name="panel_background">#011B01</color>
+    <color name="panel_outline">#AAAAAA</color>
+    <color name="panel_text">#DCDCDC</color>
+
 </resources>
