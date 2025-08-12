@@ -1,5 +1,6 @@
 package com.jcrawley.memorycardgame;
 
+import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -197,7 +198,10 @@ public class MainActivity extends AppCompatActivity {
     public void showNewGameDialog(){
         removeAllCards();
         showNewGameLayout();
+        hideStatusPanel();
     }
+
+
 
 
     public GamePreferences getGamePreferences(){
@@ -321,6 +325,7 @@ public class MainActivity extends AppCompatActivity {
         resultsTextView.setText(String.valueOf(numberOfTurns));
         recordTextView.setText(recordText);
         resultsLayout.setVisibility(VISIBLE);
+        hideStatusPanel();
         resultsLayout.startAnimation(animationManager.getResultsDropInAnimation());
     }
 
@@ -332,18 +337,33 @@ public class MainActivity extends AppCompatActivity {
         String turnsWithTitle = String.valueOf(turn);
         statusText.setText(turnsWithTitle);
         if(turn > 0 && statusPanel.getVisibility() != VISIBLE){
-            fadeInStatusPanel();
+            showStatusPanel();
         }
     }
 
 
-    private void fadeInStatusPanel(){
-       Animation fadeInAnimation = AnimationHelper.createFadeInAnimation(MainActivity.this);
-       statusPanel.clearAnimation();
-       statusPanel.setAnimation(fadeInAnimation);
-       statusPanel.setVisibility(VISIBLE);
-       statusPanel.animate();
+    private void showStatusPanel(){
+        if(statusPanel.getVisibility() == VISIBLE){
+            return;
+        }
+        Animation fadeInAnimation = AnimationHelper.createFadeInAnimation(MainActivity.this);
+        statusPanel.clearAnimation();
+        statusPanel.setAnimation(fadeInAnimation);
+        statusPanel.setVisibility(VISIBLE);
+        statusPanel.animate();
     }
+
+
+    private void hideStatusPanel(){
+        if(statusPanel.getVisibility() == INVISIBLE){
+            return;
+        }
+        Animation fadeOutAnimation = AnimationHelper.createFadeOutAnimation(MainActivity.this, statusPanel);
+        statusPanel.clearAnimation();
+        statusPanel.setAnimation(fadeOutAnimation);
+        statusPanel.animate();
+    }
+
 
     public void setPlainTitle(){
 

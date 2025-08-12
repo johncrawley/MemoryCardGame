@@ -1,6 +1,9 @@
 package com.jcrawley.memorycardgame.animation;
 
+import static android.view.View.INVISIBLE;
+
 import android.content.Context;
+import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -48,6 +51,22 @@ public class AnimationHelper {
         animation.setAnimationListener(new Animation.AnimationListener() {
             public void onAnimationEnd(Animation animation) {
                 onFinish.run();
+            }
+            public void onAnimationStart(Animation animation) { }
+            public void onAnimationRepeat(Animation animation) { }
+        });
+        return animation;
+    }
+
+
+    public static Animation createFadeOutAnimation(Context context, View view){
+        Animation animation = new AlphaAnimation(1, 0);
+        animation.setInterpolator(new AccelerateInterpolator());
+        animation.setStartOffset(getInt(context, R.integer.fade_out_cards_start_offset));
+        animation.setDuration(getInt(context, R.integer.fade_out_cards_duration));
+        animation.setAnimationListener(new Animation.AnimationListener() {
+            public void onAnimationEnd(Animation animation) {
+                view.setVisibility(INVISIBLE);
             }
             public void onAnimationStart(Animation animation) { }
             public void onAnimationRepeat(Animation animation) { }
