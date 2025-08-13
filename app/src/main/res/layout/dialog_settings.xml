@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/settingsLayout"
     android:layout_width="wrap_content"
@@ -28,7 +29,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:shadowColor="@color/text_shadow_color"
-        android:textColor="@color/about_game_title_text"
+        android:textColor="@color/setting_title_text"
 
         android:textAlignment="center"
         android:textSize="@dimen/about_game_text_size" />
@@ -39,7 +40,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/_280sdp"
         app:layout_constraintTop_toBottomOf="@+id/settingsTextView"
-        app:layout_constraintBottom_toTopOf="@+id/dialogSettingsOkButtonInclude"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
@@ -48,129 +49,23 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/cardFaceStyleText"
-                android:layout_width="match_parent"
+            <include layout="@layout/settings_list_section"
+                android:id="@+id/cardFacesSettingInclude"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="start"
-                android:paddingStart="@dimen/_2sdp"
-                android:paddingEnd="@dimen/_18sdp"
-                android:paddingTop="@dimen/_4sdp"
-                android:paddingBottom="@dimen/_4sdp"
-                android:shadowColor="@color/text_shadow_color"
-                android:shadowDx="3"
-                android:shadowDy="3"
-                android:shadowRadius="3"
-                android:text="@string/card_face_style_settings"
-                android:textAlignment="viewStart"
-                android:textColor="@color/about_game_title_text"
-                android:textSize="@dimen/version_text_size" />
-
-            <com.google.android.material.divider.MaterialDivider
-                android:id="@+id/divider"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_2sdp"
-                android:paddingStart="0dp"
-                android:paddingEnd="@dimen/_36sdp"
-                android:background="@color/material_divider_background" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/cardTypeRecycleView"
-                app:layout_constraintBottom_toTopOf="@+id/playButton"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/albumTextView"
-                android:layout_width="match_parent"
+                />
+            <include layout="@layout/settings_list_section"
+                android:id="@+id/cardBacksSettingInclude"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_8sdp"
-                android:fadeScrollbars="true"
-                android:orientation="horizontal" />
+                />
 
-
-            <TextView
-                android:id="@+id/cardBackStyleText"
-                android:layout_width="match_parent"
+            <include layout="@layout/settings_list_section"
+                android:id="@+id/backgroundsSettingInclude"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="start"
-                android:paddingStart="@dimen/_2sdp"
-                android:paddingEnd="@dimen/_18sdp"
-                android:paddingTop="@dimen/_4sdp"
-                android:paddingBottom="@dimen/_4sdp"
-                android:shadowColor="@color/text_shadow_color"
-                android:shadowDx="3"
-                android:shadowDy="3"
-                android:shadowRadius="3"
-                android:text="@string/card_back_style_settings"
-                android:textAlignment="viewStart"
-                android:textColor="@color/about_game_title_text"
-                android:textSize="@dimen/version_text_size" />
-
-            <com.google.android.material.divider.MaterialDivider
-                android:id="@+id/cardBackDivider"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_4sdp"
-                android:paddingStart="0dp"
-                android:paddingEnd="@dimen/_36sdp"
-                android:background="@color/material_divider_background" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/cardBackRecycleView"
-                app:layout_constraintBottom_toTopOf="@+id/playButton"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/albumTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/recycler_view_margin_vertical"
-                android:fadeScrollbars="true"
-                android:orientation="horizontal" />
-
-            <TextView
-                android:id="@+id/backgroundSettingsText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="start"
-                android:paddingStart="@dimen/_2sdp"
-                android:paddingEnd="@dimen/_18sdp"
-                android:paddingTop="@dimen/_4sdp"
-                android:paddingBottom="@dimen/_4sdp"
-                android:shadowColor="@color/text_shadow_color"
-                android:shadowDx="3"
-                android:shadowDy="3"
-                android:shadowRadius="3"
-                android:text="@string/background_style_settings"
-                android:textAlignment="viewStart"
-                android:textColor="@color/about_game_title_text"
-                android:textSize="@dimen/version_text_size" />
-
-            <com.google.android.material.divider.MaterialDivider
-                android:id="@+id/backgroundDivider"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_4sdp"
-                android:paddingEnd="@dimen/_36sdp"
-                android:paddingStart="0dp"
-                android:background="@color/material_divider_background"/>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/backgroundRecyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginVertical="@dimen/_8sdp"
-                android:fadeScrollbars="true"
                 />
         </LinearLayout>
     </ScrollView>
-
-    <include
-        android:id="@+id/dialogSettingsOkButtonInclude"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView2"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        layout="@layout/dialog_settings_ok_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

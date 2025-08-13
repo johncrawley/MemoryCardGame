@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -49,7 +50,7 @@ public class SettingsDialogFragment extends DialogFragment {
         assignFields();
         setupFaceTypesRecyclerView(view);
         setupBackTypesRecyclerView(view);
-        setupLists(view);
+        setupBackgroundSettings(view);
 
     }
 
@@ -67,21 +68,24 @@ public class SettingsDialogFragment extends DialogFragment {
 
 
 
-    private void setupLists(View parentView){
+    private void setupBackgroundSettings(View parentView){
         MainActivity mainActivity = (MainActivity) getActivity();
         if(mainActivity == null){
             return;
         }
+        ViewGroup backgroundsSettingsLayout = parentView.findViewById(R.id.backgroundsSettingInclude);
+        setupSettingsSectionTitle(backgroundsSettingsLayout, R.string.background_style_settings);
         GamePreferences gamePreferences = new GamePreferences(getContext());
-        RecyclerView backgroundRecyclerView = parentView.findViewById(R.id.backgroundRecyclerView);
+        RecyclerView backgroundRecyclerView = getRecyclerViewFrom(backgroundsSettingsLayout);
         BackgroundRecyclerAdapter backgroundRecyclerAdapter = new BackgroundRecyclerAdapter(BackgroundFactory.getAll());
         backgroundRecyclerAdapter.init(backgroundRecyclerView, mainActivity, gamePreferences.getInt(GamePreferences.PREF_NAME_BACKGROUND_INDEX));
     }
 
 
-
     private void setupBackTypesRecyclerView(View parentView){
-        RecyclerView cardBacksRecyclerView = parentView.findViewById(R.id.cardBackRecycleView);
+        ViewGroup settingView = parentView.findViewById(R.id.cardBacksSettingInclude);
+        setupSettingsSectionTitle(settingView, R.string.card_back_style_settings);
+        RecyclerView cardBacksRecyclerView = getRecyclerViewFrom(settingView);
 
         CardTypeRecyclerAdapter cardTypeRecyclerAdapter = new CardTypeRecyclerAdapter(cardBackManager.getSelectableCardBackTypes(),
                 bitmapLoader,
@@ -99,8 +103,11 @@ public class SettingsDialogFragment extends DialogFragment {
         if(mainActivity == null){
             return;
         }
+        ViewGroup settingView = parentView.findViewById(R.id.cardFacesSettingInclude);
+        setupSettingsSectionTitle(settingView, R.string.card_face_style_settings);
+        RecyclerView cardFacesRecyclerView = getRecyclerViewFrom(settingView);
+
         CardTypeSetter cardTypeSetter = mainActivity.getCardTypeSetter();
-        RecyclerView cardFacesRecyclerView = parentView.findViewById(R.id.cardTypeRecycleView);
         CardTypeRecyclerAdapter cardTypeRecyclerAdapter = new CardTypeRecyclerAdapter(CardType.getCardFaces(),
                 bitmapLoader,
                 cardTypeSetter,
@@ -112,5 +119,16 @@ public class SettingsDialogFragment extends DialogFragment {
                 GamePreferences.PREF_NAME_CARD_FACE_INDEX);
     }
 
+
+    private RecyclerView getRecyclerViewFrom(ViewGroup settingView){
+        return settingView.findViewById(R.id.recyclerView);
+    }
+
+
+    private void setupSettingsSectionTitle(View parentView, int strId){
+        TextView title = parentView.findViewById(R.id.settingTitleText);
+        String text = getString(strId);
+        title.setText(text);
+    }
 
 }

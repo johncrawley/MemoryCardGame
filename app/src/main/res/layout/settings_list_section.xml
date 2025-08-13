@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/settingTitleText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:paddingStart="@dimen/_2sdp"
+        android:paddingEnd="@dimen/_18sdp"
+        android:paddingTop="@dimen/_4sdp"
+        android:paddingBottom="@dimen/_4sdp"
+        android:shadowColor="@color/text_shadow_color"
+        android:shadowDx="3"
+        android:shadowDy="3"
+        android:shadowRadius="3"
+        android:text="@string/card_face_style_settings"
+        android:textAlignment="viewStart"
+        android:textColor="@color/setting_title_text"
+        android:textSize="@dimen/version_text_size" />
+
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_2sdp"
+        android:paddingStart="0dp"
+        android:paddingEnd="@dimen/_36sdp"
+        android:background="@color/material_divider_background" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_8sdp"
+        android:fadeScrollbars="true"
+        android:orientation="horizontal" />
+
+
+</LinearLayout>
