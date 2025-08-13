@@ -11,13 +11,14 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.jcrawley.memorycardgame.R;
+
 
 public class RecyclerHelper {
 
     private int selectedPosition = RecyclerView.NO_POSITION;
     private View currentlySelectedView;
     private int indexToScrollTo = -1;
-    private int HIGHLIGHTED_COLOR;
 
 
     void deselectPreviouslySelectedView(){
@@ -41,7 +42,6 @@ public class RecyclerHelper {
         recyclerView.setLayoutManager(horizontalLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
-        HIGHLIGHTED_COLOR = Color.parseColor("#F57F17"); //can't get color from context because min sdk is 19
     }
 
 
@@ -88,12 +88,12 @@ public class RecyclerHelper {
 
 
     private void highlight(View view){
-        view.setBackgroundColor(HIGHLIGHTED_COLOR);
+        view.setBackgroundResource(R.drawable.settings_item_bg_selected);
     }
 
 
     private void unhighlight(View view){
-        view.setBackgroundColor(Color.TRANSPARENT);
+        view.setBackgroundResource(R.drawable.settings_item_bg_unselected);
     }
 
 
