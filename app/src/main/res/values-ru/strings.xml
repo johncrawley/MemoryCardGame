@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><resources>
+
+    <string name="app_name">Карточки для проверки памяти</string>
+
+    <string name="turn">Повернуть</string>
+
+    <string name="game_over">Игра закончена</string>
+
+    <string name="default_turn_text">Повороты сделаны</string>
+
+    <string name="new_game_text">Новая игра</string>
+
+    <string name="created_by_text">Создано Джоном Кроули</string>
+
+    <string name="dismiss_about_button">ХОРОШО!</string>
+
+    <string name="button_8_cards_text">8 карт</string>
+
+    <string name="button_16_cards_text">16 карт</string>
+
+    <string name="button_26_cards_text">26 карт</string>
+
+    <string name="button_52_cards_text">52 карты</string>
+
+    <string name="game_complete_text">ОТЛИЧНАЯ РАБОТА!</string>
+
+    <string name="results_status_current_record">Текущий рекорд: </string>
+
+    <string name="results_status_matching_record">Соответствует текущему рекорду!</string>
+
+    <string name="results_status_new_record">Поздравляю! Новый рекорд!</string>
+
+    <string name="results_status_turns_taken">повороты сделаны</string>
+
+    <string name="menu_action_new_game">Новая игра</string>
+
+    <string name="menu_action_about">О</string>
+
+    <string name="menu_action_settings">Настройки</string>
+
+    <string name="list_item_background_content_description">Вариант фона</string>
+
+    <string name="list_item_card_content_description">Вариант типа карты</string>
+
+    <string name="card_face_style_settings">Лицо карты</string>
+
+    <string name="card_back_style_settings">Рубашка карты</string>
+
+    <string name="background_style_settings">Фон</string>
+
+    <string name="button_options_about">О приложении</string>
+
+    <string name="button_options_settings">Настройки</string>
+
+    <string name="button_options_new_game">Новая игра</string>
+
+    <string name="options_button_content_description">Параметры</string>
+
+    <string name="about_cards_text">Содержит графические изображения карт, созданные или полученные с помощью: https://totalnonsense.com/open-source-vector-playing-cards \n Авторские права 2011, 2021 – Крис Агилар – conjurenation\@gmail.com \n Лицензия: LGPL 3.0 – https://www.gnu.org/licenses/lgpl-3.0.html \n \n Лица карт кошек и собак созданы с помощью Mage Space, https://www.mage.space</string>
+
+</resources>

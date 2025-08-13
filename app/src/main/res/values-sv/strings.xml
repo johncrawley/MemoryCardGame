@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><resources>
+
+    <string name="app_name">Memory Match Cards</string>
+
+    <string name="turn">Sväng</string>
+
+    <string name="game_over">Game Over</string>
+
+    <string name="default_turn_text">Svängar tagna</string>
+
+    <string name="new_game_text">Nytt spel</string>
+
+    <string name="created_by_text">Skapad av John Crawley</string>
+
+    <string name="dismiss_about_button">ok!</string>
+
+    <string name="button_8_cards_text">8 kort</string>
+
+    <string name="button_16_cards_text">16 kort</string>
+
+    <string name="button_26_cards_text">26 kort</string>
+
+    <string name="button_52_cards_text">52 kort</string>
+
+    <string name="game_complete_text">BRA GJORT!</string>
+
+    <string name="results_status_current_record">Aktuellt rekord: </string>
+
+    <string name="results_status_matching_record">Matchar det nuvarande rekordet!</string>
+
+    <string name="results_status_new_record">Grattis! Ett nytt rekord!</string>
+
+    <string name="results_status_turns_taken">uttagna svängar</string>
+
+    <string name="menu_action_new_game">Nytt spel</string>
+
+    <string name="menu_action_about">Om</string>
+
+    <string name="menu_action_settings">Inställningar</string>
+
+    <string name="list_item_background_content_description">Bakgrundsalternativ</string>
+
+    <string name="list_item_card_content_description">Alternativ för korttyp</string>
+
+    <string name="card_face_style_settings">Kort ansikte</string>
+
+    <string name="card_back_style_settings">Kort tillbaka</string>
+
+    <string name="background_style_settings">Bakgrund</string>
+
+    <string name="button_options_about">Om App</string>
+
+    <string name="button_options_settings">Inställningar</string>
+
+    <string name="button_options_new_game">Nytt spel</string>
+
+    <string name="options_button_content_description">Alternativ</string>
+
+    <string name="about_cards_text">Innehåller kortgrafik producerad eller härledd från: https://totalnonsense.com/open-source-vector-playing-cards \n Copyright 2011,2021 – Chris Aguilar – conjurenation\@gmail.com \n Licensierad under: LGPL 3.0 – https://www.gnu.org/lgpl/licenses {0}Cat/10.html {0} och hundkortsytor genererade med Mage Space, https://www.mage.space</string>
+
+</resources>

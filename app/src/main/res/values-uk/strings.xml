@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><resources>
+
+    <string name="app_name">Картки збігів на пам\'ять</string>
+
+    <string name="turn">поворот</string>
+
+    <string name="game_over">Гра закінчена</string>
+
+    <string name="default_turn_text">Повороти</string>
+
+    <string name="new_game_text">Нова гра</string>
+
+    <string name="created_by_text">Створено Джоном Кроулі</string>
+
+    <string name="dismiss_about_button">добре!</string>
+
+    <string name="button_8_cards_text">8 карток</string>
+
+    <string name="button_16_cards_text">16 карток</string>
+
+    <string name="button_26_cards_text">26 карток</string>
+
+    <string name="button_52_cards_text">52 картки</string>
+
+    <string name="game_complete_text">МОЛОДЦІ!</string>
+
+    <string name="results_status_current_record">Поточний рекорд: </string>
+
+    <string name="results_status_matching_record">Відповідає поточному рекорду!</string>
+
+    <string name="results_status_new_record">Щиро вітаю! Новий рекорд!</string>
+
+    <string name="results_status_turns_taken">по черзі</string>
+
+    <string name="menu_action_new_game">Нова гра</string>
+
+    <string name="menu_action_about">про</string>
+
+    <string name="menu_action_settings">Налаштування</string>
+
+    <string name="list_item_background_content_description">Фоновий варіант</string>
+
+    <string name="list_item_card_content_description">Варіант типу картки</string>
+
+    <string name="card_face_style_settings">Обличчя картки</string>
+
+    <string name="card_back_style_settings">Зворотна картка</string>
+
+    <string name="background_style_settings">Фон</string>
+
+    <string name="button_options_about">Про додаток</string>
+
+    <string name="button_options_settings">Налаштування</string>
+
+    <string name="button_options_new_game">Нова гра</string>
+
+    <string name="options_button_content_description">Опції</string>
+
+    <string name="about_cards_text">Містить графіку карток, створену або отриману з: https://totalnonsense.com/open-source-vector-playing-cards \n Авторське право 2011, 2021 – Chris Aguilar – conjurenation\@gmail.com \n Ліцензія: LGPL 3.0 – https://www.gnu.org/licenses/lgpl-3.0.html \n \n Карткові обличчя котів і собак, створені за допомогою Mage Space, https://www.mage.space</string>
+
+</resources>

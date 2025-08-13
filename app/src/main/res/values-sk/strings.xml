@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><resources>
+
+    <string name="app_name">Memory Match Cards</string>
+
+    <string name="turn">Otočte sa</string>
+
+    <string name="game_over">Koniec hry</string>
+
+    <string name="default_turn_text">Turns Takeed</string>
+
+    <string name="new_game_text">Nová hra</string>
+
+    <string name="created_by_text">Vytvoril John Crawley</string>
+
+    <string name="dismiss_about_button">OK!</string>
+
+    <string name="button_8_cards_text">8 kariet</string>
+
+    <string name="button_16_cards_text">16 kariet</string>
+
+    <string name="button_26_cards_text">26 kariet</string>
+
+    <string name="button_52_cards_text">52 kariet</string>
+
+    <string name="game_complete_text">DOBRE!</string>
+
+    <string name="results_status_current_record">Aktuálny rekord: </string>
+
+    <string name="results_status_matching_record">Zhoduje sa s aktuálnym rekordom!</string>
+
+    <string name="results_status_new_record">Gratulujem! Nový rekord!</string>
+
+    <string name="results_status_turns_taken">urobené otáčky</string>
+
+    <string name="menu_action_new_game">Nová hra</string>
+
+    <string name="menu_action_about">O</string>
+
+    <string name="menu_action_settings">Nastavenia</string>
+
+    <string name="list_item_background_content_description">Možnosť pozadia</string>
+
+    <string name="list_item_card_content_description">Možnosť typu karty</string>
+
+    <string name="card_face_style_settings">Tvár karty</string>
+
+    <string name="card_back_style_settings">Späť karty</string>
+
+    <string name="background_style_settings">Pozadie</string>
+
+    <string name="button_options_about">O aplikácii</string>
+
+    <string name="button_options_settings">Nastavenia</string>
+
+    <string name="button_options_new_game">Nová hra</string>
+
+    <string name="options_button_content_description">Možnosti</string>
+
+    <string name="about_cards_text">Obsahuje grafiku kariet vyrobenú alebo odvodenú z: https://totalnonsense.com/open-source-vector-playing-cards \n Autorské práva 2011,2021 – Chris Aguilar – conjurenation\@gmail.com \n Licencované na základe: LGPL 3.0 – https://www.gnu.org/licenses/licenses/lgpl {0}karta Cat.10} pes-13.generované pomocou Mage Space, https://www.mage.space</string>
+
+</resources>

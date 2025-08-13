@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><resources>
+
+    <string name="app_name">Cartões de jogo de memória</string>
+
+    <string name="turn">Vez</string>
+
+    <string name="game_over">Game Over</string>
+
+    <string name="default_turn_text">Turnos tomados</string>
+
+    <string name="new_game_text">Novo jogo</string>
+
+    <string name="created_by_text">Criado por John Crawley</string>
+
+    <string name="dismiss_about_button">OK!</string>
+
+    <string name="button_8_cards_text">8 cartas</string>
+
+    <string name="button_16_cards_text">16 cartas</string>
+
+    <string name="button_26_cards_text">26 cartas</string>
+
+    <string name="button_52_cards_text">52 cartas</string>
+
+    <string name="game_complete_text">BOM TRABALHO!</string>
+
+    <string name="results_status_current_record">Registro atual: </string>
+
+    <string name="results_status_matching_record">Igualando o recorde atual!</string>
+
+    <string name="results_status_new_record">Parabéns! Um novo recorde!</string>
+
+    <string name="results_status_turns_taken">turnos tomados</string>
+
+    <string name="menu_action_new_game">Novo jogo</string>
+
+    <string name="menu_action_about">Sobre</string>
+
+    <string name="menu_action_settings">Configurações</string>
+
+    <string name="list_item_background_content_description">Opção de plano de fundo</string>
+
+    <string name="list_item_card_content_description">Opção de tipo de cartão</string>
+
+    <string name="card_face_style_settings">Face da carta</string>
+
+    <string name="card_back_style_settings">Verso do cartão</string>
+
+    <string name="background_style_settings">Fundo</string>
+
+    <string name="button_options_about">Sobre o aplicativo</string>
+
+    <string name="button_options_settings">Configurações</string>
+
+    <string name="button_options_new_game">Novo jogo</string>
+
+    <string name="options_button_content_description">Opções</string>
+
+    <string name="about_cards_text">Contém gráficos de cartas produzidos ou derivados de: https://totalnonsense.com/open-source-vector-playing-cards \n Copyright 2011,2021 – Chris Aguilar – conjurenation\@gmail.com \n Licenciado sob: LGPL 3.0 – https://www.gnu.org/licenses/lgpl-3.0.html \n \n Rostos de cartas de gato e cachorro gerados usando Mage Space, https://www.mage.space</string>
+
+</resources>

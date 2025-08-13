@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><resources>
+
+    <string name="app_name">Memory Match Cards</string>
+
+    <string name="turn">Fordulat</string>
+
+    <string name="game_over">A játék vége</string>
+
+    <string name="default_turn_text">Felvett körök</string>
+
+    <string name="new_game_text">Új játék</string>
+
+    <string name="created_by_text">Készítette: John Crawley</string>
+
+    <string name="dismiss_about_button">Rendben!</string>
+
+    <string name="button_8_cards_text">8 kártya</string>
+
+    <string name="button_16_cards_text">16 kártya</string>
+
+    <string name="button_26_cards_text">26 kártya</string>
+
+    <string name="button_52_cards_text">52 kártya</string>
+
+    <string name="game_complete_text">GRATULÁLOK!</string>
+
+    <string name="results_status_current_record">Aktuális rekord: </string>
+
+    <string name="results_status_matching_record">Megfelel a jelenlegi rekordnak!</string>
+
+    <string name="results_status_new_record">Gratulálok! Új rekord!</string>
+
+    <string name="results_status_turns_taken">fordultak</string>
+
+    <string name="menu_action_new_game">Új játék</string>
+
+    <string name="menu_action_about">Körülbelül</string>
+
+    <string name="menu_action_settings">Beállítások elemre</string>
+
+    <string name="list_item_background_content_description">Háttér opció</string>
+
+    <string name="list_item_card_content_description">Kártyatípus opció</string>
+
+    <string name="card_face_style_settings">Kártya arca</string>
+
+    <string name="card_back_style_settings">Kártya vissza</string>
+
+    <string name="background_style_settings">Háttér</string>
+
+    <string name="button_options_about">Az alkalmazásról</string>
+
+    <string name="button_options_settings">Beállítások elemre</string>
+
+    <string name="button_options_new_game">Új játék</string>
+
+    <string name="options_button_content_description">Opciók</string>
+
+    <string name="about_cards_text">Tartalmazza a https://totalnonsense.com/open-source-vector-playing-cards előállított vagy származtatott kártyagrafikát \n Copyright 2011,2021 – Chris Aguilar – conjurenation\@gmail.com \n Licenc: LGPL 3.0 – https://www.gnu/lg.html {0}1}1}1} Macska és kutya kártyalapok a Mage Space segítségével, https://www.mage.space</string>
+
+</resources>

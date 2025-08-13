@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><resources>
+
+    <string name="app_name">بطاقات مطابقة الذاكرة</string>
+
+    <string name="turn">دور</string>
+
+    <string name="game_over">انتهت اللعبة</string>
+
+    <string name="default_turn_text">الأدوار المتخذة</string>
+
+    <string name="new_game_text">لعبة جديدة</string>
+
+    <string name="created_by_text">تم إنشاؤه بواسطة جون كراولي</string>
+
+    <string name="dismiss_about_button">نعم!</string>
+
+    <string name="button_8_cards_text">8 بطاقات</string>
+
+    <string name="button_16_cards_text">16 بطاقة</string>
+
+    <string name="button_26_cards_text">26 بطاقة</string>
+
+    <string name="button_52_cards_text">52 بطاقة</string>
+
+    <string name="game_complete_text">أحسنت!</string>
+
+    <string name="results_status_current_record">السجل الحالي: </string>
+
+    <string name="results_status_matching_record">مطابقة السجل الحالي!</string>
+
+    <string name="results_status_new_record">مبروك! رقم قياسي جديد!</string>
+
+    <string name="results_status_turns_taken">الأدوار المتخذة</string>
+
+    <string name="menu_action_new_game">لعبة جديدة</string>
+
+    <string name="menu_action_about">عن</string>
+
+    <string name="menu_action_settings">إعدادات</string>
+
+    <string name="list_item_background_content_description">خيار الخلفية</string>
+
+    <string name="list_item_card_content_description">خيار نوع البطاقة</string>
+
+    <string name="card_face_style_settings">وجه البطاقة</string>
+
+    <string name="card_back_style_settings">ظهر البطاقة</string>
+
+    <string name="background_style_settings">خلفية</string>
+
+    <string name="button_options_about">حول التطبيق</string>
+
+    <string name="button_options_settings">إعدادات</string>
+
+    <string name="button_options_new_game">لعبة جديدة</string>
+
+    <string name="options_button_content_description">خيارات</string>
+
+    <string name="about_cards_text">يحتوي على رسومات بطاقات تم إنتاجها أو اشتقاقها من: https://totalnonsense.com/open-source-vector-playing-cards \n حقوق الطبع والنشر 2011،2021 - كريس أغيلار - conjurenation\@gmail.com \n مرخص بموجب: LGPL 3.0 - https://www.gnu.org/licenses/lgpl-3.0.html \n \n وجوه بطاقات القطط والكلاب تم إنشاؤها باستخدام Mage Space، https://www.mage.space</string>
+
+</resources>

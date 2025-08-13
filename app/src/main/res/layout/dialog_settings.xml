@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/settingsLayout"
     android:layout_width="wrap_content"
-    android:layout_height="300dp"
+    android:layout_height="@dimen/_280sdp"
     android:layout_gravity="center"
     android:background="@drawable/background_with_shadow"
     android:shadowDx="5"
     android:shadowDy="4"
     android:shadowRadius="2"
-    android:padding="12dp"
+    android:padding="@dimen/_12sdp"
     android:shadowColor="@color/default_color_primary">
 
 
@@ -18,8 +18,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/menu_action_settings"
-        android:paddingHorizontal="@dimen/turns_text_padding_horizontal"
-        android:paddingBottom="@dimen/turns_text_padding_bottom"
+        android:paddingHorizontal="@dimen/_18sdp"
+        android:paddingBottom="@dimen/_8sdp"
         android:shadowRadius="3"
         android:shadowDy="3"
         android:shadowDx="3"
@@ -37,7 +37,7 @@
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="@dimen/_280sdp"
         app:layout_constraintTop_toBottomOf="@+id/settingsTextView"
         app:layout_constraintBottom_toTopOf="@+id/dialogSettingsOkButtonInclude"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,10 +53,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="start"
-                android:paddingStart="@dimen/settings_section_text_padding_start"
-                android:paddingEnd="@dimen/settings_section_text_padding_end"
-                android:paddingTop="@dimen/settings_category_heading_padding_top"
-                android:paddingBottom="@dimen/settings_category_heading_padding_bottom"
+                android:paddingStart="@dimen/_2sdp"
+                android:paddingEnd="@dimen/_18sdp"
+                android:paddingTop="@dimen/_4sdp"
+                android:paddingBottom="@dimen/_4sdp"
                 android:shadowColor="@color/text_shadow_color"
                 android:shadowDx="3"
                 android:shadowDy="3"
@@ -70,9 +70,9 @@
             <com.google.android.material.divider.MaterialDivider
                 android:id="@+id/divider"
                 android:layout_width="match_parent"
-                android:layout_height="4dp"
+                android:layout_height="@dimen/_4sdp"
                 android:paddingStart="0dp"
-                android:paddingEnd="36dp"
+                android:paddingEnd="@dimen/_36sdp"
                 android:background="@color/material_divider_background" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -83,7 +83,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/albumTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/recycler_view_margin_vertical"
+                android:layout_margin="@dimen/_8sdp"
                 android:fadeScrollbars="true"
                 android:orientation="horizontal" />
 
@@ -93,10 +93,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="start"
-                android:paddingStart="@dimen/settings_section_text_padding_start"
-                android:paddingEnd="@dimen/settings_section_text_padding_end"
-                android:paddingTop="@dimen/settings_category_heading_padding_top"
-                android:paddingBottom="@dimen/settings_category_heading_padding_bottom"
+                android:paddingStart="@dimen/_2sdp"
+                android:paddingEnd="@dimen/_18sdp"
+                android:paddingTop="@dimen/_4sdp"
+                android:paddingBottom="@dimen/_4sdp"
                 android:shadowColor="@color/text_shadow_color"
                 android:shadowDx="3"
                 android:shadowDy="3"
@@ -109,9 +109,9 @@
             <com.google.android.material.divider.MaterialDivider
                 android:id="@+id/cardBackDivider"
                 android:layout_width="match_parent"
-                android:layout_height="4dp"
+                android:layout_height="@dimen/_4sdp"
                 android:paddingStart="0dp"
-                android:paddingEnd="36dp"
+                android:paddingEnd="@dimen/_36sdp"
                 android:background="@color/material_divider_background" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -131,10 +131,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="start"
-                android:paddingStart="@dimen/settings_section_text_padding_start"
-                android:paddingEnd="@dimen/settings_section_text_padding_end"
-                android:paddingTop="@dimen/settings_category_heading_padding_top"
-                android:paddingBottom="@dimen/settings_category_heading_padding_bottom"
+                android:paddingStart="@dimen/_2sdp"
+                android:paddingEnd="@dimen/_18sdp"
+                android:paddingTop="@dimen/_4sdp"
+                android:paddingBottom="@dimen/_4sdp"
                 android:shadowColor="@color/text_shadow_color"
                 android:shadowDx="3"
                 android:shadowDy="3"
@@ -147,8 +147,8 @@
             <com.google.android.material.divider.MaterialDivider
                 android:id="@+id/backgroundDivider"
                 android:layout_width="match_parent"
-                android:layout_height="4dp"
-                android:paddingEnd="36dp"
+                android:layout_height="@dimen/_4sdp"
+                android:paddingEnd="@dimen/_36sdp"
                 android:paddingStart="0dp"
                 android:background="@color/material_divider_background"/>
 
@@ -157,7 +157,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginVertical="@dimen/recycler_view_margin_vertical"
+                android:layout_marginVertical="@dimen/_8sdp"
                 android:fadeScrollbars="true"
                 />
         </LinearLayout>

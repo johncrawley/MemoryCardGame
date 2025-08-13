@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><resources>
+
+    <string name="app_name">Muistikortit</string>
+
+    <string name="turn">Käänny</string>
+
+    <string name="game_over">Peli ohi</string>
+
+    <string name="default_turn_text">Vuorot otettu</string>
+
+    <string name="new_game_text">Uusi Peli</string>
+
+    <string name="created_by_text">Luonut John Crawley</string>
+
+    <string name="dismiss_about_button">OK!</string>
+
+    <string name="button_8_cards_text">8 korttia</string>
+
+    <string name="button_16_cards_text">16 korttia</string>
+
+    <string name="button_26_cards_text">26 korttia</string>
+
+    <string name="button_52_cards_text">52 korttia</string>
+
+    <string name="game_complete_text">HYVIN TEHTY!</string>
+
+    <string name="results_status_current_record">Nykyinen ennätys: </string>
+
+    <string name="results_status_matching_record">Vastaa nykyistä ennätystä!</string>
+
+    <string name="results_status_new_record">Onnittelut! Uusi ennätys!</string>
+
+    <string name="results_status_turns_taken">käännöksiä otettu</string>
+
+    <string name="menu_action_new_game">Uusi Peli</string>
+
+    <string name="menu_action_about">Noin</string>
+
+    <string name="menu_action_settings">Asetukset</string>
+
+    <string name="list_item_background_content_description">Taustavaihtoehto</string>
+
+    <string name="list_item_card_content_description">Korttityyppivaihtoehto</string>
+
+    <string name="card_face_style_settings">Kortin kasvot</string>
+
+    <string name="card_back_style_settings">Kortti Takaisin</string>
+
+    <string name="background_style_settings">Tausta</string>
+
+    <string name="button_options_about">Tietoja App</string>
+
+    <string name="button_options_settings">Asetukset</string>
+
+    <string name="button_options_new_game">Uusi Peli</string>
+
+    <string name="options_button_content_description">Vaihtoehdot</string>
+
+    <string name="about_cards_text">Sisältää korttigrafiikkaa, joka on tuotettu tai johdettu osoitteesta https://totalnonsense.com/open-source-vector-playing-cards \n Tekijänoikeus 2011,2021 – Chris Aguilar – conjurenation\@gmail.com \n Lisenssi: LGPL 3.0 – https://www.gnu/lg.html {0}1.1} {0} Kissan ja koiran korttien kasvot luotu käyttämällä Mage Spacea, https://www.mage.space</string>
+
+</resources>

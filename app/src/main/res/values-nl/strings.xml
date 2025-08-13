@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><resources>
+
+    <string name="app_name">Memory Match-kaarten</string>
+
+    <string name="turn">Draai</string>
+
+    <string name="game_over">Spel voorbij</string>
+
+    <string name="default_turn_text">Beurten genomen</string>
+
+    <string name="new_game_text">Nieuw spel</string>
+
+    <string name="created_by_text">Gemaakt door John Crawley</string>
+
+    <string name="dismiss_about_button">OK!</string>
+
+    <string name="button_8_cards_text">8 kaarten</string>
+
+    <string name="button_16_cards_text">16 kaarten</string>
+
+    <string name="button_26_cards_text">26 kaarten</string>
+
+    <string name="button_52_cards_text">52 kaarten</string>
+
+    <string name="game_complete_text">GOED GEDAAN!</string>
+
+    <string name="results_status_current_record">Huidig record: </string>
+
+    <string name="results_status_matching_record">Het huidige record evenaren!</string>
+
+    <string name="results_status_new_record">Gefeliciteerd! Een nieuw record!</string>
+
+    <string name="results_status_turns_taken">beurten genomen</string>
+
+    <string name="menu_action_new_game">Nieuw spel</string>
+
+    <string name="menu_action_about">Over</string>
+
+    <string name="menu_action_settings">Instellingen</string>
+
+    <string name="list_item_background_content_description">Achtergrondoptie</string>
+
+    <string name="list_item_card_content_description">Kaarttype optie</string>
+
+    <string name="card_face_style_settings">Kaartgezicht</string>
+
+    <string name="card_back_style_settings">Kaart achterkant</string>
+
+    <string name="background_style_settings">Achtergrond</string>
+
+    <string name="button_options_about">Over de app</string>
+
+    <string name="button_options_settings">Instellingen</string>
+
+    <string name="button_options_new_game">Nieuw spel</string>
+
+    <string name="options_button_content_description">Opties</string>
+
+    <string name="about_cards_text">Bevat kaartafbeeldingen geproduceerd of afgeleid van: https://totalnonsense.com/open-source-vector-playing-cards \n Copyright 2011,2021 – Chris Aguilar – conjurenation\@gmail.com \n Gelicentieerd onder: LGPL 3.0 – https://www.gnu.org/licenses/lgpl-3.0.html \n \n Kaartgezichten van katten en honden gegenereerd met Mage Space, https://www.mage.space</string>
+
+</resources>

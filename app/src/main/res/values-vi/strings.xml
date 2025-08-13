@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><resources>
+
+    <string name="app_name">Thẻ nhớ ghép hình</string>
+
+    <string name="turn">Xoay</string>
+
+    <string name="game_over">Trò chơi kết thúc</string>
+
+    <string name="default_turn_text">Lượt đi đã thực hiện</string>
+
+    <string name="new_game_text">Trò chơi mới</string>
+
+    <string name="created_by_text">Được tạo bởi John Crawley</string>
+
+    <string name="dismiss_about_button">ĐƯỢC RỒI!</string>
+
+    <string name="button_8_cards_text">8 lá bài</string>
+
+    <string name="button_16_cards_text">16 lá bài</string>
+
+    <string name="button_26_cards_text">26 lá bài</string>
+
+    <string name="button_52_cards_text">52 lá bài</string>
+
+    <string name="game_complete_text">LÀM TỐT!</string>
+
+    <string name="results_status_current_record">Kỷ lục hiện tại: </string>
+
+    <string name="results_status_matching_record">Phù hợp với kỷ lục hiện tại!</string>
+
+    <string name="results_status_new_record">Chúc mừng! Một kỷ lục mới!</string>
+
+    <string name="results_status_turns_taken">lượt đi đã thực hiện</string>
+
+    <string name="menu_action_new_game">Trò chơi mới</string>
+
+    <string name="menu_action_about">Về</string>
+
+    <string name="menu_action_settings">Cài đặt</string>
+
+    <string name="list_item_background_content_description">Tùy chọn nền</string>
+
+    <string name="list_item_card_content_description">Tùy chọn loại thẻ</string>
+
+    <string name="card_face_style_settings">Mặt thẻ</string>
+
+    <string name="card_back_style_settings">Mặt sau của thẻ</string>
+
+    <string name="background_style_settings">Lý lịch</string>
+
+    <string name="button_options_about">Giới thiệu về ứng dụng</string>
+
+    <string name="button_options_settings">Cài đặt</string>
+
+    <string name="button_options_new_game">Trò chơi mới</string>
+
+    <string name="options_button_content_description">Tùy chọn</string>
+
+    <string name="about_cards_text">Chứa đồ họa thẻ bài được tạo hoặc lấy từ: https://totalnonsense.com/open-source-vector-playing-cards \n Bản quyền 2011,2021 – Chris Aguilar – conjurenation\@gmail.com \n Được cấp phép theo: LGPL 3.0 – https://www.gnu.org/licenses/lgpl-3.0.html \n \n Khuôn mặt thẻ bài mèo và chó được tạo bằng Mage Space, https://www.mage.space</string>
+
+</resources>

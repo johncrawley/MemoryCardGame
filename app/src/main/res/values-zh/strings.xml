@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><resources>
+
+    <string name="app_name">记忆匹配卡</string>
+
+    <string name="turn">转动</string>
+
+    <string name="game_over">游戏结束</string>
+
+    <string name="default_turn_text">轮流</string>
+
+    <string name="new_game_text">新游戏</string>
+
+    <string name="created_by_text">由约翰·克劳利创作</string>
+
+    <string name="dismiss_about_button">好的！</string>
+
+    <string name="button_8_cards_text">8 张牌</string>
+
+    <string name="button_16_cards_text">16 张卡片</string>
+
+    <string name="button_26_cards_text">26 张卡片</string>
+
+    <string name="button_52_cards_text">52 张卡片</string>
+
+    <string name="game_complete_text">做得好！</string>
+
+    <string name="results_status_current_record">当前记录：</string>
+
+    <string name="results_status_matching_record">匹配当前记录！</string>
+
+    <string name="results_status_new_record">恭喜！新纪录！</string>
+
+    <string name="results_status_turns_taken">轮流</string>
+
+    <string name="menu_action_new_game">新游戏</string>
+
+    <string name="menu_action_about">关于</string>
+
+    <string name="menu_action_settings">设置</string>
+
+    <string name="list_item_background_content_description">背景选项</string>
+
+    <string name="list_item_card_content_description">卡类型选项</string>
+
+    <string name="card_face_style_settings">卡面</string>
+
+    <string name="card_back_style_settings">卡背</string>
+
+    <string name="background_style_settings">背景</string>
+
+    <string name="button_options_about">关于应用程序</string>
+
+    <string name="button_options_settings">设置</string>
+
+    <string name="button_options_new_game">新游戏</string>
+
+    <string name="options_button_content_description">选项</string>
+
+    <string name="about_cards_text">包含制作或衍生自以下网址的纸牌图形：https://totalnonsense.com/open-source-vector-playing-cards \n 版权所有 2011,2021 – Chris Aguilar – conjurenation\@gmail.com \n 许可依据：LGPL 3.0 – https://www.gnu.org/licenses/lgpl-3.0.html \n \n 使用 Mage Space 生成的猫和狗纸牌图案，https://www.mage.space</string>
+
+</resources>

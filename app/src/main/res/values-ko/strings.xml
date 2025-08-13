@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><resources>
+
+    <string name="app_name">메모리 매치 카드</string>
+
+    <string name="turn">회전하다</string>
+
+    <string name="game_over">게임 오버</string>
+
+    <string name="default_turn_text">턴이 진행됨</string>
+
+    <string name="new_game_text">새로운 게임</string>
+
+    <string name="created_by_text">John Crawley가 만들었습니다</string>
+
+    <string name="dismiss_about_button">좋아요!</string>
+
+    <string name="button_8_cards_text">8장의 카드</string>
+
+    <string name="button_16_cards_text">16장의 카드</string>
+
+    <string name="button_26_cards_text">26장의 카드</string>
+
+    <string name="button_52_cards_text">52장의 카드</string>
+
+    <string name="game_complete_text">잘하셨어요!</string>
+
+    <string name="results_status_current_record">현재 기록: </string>
+
+    <string name="results_status_matching_record">현재 기록과 맞먹습니다!</string>
+
+    <string name="results_status_new_record">축하해요! 새로운 기록!</string>
+
+    <string name="results_status_turns_taken">차례가 바뀌다</string>
+
+    <string name="menu_action_new_game">새로운 게임</string>
+
+    <string name="menu_action_about">에 대한</string>
+
+    <string name="menu_action_settings">설정</string>
+
+    <string name="list_item_background_content_description">배경 옵션</string>
+
+    <string name="list_item_card_content_description">카드 유형 옵션</string>
+
+    <string name="card_face_style_settings">카드 페이스</string>
+
+    <string name="card_back_style_settings">카드 뒷면</string>
+
+    <string name="background_style_settings">배경</string>
+
+    <string name="button_options_about">앱 정보</string>
+
+    <string name="button_options_settings">설정</string>
+
+    <string name="button_options_new_game">새로운 게임</string>
+
+    <string name="options_button_content_description">옵션</string>
+
+    <string name="about_cards_text">다음에서 제작 또는 파생된 카드 그래픽이 포함되어 있습니다: https://totalnonsense.com/open-source-vector-playing-cards \n 저작권 2011,2021 – Chris Aguilar – conjurenation\@gmail.com \n 라이선스: LGPL 3.0 – https://www.gnu.org/licenses/lgpl-3.0.html \n \n Mage Space(https://www.mage.space)를 사용하여 생성된 고양이와 개 카드면</string>
+
+</resources>

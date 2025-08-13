@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><resources>
+
+    <string name="app_name">כרטיסי התאמה לזיכרון</string>
+
+    <string name="turn">פִּנָה</string>
+
+    <string name="game_over">המשחק נגמר</string>
+
+    <string name="default_turn_text">תורנו</string>
+
+    <string name="new_game_text">משחק חדש</string>
+
+    <string name="created_by_text">נוצר על ידי ג\'ון קרולי</string>
+
+    <string name="dismiss_about_button">בְּסֵדֶר!</string>
+
+    <string name="button_8_cards_text">8 קלפים</string>
+
+    <string name="button_16_cards_text">16 קלפים</string>
+
+    <string name="button_26_cards_text">26 קלפים</string>
+
+    <string name="button_52_cards_text">52 קלפים</string>
+
+    <string name="game_complete_text">כל הכבוד!</string>
+
+    <string name="results_status_current_record">שיא נוכחי: </string>
+
+    <string name="results_status_matching_record">התאמה לשיא הנוכחי!</string>
+
+    <string name="results_status_new_record">מזל טוב! שיא חדש!</string>
+
+    <string name="results_status_turns_taken">התורות</string>
+
+    <string name="menu_action_new_game">משחק חדש</string>
+
+    <string name="menu_action_about">אוֹדוֹת</string>
+
+    <string name="menu_action_settings">הגדרות</string>
+
+    <string name="list_item_background_content_description">אפשרות רקע</string>
+
+    <string name="list_item_card_content_description">אפשרות לסוג כרטיס</string>
+
+    <string name="card_face_style_settings">פני כרטיס</string>
+
+    <string name="card_back_style_settings">כרטיס חזרה</string>
+
+    <string name="background_style_settings">רֶקַע</string>
+
+    <string name="button_options_about">על אפליקציה</string>
+
+    <string name="button_options_settings">הגדרות</string>
+
+    <string name="button_options_new_game">משחק חדש</string>
+
+    <string name="options_button_content_description">אפשרויות</string>
+
+    <string name="about_cards_text">מכיל גרפיקת כרטיס שהופקה או נגזרת מ: https://totalnonsense.com/open-source-vector-playing-cards \n זכויות יוצרים 2011,2021 – Chris Aguilar – conjurenation\@gmail.com \n מורשה תחת: LGPL 3.0 – https://www.gnu.org/10.html {0}Catpl/Licenses ופני כרטיסי כלב שנוצרו באמצעות Mage Space, https://www.mage.space</string>
+
+</resources>

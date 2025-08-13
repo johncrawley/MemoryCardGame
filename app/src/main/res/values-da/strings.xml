@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><resources>
+
+    <string name="app_name">Memory Match-kort</string>
+
+    <string name="turn">Tur</string>
+
+    <string name="game_over">Game Over</string>
+
+    <string name="default_turn_text">Drej taget</string>
+
+    <string name="new_game_text">Nyt spil</string>
+
+    <string name="created_by_text">Skabt af John Crawley</string>
+
+    <string name="dismiss_about_button">OK!</string>
+
+    <string name="button_8_cards_text">8 kort</string>
+
+    <string name="button_16_cards_text">16 kort</string>
+
+    <string name="button_26_cards_text">26 kort</string>
+
+    <string name="button_52_cards_text">52 kort</string>
+
+    <string name="game_complete_text">GODT GÅET!</string>
+
+    <string name="results_status_current_record">Nuværende rekord: </string>
+
+    <string name="results_status_matching_record">Matcher den nuværende rekord!</string>
+
+    <string name="results_status_new_record">Tillykke! En ny rekord!</string>
+
+    <string name="results_status_turns_taken">drejninger taget</string>
+
+    <string name="menu_action_new_game">Nyt spil</string>
+
+    <string name="menu_action_about">Om</string>
+
+    <string name="menu_action_settings">Indstillinger</string>
+
+    <string name="list_item_background_content_description">Baggrundsmulighed</string>
+
+    <string name="list_item_card_content_description">Mulighed for korttype</string>
+
+    <string name="card_face_style_settings">Kortflade</string>
+
+    <string name="card_back_style_settings">Kort tilbage</string>
+
+    <string name="background_style_settings">Baggrund</string>
+
+    <string name="button_options_about">Om App</string>
+
+    <string name="button_options_settings">Indstillinger</string>
+
+    <string name="button_options_new_game">Nyt spil</string>
+
+    <string name="options_button_content_description">Valgmuligheder</string>
+
+    <string name="about_cards_text">Indeholder kortgrafik produceret eller afledt fra: https://totalnonsense.com/open-source-vector-playing-cards \n Copyright 2011,2021 – Chris Aguilar – conjurenation\@gmail.com \n Licenseret under: LGPL 3.0 – https://www.gnu.org/lgpl/licenses {0}Cat/10.html {0} og hundekortansigter genereret ved hjælp af Mage Space, https://www.mage.space</string>
+
+</resources>

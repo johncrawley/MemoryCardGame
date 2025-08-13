@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><resources>
+
+    <string name="app_name">Hafıza Eşleştirme Kartları</string>
+
+    <string name="turn">Dönüş</string>
+
+    <string name="game_over">Oyun bitti</string>
+
+    <string name="default_turn_text">Sıralar Alındı</string>
+
+    <string name="new_game_text">Yeni Oyun</string>
+
+    <string name="created_by_text">John Crawley tarafından yaratıldı</string>
+
+    <string name="dismiss_about_button">TAMAM!</string>
+
+    <string name="button_8_cards_text">8 Kart</string>
+
+    <string name="button_16_cards_text">16 Kart</string>
+
+    <string name="button_26_cards_text">26 Kart</string>
+
+    <string name="button_52_cards_text">52 Kart</string>
+
+    <string name="game_complete_text">TEBRİKLER!</string>
+
+    <string name="results_status_current_record">Güncel Kayıt: </string>
+
+    <string name="results_status_matching_record">Güncel Rekoru Yakaladık!</string>
+
+    <string name="results_status_new_record">Tebrikler! Yeni Bir Rekor!</string>
+
+    <string name="results_status_turns_taken">dönüşler alındı</string>
+
+    <string name="menu_action_new_game">Yeni Oyun</string>
+
+    <string name="menu_action_about">Hakkında</string>
+
+    <string name="menu_action_settings">Ayarlar</string>
+
+    <string name="list_item_background_content_description">Arka plan seçeneği</string>
+
+    <string name="list_item_card_content_description">Kart türü seçeneği</string>
+
+    <string name="card_face_style_settings">Kart Yüzü</string>
+
+    <string name="card_back_style_settings">Kart Arkası</string>
+
+    <string name="background_style_settings">Arka plan</string>
+
+    <string name="button_options_about">Uygulama Hakkında</string>
+
+    <string name="button_options_settings">Ayarlar</string>
+
+    <string name="button_options_new_game">Yeni Oyun</string>
+
+    <string name="options_button_content_description">Seçenekler</string>
+
+    <string name="about_cards_text">Şu kaynaktan üretilen veya türetilen kart grafiklerini içerir: https://totalnonsense.com/open-source-vector-playing-cards \n Telif Hakkı 2011,2021 – Chris Aguilar – conjurenation\@gmail.com \n Lisanslı: LGPL 3.0 – https://www.gnu.org/licenses/lgpl-3.0.html \n \n Mage Space kullanılarak üretilen kedi ve köpek kartı yüzleri, https://www.mage.space</string>
+
+</resources>

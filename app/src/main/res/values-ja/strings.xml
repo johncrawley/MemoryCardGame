@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><resources>
+
+    <string name="app_name">メモリーマッチカード</string>
+
+    <string name="turn">振り向く</string>
+
+    <string name="game_over">ゲームオーバー</string>
+
+    <string name="default_turn_text">ターンの取り方</string>
+
+    <string name="new_game_text">新しいゲーム</string>
+
+    <string name="created_by_text">ジョン・クローリー作</string>
+
+    <string name="dismiss_about_button">わかりました！</string>
+
+    <string name="button_8_cards_text">8 枚のカード</string>
+
+    <string name="button_16_cards_text">16 枚のカード</string>
+
+    <string name="button_26_cards_text">26 枚のカード</string>
+
+    <string name="button_52_cards_text">52 枚のカード</string>
+
+    <string name="game_complete_text">よくやった！</string>
+
+    <string name="results_status_current_record">現在の記録: </string>
+
+    <string name="results_status_matching_record">現在の記録に匹敵！</string>
+
+    <string name="results_status_new_record">おめでとう！新記録！</string>
+
+    <string name="results_status_turns_taken">交代</string>
+
+    <string name="menu_action_new_game">新しいゲーム</string>
+
+    <string name="menu_action_about">について</string>
+
+    <string name="menu_action_settings">設定</string>
+
+    <string name="list_item_background_content_description">背景オプション</string>
+
+    <string name="list_item_card_content_description">カードタイプオプション</string>
+
+    <string name="card_face_style_settings">カード面</string>
+
+    <string name="card_back_style_settings">カード裏面</string>
+
+    <string name="background_style_settings">背景</string>
+
+    <string name="button_options_about">アプリについて</string>
+
+    <string name="button_options_settings">設定</string>
+
+    <string name="button_options_new_game">新しいゲーム</string>
+
+    <string name="options_button_content_description">オプション</string>
+
+    <string name="about_cards_text">次のサイトから作成または派生したカード グラフィックが含まれています: https://totalnonsense.com/open-source-vector-playing-cards \n Copyright 2011,2021 – Chris Aguilar – conjurenation\@gmail.com \n Licensed under: LGPL 3.0 – https://www.gnu.org/licenses/lgpl-3.0.html \n \n Mage Space (https://www.mage.space) を使用して生成された猫と犬のカード フェイス</string>
+
+</resources>

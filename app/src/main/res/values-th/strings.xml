@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><resources>
+
+    <string name="app_name">การ์ดจับคู่ความทรงจำ</string>
+
+    <string name="turn">เปลี่ยน</string>
+
+    <string name="game_over">เกมโอเวอร์</string>
+
+    <string name="default_turn_text">จำนวนครั้งที่เลี้ยว</string>
+
+    <string name="new_game_text">เกมใหม่</string>
+
+    <string name="created_by_text">สร้างโดยจอห์น ครอว์ลีย์</string>
+
+    <string name="dismiss_about_button">ตกลง!</string>
+
+    <string name="button_8_cards_text">ไพ่ 8 ใบ</string>
+
+    <string name="button_16_cards_text">16 ใบ</string>
+
+    <string name="button_26_cards_text">26 ใบ</string>
+
+    <string name="button_52_cards_text">52 ใบ</string>
+
+    <string name="game_complete_text">ทำได้ดี!</string>
+
+    <string name="results_status_current_record">บันทึกปัจจุบัน: </string>
+
+    <string name="results_status_matching_record">ตรงกับบันทึกปัจจุบัน!</string>
+
+    <string name="results_status_new_record">ยินดีด้วย! สถิติใหม่!</string>
+
+    <string name="results_status_turns_taken">ผลัดกัน</string>
+
+    <string name="menu_action_new_game">เกมใหม่</string>
+
+    <string name="menu_action_about">เกี่ยวกับ</string>
+
+    <string name="menu_action_settings">การตั้งค่า</string>
+
+    <string name="list_item_background_content_description">ตัวเลือกพื้นหลัง</string>
+
+    <string name="list_item_card_content_description">ตัวเลือกประเภทการ์ด</string>
+
+    <string name="card_face_style_settings">หน้าไพ่</string>
+
+    <string name="card_back_style_settings">ด้านหลังการ์ด</string>
+
+    <string name="background_style_settings">พื้นหลัง</string>
+
+    <string name="button_options_about">เกี่ยวกับแอพ</string>
+
+    <string name="button_options_settings">การตั้งค่า</string>
+
+    <string name="button_options_new_game">เกมใหม่</string>
+
+    <string name="options_button_content_description">ตัวเลือก</string>
+
+    <string name="about_cards_text">ประกอบด้วยกราฟิกการ์ดที่สร้างหรือได้รับมาจาก: https://totalnonsense.com/open-source-vector-playing-cards ลิขสิทธิ์ 2011,2021 – Chris Aguilar – conjurenation\@gmail.com ได้รับอนุญาตภายใต้: LGPL 3.0 – https://www.gnu.org/licenses/lgpl-3.0.html หน้าการ์ดแมวและสุนัขสร้างขึ้นโดยใช้ Mage Space, https://www.mage.space</string>
+
+</resources>

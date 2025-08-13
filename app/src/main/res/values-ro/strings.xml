@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><resources>
+
+    <string name="app_name">Carduri de potrivire de memorie</string>
+
+    <string name="turn">Întoarce-te</string>
+
+    <string name="game_over">Joc încheiat</string>
+
+    <string name="default_turn_text">Turnurile luate</string>
+
+    <string name="new_game_text">Joc nou</string>
+
+    <string name="created_by_text">Creat de John Crawley</string>
+
+    <string name="dismiss_about_button">BINE!</string>
+
+    <string name="button_8_cards_text">8 cărți</string>
+
+    <string name="button_16_cards_text">16 cărți</string>
+
+    <string name="button_26_cards_text">26 de cărți</string>
+
+    <string name="button_52_cards_text">52 de cărți</string>
+
+    <string name="game_complete_text">BINE FĂCUT!</string>
+
+    <string name="results_status_current_record">Record curent: </string>
+
+    <string name="results_status_matching_record">Se potrivește recordului curent!</string>
+
+    <string name="results_status_new_record">Felicitări! Un nou record!</string>
+
+    <string name="results_status_turns_taken">ture luate</string>
+
+    <string name="menu_action_new_game">Joc nou</string>
+
+    <string name="menu_action_about">Despre</string>
+
+    <string name="menu_action_settings">Setări</string>
+
+    <string name="list_item_background_content_description">Opțiune de fundal</string>
+
+    <string name="list_item_card_content_description">Opțiune tip card</string>
+
+    <string name="card_face_style_settings">Fața cardului</string>
+
+    <string name="card_back_style_settings">Spatele cardului</string>
+
+    <string name="background_style_settings">Fundal</string>
+
+    <string name="button_options_about">Despre aplicație</string>
+
+    <string name="button_options_settings">Setări</string>
+
+    <string name="button_options_new_game">Joc nou</string>
+
+    <string name="options_button_content_description">Opțiuni</string>
+
+    <string name="about_cards_text">Conține elemente grafice pentru carduri produse sau derivate din: https://totalnonsense.com/open-source-vector-playing-cards \n Drepturi de autor 2011,2021 – Chris Aguilar – conjurenation\@gmail.com \n Licențiat sub: LGPL 3.0 – https://www.gnu.org/licenses/lgpl {01010} și cardul Cat {0} fețe generate folosind Mage Space, https://www.mage.space</string>
+
+</resources>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><resources>
+
+    <string name="app_name">Memory Match Cards</string>
+
+    <string name="turn">Otočte se</string>
+
+    <string name="game_over">Konec hry</string>
+
+    <string name="default_turn_text">Turns Takeed</string>
+
+    <string name="new_game_text">Nová hra</string>
+
+    <string name="created_by_text">Vytvořil John Crawley</string>
+
+    <string name="dismiss_about_button">OK!</string>
+
+    <string name="button_8_cards_text">8 karet</string>
+
+    <string name="button_16_cards_text">16 karet</string>
+
+    <string name="button_26_cards_text">26 karet</string>
+
+    <string name="button_52_cards_text">52 karet</string>
+
+    <string name="game_complete_text">DOBRÁ PRÁCE!</string>
+
+    <string name="results_status_current_record">Aktuální rekord: </string>
+
+    <string name="results_status_matching_record">Dorovnání současného rekordu!</string>
+
+    <string name="results_status_new_record">Gratuluji! Nový rekord!</string>
+
+    <string name="results_status_turns_taken">zatáčky</string>
+
+    <string name="menu_action_new_game">Nová hra</string>
+
+    <string name="menu_action_about">Informace</string>
+
+    <string name="menu_action_settings">Nastavení</string>
+
+    <string name="list_item_background_content_description">Možnost pozadí</string>
+
+    <string name="list_item_card_content_description">Možnost typu karty</string>
+
+    <string name="card_face_style_settings">Tvář karty</string>
+
+    <string name="card_back_style_settings">Zpět karty</string>
+
+    <string name="background_style_settings">Pozadí</string>
+
+    <string name="button_options_about">O aplikaci</string>
+
+    <string name="button_options_settings">Nastavení</string>
+
+    <string name="button_options_new_game">Nová hra</string>
+
+    <string name="options_button_content_description">Možnosti</string>
+
+    <string name="about_cards_text">Obsahuje grafiku karet vytvořenou nebo odvozenou z: https://totalnonsense.com/open-source-vector-playing-cards \n Copyright 2011,2021 – Chris Aguilar – conjurenation\@gmail.com \n Licencováno pod: LGPL 3.0 – https://www.gnu.org/licenses/licenses/lgpl 0} Cat10 a dog face-3. generované pomocí Mage Space, https://www.mage.space</string>
+
+</resources>

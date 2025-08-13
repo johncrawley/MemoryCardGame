@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><resources>
+
+    <string name="app_name">Karty do gry w pamięć</string>
+
+    <string name="turn">Zakręt</string>
+
+    <string name="game_over">Koniec gry</string>
+
+    <string name="default_turn_text">Kolejki zajęte</string>
+
+    <string name="new_game_text">Nowa gra</string>
+
+    <string name="created_by_text">Stworzone przez Johna Crawleya</string>
+
+    <string name="dismiss_about_button">OK!</string>
+
+    <string name="button_8_cards_text">8 kart</string>
+
+    <string name="button_16_cards_text">16 kart</string>
+
+    <string name="button_26_cards_text">26 kart</string>
+
+    <string name="button_52_cards_text">52 karty</string>
+
+    <string name="game_complete_text">DOBRZE ZROBIONY!</string>
+
+    <string name="results_status_current_record">Aktualny rekord: </string>
+
+    <string name="results_status_matching_record">Dopasuj aktualny rekord!</string>
+
+    <string name="results_status_new_record">Gratulacje! Nowy rekord!</string>
+
+    <string name="results_status_turns_taken">zajęte tury</string>
+
+    <string name="menu_action_new_game">Nowa gra</string>
+
+    <string name="menu_action_about">O</string>
+
+    <string name="menu_action_settings">Ustawienia</string>
+
+    <string name="list_item_background_content_description">Opcja tła</string>
+
+    <string name="list_item_card_content_description">Opcja typu karty</string>
+
+    <string name="card_face_style_settings">Twarz karty</string>
+
+    <string name="card_back_style_settings">Tył karty</string>
+
+    <string name="background_style_settings">Tło</string>
+
+    <string name="button_options_about">O aplikacji</string>
+
+    <string name="button_options_settings">Ustawienia</string>
+
+    <string name="button_options_new_game">Nowa gra</string>
+
+    <string name="options_button_content_description">Opcje</string>
+
+    <string name="about_cards_text">Zawiera grafikę kart wytworzoną lub pochodzącą z: https://totalnonsense.com/open-source-vector-playing-cards \n Prawa autorskie 2011,2021 – Chris Aguilar – conjurenation\@gmail.com \n Licencja: LGPL 3.0 – https://www.gnu.org/licenses/lgpl-3.0.html \n \n Twarze kart z kotem i psem wygenerowane przy użyciu Mage Space, https://www.mage.space</string>
+
+</resources>

@@ -4,14 +4,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="2dp"
-    android:layout_margin="@dimen/recycler_image_item_margin"
+    android:padding="@dimen/_2sdp"
+    android:layout_margin="@dimen/_3sdp"
     >
 
     <ImageView
         android:id="@+id/itemImage"
-        android:layout_width="50dp"
-        android:layout_height="70dp"
-        android:contentDescription="@string/menu_action_settings" />
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_70sdp"
+        android:contentDescription="@string/list_item_background_content_description" />
 
 </app:LinearLayout>

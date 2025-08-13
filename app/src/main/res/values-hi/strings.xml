@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><resources>
+
+    <string name="app_name">मेमोरी मैच कार्ड</string>
+
+    <string name="turn">मोड़</string>
+
+    <string name="game_over">खेल खत्म</string>
+
+    <string name="default_turn_text">लिए गए मोड़</string>
+
+    <string name="new_game_text">नया खेल</string>
+
+    <string name="created_by_text">जॉन क्रॉली द्वारा निर्मित</string>
+
+    <string name="dismiss_about_button">ठीक है!</string>
+
+    <string name="button_8_cards_text">8 कार्ड</string>
+
+    <string name="button_16_cards_text">16 कार्ड</string>
+
+    <string name="button_26_cards_text">26 कार्ड</string>
+
+    <string name="button_52_cards_text">52 कार्ड</string>
+
+    <string name="game_complete_text">बहुत अच्छा!</string>
+
+    <string name="results_status_current_record">वर्तमान रिकॉर्ड: </string>
+
+    <string name="results_status_matching_record">वर्तमान रिकार्ड से मेल खाते हुए!</string>
+
+    <string name="results_status_new_record">बधाई हो! एक नया रिकार्ड!</string>
+
+    <string name="results_status_turns_taken">बारी-बारी से लिया गया</string>
+
+    <string name="menu_action_new_game">नया खेल</string>
+
+    <string name="menu_action_about">के बारे में</string>
+
+    <string name="menu_action_settings">सेटिंग्स</string>
+
+    <string name="list_item_background_content_description">पृष्ठभूमि विकल्प</string>
+
+    <string name="list_item_card_content_description">कार्ड प्रकार विकल्प</string>
+
+    <string name="card_face_style_settings">कार्ड फेस</string>
+
+    <string name="card_back_style_settings">कार्ड वापस</string>
+
+    <string name="background_style_settings">पृष्ठभूमि</string>
+
+    <string name="button_options_about">ऐप के बारे में</string>
+
+    <string name="button_options_settings">सेटिंग्स</string>
+
+    <string name="button_options_new_game">नया खेल</string>
+
+    <string name="options_button_content_description">विकल्प</string>
+
+    <string name="about_cards_text">https://totalnonsense.com/open-source-vector-playing-cards से निर्मित या प्राप्त कार्ड ग्राफ़िक्स शामिल हैं \n कॉपीराइट 2011,2021 – क्रिस एगुइलर – conjurenation\@gmail.com \n लाइसेंस प्राप्त: LGPL 3.0 – https://www.gnu.org/licenses/lgpl-3.0.html \n \n Mage Space का उपयोग करके उत्पन्न बिल्ली और कुत्ते के कार्ड चेहरे, https://www.mage.space</string>
+
+</resources>

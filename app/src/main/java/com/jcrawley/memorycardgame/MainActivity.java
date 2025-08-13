@@ -11,16 +11,13 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.DisplayMetrics;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.view.Window;
 import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -174,13 +171,6 @@ public class MainActivity extends AppCompatActivity {
 
     public MainViewModel getViewModel(){
         return viewModel;
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menuitems, menu);
-        return super.onCreateOptionsMenu(menu);
     }
 
 

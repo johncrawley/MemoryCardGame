@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><resources>
+
+    <string name="app_name">Kartu Pencocokan Memori</string>
+
+    <string name="turn">Berbelok</string>
+
+    <string name="game_over">Permainan Berakhir</string>
+
+    <string name="default_turn_text">Giliran yang Diambil</string>
+
+    <string name="new_game_text">Permainan Baru</string>
+
+    <string name="created_by_text">Dibuat oleh John Crawley</string>
+
+    <string name="dismiss_about_button">OKE!</string>
+
+    <string name="button_8_cards_text">8 Kartu</string>
+
+    <string name="button_16_cards_text">16 Kartu</string>
+
+    <string name="button_26_cards_text">26 Kartu</string>
+
+    <string name="button_52_cards_text">52 Kartu</string>
+
+    <string name="game_complete_text">BAGUS SEKALI!</string>
+
+    <string name="results_status_current_record">Rekor Saat Ini: </string>
+
+    <string name="results_status_matching_record">Menyamai Rekor Saat Ini!</string>
+
+    <string name="results_status_new_record">Selamat! Rekor Baru!</string>
+
+    <string name="results_status_turns_taken">giliran diambil</string>
+
+    <string name="menu_action_new_game">Permainan Baru</string>
+
+    <string name="menu_action_about">Tentang</string>
+
+    <string name="menu_action_settings">Pengaturan</string>
+
+    <string name="list_item_background_content_description">Opsi latar belakang</string>
+
+    <string name="list_item_card_content_description">Pilihan jenis kartu</string>
+
+    <string name="card_face_style_settings">Wajah Kartu</string>
+
+    <string name="card_back_style_settings">Bagian Belakang Kartu</string>
+
+    <string name="background_style_settings">Latar belakang</string>
+
+    <string name="button_options_about">Tentang Aplikasi</string>
+
+    <string name="button_options_settings">Pengaturan</string>
+
+    <string name="button_options_new_game">Permainan Baru</string>
+
+    <string name="options_button_content_description">Pilihan</string>
+
+    <string name="about_cards_text">Berisi grafis kartu yang diproduksi atau berasal dari: https://totalnonsense.com/open-source-vector-playing-cards \n Hak Cipta 2011,2021 – Chris Aguilar – conjurenation\@gmail.com \n Dilisensikan di bawah: LGPL 3.0 – https://www.gnu.org/licenses/lgpl-3.0.html \n \n Wajah kartu kucing dan anjing dibuat menggunakan Mage Space, https://www.mage.space</string>
+
+</resources>
