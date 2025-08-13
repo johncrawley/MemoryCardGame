@@ -66,11 +66,10 @@
                 android:textColor="@color/about_game_title_text"
                 android:textSize="@dimen/version_text_size" />
 
-
             <com.google.android.material.divider.MaterialDivider
                 android:id="@+id/divider"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_4sdp"
+                android:layout_height="@dimen/_2sdp"
                 android:paddingStart="0dp"
                 android:paddingEnd="@dimen/_36sdp"
                 android:background="@color/material_divider_background" />
