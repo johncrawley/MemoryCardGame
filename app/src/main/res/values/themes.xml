@@ -2,7 +2,6 @@
 <!-- Base application theme. -->
 <style name="Theme.MemoryCardGame" parent="Theme.Material3.DayNight.NoActionBar">
     <!-- Primary brand color. -->
-    <item name="colorPrimary">@color/default_color_primary</item>
     <item name="colorPrimaryVariant">@color/purple_700</item>
     <item name="colorOnPrimary">@color/black</item>
     <!-- Secondary brand color. -->
@@ -10,10 +9,12 @@
     <item name="colorSecondaryVariant">@color/teal_200</item>
     <item name="colorOnSecondary">@color/black</item>
     <!-- Customize your theme here. -->
+    <item name="colorPrimary">@color/button_tint</item>
     <item name="colorPrimaryDark">@color/status_bar_color</item>
     <item name="status_panel_background_color">@color/panel_background</item>
     <item name="status_panel_outline_color">@color/panel_outline</item>
     <item name="status_panel_text_color">@color/panel_text</item>
+    <item name="android:windowBackground">@color/background_color</item>
 
 </style>
 </resources>

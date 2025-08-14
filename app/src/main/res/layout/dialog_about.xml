@@ -62,7 +62,7 @@
         android:layout_marginTop="@dimen/about_info_scroll_view_margin_top"
         android:layout_marginBottom="@dimen/about_info_scroll_view_margin_bottom"
         app:layout_constraintTop_toBottomOf="@id/versionTextView"
-        app:layout_constraintBottom_toTopOf="@+id/dialogAboutOkButtonInclude"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
