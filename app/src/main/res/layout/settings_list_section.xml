@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    android:layout_height="match_parent">
+    android:background="@color/setting_list_background"
+    android:layout_height="0dp">
 
     <TextView
         android:id="@+id/settingTitleText"

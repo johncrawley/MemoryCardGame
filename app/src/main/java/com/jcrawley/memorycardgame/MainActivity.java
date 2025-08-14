@@ -286,6 +286,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public int getScreenWidth(){
+        return screenWidth;
+    }
+
+
+    public int getScreenHeight(){
+        return screenHeight;
+    }
+
+
+
     public void displayResults(int numberOfTurns, String recordText){
         TextView resultsTextView = findViewById(R.id.numberOfTurnsTakenTextView);
         TextView recordTextView = findViewById(R.id.currentRecordTurnsTextView);

@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -47,11 +49,11 @@ public class SettingsDialogFragment extends DialogFragment {
         super.onViewCreated(view, savedInstanceState);
         //DialogFragmentUtils.setScrollViewHeight(this, view, R.id.aboutInfoScrollView, R.id.aboutInfoLayout);
         //DialogFragmentUtils.setTransparentBackground(this);
+        setDialogDimensions(view);
         assignFields();
         setupFaceTypesRecyclerView(view);
         setupBackTypesRecyclerView(view);
         setupBackgroundSettings(view);
-
     }
 
 
@@ -66,6 +68,24 @@ public class SettingsDialogFragment extends DialogFragment {
         game = mainActivity.getGame();
     }
 
+
+    public void setDialogDimensions(View parentView){
+        MainActivity mainActivity = (MainActivity)getActivity();
+        if(mainActivity == null){
+            return;
+        }
+        int width = (mainActivity.getScreenWidth() * 80) / 100;
+        int height = (mainActivity.getScreenHeight() * 85) / 100;
+        parentView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                parentView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(width, height);
+                parentView.setLayoutParams(layoutParams);
+
+            }
+        });
+    }
 
 
     private void setupBackgroundSettings(View parentView){
