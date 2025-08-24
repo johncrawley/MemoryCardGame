@@ -19,6 +19,7 @@ import com.jcrawley.memorycardgame.card.Card;
 import com.jcrawley.memorycardgame.card.CardBackManager;
 import com.jcrawley.memorycardgame.card.CardFactory;
 import com.jcrawley.memorycardgame.card.DeckSize;
+import com.jcrawley.memorycardgame.utils.GameUtils;
 
 import java.util.Collections;
 import java.util.List;
@@ -78,15 +79,30 @@ public class Game {
         viewModel.remainingCards = viewModel.numberOfCards;
         viewModel.cards = cardFactory.getCards(deckSize.getValue());
         cardLayoutPopulator.addCardViews(viewModel.numberOfCards);
-        viewModel.gameState = GameState.NOTHING_SELECTED;
+        resetTurnState();
         if(viewModel.cards == null){
             return;
         }
         Collections.shuffle(viewModel.cards);
+        initCards();
+        setAllCardsFaceDown();
+        swipeInCardsAfterDelay();
+    }
+
+
+    private void resetTurnState(){
+        viewModel.turnState = TurnState.NOTHING_SELECTED;
+    }
+
+
+    private void initCards(){
         for(Card card : viewModel.cards){
             card.init();
         }
-        setAllCardsFaceDown();
+    }
+
+
+    private void swipeInCardsAfterDelay(){
         int initialDelay = mainActivity.getResources().getInteger(R.integer.swipe_in_cards_initial_delay);
         new Handler(Looper.getMainLooper()).postDelayed(this::swipeInCards, initialDelay);
     }
@@ -107,7 +123,7 @@ public class Game {
             this.cardLayoutPopulator = cardLayoutPopulator;
             boolean shouldCardBackBeRefreshed = !viewModel.isAlreadyInitialised;
             cardLayoutPopulator.addCardViews(shouldCardBackBeRefreshed);
-            if(viewModel.gameState == GameState.FIRST_CARD_SELECTED){
+            if(viewModel.turnState == TurnState.FIRST_CARD_SELECTED){
                 quickFlipFirstSelectedCard();
             }
         }
@@ -124,14 +140,11 @@ public class Game {
         if (card.isUnavailable()) {
             return;
         }
-        if(viewModel.gameState == GameState.NOTHING_SELECTED){
-            handleFirstSelection(view, position);
-        }
-        else if(viewModel.gameState == GameState.FIRST_CARD_SELECTED) {
-            handleSecondSelection(view, position);
-        }
-        else if(viewModel.gameState == GameState.SECOND_CARD_SELECTED){
-           handleClickAfterSecondSelection(view, position);
+        switch(viewModel.turnState){
+            case NOTHING_SELECTED: handleFirstSelection(view, position); break;
+            case FIRST_CARD_SELECTED:handleSecondSelection(view, position); break;
+            case SECOND_CARD_SELECTED: handleClickAfterSecondSelection(view, position); break;
+            default: break;
         }
     }
 
@@ -144,7 +157,7 @@ public class Game {
     private void handleClickAfterSecondSelection(ImageView view, int position){
         immediatelyFlipBackBothCardsIfNoMatch();
         if(position != viewModel.firstSelectedPosition && position != viewModel.secondSelectedPosition){
-            viewModel.gameState = GameState.NOTHING_SELECTED;
+            resetTurnState();
             notifyClickOnPosition(view);
         }
     }
@@ -156,7 +169,7 @@ public class Game {
             return;
         }
         background.setOnClickListener(v -> {
-            if(viewModel.gameState == GameState.SECOND_CARD_SELECTED){
+            if(viewModel.turnState == TurnState.SECOND_CARD_SELECTED){
                 immediatelyFlipBackBothCardsIfNoMatch();
             }
         });
@@ -164,9 +177,16 @@ public class Game {
 
 
     private void quickFlipFirstSelectedCard(){
-        firstSelectedCard = cardLayoutPopulator.getImageViews().get(viewModel.firstSelectedPosition);
-        setBitmapForCard(firstSelectedCard, viewModel.firstSelectedPosition);
-        firstSelectedCard.animate().rotationY(180).setDuration(1).start();
+        int position = viewModel.firstSelectedPosition;
+        List<ImageView> imageViews = cardLayoutPopulator.getImageViews();
+        if(GameUtils.isValidPosition(imageViews, position)){
+            firstSelectedCard = imageViews.get(position);
+            setBitmapForCard(firstSelectedCard, position);
+            firstSelectedCard.animate()
+                    .rotationY(180)
+                    .setDuration(1)
+                    .start();
+        }
     }
 
 
@@ -188,7 +208,7 @@ public class Game {
         }
         viewModel.isAlreadyInitialised = true;
         viewModel.cards = cardFactory.getCards(recordKeeper.getNumberOfCards());
-        viewModel.gameState = GameState.NOTHING_SELECTED;
+        resetTurnState();
         assert viewModel.cards != null;
         viewModel.numberOfCards = viewModel.cards.size();
         viewModel.remainingCards = viewModel.numberOfCards;
@@ -198,7 +218,7 @@ public class Game {
 
     private void handleFirstSelection(ImageView view, int position){
         mainActivity.setTitleWithTurns(++viewModel.numberOfTurns);
-        viewModel.gameState = GameState.FIRST_CARD_SELECTED;
+        viewModel.turnState = TurnState.FIRST_CARD_SELECTED;
         viewModel.firstSelectedPosition = position;
         firstSelectedCard = view;
         flipCard(position);
@@ -210,7 +230,7 @@ public class Game {
             if(position == viewModel.firstSelectedPosition){
                 return;
             }
-            viewModel.gameState = GameState.SECOND_CARD_SELECTED;
+            viewModel.turnState = TurnState.SECOND_CARD_SELECTED;
             viewModel.secondSelectedPosition = position;
             flipCard(position);
             secondSelectedCard = view;
@@ -235,7 +255,7 @@ public class Game {
     private void removeSelectedCards(){
         removeCard(firstSelectedCard, viewModel.firstSelectedPosition);
         removeCard(secondSelectedCard, viewModel.secondSelectedPosition);
-        viewModel.gameState = GameState.NOTHING_SELECTED;
+        resetTurnState();
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
             viewModel.remainingCards -= 2;
             if(viewModel.remainingCards <= 0){
@@ -372,7 +392,7 @@ public class Game {
         mainActivity.runOnUiThread(()->{
             flipCardBack(firstSelectedCard, 0 );
             flipCardBack(secondSelectedCard, secondFlipBackDelay);
-            viewModel.gameState = GameState.NOTHING_SELECTED;
+            resetTurnState();
             firstSelectedCard = null;
         });
     }
