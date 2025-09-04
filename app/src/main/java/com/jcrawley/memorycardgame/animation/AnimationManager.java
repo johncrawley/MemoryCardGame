@@ -6,6 +6,9 @@ import android.view.animation.Animation;
 
 import com.jcrawley.memorycardgame.MainActivity;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 public class AnimationManager {
 
 
@@ -15,19 +18,22 @@ public class AnimationManager {
     private Context context;
 
     public AnimationManager(MainActivity mainActivity, int screenHeight){
-        setupAnimations(mainActivity, screenHeight);
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        executorService.execute(()-> setupAnimations(mainActivity, screenHeight));
     }
 
 
     private void setupAnimations(MainActivity mainActivity, int screenHeight){
         context = mainActivity.getApplicationContext();
         this.screenHeight = screenHeight;
-
+        long startTime = System.currentTimeMillis();
         resultsDropInAnimation = createDropInAnimation(mainActivity::onResultsDialogShown);
         resultsDropOutAnimation = createDropOutAnimation(mainActivity::onResultsDismissed);
         newGameDropInAnimation = createDropInAnimation(()->{});
         newGameDropOutAnimation = createDropOutAnimation(mainActivity::onNewGameScreenDismissed);
-        cardsFadeOutAnimation= AnimationHelper.createFadeOutAnimationForCards(context, mainActivity::onCardsFadedOut);
+        cardsFadeOutAnimation = AnimationHelper.createFadeOutAnimationForCards(context, mainActivity::onCardsFadedOut);
+        long duration = System.currentTimeMillis() - startTime;
+        System.out.println("^^^ setupAnimations time: " + duration);
     }
 
 

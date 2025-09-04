@@ -23,6 +23,7 @@ import com.jcrawley.memorycardgame.utils.GameUtils;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -43,6 +44,7 @@ public class Game {
     private final CardFactory cardFactory;
     private final ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
     private final AtomicBoolean hasFlipBackAlreadyBeenInitiated = new AtomicBoolean();
+    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
 
     public Game(MainActivity mainActivity, CardBackManager cardBackManager, BitmapLoader bitmapLoader, int screenWidth){
@@ -122,7 +124,8 @@ public class Game {
         if(isFirstRunSinceCreate){
             this.cardLayoutPopulator = cardLayoutPopulator;
             boolean shouldCardBackBeRefreshed = !viewModel.isAlreadyInitialised;
-            cardLayoutPopulator.addCardViews(shouldCardBackBeRefreshed);
+            executorService.execute(()->
+                    cardLayoutPopulator.addCardViews(shouldCardBackBeRefreshed));
             if(viewModel.turnState == TurnState.FIRST_CARD_SELECTED){
                 quickFlipFirstSelectedCard();
             }

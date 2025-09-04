@@ -1,8 +1,8 @@
 package com.jcrawley.memorycardgame.game;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -13,12 +13,11 @@ import com.jcrawley.memorycardgame.card.CardBackManager;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class CardLayoutPopulator {
 
     private int cardWidth, cardHeight;
-    private final Activity activity;
+    private final MainActivity activity;
     private View.OnClickListener onClickListener;
     private int numberOfCards;
     private int cardsAdded;
@@ -32,6 +31,7 @@ public class CardLayoutPopulator {
     private int padding;
     private final MainViewModel viewModel;
     private final CardBackManager cardBackManager;
+    private final List<ViewGroup> cardRows = new ArrayList<>();
 
     @SuppressLint("UseCompatLoadingForDrawables")
     public CardLayoutPopulator(MainActivity activity, LinearLayout parentLayout, Game game, CardBackManager cardBackManager){
@@ -128,21 +128,24 @@ public class CardLayoutPopulator {
 
 
     private void addCardsToParent(){
+        cardRows.clear();
         for(int i = 0; i < numberOfRows; i++){
-            addRowOfCards(numberOfCardsPerRow);
+          cardRows.add(createRowOfCards(numberOfCardsPerRow));
         }
+        activity.setCardRows(cardRows);
     }
 
 
-    private void addRowOfCards(int numberOfCardsPerRow){
+    private ViewGroup createRowOfCards(int numberOfCardsPerRow){
         LinearLayout rowLayout = new LinearLayout(activity);
-        for(int i=0; i< numberOfCardsPerRow; i++){
+        for(int i = 0; i < numberOfCardsPerRow; i++){
             if(cardsAdded < numberOfCards){
                 ImageView imageView = createCard();
                 rowLayout.addView(imageView);
             }
         }
-        parentLayout.addView(rowLayout);
+        return rowLayout;
+        //parentLayout.addView(rowLayout);
     }
 
 

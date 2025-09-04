@@ -36,6 +36,8 @@ import com.jcrawley.memorycardgame.utils.AppearanceSetter;
 import com.jcrawley.memorycardgame.utils.BitmapLoader;
 import com.jcrawley.memorycardgame.dialog.FragmentManagerHelper;
 
+import java.util.List;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -126,12 +128,15 @@ public class MainActivity extends AppCompatActivity {
             public void onGlobalLayout() {
                 cardLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 assignScreenDimensions();
+                long start = System.currentTimeMillis();
                 animationManager = new AnimationManager(MainActivity.this, screenHeight);
                 cardLayout.removeAllViewsInLayout();
                 game = new Game(MainActivity.this, cardBackManager, bitmapLoader, screenWidth);
                 CardLayoutPopulator cardLayoutPopulator = new CardLayoutPopulator(MainActivity.this, cardLayout, game, cardBackManager);
                 game.initCards(cardLayoutPopulator);
                 showNewGameIfNoCardsRemain();
+                long duration = System.currentTimeMillis() - start;
+                System.out.println("^^^ initCardsAfterLayoutCreation() duration: " + duration);
             }});
     }
 
@@ -147,6 +152,14 @@ public class MainActivity extends AppCompatActivity {
         mainLayout.setBackground(drawable);
     }
 
+
+    public void setCardRows(List<ViewGroup> cardRows){
+        runOnUiThread(()->{
+            for(ViewGroup cardRow : cardRows){
+                cardLayout.addView(cardRow);
+            }
+        });
+    }
 
     private void showNewGameIfNoCardsRemain(){
         if(viewModel.cards == null){

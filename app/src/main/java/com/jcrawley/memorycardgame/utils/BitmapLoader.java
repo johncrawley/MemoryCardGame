@@ -54,6 +54,7 @@ public class BitmapLoader {
         imageView.setImageBitmap(bitmapMap.get(bitmapId));
     }
 
+
     public void clearCardFaceCache(){
         viewModel.cardFaceMap.clear();
     }
