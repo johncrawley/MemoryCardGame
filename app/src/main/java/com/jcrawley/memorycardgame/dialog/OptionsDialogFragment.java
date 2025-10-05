@@ -57,7 +57,6 @@ public class OptionsDialogFragment extends DialogFragment {
     }
 
 
-
     private void startNewGame(){
        MainActivity mainActivity = (MainActivity) getActivity();
        if(mainActivity != null){

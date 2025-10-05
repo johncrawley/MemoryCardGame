@@ -11,7 +11,6 @@ import java.util.List;
 public class GameUtilsTest {
 
 
-
     @Test
     public void canVerifyAValidListPosition(){
         List<Boolean> list = List.of(true, true, true);
