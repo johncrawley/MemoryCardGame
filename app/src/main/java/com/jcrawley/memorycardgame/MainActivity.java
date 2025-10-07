@@ -10,9 +10,13 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.ComponentName;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.Looper;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -32,11 +36,13 @@ import com.jcrawley.memorycardgame.card.DeckSize;
 import com.jcrawley.memorycardgame.card.CardBackManager;
 import com.jcrawley.memorycardgame.game.CardLayoutPopulator;
 import com.jcrawley.memorycardgame.game.Game;
+import com.jcrawley.memorycardgame.service.GameService;
 import com.jcrawley.memorycardgame.utils.AppearanceSetter;
 import com.jcrawley.memorycardgame.utils.BitmapLoader;
 import com.jcrawley.memorycardgame.dialog.FragmentManagerHelper;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -59,6 +65,25 @@ public class MainActivity extends AppCompatActivity {
     private TextView statusText;
     private ViewGroup mainLayout;
     private ViewGroup statusPanel;
+    private GameService gameService;
+    private final AtomicBoolean isServiceConnected = new AtomicBoolean();
+
+
+    private final ServiceConnection connection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName className, IBinder service) {
+            GameService.LocalBinder binder = (GameService.LocalBinder) service;
+            MainActivity.this.gameService = binder.getService();
+            gameService.setActivity(MainActivity.this);
+            //game = gameService.getGame();
+            isServiceConnected.set(true);
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            isServiceConnected.set(false);
+        }
+    };
 
 
     @Override
@@ -66,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setupInsetPadding();
+        setupGameService();
         mainLayout = findViewById(R.id.mainLayout);
         statusPanel = findViewById(R.id.statusPanelInclude);
         gamePreferences = new GamePreferences(MainActivity.this);
@@ -76,6 +102,13 @@ public class MainActivity extends AppCompatActivity {
         cardBackManager = new CardBackManager(viewModel, bitmapLoader);
         setupOptionsButton();
         AppearanceSetter.setSavedAppearance(MainActivity.this, cardBackManager, viewModel);
+    }
+
+
+    private void setupGameService() {
+        Intent intent = new Intent(getApplicationContext(), GameService.class);
+        getApplicationContext().startService(intent);
+        getApplicationContext().bindService(intent, connection, 0);
     }
 
 
