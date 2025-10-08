@@ -6,8 +6,9 @@ import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 
+import com.jcrawley.memorycardgame.GamePreferences;
 import com.jcrawley.memorycardgame.MainActivity;
-import com.jcrawley.memorycardgame.game.Game;
+import com.jcrawley.memorycardgame.game.OldGame;
 
 public class GameService extends Service {
     IBinder binder = new LocalBinder();
@@ -22,7 +23,8 @@ public class GameService extends Service {
     @Override
     public void onCreate() {
         Context context = getApplicationContext();
-        //game = new Game();
+        GamePreferences gamePreferences = new GamePreferences(context);
+        game = new Game(gamePreferences);
     }
 
 
@@ -62,6 +64,7 @@ public class GameService extends Service {
 
     public void setActivity(MainActivity mainActivity){
         this.mainActivity = mainActivity;
+        game.setView(mainActivity.getGameView());
     }
 
 

@@ -1,7 +1,6 @@
 package com.jcrawley.memorycardgame.game;
 
 import android.content.Context;
-import android.os.Build;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
@@ -25,7 +24,7 @@ public class CardAnimator {
     }
 
 
-    void swipeInAll(List<ImageView> cards){
+    public void swipeInAll(List<ImageView> cards){
         int delay = getInt(R.integer.swipe_in_all_cards_initial_delay);
         int delayIncrement = getInt(R.integer.swipe_in_all_cards_delay_offset);
         delayIncrement -= cards.size();
@@ -99,21 +98,17 @@ public class CardAnimator {
 
 
     private void setToPreviousElevation(View card){
-        if(android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
-            card.setElevation(previousElevation);
-        }
+        card.setElevation(previousElevation);
     }
+
 
     private void savePreviousElevation(View card){
-        if(android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
-            previousElevation = card.getElevation();
-        }
+        previousElevation = card.getElevation();
     }
 
+
     private void setHighElevation(View card){
-        if(android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
-            card.setElevation(getInt(R.integer.card_elevation));
-        }
+        card.setElevation(getInt(R.integer.card_elevation));
     }
 
 }

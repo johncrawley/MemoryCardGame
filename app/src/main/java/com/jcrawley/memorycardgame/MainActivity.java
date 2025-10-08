@@ -25,6 +25,7 @@ import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -34,12 +35,16 @@ import com.jcrawley.memorycardgame.card.Card;
 import com.jcrawley.memorycardgame.card.CardTypeSetter;
 import com.jcrawley.memorycardgame.card.DeckSize;
 import com.jcrawley.memorycardgame.card.CardBackManager;
+import com.jcrawley.memorycardgame.game.CardAnimator;
 import com.jcrawley.memorycardgame.game.CardLayoutPopulator;
-import com.jcrawley.memorycardgame.game.Game;
+import com.jcrawley.memorycardgame.game.OldGame;
+import com.jcrawley.memorycardgame.service.Game;
 import com.jcrawley.memorycardgame.service.GameService;
 import com.jcrawley.memorycardgame.utils.AppearanceSetter;
 import com.jcrawley.memorycardgame.utils.BitmapLoader;
 import com.jcrawley.memorycardgame.dialog.FragmentManagerHelper;
+import com.jcrawley.memorycardgame.view.GameViewImpl;
+import com.jcrawley.memorycardgame.view.GameView;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -51,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout resultsLayout;
     private LinearLayout newGameLayout;
     private LinearLayout cardLayout;
-    private Game game;
+    private OldGame oldGame;
     private boolean isReadyToDismissResults = false;
     private DeckSize deckSize;
     private int currentCardCount;
@@ -67,6 +72,9 @@ public class MainActivity extends AppCompatActivity {
     private ViewGroup statusPanel;
     private GameService gameService;
     private final AtomicBoolean isServiceConnected = new AtomicBoolean();
+    private CardAnimator cardAnimator;
+    private CardLayoutPopulator cardLayoutPopulator;
+    private GameView gameView;
 
 
     private final ServiceConnection connection = new ServiceConnection() {
@@ -76,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
             MainActivity.this.gameService = binder.getService();
             gameService.setActivity(MainActivity.this);
             //game = gameService.getGame();
+            initLayouts();
             isServiceConnected.set(true);
         }
 
@@ -84,6 +93,11 @@ public class MainActivity extends AppCompatActivity {
             isServiceConnected.set(false);
         }
     };
+
+
+    public GameView getGameView(){
+        return gameView;
+    }
 
 
     @Override
@@ -95,11 +109,12 @@ public class MainActivity extends AppCompatActivity {
         mainLayout = findViewById(R.id.mainLayout);
         statusPanel = findViewById(R.id.statusPanelInclude);
         gamePreferences = new GamePreferences(MainActivity.this);
-        initButtons();
-        initLayouts();
+        initStartGameButtons();
         viewModel  = new ViewModelProvider(this).get(MainViewModel.class);
         bitmapLoader = new BitmapLoader(MainActivity.this, viewModel);
         cardBackManager = new CardBackManager(viewModel, bitmapLoader);
+        cardAnimator = new CardAnimator(screenWidth, getApplicationContext());
+        gameView = new GameViewImpl(this, cardLayoutPopulator);
         setupOptionsButton();
         AppearanceSetter.setSavedAppearance(MainActivity.this, cardBackManager, viewModel);
     }
@@ -118,6 +133,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public GameService getGameService(){
+        return gameService;
+    }
+
+
+    public void switchBacksOnFaceDownCards(int firstSelectedCardIndex){
+        List<ImageView> cards = cardLayoutPopulator.getImageViews();
+        for(int i = 0; i < cards.size(); i++){
+            if(i == firstSelectedCardIndex){
+                continue;
+            }
+            setCardFaceDown(cards.get(i));
+        }
+    }
+
+
     public CardBackManager getCardBackManager(){
         return cardBackManager;
     }
@@ -133,8 +164,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public Game getGame(){
-        return game;
+    public OldGame getOldGame(){
+        return oldGame;
     }
 
 
@@ -164,13 +195,48 @@ public class MainActivity extends AppCompatActivity {
                 long start = System.currentTimeMillis();
                 animationManager = new AnimationManager(MainActivity.this, screenHeight);
                 cardLayout.removeAllViewsInLayout();
-                game = new Game(MainActivity.this, cardBackManager, bitmapLoader, screenWidth);
-                CardLayoutPopulator cardLayoutPopulator = new CardLayoutPopulator(MainActivity.this, cardLayout, game, cardBackManager);
-                game.initCards(cardLayoutPopulator);
+                oldGame = new OldGame(MainActivity.this, cardBackManager, bitmapLoader, screenWidth);
+                Game game = gameService.getGame();
+                cardLayoutPopulator = new CardLayoutPopulator(MainActivity.this, game.getNumberOfCards(), game::notifyClickOnPosition);
+                oldGame.initCards(cardLayoutPopulator);
                 showNewGameIfNoCardsRemain();
                 long duration = System.currentTimeMillis() - start;
                 System.out.println("^^^ initCardsAfterLayoutCreation() duration: " + duration);
             }});
+    }
+
+
+    public ViewGroup getCardLayout(){
+        return cardLayout;
+    }
+
+
+    public CardAnimator getCardAnimator(){
+        return cardAnimator;
+    }
+
+
+    private void initBackgroundClickListener(){
+        ViewGroup background = findViewById(R.id.cardLayoutHolder);
+        if(background == null){
+            return;
+        }
+        background.setOnClickListener(v -> {
+            if(gameService != null){
+                Game game = gameService.getGame();
+                game.immediatelyFlipBackBothCardsIfNoMatch();
+            }
+        });
+    }
+
+
+    public void displayResults(int numberOfTurns, int currentRecord){
+            String recordText =
+                    numberOfTurns < currentRecord ? getString(R.string.results_status_new_record)
+                            : numberOfTurns == currentRecord ? getString(R.string.results_status_matching_record)
+                                : getString(R.string.results_status_current_record) + currentRecord;
+
+            displayResults(numberOfTurns, recordText);
     }
 
 
@@ -193,6 +259,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 
     private void showNewGameIfNoCardsRemain(){
         if(viewModel.cards == null){
@@ -269,7 +336,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void initButtons(){
+    private void initStartGameButtons(){
         setupButton(R.id.cards8Button, DeckSize.EIGHT);
         setupButton(R.id.cards16Button, DeckSize.SIXTEEN);
         setupButton(R.id.cards26Button, DeckSize.TWENTY_SIX);
@@ -303,7 +370,7 @@ public class MainActivity extends AppCompatActivity {
     public void onNewGameScreenDismissed(){
         newGameLayout.clearAnimation();
         newGameLayout.setVisibility(View.GONE);
-        game.startAgain(deckSize);
+        oldGame.startAgain(deckSize);
     }
 
 
@@ -375,6 +442,11 @@ public class MainActivity extends AppCompatActivity {
         statusPanel.setAnimation(fadeInAnimation);
         statusPanel.setVisibility(VISIBLE);
         statusPanel.animate();
+    }
+
+
+    private void setCardFaceDown(ImageView imageView){
+        cardBackManager.setCardBackOf(imageView);
     }
 
 

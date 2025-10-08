@@ -7,7 +7,8 @@ public class Card {
     private final Suit suit;
     private boolean isVisible;
     private boolean isFaceDown;
-    private AtomicBoolean isAvailable = new AtomicBoolean(true);
+    private int position;
+    private final AtomicBoolean isAvailable = new AtomicBoolean(true);
 
 
     public Card(Rank rank, Suit suit){
@@ -21,6 +22,16 @@ public class Card {
         this.isVisible = true;
         this.isFaceDown = true;
         isAvailable.set(true);
+    }
+
+
+    public void setPosition(int position){
+        this.position = position;
+    }
+
+
+    public int getPosition(){
+        return position;
     }
 
 

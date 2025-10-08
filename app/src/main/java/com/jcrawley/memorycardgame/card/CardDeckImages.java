@@ -161,8 +161,6 @@ public class CardDeckImages implements CardTypeSetter{
     }
 
 
-
-
     private void addCatDeck(){
         Map<Rank, Integer> drawableMap = new HashMap<>();
         drawableMap.put(Rank.TWO,    R.drawable.card_face_cat_2);
@@ -198,7 +196,6 @@ public class CardDeckImages implements CardTypeSetter{
         drawableMap.put(Rank.ACE,    R.drawable.card_face_dog_ace);
         decksMap.put(CardType.DOG, addForAllSuits(drawableMap));
     }
-
 
 
     private void add(Map<String, Integer> deckMap, Suit suit, Rank rank, int id){

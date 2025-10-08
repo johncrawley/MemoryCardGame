@@ -5,7 +5,7 @@ plugins {
 android {
     defaultConfig {
         applicationId "com.jcrawley.memorycardgame"
-        minSdkVersion 21
+        minSdkVersion 24
         compileSdk 34
         targetSdk 36
         versionCode 8

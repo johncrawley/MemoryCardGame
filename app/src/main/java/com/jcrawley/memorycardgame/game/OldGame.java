@@ -29,7 +29,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class Game {
+public class OldGame {
 
     private ImageView firstSelectedCard, secondSelectedCard;
     private final BitmapLoader bitmapLoader;
@@ -47,7 +47,7 @@ public class Game {
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
 
-    public Game(MainActivity mainActivity, CardBackManager cardBackManager, BitmapLoader bitmapLoader, int screenWidth){
+    public OldGame(MainActivity mainActivity, CardBackManager cardBackManager, BitmapLoader bitmapLoader, int screenWidth){
         this.mainActivity = mainActivity;
         this.cardBackManager = cardBackManager;
         cardFactory = new CardFactory();
@@ -370,11 +370,6 @@ public class Game {
     }
 
 
-    private boolean areCurrentCardsDifferent(int position1, int position2){
-        return position1 != getPositionTag(firstSelectedCard) && position2 != getPositionTag(secondSelectedCard);
-    }
-
-
     private void immediatelyFlipBackBothCardsIfNoMatch(){
         if(firstSelectedCard == null || secondSelectedCard == null){
             return;
@@ -398,6 +393,11 @@ public class Game {
             resetTurnState();
             firstSelectedCard = null;
         });
+    }
+
+
+    private boolean areCurrentCardsDifferent(int position1, int position2){
+        return position1 != getPositionTag(firstSelectedCard) && position2 != getPositionTag(secondSelectedCard);
     }
 
 

@@ -15,14 +15,18 @@ import androidx.lifecycle.ViewModel;
 
 public class MainViewModel extends ViewModel {
 
+
+    //game
+    public List<Card> cards = new ArrayList<>();
+    public TurnState turnState;
+
+
     public boolean isAlreadyInitialised = false;
-    public Map<Integer, Bitmap> cardFaceMap,cardBackMap;
+    public Map<Integer, Bitmap> cardFaceMap, cardBackMap;
     public int numberOfCards;
     public int remainingCards;
     public int numberOfTurns;
-    public TurnState turnState;
     public int currentPosition;
-    public List<Card> cards = new ArrayList<>();
     public int firstSelectedPosition = -1;
     public int secondSelectedPosition = -1;
     public CardDeckImages cardDeckImages = new CardDeckImages();

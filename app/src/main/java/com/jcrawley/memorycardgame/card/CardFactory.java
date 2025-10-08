@@ -42,7 +42,15 @@ public class CardFactory {
         List<Card> listToAdd = number == allCards.size() ? allCards : getRandomCardsFromSuits(number);
         List<Card> cards = new ArrayList<>(listToAdd);
         Collections.shuffle(cards);
+        addPositionsTo(cards);
         return cards;
+    }
+
+
+    private void addPositionsTo(List<Card> cards){
+        for(int i = 0 ; i < cards.size(); i++){
+            cards.get(i).setPosition(i);
+        }
     }
 
 
@@ -85,7 +93,6 @@ public class CardFactory {
         }
         return cards;
     }
-
 
 
     private void initRandom(){

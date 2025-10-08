@@ -13,6 +13,7 @@ import com.jcrawley.memorycardgame.card.CardBackManager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class CardLayoutPopulator {
 
@@ -21,10 +22,10 @@ public class CardLayoutPopulator {
     private View.OnClickListener onClickListener;
     private int numberOfCards;
     private int cardsAdded;
-    private final Game game;
+   // private final Game game;
     private List<ImageView> imageViews;
     private boolean hasRun = false;
-    private final LinearLayout parentLayout;
+    private final ViewGroup parentLayout;
     private int numberOfCardsPerRow;
     private int numberOfRows;
     private boolean isFirstRun = true;
@@ -32,15 +33,16 @@ public class CardLayoutPopulator {
     private final MainViewModel viewModel;
     private final CardBackManager cardBackManager;
     private final List<ViewGroup> cardRows = new ArrayList<>();
+    private final Consumer<Integer> clickConsumer;
 
     @SuppressLint("UseCompatLoadingForDrawables")
-    public CardLayoutPopulator(MainActivity activity, LinearLayout parentLayout, Game game, CardBackManager cardBackManager){
+    public CardLayoutPopulator(MainActivity activity, int numberOfCards, Consumer<Integer> clickConsumer){
         this.activity = activity;
+        this.parentLayout = activity.getCardLayout();
         this.viewModel = activity.getViewModel();
-        this.parentLayout = parentLayout;
-        this.game = game;
-        this.cardBackManager = cardBackManager;
-        numberOfCards = game.getNumberOfCards();
+        this.clickConsumer = clickConsumer;
+        this.cardBackManager = activity.getCardBackManager();
+        this.numberOfCards = numberOfCards;
         imageViews = new ArrayList<>(numberOfCards);
         createClickListener();
     }
@@ -127,6 +129,12 @@ public class CardLayoutPopulator {
     }
 
 
+    public ImageView getImageViewAt(int position){
+        int index = position >= imageViews.size() ? 0 : position;
+        return imageViews.get(index);
+    }
+
+
     private void addCardsToParent(){
         cardRows.clear();
         for(int i = 0; i < numberOfRows; i++){
@@ -183,7 +191,7 @@ public class CardLayoutPopulator {
     private void createClickListener(){
         onClickListener = view -> {
             if(view.getVisibility() == View.VISIBLE){
-                game.notifyClickOnPosition((ImageView)view);
+                clickConsumer.accept((int)view.getTag(R.string.position_tag));
             }
         };
     }
