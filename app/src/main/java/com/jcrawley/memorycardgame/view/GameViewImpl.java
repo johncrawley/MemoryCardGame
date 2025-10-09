@@ -21,7 +21,6 @@ import com.jcrawley.memorycardgame.utils.GameUtils;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -36,8 +35,7 @@ public class GameViewImpl implements GameView {
     private final AtomicBoolean isFlipBackInitiated = new AtomicBoolean(false);
     private CardLayoutManager cardLayoutManager;
     private final ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
-    private final CardAnimator cardAnimator;
-    private int currentPosition;
+    private CardAnimator cardAnimator;
     private final CardBackManager cardBackManager;
     public CardDeckImages cardDeckImages = new CardDeckImages();
 
@@ -45,8 +43,14 @@ public class GameViewImpl implements GameView {
     public GameViewImpl(MainActivity mainActivity){
         this.mainActivity = mainActivity;
         bitmapLoader = mainActivity.getBitmapLoader();
-        this.cardAnimator = mainActivity.getCardAnimator();
         this.cardBackManager = mainActivity.getCardBackManager();
+    }
+
+
+    @Override
+    public void init(CardLayoutManager cardLayoutManager, CardAnimator cardAnimator){
+        this.cardLayoutManager = cardLayoutManager;
+        this.cardAnimator = cardAnimator;
     }
 
 
@@ -71,8 +75,7 @@ public class GameViewImpl implements GameView {
 
     @Override
     public void flipOver(Card card, boolean isSecondCardSelected){
-        currentPosition = card.getPosition();
-        ImageView cardView = getCardViewAt(currentPosition);
+        ImageView cardView = getImageViewFor(card);
         Animator.AnimatorListener halfWayFlip = createAnimatorListener(() -> onFinishedHalfFlip(cardView, card, isSecondCardSelected));
         animateCardFlip(cardView, 1, halfWayFlip);
     }
@@ -146,8 +149,10 @@ public class GameViewImpl implements GameView {
 
     @Override
     public void swipeOut(Card card) {
-
+        ImageView cardView = getImageViewFor(card);
+        cardAnimator.swipeOut(cardView);
     }
+
 
 
     private void swipeInCards(){
@@ -188,8 +193,11 @@ public class GameViewImpl implements GameView {
     }
 
 
-    private ImageView getCardViewAt(int position){
-        return cardLayoutManager.getCardViews().get(position);
+
+    private ImageView getImageViewFor(Card card){
+        log("getImageViewFor() position: " + card.getPosition());
+        log("number of image view cards: " + cardLayoutManager.getCardViews().size());
+        return cardLayoutManager.getImageViewAt(card.getPosition());
     }
 
 
@@ -214,12 +222,6 @@ public class GameViewImpl implements GameView {
                 && !flipBackFuture.isDone()){
             flipBackFuture.cancel(false);
         }
-    }
-
-
-    @Override
-    public void setCardLayoutManager(CardLayoutManager cardLayoutManager){
-        this.cardLayoutManager = cardLayoutManager;
     }
 
     private void log(String msg){
@@ -258,17 +260,11 @@ public class GameViewImpl implements GameView {
 
 
     private void setFaceBitmapFor(ImageView cardView, Card card){
-        int imageId = getImageIdAt(card);
+        int imageId = cardDeckImages.getImageIdFor(card);
         if(imageId == -1){
             return;
         }
-        bitmapLoader.setCardFace(cardView, getImageIdAt(card));
-    }
-
-
-    private int getImageIdAt(Card card){
-       // return cardDeckImages.getImageIdFor(cards.get(position));
-        return cardDeckImages.getImageIdFor(card);
+        bitmapLoader.setCardFace(cardView, imageId);
     }
 
 

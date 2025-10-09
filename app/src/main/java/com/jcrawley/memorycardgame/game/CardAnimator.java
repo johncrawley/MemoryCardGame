@@ -1,6 +1,8 @@
 package com.jcrawley.memorycardgame.game;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
@@ -66,30 +68,34 @@ public class CardAnimator {
     }
 
 
-    void swipeOut(View card){
-        savePreviousElevation(card);
-        int duration = getInt(R.integer.swipe_card_out_animation_duration);
-        int initialOffset = getInt(R.integer.swipe_card_out_animation_initial_offset);
-        setHighElevation(card);
-        Animation animation = new TranslateAnimation(
-                0,
-                screenWidth + 100,
-                0,
-                0);
-        animation.setDuration(duration);
-        animation.setStartOffset(initialOffset);
+    public void swipeOut(View card){
+        new Handler(Looper.getMainLooper()).post(() -> {
+            savePreviousElevation(card);
+            int duration = getInt(R.integer.swipe_card_out_animation_duration);
+            int initialOffset = getInt(R.integer.swipe_card_out_animation_initial_offset);
+            setHighElevation(card);
+            Animation animation = new TranslateAnimation(
+                    0,
+                    screenWidth + 100,
+                    0,
+                    0);
+            animation.setDuration(duration);
+            animation.setStartOffset(initialOffset);
 
-        animation.setAnimationListener(new Animation.AnimationListener() {
-            public void onAnimationStart(Animation arg0) { }
-            public void onAnimationRepeat(Animation arg0) { }
-            public void onAnimationEnd(Animation arg0) {
-                card.setVisibility(View.INVISIBLE);
-                card.clearAnimation();
-                setToPreviousElevation(card);
-            }
+            animation.setAnimationListener(new Animation.AnimationListener() {
+                public void onAnimationStart(Animation arg0) { }
+                public void onAnimationRepeat(Animation arg0) { }
+                public void onAnimationEnd(Animation arg0) {
+                    card.setVisibility(View.INVISIBLE);
+                    card.clearAnimation();
+                    setToPreviousElevation(card);
+                }
+            });
+            card.startAnimation(animation);
         });
-        card.startAnimation(animation);
     }
+
+
 
 
     public int getInt(int resId){

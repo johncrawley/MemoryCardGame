@@ -130,9 +130,7 @@ public class Game {
 
 
     private boolean areCardsMatching(){
-        Card card1 = cards.get(firstSelectedPosition);
-        Card card2 = cards.get(secondSelectedPosition);
-        return card1.getRank() == card2.getRank();
+        return firstSelectedCard.getRank() == secondSelectedCard.getRank();
     }
 
 
@@ -217,7 +215,7 @@ public class Game {
             log("checkCards() secondCardHasNotBeenTurnedOver or first or second card are null");
             return;
         }
-        if(cardsMatch()){
+        if(areCardsMatching()){
             log("cards match, removing");
             removeSelectedCards();
         }
@@ -248,18 +246,5 @@ public class Game {
         gameView.swipeOut(card);
         cards.get(firstSelectedPosition).setVisible(false);
     }
-
-
-    private boolean cardsMatch(){
-        return firstSelectedCard.getRank() == secondSelectedCard.getRank();
-    }
-
-
-/*
-    private boolean areCurrentCardsDifferent(int position1, int position2){
-        return position1 != getPositionTag(firstSelectedCard) && position2 != getPositionTag(secondSelectedCard);
-    }
-*/
-
 
 }

@@ -111,8 +111,9 @@ public class MainActivity extends AppCompatActivity {
         bitmapLoader = new BitmapLoader(MainActivity.this, viewModel);
         cardBackManager = new CardBackManager(viewModel, bitmapLoader);
         cardLayoutManager = new CardLayoutManager(MainActivity.this);
-        gameView = new GameViewImpl(MainActivity.this);
+        log("onCreate() screen width: " + screenWidth);
         cardAnimator = new CardAnimator(screenWidth, getApplicationContext());
+        gameView = new GameViewImpl(MainActivity.this);
         setupOptionsButton();
         setupGameService();
         AppearanceSetter.setSavedAppearance(MainActivity.this, cardBackManager, viewModel);
@@ -184,7 +185,8 @@ public class MainActivity extends AppCompatActivity {
                 animationManager = new AnimationManager(MainActivity.this, screenHeight);
                 cardLayout.removeAllViewsInLayout();
                 oldGame = new OldGame(MainActivity.this, cardBackManager, bitmapLoader, screenWidth);
-                gameView.setCardLayoutManager(cardLayoutManager);
+                cardAnimator = new CardAnimator(screenWidth, getApplicationContext());
+                gameView.init(cardLayoutManager, cardAnimator);
                 oldGame.initCards(cardLayoutManager);
                 showNewGameIfNoCardsRemain();
                 long duration = System.currentTimeMillis() - start;
