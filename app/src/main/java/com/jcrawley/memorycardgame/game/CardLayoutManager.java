@@ -1,5 +1,8 @@
 package com.jcrawley.memorycardgame.game;
 
+import static android.view.View.INVISIBLE;
+import static android.view.View.VISIBLE;
+
 import android.annotation.SuppressLint;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,15 +10,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.jcrawley.memorycardgame.MainActivity;
-import com.jcrawley.memorycardgame.MainViewModel;
 import com.jcrawley.memorycardgame.R;
+import com.jcrawley.memorycardgame.card.Card;
 import com.jcrawley.memorycardgame.card.CardBackManager;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class CardLayoutPopulator {
+public class CardLayoutManager {
 
     private int cardWidth, cardHeight;
     private final MainActivity activity;
@@ -23,37 +26,68 @@ public class CardLayoutPopulator {
     private int numberOfCards;
     private int cardsAdded;
    // private final Game game;
-    private List<ImageView> imageViews;
+    private List<ImageView> cardViews;
     private boolean hasRun = false;
     private final ViewGroup parentLayout;
     private int numberOfCardsPerRow;
     private int numberOfRows;
     private boolean isFirstRun = true;
     private int padding;
-    private final MainViewModel viewModel;
     private final CardBackManager cardBackManager;
     private final List<ViewGroup> cardRows = new ArrayList<>();
-    private final Consumer<Integer> clickConsumer;
+    private Consumer<Integer> clickConsumer;
 
     @SuppressLint("UseCompatLoadingForDrawables")
-    public CardLayoutPopulator(MainActivity activity, int numberOfCards, Consumer<Integer> clickConsumer){
+    public CardLayoutManager(MainActivity activity){
         this.activity = activity;
         this.parentLayout = activity.getCardLayout();
-        this.viewModel = activity.getViewModel();
-        this.clickConsumer = clickConsumer;
+       // this.viewModel = activity.getViewModel();
         this.cardBackManager = activity.getCardBackManager();
-        this.numberOfCards = numberOfCards;
-        imageViews = new ArrayList<>(numberOfCards);
+    }
+
+
+    public void init(Consumer<Integer> clickConsumer){
+        log("entered init()");
+        this.clickConsumer = clickConsumer;
         createClickListener();
     }
 
 
-    public void addCardViews(){
-        addCardViews(true);
+    private int getInt(int resId){
+        return activity.getResources().getInteger(resId);
     }
 
 
-    public void addCardViews(boolean shouldCardBackTypeBeRefreshed){
+    public void addViewsFor(List<Card> cards){
+        hasRun = false;
+        parentLayout.removeAllViewsInLayout();
+        this.numberOfCards = cards.size();
+        cardViews = new ArrayList<>(numberOfCards);
+        addCardViews(cards, true);
+        setVisibilityOnCardViews(cards);
+    }
+
+    public void addViewsFor(List<Card> cards, Consumer<Integer> clickConsumer){
+        hasRun = false;
+        this.clickConsumer = clickConsumer;
+        createClickListener();
+        parentLayout.removeAllViewsInLayout();
+        this.numberOfCards = cards.size();
+        cardViews = new ArrayList<>(numberOfCards);
+        addCardViews(cards, true);
+        setVisibilityOnCardViews(cards);
+    }
+
+
+    private void setVisibilityOnCardViews(List<Card> cards){
+        for(int i = 0; i < cardViews.size(); i++){
+            View cardView = cardViews.get(i);
+            Card card = cards.get(i);
+            cardView.setVisibility(card.isVisible() ? VISIBLE : INVISIBLE);
+        }
+    }
+
+    public void addCardViews(List<Card> cards, boolean shouldCardBackTypeBeRefreshed){
         if(hasRun){
             return;
         }
@@ -65,20 +99,6 @@ public class CardLayoutPopulator {
         setDimensions();
         addCardsToParent();
         isFirstRun = false;
-    }
-
-
-    private int getInt(int resId){
-        return activity.getResources().getInteger(resId);
-    }
-
-
-    public void addCardViews(int numberOfCards){
-        hasRun = false;
-        parentLayout.removeAllViewsInLayout();
-        this.numberOfCards = numberOfCards;
-        imageViews = new ArrayList<>(numberOfCards);
-        addCardViews();
     }
 
 
@@ -124,14 +144,15 @@ public class CardLayoutPopulator {
     }
 
 
-    public List<ImageView> getImageViews(){
-        return imageViews;
+    public List<ImageView> getCardViews(){
+        return cardViews;
     }
 
 
     public ImageView getImageViewAt(int position){
-        int index = position >= imageViews.size() ? 0 : position;
-        return imageViews.get(index);
+        log("getImageViewAt() cardViews size: " + cardViews.size());
+        int index = position >= cardViews.size() ? 0 : position;
+        return cardViews.get(index);
     }
 
 
@@ -161,22 +182,16 @@ public class CardLayoutPopulator {
         ImageView imageView = new ImageView(activity);
         int id = View.generateViewId();
         imageView.setId(id);
-        imageViews.add(imageView);
+        cardViews.add(imageView);
         cardBackManager.setCardBackOf(imageView);
         imageView.setPadding(padding, padding, padding, padding);
         LinearLayout.LayoutParams layoutParams =  new LinearLayout.LayoutParams(cardWidth, cardHeight);
         imageView.setTag(R.string.position_tag, cardsAdded);
+        log("about to assign clickListener to card");
         imageView.setOnClickListener(onClickListener);
         imageView.setLayoutParams(layoutParams);
-        setVisibility(imageView);
         cardsAdded++;
         return  imageView;
-    }
-
-
-    private void setVisibility(ImageView cardView){
-        boolean isVisible = viewModel.cards.get(cardsAdded).isVisible() && isFirstRun;
-        cardView.setVisibility(isVisible ? View.VISIBLE : View.INVISIBLE);
     }
 
 
@@ -189,11 +204,18 @@ public class CardLayoutPopulator {
 
 
     private void createClickListener(){
+        log("Entered createClickListener()");
         onClickListener = view -> {
-            if(view.getVisibility() == View.VISIBLE){
+            if(view.getVisibility() == VISIBLE){
+                log("createClickListener() card view clicked!");
                 clickConsumer.accept((int)view.getTag(R.string.position_tag));
+                log("createClickListener() click consumer accepted!");
             }
         };
+    }
+
+    private void log(String msg){
+        System.out.println("^^^ CardLayoutManager: " + msg);
     }
 
 }

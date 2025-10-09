@@ -33,7 +33,7 @@ public class OldGame {
 
     private ImageView firstSelectedCard, secondSelectedCard;
     private final BitmapLoader bitmapLoader;
-    private CardLayoutPopulator cardLayoutPopulator;
+    private CardLayoutManager cardLayoutManager;
     private final CardAnimator cardAnimator;
     private final GamePreferences recordKeeper;
     private final MainActivity mainActivity;
@@ -80,7 +80,7 @@ public class OldGame {
         viewModel.numberOfCards = deckSize.getValue();
         viewModel.remainingCards = viewModel.numberOfCards;
         viewModel.cards = cardFactory.getCards(deckSize.getValue());
-        cardLayoutPopulator.addCardViews(viewModel.numberOfCards);
+        //cardLayoutManager.addViewsFor(viewModel.numberOfCards);
         resetTurnState();
         if(viewModel.cards == null){
             return;
@@ -120,12 +120,16 @@ public class OldGame {
     }
 
 
-    public void initCards(CardLayoutPopulator cardLayoutPopulator){
+    public void initCards(CardLayoutManager cardLayoutManager){
         if(isFirstRunSinceCreate){
-            this.cardLayoutPopulator = cardLayoutPopulator;
+            this.cardLayoutManager = cardLayoutManager;
             boolean shouldCardBackBeRefreshed = !viewModel.isAlreadyInitialised;
+            /*
             executorService.execute(()->
-                    cardLayoutPopulator.addCardViews(shouldCardBackBeRefreshed));
+                  cardLayoutManager.addViewsFor(shouldCardBackBeRefreshed));
+
+
+             */
             if(viewModel.turnState == TurnState.FIRST_CARD_SELECTED){
                 quickFlipFirstSelectedCard();
             }
@@ -181,7 +185,7 @@ public class OldGame {
 
     private void quickFlipFirstSelectedCard(){
         int position = viewModel.firstSelectedPosition;
-        List<ImageView> imageViews = cardLayoutPopulator.getImageViews();
+        List<ImageView> imageViews = cardLayoutManager.getCardViews();
         if(GameUtils.isValidPosition(imageViews, position)){
             firstSelectedCard = imageViews.get(position);
             setBitmapForCard(firstSelectedCard, position);
@@ -194,7 +198,7 @@ public class OldGame {
 
 
     public void switchBacksOnFaceDownCards(){
-        List<ImageView> cards = cardLayoutPopulator.getImageViews();
+        List<ImageView> cards = cardLayoutManager.getCardViews();
         for(ImageView card: cards){
             if(firstSelectedCard == card){
                 continue;
@@ -301,12 +305,12 @@ public class OldGame {
 
 
     private void swipeInCards(){
-        cardAnimator.swipeInAll(cardLayoutPopulator.getImageViews());
+        cardAnimator.swipeInAll(cardLayoutManager.getCardViews());
     }
 
 
     private void setAllCardsFaceDown(){
-        for(ImageView card : cardLayoutPopulator.getImageViews()){
+        for(ImageView card : cardLayoutManager.getCardViews()){
             setCardFaceDown(card);
         }
     }

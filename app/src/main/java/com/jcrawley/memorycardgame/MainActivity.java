@@ -36,7 +36,7 @@ import com.jcrawley.memorycardgame.card.CardTypeSetter;
 import com.jcrawley.memorycardgame.card.DeckSize;
 import com.jcrawley.memorycardgame.card.CardBackManager;
 import com.jcrawley.memorycardgame.game.CardAnimator;
-import com.jcrawley.memorycardgame.game.CardLayoutPopulator;
+import com.jcrawley.memorycardgame.game.CardLayoutManager;
 import com.jcrawley.memorycardgame.game.OldGame;
 import com.jcrawley.memorycardgame.service.Game;
 import com.jcrawley.memorycardgame.service.GameService;
@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
     private GameService gameService;
     private final AtomicBoolean isServiceConnected = new AtomicBoolean();
     private CardAnimator cardAnimator;
-    private CardLayoutPopulator cardLayoutPopulator;
+    private CardLayoutManager cardLayoutManager;
     private GameView gameView;
 
 
@@ -83,8 +83,6 @@ public class MainActivity extends AppCompatActivity {
             GameService.LocalBinder binder = (GameService.LocalBinder) service;
             MainActivity.this.gameService = binder.getService();
             gameService.setActivity(MainActivity.this);
-            //game = gameService.getGame();
-            initLayouts();
             isServiceConnected.set(true);
         }
 
@@ -93,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
             isServiceConnected.set(false);
         }
     };
+
 
 
     public GameView getGameView(){
@@ -105,17 +104,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setupInsetPadding();
-        setupGameService();
-        mainLayout = findViewById(R.id.mainLayout);
-        statusPanel = findViewById(R.id.statusPanelInclude);
+        initLayouts();
         gamePreferences = new GamePreferences(MainActivity.this);
         initStartGameButtons();
         viewModel  = new ViewModelProvider(this).get(MainViewModel.class);
         bitmapLoader = new BitmapLoader(MainActivity.this, viewModel);
         cardBackManager = new CardBackManager(viewModel, bitmapLoader);
+        cardLayoutManager = new CardLayoutManager(MainActivity.this);
+        gameView = new GameViewImpl(MainActivity.this);
         cardAnimator = new CardAnimator(screenWidth, getApplicationContext());
-        gameView = new GameViewImpl(this, cardLayoutPopulator);
         setupOptionsButton();
+        setupGameService();
         AppearanceSetter.setSavedAppearance(MainActivity.this, cardBackManager, viewModel);
     }
 
@@ -135,17 +134,6 @@ public class MainActivity extends AppCompatActivity {
 
     public GameService getGameService(){
         return gameService;
-    }
-
-
-    public void switchBacksOnFaceDownCards(int firstSelectedCardIndex){
-        List<ImageView> cards = cardLayoutPopulator.getImageViews();
-        for(int i = 0; i < cards.size(); i++){
-            if(i == firstSelectedCardIndex){
-                continue;
-            }
-            setCardFaceDown(cards.get(i));
-        }
     }
 
 
@@ -196,9 +184,8 @@ public class MainActivity extends AppCompatActivity {
                 animationManager = new AnimationManager(MainActivity.this, screenHeight);
                 cardLayout.removeAllViewsInLayout();
                 oldGame = new OldGame(MainActivity.this, cardBackManager, bitmapLoader, screenWidth);
-                Game game = gameService.getGame();
-                cardLayoutPopulator = new CardLayoutPopulator(MainActivity.this, game.getNumberOfCards(), game::notifyClickOnPosition);
-                oldGame.initCards(cardLayoutPopulator);
+                gameView.setCardLayoutManager(cardLayoutManager);
+                oldGame.initCards(cardLayoutManager);
                 showNewGameIfNoCardsRemain();
                 long duration = System.currentTimeMillis() - start;
                 System.out.println("^^^ initCardsAfterLayoutCreation() duration: " + duration);
@@ -275,12 +262,21 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void initLayouts(){
+        log("entered initLayouts()");
+        mainLayout = findViewById(R.id.mainLayout);
+        statusPanel = findViewById(R.id.statusPanelInclude);
         cardLayout = findViewById(R.id.cardLayout);
+        boolean isCardLayoutNull = cardLayout == null;
+        log("initLayout() is card layout null: " + isCardLayoutNull);
         newGameLayout = findViewById(R.id.new_game_include);
         resultsLayout = findViewById(R.id.game_over_include);
         resultsLayout.setOnClickListener(view -> dismissResults());
     }
 
+
+    private void log(String msg){
+        System.out.println("^^^ MainActivity: " + msg);
+    }
 
     public MainViewModel getViewModel(){
         return viewModel;
