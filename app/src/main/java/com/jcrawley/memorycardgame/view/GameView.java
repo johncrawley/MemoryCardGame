@@ -13,7 +13,7 @@ import java.util.function.Consumer;
 public interface GameView {
 
    void swipeInAll(List<ImageView> cards);
-   void swipeInCardsAfterDelay();
+   void swipeInCardsAfterDelay(List<Card> cards, Consumer<Integer> onClickConsumer);
    void swipeOut(Card card);
 
    void flipBothCardsBack(Card card1, Card card2, int secondFlipBackDelay);
@@ -22,9 +22,9 @@ public interface GameView {
    void flipOver(Card card, boolean isSecondCardSelected);
 
    void addCardViews(List<Card> cards, Consumer<Integer> clickConsumer);
-   void setAllCardsFaceDown();
    void displayResults(int numberOfTurns, int currentRecord);
    void setTitleWithTurns(int numberOfTurns);
+   void switchBacksOnFaceDownCards();
 
    void init(CardLayoutManager cardLayoutManager, CardAnimator cardAnimator);
 }

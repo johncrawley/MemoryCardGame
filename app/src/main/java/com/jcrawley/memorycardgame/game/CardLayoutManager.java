@@ -58,36 +58,28 @@ public class CardLayoutManager {
     }
 
 
-    public void addViewsFor(List<Card> cards){
-        hasRun = false;
-        parentLayout.removeAllViewsInLayout();
-        this.numberOfCards = cards.size();
-        cardViews = new ArrayList<>(numberOfCards);
-        addCardViews(cards, true);
-        setVisibilityOnCardViews(cards);
-    }
-
-    public void addViewsFor(List<Card> cards, Consumer<Integer> clickConsumer){
+    public void addViewsFor(List<Card> cards, Consumer<Integer> clickConsumer, boolean isVisible){
         hasRun = false;
         this.clickConsumer = clickConsumer;
         createClickListener();
         parentLayout.removeAllViewsInLayout();
         this.numberOfCards = cards.size();
         cardViews = new ArrayList<>(numberOfCards);
-        addCardViews(cards, true);
-        setVisibilityOnCardViews(cards);
+        addCardViews( true);
+        setVisibilityOnCardViews(cards, isVisible);
     }
 
 
-    private void setVisibilityOnCardViews(List<Card> cards){
+    private void setVisibilityOnCardViews(List<Card> cards, boolean isVisible){
         for(int i = 0; i < cardViews.size(); i++){
             View cardView = cardViews.get(i);
             Card card = cards.get(i);
-            cardView.setVisibility(card.isVisible() ? VISIBLE : INVISIBLE);
+            int visibility = isVisible && card.isVisible() ? VISIBLE : INVISIBLE;
+            cardView.setVisibility(visibility);
         }
     }
 
-    public void addCardViews(List<Card> cards, boolean shouldCardBackTypeBeRefreshed){
+    public void addCardViews(boolean shouldCardBackTypeBeRefreshed){
         if(hasRun){
             return;
         }

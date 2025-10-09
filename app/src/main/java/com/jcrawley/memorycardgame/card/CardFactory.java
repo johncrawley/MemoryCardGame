@@ -43,7 +43,7 @@ public class CardFactory {
         List<Card> cards = new ArrayList<>(listToAdd);
         log("getCards() size: " + cards.size());
         Collections.shuffle(cards);
-        addPositionsTo(cards);
+        init(cards);
         return cards;
     }
 
@@ -52,9 +52,10 @@ public class CardFactory {
         System.out.println("^^^ CardFactory: " + msg);
     }
 
-    private void addPositionsTo(List<Card> cards){
+    private void init(List<Card> cards){
         for(int i = 0 ; i < cards.size(); i++){
             cards.get(i).setPosition(i);
+            cards.get(i).init();
         }
     }
 

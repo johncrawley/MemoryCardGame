@@ -77,7 +77,7 @@ public class Game {
 
     public void startAgain(){
         initDeckOfCards();
-        gameView.swipeInCardsAfterDelay();
+        gameView.swipeInCardsAfterDelay(cards, this::notifyClickOnPosition);
     }
 
 
@@ -90,6 +90,7 @@ public class Game {
         initEachCard();
         log("initDeckOfCards() cards size: " + cards.size());
     }
+
 
     private void initEachCard(){
         for(Card card : cards){
@@ -191,6 +192,11 @@ public class Game {
             return;
         }
         cards.get(position).flipCard();
+    }
+
+
+    public int getFirstSelectedPosition(){
+        return turnState == TurnState.NOTHING_SELECTED ? -1 : firstSelectedCard.getPosition();
     }
 
 

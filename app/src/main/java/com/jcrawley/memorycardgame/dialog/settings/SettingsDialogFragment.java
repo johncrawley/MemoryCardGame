@@ -24,12 +24,13 @@ import com.jcrawley.memorycardgame.game.OldGame;
 import com.jcrawley.memorycardgame.dialog.settings.list.BackgroundRecyclerAdapter;
 import com.jcrawley.memorycardgame.dialog.settings.list.CardTypeRecyclerAdapter;
 import com.jcrawley.memorycardgame.utils.BitmapLoader;
+import com.jcrawley.memorycardgame.view.GameView;
 
 public class SettingsDialogFragment extends DialogFragment {
 
 
     private BitmapLoader bitmapLoader;
-    private OldGame game;
+    private GameView gameView;
     private CardBackManager cardBackManager;
     private GamePreferences gamePreferences;
 
@@ -65,7 +66,7 @@ public class SettingsDialogFragment extends DialogFragment {
         cardBackManager = mainActivity.getCardBackManager();
         bitmapLoader = mainActivity.getBitmapLoader();
         gamePreferences = new GamePreferences(getContext());
-        game = mainActivity.getOldGame();
+        gameView = mainActivity.getGameView();
     }
 
 
@@ -111,7 +112,7 @@ public class SettingsDialogFragment extends DialogFragment {
                 bitmapLoader,
                 cardBackManager,
                 ()->{
-                    game.switchBacksOnFaceDownCards();
+                    gameView.switchBacksOnFaceDownCards();
                     bitmapLoader.clearCardBackCache();
                 } );
         cardTypeRecyclerAdapter.init(cardBacksRecyclerView, getContext(), gamePreferences, GamePreferences.PREF_NAME_CARD_BACK_INDEX);

@@ -37,7 +37,6 @@ import com.jcrawley.memorycardgame.card.DeckSize;
 import com.jcrawley.memorycardgame.card.CardBackManager;
 import com.jcrawley.memorycardgame.game.CardAnimator;
 import com.jcrawley.memorycardgame.game.CardLayoutManager;
-import com.jcrawley.memorycardgame.game.OldGame;
 import com.jcrawley.memorycardgame.service.Game;
 import com.jcrawley.memorycardgame.service.GameService;
 import com.jcrawley.memorycardgame.utils.AppearanceSetter;
@@ -56,9 +55,7 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout resultsLayout;
     private LinearLayout newGameLayout;
     private LinearLayout cardLayout;
-    private OldGame oldGame;
     private boolean isReadyToDismissResults = false;
-    private DeckSize deckSize;
     private int currentCardCount;
     private int currentFadeOutCount = 0;
     private boolean isShowingNewGameDialogue;
@@ -153,11 +150,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public OldGame getOldGame(){
-        return oldGame;
-    }
-
-
     private void setupInsetPadding(){
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.mainLayout), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -184,11 +176,8 @@ public class MainActivity extends AppCompatActivity {
                 long start = System.currentTimeMillis();
                 animationManager = new AnimationManager(MainActivity.this, screenHeight);
                 cardLayout.removeAllViewsInLayout();
-                oldGame = new OldGame(MainActivity.this, cardBackManager, bitmapLoader, screenWidth);
                 cardAnimator = new CardAnimator(screenWidth, getApplicationContext());
                 gameView.init(cardLayoutManager, cardAnimator);
-                oldGame.initCards(cardLayoutManager);
-                showNewGameIfNoCardsRemain();
                 long duration = System.currentTimeMillis() - start;
                 System.out.println("^^^ initCardsAfterLayoutCreation() duration: " + duration);
             }});
@@ -250,19 +239,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void showNewGameIfNoCardsRemain(){
-        if(viewModel.cards == null){
-            return;
-        }
-        for(Card card : viewModel.cards){
-            if(card.isVisible()){
-                return;
-            }
-        }
-        showNewGameLayout();
-    }
-
-
     private void initLayouts(){
         log("entered initLayouts()");
         mainLayout = findViewById(R.id.mainLayout);
@@ -271,6 +247,8 @@ public class MainActivity extends AppCompatActivity {
         boolean isCardLayoutNull = cardLayout == null;
         log("initLayout() is card layout null: " + isCardLayoutNull);
         newGameLayout = findViewById(R.id.new_game_include);
+        boolean isNewGameNull = newGameLayout == null;
+        log("initLayouts() is newGameLayout null: " + isNewGameNull);
         resultsLayout = findViewById(R.id.game_over_include);
         resultsLayout.setOnClickListener(view -> dismissResults());
     }
@@ -279,6 +257,7 @@ public class MainActivity extends AppCompatActivity {
     private void log(String msg){
         System.out.println("^^^ MainActivity: " + msg);
     }
+
 
     public MainViewModel getViewModel(){
         return viewModel;
@@ -349,7 +328,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void startNewGame(DeckSize deckSize){
-        this.deckSize = deckSize;
         gamePreferences.saveNumberOfCards(deckSize.getValue());
         isShowingNewGameDialogue = false;
         newGameLayout.clearAnimation();
@@ -368,7 +346,9 @@ public class MainActivity extends AppCompatActivity {
     public void onNewGameScreenDismissed(){
         newGameLayout.clearAnimation();
         newGameLayout.setVisibility(View.GONE);
-        oldGame.startAgain(deckSize);
+        if(gameService != null){
+            gameService.getGame().startAgain();
+        }
     }
 
 

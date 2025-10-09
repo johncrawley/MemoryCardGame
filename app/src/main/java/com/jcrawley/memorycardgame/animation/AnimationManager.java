@@ -37,21 +37,32 @@ public class AnimationManager {
     }
 
 
+    private void log(String msg){
+        System.out.println("^^^ AnimationManager: " + msg);
+    }
+
+
     public Animation getResultsDropInAnimation(){
         return resultsDropInAnimation;
     }
+
 
     public Animation getResultsDropOutAnimation(){
         return resultsDropOutAnimation;
     }
 
+
     public Animation getNewGameDropInAnimation(){
         return newGameDropInAnimation;
     }
 
+
     public Animation getNewGameDropOutAnimation(){
+        boolean isNull = newGameDropOutAnimation == null;
+        log("entered getNewGameDropOutAnimation() is null: " + isNull);
         return newGameDropOutAnimation;
     }
+
 
     public Animation getCardsFadeOutAnimation(){
         return cardsFadeOutAnimation;

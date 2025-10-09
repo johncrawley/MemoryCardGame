@@ -4,7 +4,6 @@ import android.animation.Animator;
 import android.os.Handler;
 import android.os.Looper;
 import android.widget.ImageView;
-
 import androidx.annotation.NonNull;
 
 import com.jcrawley.memorycardgame.MainActivity;
@@ -38,6 +37,7 @@ public class GameViewImpl implements GameView {
     private CardAnimator cardAnimator;
     private final CardBackManager cardBackManager;
     public CardDeckImages cardDeckImages = new CardDeckImages();
+    private int firstSelectedPosition = -1;
 
 
     public GameViewImpl(MainActivity mainActivity){
@@ -56,9 +56,14 @@ public class GameViewImpl implements GameView {
 
     @Override
     public void addCardViews(List<Card> cards, Consumer<Integer> clickConsumer){
+        addCardViews(cards, clickConsumer, true);
+    }
+
+
+    public void addCardViews(List<Card> cards, Consumer<Integer> clickConsumer, boolean isVisible){
         log("entered addCardViews() cards size: " + cards.size());
         int numberOfCards = cards.size();
-        cardLayoutManager.addViewsFor(cards, clickConsumer);
+        cardLayoutManager.addViewsFor(cards, clickConsumer, isVisible);
 
         for(int i = 0; i < numberOfCards; i++){
             Card card = cards.get(i);
@@ -134,6 +139,7 @@ public class GameViewImpl implements GameView {
         return Optional.empty();
     }
 
+
     @Override
     public void swipeInAll(List<ImageView> cards) {
 
@@ -141,8 +147,10 @@ public class GameViewImpl implements GameView {
 
 
     @Override
-    public void swipeInCardsAfterDelay(){
+    public void swipeInCardsAfterDelay(List<Card> cards, Consumer<Integer> onClickConsumer){
+        addCardViews(cards, onClickConsumer, false);
         int initialDelay = mainActivity.getResources().getInteger(R.integer.swipe_in_cards_initial_delay);
+        setAllCardsFaceDown();
         new Handler(Looper.getMainLooper()).postDelayed(this::swipeInCards, initialDelay);
     }
 
@@ -229,7 +237,6 @@ public class GameViewImpl implements GameView {
     }
 
 
-    @Override
     public void setAllCardsFaceDown(){
         for(ImageView card : cardLayoutManager.getCardViews()){
             setFaceDown(card);
@@ -277,6 +284,20 @@ public class GameViewImpl implements GameView {
             public void onAnimationCancel(@NonNull Animator animator) {}
             public void onAnimationRepeat(@NonNull Animator animator) {}
         };
+    }
+
+
+    public void switchBacksOnFaceDownCards(){
+        getGame().ifPresent(game ->{
+            int firstSelectedPosition = game.getFirstSelectedPosition();
+            List<ImageView> views = cardLayoutManager.getCardViews();
+            for(int i = 0; i < views.size(); i++){
+                if(i == firstSelectedPosition){
+                    continue;
+                }
+                cardBackManager.setCardBackOf(views.get(i));
+            }
+        });
     }
 
 
