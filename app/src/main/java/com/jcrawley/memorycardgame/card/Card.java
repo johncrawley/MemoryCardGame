@@ -30,6 +30,11 @@ public class Card {
     }
 
 
+    public void setFaceDown(){
+        isFaceDown = true;
+    }
+
+
     public int getPosition(){
         return position;
     }

@@ -16,7 +16,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class Game {
 
     private final GamePreferences gamePreferences;
-    private boolean isFirstRunSinceCreate;
     private final CardFactory cardFactory;
     private final AtomicBoolean hasFlipBackAlreadyBeenInitiated = new AtomicBoolean();
     private List<Card> cards = new ArrayList<>();
@@ -34,7 +33,6 @@ public class Game {
 
     public Game(GamePreferences gamePreferences){
         cardFactory = new CardFactory();
-        isFirstRunSinceCreate = true;
         ensureUnavailableCardsAreInvisible();
         this.gamePreferences = gamePreferences;
         initModel();
@@ -46,11 +44,20 @@ public class Game {
 
 
     public void setView(GameView gameView){
+        log("************* entered setView() ****************");
         this.gameView = gameView;
         if(cards == null || cards.isEmpty()){
             initDeckOfCards();
         }
         gameView.addCardViews(cards, this::notifyClickOnPosition);
+        quickFlipFirstSelectedCard();
+    }
+
+
+    private void quickFlipFirstSelectedCard(){
+        if(turnState == TurnState.FIRST_CARD_SELECTED){
+            gameView.quickFlip(firstSelectedCard);
+        }
     }
 
 
@@ -99,34 +106,8 @@ public class Game {
     }
 
 
-    public void initCards2(){
-        if(isFirstRunSinceCreate){
-            boolean shouldCardBackBeRefreshed = !isAlreadyInitialised;
-            //gameView.addCardViews(shouldCardBackBeRefreshed);
-            if(turnState == TurnState.FIRST_CARD_SELECTED){
-                gameView.quickFlip(firstSelectedCard);
-            }
-        }
-        isFirstRunSinceCreate = false;
-    }
-
-
     public void resetTurnState(){
         turnState = TurnState.NOTHING_SELECTED;
-    }
-
-
-    public void immediatelyFlipBackBothCardsIfNoMatch(){
-        if(firstSelectedPosition < 0
-                || secondSelectedPosition < 0
-                || turnState != TurnState.SECOND_CARD_SELECTED){
-            return;
-        }
-        Card card1 = cards.get(firstSelectedPosition);
-        Card card2 = cards.get(secondSelectedPosition);
-        if(!areCardsMatching()){
-            gameView.flipBothCardsBack(card1, card2, 0);
-        }
     }
 
 
@@ -186,6 +167,37 @@ public class Game {
     }
 
 
+    public void immediatelyFlipBackBothCardsIfNoMatch(){
+        if(firstSelectedPosition < 0
+                || secondSelectedPosition < 0
+                || turnState != TurnState.SECOND_CARD_SELECTED){
+            return;
+        }
+
+        if(!areCardsMatching()){
+            gameView.flipBothCardsBack(firstSelectedCard, secondSelectedCard, 0);
+            firstSelectedCard.setFaceDown();
+            secondSelectedCard.setFaceDown();
+        }
+    }
+
+
+    public void checkCards(boolean hasSecondCardBeenTurnedOver){
+        if(!hasSecondCardBeenTurnedOver
+                || firstSelectedCard == null
+                || secondSelectedCard == null){
+            return;
+        }
+        if(areCardsMatching()){
+            removeSelectedCards();
+        }
+        else{
+            gameView.flipBothCardsBackAfterDelay(firstSelectedCard, secondSelectedCard);
+            firstSelectedCard.setFaceDown();
+            secondSelectedCard.setFaceDown();
+        }
+    }
+
     private void flipCard(int position){
         log("entered flipCard()");
         if(cards == null || position >= cards.size()){
@@ -200,35 +212,12 @@ public class Game {
     }
 
 
-    public boolean isCardsListValidFor(int position){
-        return cards != null && cards.size() > position;
-    }
-
-
     private void displayResults(){
         int currentRecord = gamePreferences.getCurrentTurnsRecordFromPreferences(numberOfCards);
         if(numberOfTurns < currentRecord){
             gamePreferences.saveNewTurnsRecord(numberOfTurns, numberOfCards);
         }
         gameView.displayResults(numberOfTurns, currentRecord );
-    }
-
-
-    public void checkCards(boolean hasSecondCardBeenTurnedOver){
-        if(!hasSecondCardBeenTurnedOver
-                || firstSelectedCard == null
-                || secondSelectedCard == null){
-            log("checkCards() secondCardHasNotBeenTurnedOver or first or second card are null");
-            return;
-        }
-        if(areCardsMatching()){
-            log("cards match, removing");
-            removeSelectedCards();
-        }
-        else{
-            log("cards do not match, flipping back after delay");
-            gameView.flipBothCardsBackAfterDelay(firstSelectedCard, secondSelectedCard);
-        }
     }
 
 
@@ -246,11 +235,9 @@ public class Game {
 
 
     private void removeCard(Card card){
-        if(isCardsListValidFor(card.getPosition())){
-            card.setUnavailable();
-        }
         gameView.swipeOut(card);
-        cards.get(firstSelectedPosition).setVisible(false);
+        card.setUnavailable();
+        card.setVisible(false);
     }
 
 }

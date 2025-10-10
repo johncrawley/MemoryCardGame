@@ -12,7 +12,6 @@ import java.util.function.Consumer;
 
 public interface GameView {
 
-   void swipeInAll(List<ImageView> cards);
    void swipeInCardsAfterDelay(List<Card> cards, Consumer<Integer> onClickConsumer);
    void swipeOut(Card card);
 

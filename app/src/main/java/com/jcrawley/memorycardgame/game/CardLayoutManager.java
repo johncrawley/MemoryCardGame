@@ -31,7 +31,6 @@ public class CardLayoutManager {
     private final ViewGroup parentLayout;
     private int numberOfCardsPerRow;
     private int numberOfRows;
-    private boolean isFirstRun = true;
     private int padding;
     private final CardBackManager cardBackManager;
     private final List<ViewGroup> cardRows = new ArrayList<>();
@@ -91,7 +90,6 @@ public class CardLayoutManager {
         cardsAdded = 0;
         setDimensions();
         addCardsToParent();
-        isFirstRun = false;
     }
 
 
@@ -143,7 +141,6 @@ public class CardLayoutManager {
 
 
     public ImageView getImageViewAt(int position){
-        log("getImageViewAt() cardViews size: " + cardViews.size());
         int index = position >= cardViews.size() ? 0 : position;
         return cardViews.get(index);
     }
@@ -180,7 +177,6 @@ public class CardLayoutManager {
         imageView.setPadding(padding, padding, padding, padding);
         LinearLayout.LayoutParams layoutParams =  new LinearLayout.LayoutParams(cardWidth, cardHeight);
         imageView.setTag(R.string.position_tag, cardsAdded);
-        log("about to assign clickListener to card");
         imageView.setOnClickListener(onClickListener);
         imageView.setLayoutParams(layoutParams);
         cardsAdded++;
@@ -197,7 +193,6 @@ public class CardLayoutManager {
 
 
     private void createClickListener(){
-        log("Entered createClickListener()");
         onClickListener = view -> {
             if(view.getVisibility() == VISIBLE){
                 log("createClickListener() card view clicked!");

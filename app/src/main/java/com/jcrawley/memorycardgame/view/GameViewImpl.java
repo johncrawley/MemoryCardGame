@@ -16,7 +16,6 @@ import com.jcrawley.memorycardgame.game.CardLayoutManager;
 import com.jcrawley.memorycardgame.service.Game;
 import com.jcrawley.memorycardgame.service.GameService;
 import com.jcrawley.memorycardgame.utils.BitmapLoader;
-import com.jcrawley.memorycardgame.utils.GameUtils;
 
 import java.util.List;
 import java.util.Optional;
@@ -37,7 +36,7 @@ public class GameViewImpl implements GameView {
     private CardAnimator cardAnimator;
     private final CardBackManager cardBackManager;
     public CardDeckImages cardDeckImages = new CardDeckImages();
-    private int firstSelectedPosition = -1;
+    private ScheduledFuture <?> flipBackFuture;
 
 
     public GameViewImpl(MainActivity mainActivity){
@@ -61,7 +60,6 @@ public class GameViewImpl implements GameView {
 
 
     public void addCardViews(List<Card> cards, Consumer<Integer> clickConsumer, boolean isVisible){
-        log("entered addCardViews() cards size: " + cards.size());
         int numberOfCards = cards.size();
         cardLayoutManager.addViewsFor(cards, clickConsumer, isVisible);
 
@@ -98,16 +96,15 @@ public class GameViewImpl implements GameView {
 
 
     @Override
-    public void quickFlip(Card card){
-        List<ImageView> imageViews = cardLayoutManager.getCardViews();
-        if(GameUtils.isValidPosition(imageViews, card.getPosition())){
-            ImageView cardImageView = imageViews.get(card.getPosition());
-            setFaceBitmapFor(cardImageView, card);
-            cardImageView.animate()
+    public void quickFlip(Card card) {
+        ImageView cardView = getImageViewFor(card);
+        setFaceBitmapFor(cardView, card);
+        new Handler(Looper.getMainLooper()).post(() ->
+            cardView.animate()
                     .rotationY(180)
                     .setDuration(1)
-                    .start();
-        }
+                    .start()
+        );
     }
 
 
@@ -141,12 +138,6 @@ public class GameViewImpl implements GameView {
 
 
     @Override
-    public void swipeInAll(List<ImageView> cards) {
-
-    }
-
-
-    @Override
     public void swipeInCardsAfterDelay(List<Card> cards, Consumer<Integer> onClickConsumer){
         addCardViews(cards, onClickConsumer, false);
         int initialDelay = mainActivity.getResources().getInteger(R.integer.swipe_in_cards_initial_delay);
@@ -160,7 +151,6 @@ public class GameViewImpl implements GameView {
         ImageView cardView = getImageViewFor(card);
         cardAnimator.swipeOut(cardView);
     }
-
 
 
     private void swipeInCards(){
@@ -188,7 +178,6 @@ public class GameViewImpl implements GameView {
             flipCardBack(card1, 0 );
             flipCardBack(card2, secondFlipBackDelay);
             resetTurnState();
-            //firstSelectedCard = null;
         });
     }
 
@@ -199,7 +188,6 @@ public class GameViewImpl implements GameView {
         Animator.AnimatorListener onHalfWayFlippedBack = createAnimatorListener( () -> onHalfWayFlippedBack(cardView, card, onFullWayFlippedBack));
         animateCardFlip(cardView, 1, onHalfWayFlippedBack, delay);
     }
-
 
 
     private ImageView getImageViewFor(Card card){
@@ -221,8 +209,6 @@ public class GameViewImpl implements GameView {
         animateCardFlip(cardView, 0, fullWayFlippedBackListener);
     }
 
-    private ScheduledFuture <?> flipBackFuture;
-
 
     private void cancelFlipBackFuture(){
         if(flipBackFuture != null
@@ -231,6 +217,7 @@ public class GameViewImpl implements GameView {
             flipBackFuture.cancel(false);
         }
     }
+
 
     private void log(String msg){
         System.out.println("^^^ GameViewImpl: " + msg);
