@@ -168,9 +168,7 @@ public class Game {
 
 
     public void immediatelyFlipBackBothCardsIfNoMatch(){
-        if(firstSelectedPosition < 0
-                || secondSelectedPosition < 0
-                || turnState != TurnState.SECOND_CARD_SELECTED){
+        if(turnState != TurnState.SECOND_CARD_SELECTED){
             return;
         }
 

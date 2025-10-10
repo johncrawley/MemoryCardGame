@@ -90,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
     };
 
 
-
     public GameView getGameView(){
         return gameView;
     }
@@ -102,18 +101,23 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setupInsetPadding();
         initLayouts();
-        gamePreferences = new GamePreferences(MainActivity.this);
         initStartGameButtons();
         viewModel  = new ViewModelProvider(this).get(MainViewModel.class);
-        bitmapLoader = new BitmapLoader(MainActivity.this, viewModel);
-        cardBackManager = new CardBackManager(viewModel, bitmapLoader);
-        cardLayoutManager = new CardLayoutManager(MainActivity.this);
-        log("onCreate() screen width: " + screenWidth);
-        cardAnimator = new CardAnimator(screenWidth, getApplicationContext());
+        initHelperClasses();
         gameView = new GameViewImpl(MainActivity.this);
         setupOptionsButton();
         setupGameService();
+        initBackgroundClickListener();
         AppearanceSetter.setSavedAppearance(MainActivity.this, cardBackManager, viewModel);
+    }
+
+
+    private void initHelperClasses(){
+        gamePreferences = new GamePreferences(MainActivity.this);
+        bitmapLoader = new BitmapLoader(MainActivity.this, viewModel);
+        cardBackManager = new CardBackManager(viewModel, bitmapLoader);
+        cardLayoutManager = new CardLayoutManager(MainActivity.this);
+        cardAnimator = new CardAnimator(screenWidth, getApplicationContext());
     }
 
 
@@ -173,24 +177,15 @@ public class MainActivity extends AppCompatActivity {
             public void onGlobalLayout() {
                 cardLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 assignScreenDimensions();
-                long start = System.currentTimeMillis();
                 animationManager = new AnimationManager(MainActivity.this, screenHeight);
-                cardLayout.removeAllViewsInLayout();
                 cardAnimator = new CardAnimator(screenWidth, getApplicationContext());
                 gameView.init(cardLayoutManager, cardAnimator);
-                long duration = System.currentTimeMillis() - start;
-                System.out.println("^^^ initCardsAfterLayoutCreation() duration: " + duration);
             }});
     }
 
 
     public ViewGroup getCardLayout(){
         return cardLayout;
-    }
-
-
-    public CardAnimator getCardAnimator(){
-        return cardAnimator;
     }
 
 
