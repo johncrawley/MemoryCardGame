@@ -35,7 +35,6 @@ public class Game {
         cardFactory = new CardFactory();
         ensureUnavailableCardsAreInvisible();
         this.gamePreferences = gamePreferences;
-        initModel();
     }
 
     private void log(String msg){
@@ -51,6 +50,14 @@ public class Game {
         }
         gameView.addCardViews(cards, this::notifyClickOnPosition);
         quickFlipFirstSelectedCard();
+        updateNumberOfTurnsOnView();
+    }
+
+
+    private void updateNumberOfTurnsOnView(){
+        if(numberOfTurns > 0){
+            gameView.setTitleWithTurns(numberOfTurns);
+        }
     }
 
 
@@ -70,15 +77,6 @@ public class Game {
                 card.setVisible(false);
             }
         }
-    }
-
-
-    private void initModel(){
-        if(isAlreadyInitialised){
-            gameView.setTitleWithTurns(numberOfTurns);
-            return;
-        }
-        isAlreadyInitialised = true;
     }
 
 
@@ -188,6 +186,7 @@ public class Game {
         }
         if(areCardsMatching()){
             removeSelectedCards();
+            updateNumberOfTurnsOnView();
         }
         else{
             gameView.flipBothCardsBackAfterDelay(firstSelectedCard, secondSelectedCard);

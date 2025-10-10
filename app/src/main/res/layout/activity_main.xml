@@ -18,7 +18,6 @@
         android:layout_marginBottom="@dimen/_14sdp"
         app:layout_constraintStart_toStartOf="parent">
 
-
         <include layout="@layout/status_panel"
             android:id="@+id/statusPanelInclude"
             android:layout_width="wrap_content"

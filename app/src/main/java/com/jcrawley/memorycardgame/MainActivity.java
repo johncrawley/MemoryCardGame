@@ -101,7 +101,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setupInsetPadding();
         initLayouts();
-        initStartGameButtons();
         viewModel  = new ViewModelProvider(this).get(MainViewModel.class);
         initHelperClasses();
         gameView = new GameViewImpl(MainActivity.this);
@@ -235,22 +234,13 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void initLayouts(){
-        log("entered initLayouts()");
         mainLayout = findViewById(R.id.mainLayout);
         statusPanel = findViewById(R.id.statusPanelInclude);
         cardLayout = findViewById(R.id.cardLayout);
-        boolean isCardLayoutNull = cardLayout == null;
-        log("initLayout() is card layout null: " + isCardLayoutNull);
         newGameLayout = findViewById(R.id.new_game_include);
-        boolean isNewGameNull = newGameLayout == null;
-        log("initLayouts() is newGameLayout null: " + isNewGameNull);
         resultsLayout = findViewById(R.id.game_over_include);
         resultsLayout.setOnClickListener(view -> dismissResults());
-    }
-
-
-    private void log(String msg){
-        System.out.println("^^^ MainActivity: " + msg);
+        initStartGameButtons();
     }
 
 
@@ -380,7 +370,6 @@ public class MainActivity extends AppCompatActivity {
     public int getScreenHeight(){
         return screenHeight;
     }
-
 
 
     public void displayResults(int numberOfTurns, String recordText){

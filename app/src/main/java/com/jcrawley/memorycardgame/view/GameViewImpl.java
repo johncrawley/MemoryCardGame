@@ -116,7 +116,7 @@ public class GameViewImpl implements GameView {
 
     @Override
     public void setTitleWithTurns(int numberOfTurns) {
-
+        mainActivity.setTitleWithTurns(numberOfTurns);
     }
 
 

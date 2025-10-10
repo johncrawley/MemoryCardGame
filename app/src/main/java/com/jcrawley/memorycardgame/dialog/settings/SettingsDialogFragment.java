@@ -20,7 +20,6 @@ import com.jcrawley.memorycardgame.background.BackgroundFactory;
 import com.jcrawley.memorycardgame.card.CardBackManager;
 import com.jcrawley.memorycardgame.card.CardTypeSetter;
 import com.jcrawley.memorycardgame.card.cardType.CardType;
-import com.jcrawley.memorycardgame.game.OldGame;
 import com.jcrawley.memorycardgame.dialog.settings.list.BackgroundRecyclerAdapter;
 import com.jcrawley.memorycardgame.dialog.settings.list.CardTypeRecyclerAdapter;
 import com.jcrawley.memorycardgame.utils.BitmapLoader;
