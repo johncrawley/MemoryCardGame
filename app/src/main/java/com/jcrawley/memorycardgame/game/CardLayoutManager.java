@@ -79,6 +79,7 @@ public class CardLayoutManager {
         }
     }
 
+
     public void addCardViews(boolean shouldCardBackTypeBeRefreshed){
         if(hasRun){
             return;

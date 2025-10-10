@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <app:LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/newGameLayout"
@@ -19,51 +18,55 @@
     android:orientation="vertical">
 
 
-<TextView
-    android:id="@+id/newGameTextView"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="@string/new_game_text"
-    android:paddingHorizontal="@dimen/turns_text_padding_horizontal"
-    android:paddingBottom="@dimen/turns_text_padding_bottom"
-    android:shadowRadius="3"
-    android:shadowDy="3"
-    android:shadowDx="3"
-    android:shadowColor="@color/text_shadow_color"
-    android:textColor="@color/about_game_title_text"
-    android:textSize="24sp"
-    app:layout_constraintBottom_toTopOf="@+id/cardLayout"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/newGameTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/new_game_text"
+        android:paddingHorizontal="@dimen/turns_text_padding_horizontal"
+        android:paddingBottom="@dimen/turns_text_padding_bottom"
+        android:shadowRadius="3"
+        android:shadowDy="3"
+        android:shadowDx="3"
+        android:shadowColor="@color/text_shadow_color"
+        android:textColor="@color/about_game_title_text"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/cardLayout"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-<Button
-    android:id="@+id/cards8Button"
-    android:textColor="@color/button_text"
-    android:layout_width="match_parent"
-    android:text="@string/button_8_cards_text"
-    android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/cards8Button"
+        android:backgroundTint="@color/button_tint"
+        android:textColor="@color/button_text"
+        android:layout_width="match_parent"
+        android:text="@string/button_8_cards_text"
+        android:layout_height="wrap_content"/>
 
-<Button
-    android:id="@+id/cards16Button"
-    android:textColor="@color/button_text"
-    android:layout_width="match_parent"
-    android:text="@string/button_16_cards_text"
-    android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/cards16Button"
+        android:backgroundTint="@color/button_tint"
+        android:textColor="@color/button_text"
+        android:layout_width="match_parent"
+        android:text="@string/button_16_cards_text"
+        android:layout_height="wrap_content"/>
 
-<Button
-    android:id="@+id/cards26Button"
-    android:textColor="@color/button_text"
-    android:layout_width="match_parent"
-    android:text="@string/button_26_cards_text"
-    android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/cards26Button"
+        android:backgroundTint="@color/button_tint"
+        android:textColor="@color/button_text"
+        android:layout_width="match_parent"
+        android:text="@string/button_26_cards_text"
+        android:layout_height="wrap_content"/>
 
-<Button
-    android:id="@+id/cards52Button"
-    android:textColor="@color/button_text"
-    android:layout_width="match_parent"
-    android:text="@string/button_52_cards_text"
-    android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/cards52Button"
+        android:backgroundTint="@color/button_tint"
+        android:textColor="@color/button_text"
+        android:layout_width="match_parent"
+        android:text="@string/button_52_cards_text"
+        android:layout_height="wrap_content"/>
 
 </app:LinearLayout>
 
