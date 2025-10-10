@@ -25,13 +25,11 @@ import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jcrawley.memorycardgame.animation.AnimationHelper;
 import com.jcrawley.memorycardgame.animation.AnimationManager;
-import com.jcrawley.memorycardgame.card.Card;
 import com.jcrawley.memorycardgame.card.CardTypeSetter;
 import com.jcrawley.memorycardgame.card.DeckSize;
 import com.jcrawley.memorycardgame.card.CardBackManager;
@@ -56,8 +54,6 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout newGameLayout;
     private LinearLayout cardLayout;
     private boolean isReadyToDismissResults = false;
-    private int currentCardCount;
-    private int currentFadeOutCount = 0;
     private boolean isShowingNewGameDialogue;
     private MainViewModel viewModel;
     private GamePreferences gamePreferences;
@@ -88,11 +84,6 @@ public class MainActivity extends AppCompatActivity {
             isServiceConnected.set(false);
         }
     };
-
-
-    public GameView getGameView(){
-        return gameView;
-    }
 
 
     @Override
@@ -133,6 +124,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public GameView getGameView(){
+        return gameView;
+    }
+
+
     public GameService getGameService(){
         return gameService;
     }
@@ -150,6 +146,16 @@ public class MainActivity extends AppCompatActivity {
 
     public CardTypeSetter getCardTypeSetter(){
         return viewModel.cardDeckImages;
+    }
+
+
+    public ViewGroup getCardLayout(){
+        return cardLayout;
+    }
+
+
+    public GamePreferences getGamePreferences(){
+        return this.gamePreferences;
     }
 
 
@@ -182,10 +188,6 @@ public class MainActivity extends AppCompatActivity {
             }});
     }
 
-
-    public ViewGroup getCardLayout(){
-        return cardLayout;
-    }
 
 
     private void initBackgroundClickListener(){
@@ -244,20 +246,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public MainViewModel getViewModel(){
-        return viewModel;
-    }
-
-
     public void showNewGameDialog(){
         removeAllCards();
         showNewGameLayout();
         hideStatusPanel();
+        notifyGameOfNewGameDialogPresence();
     }
 
 
-    public GamePreferences getGamePreferences(){
-        return this.gamePreferences;
+    private void removeAllCards(){
+        if(cardLayout != null && animationManager != null){
+            cardLayout.startAnimation(animationManager.getCardsFadeOutAnimation());
+        }
+    }
+
+
+    private void notifyGameOfNewGameDialogPresence(){
+        if(isServiceConnected.get()){
+            var game = gameService.getGame();
+            game.onNewGameLayoutShown();
+        }
     }
 
 
@@ -267,34 +275,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void checkToRemoveAllCardsFromLayout(){
-        if(currentFadeOutCount >= currentCardCount){
-            cardLayout.removeAllViewsInLayout();
-        }
-    }
-
-
-    private void removeAllCards(){
-        int cardCount = cardLayout.getChildCount();
-        currentFadeOutCount = 0;
-        currentCardCount = cardCount;
-        cardLayout.startAnimation(animationManager.getCardsFadeOutAnimation());
-        if(viewModel.cards != null){
-            for(Card card : viewModel.cards){
-                card.setVisible(false);
-            }
-        }
-    }
-
-
     public void onCardsFadedOut(){
         for(View v : cardLayout.getTouchables()){
             v.setVisibility(View.GONE);
         }
         cardLayout.setVisibility(VISIBLE);
         cardLayout.clearAnimation();
-        currentFadeOutCount++;
-        checkToRemoveAllCardsFromLayout();
+        cardLayout.removeAllViewsInLayout();
     }
 
 
@@ -344,7 +331,10 @@ public class MainActivity extends AppCompatActivity {
         isShowingNewGameDialogue = true;
         dismissResultsLayoutIfVisible();
         newGameLayout.setVisibility(VISIBLE);
-        newGameLayout.startAnimation(animationManager.getNewGameDropInAnimation());
+        if(animationManager != null){
+            var animation = animationManager.getNewGameDropInAnimation();
+            newGameLayout.startAnimation(animation);
+        }
     }
 
 
@@ -404,11 +394,6 @@ public class MainActivity extends AppCompatActivity {
         statusPanel.setAnimation(fadeInAnimation);
         statusPanel.setVisibility(VISIBLE);
         statusPanel.animate();
-    }
-
-
-    private void setCardFaceDown(ImageView imageView){
-        cardBackManager.setCardBackOf(imageView);
     }
 
 

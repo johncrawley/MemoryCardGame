@@ -45,6 +45,10 @@ public class Game {
     public void setView(GameView gameView){
         log("************* entered setView() ****************");
         this.gameView = gameView;
+        if(turnState == TurnState.AWAITING_NEW_GAME){
+            gameView.showNewGameLayout();
+            return;
+        }
         if(cards == null || cards.isEmpty()){
             initDeckOfCards();
         }
@@ -58,6 +62,12 @@ public class Game {
         if(numberOfTurns > 0){
             gameView.setTitleWithTurns(numberOfTurns);
         }
+    }
+
+
+    public void onNewGameLayoutShown(){
+        cards = null;
+        turnState = turnState.AWAITING_NEW_GAME;
     }
 
 

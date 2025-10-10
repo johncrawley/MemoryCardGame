@@ -120,6 +120,12 @@ public class GameViewImpl implements GameView {
     }
 
 
+    @Override
+    public void showNewGameLayout(){
+        mainActivity.showNewGameDialog();
+    }
+
+
     private void resetTurnState(){
         getGame().ifPresent(Game::resetTurnState);
     }

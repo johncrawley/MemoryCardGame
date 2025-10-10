@@ -25,5 +25,7 @@ public interface GameView {
    void setTitleWithTurns(int numberOfTurns);
    void switchBacksOnFaceDownCards();
 
+   void showNewGameLayout();
+
    void init(CardLayoutManager cardLayoutManager, CardAnimator cardAnimator);
 }

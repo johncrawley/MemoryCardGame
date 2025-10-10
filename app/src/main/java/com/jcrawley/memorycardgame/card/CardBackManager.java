@@ -61,7 +61,7 @@ public class CardBackManager implements CardTypeSetter {
 
     public void setCardType(CardType cardType){
         if(cardType == CardType.BACK_RANDOM){
-            if(!viewModel.isAlreadyInitialised || viewModel.previouslySelectedCardTypeBack != CardType.BACK_RANDOM) {
+            if(viewModel.previouslySelectedCardTypeBack != CardType.BACK_RANDOM) {
                 setRandomCardBackType();
                 viewModel.previouslySelectedCardTypeBack  = CardType.BACK_RANDOM;
             }
