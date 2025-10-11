@@ -1,20 +1,29 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 <!-- Base application theme. -->
-<style name="Theme.MemoryCardGame" parent="Theme.Material3.DayNight.NoActionBar">
+<style name="Theme.MemoryCardGame" parent="Theme.Material3.Dark.NoActionBar">
     <!-- Primary brand color. -->
     <item name="colorPrimaryVariant">@color/purple_700</item>
     <item name="colorOnPrimary">@color/black</item>
     <!-- Secondary brand color. -->
     <item name="colorSecondary">@color/teal_200</item>
     <item name="colorSecondaryVariant">@color/teal_200</item>
-    <item name="colorOnSecondary">@color/black</item>
-    <!-- Customize your theme here. -->
+
     <item name="colorPrimary">@color/button_tint</item>
-    <item name="colorPrimaryDark">@color/status_bar_color</item>
+    <item name="colorPrimaryDark">@color/button_text</item>
+
     <item name="status_panel_background_color">@color/panel_background</item>
     <item name="status_panel_outline_color">@color/panel_outline</item>
     <item name="status_panel_text_color">@color/panel_text</item>
     <item name="android:windowBackground">@color/background_color</item>
+
+    <item name="android:navigationBarColor">
+        @android:color/transparent
+    </item>
+
+    <!-- Optional: set to transparent if your app is drawing behind the status bar. -->
+    <item name="android:statusBarColor">
+        @android:color/transparent
+    </item>
 
 </style>
 </resources>

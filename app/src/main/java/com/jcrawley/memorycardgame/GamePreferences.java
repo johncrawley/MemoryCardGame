@@ -25,9 +25,7 @@ public class GamePreferences {
 
 
     public void saveNewTurnsRecord(int numberOfTurns, int numberOfCards){
-        SharedPreferences.Editor editor = getEditor();
-        editor.putInt(PREF_NAME_TURNS_RECORD + numberOfCards, numberOfTurns );
-        editor.apply();
+        saveInt(PREF_NAME_TURNS_RECORD + numberOfCards, numberOfTurns );
     }
 
 
@@ -37,7 +35,7 @@ public class GamePreferences {
 
 
     public void saveInt(String prefName, int value){
-        SharedPreferences.Editor editor = getEditor();
+        var editor = getEditor();
         editor.putInt(prefName, value);
         editor.apply();
     }

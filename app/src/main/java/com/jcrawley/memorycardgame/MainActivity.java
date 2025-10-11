@@ -3,10 +3,12 @@ package com.jcrawley.memorycardgame;
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -160,11 +162,16 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void setupInsetPadding(){
+        EdgeToEdge.enable(this);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.mainLayout), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        var window = getWindow();
+        var insetsController = WindowCompat.getInsetsController(window, window.getDecorView());
+        insetsController.setAppearanceLightNavigationBars(false);
+        insetsController.setAppearanceLightStatusBars(false);
     }
 
 
@@ -204,13 +211,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void displayResults(int numberOfTurns, int currentRecord){
-            String recordText =
-                    numberOfTurns < currentRecord ? getString(R.string.results_status_new_record)
-                            : numberOfTurns == currentRecord ? getString(R.string.results_status_matching_record)
-                                : getString(R.string.results_status_current_record) + currentRecord;
+    public void displayResults(int numberOfTurns, int currentRecord, int delay){
+        new Handler(Looper.getMainLooper()).postDelayed(() -> {
+            String recordText = getRecordTextFor(numberOfTurns, currentRecord);
+            displayResults(numberOfTurns, recordText );
+        }, delay);
 
-            displayResults(numberOfTurns, recordText);
+    }
+
+
+    private String getRecordTextFor(int numberOfTurns, int currentRecord){
+        return numberOfTurns < currentRecord ? getString(R.string.results_status_new_record)
+                : numberOfTurns == currentRecord ? getString(R.string.results_status_matching_record)
+                : getString(R.string.results_status_current_record) + currentRecord;
+
     }
 
 

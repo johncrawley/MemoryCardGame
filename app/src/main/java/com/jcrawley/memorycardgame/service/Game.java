@@ -1,8 +1,5 @@
 package com.jcrawley.memorycardgame.service;
 
-import android.os.Handler;
-import android.os.Looper;
-
 import com.jcrawley.memorycardgame.game.TurnState;
 import com.jcrawley.memorycardgame.GamePreferences;
 import com.jcrawley.memorycardgame.card.Card;
@@ -37,18 +34,19 @@ public class Game {
         this.gamePreferences = gamePreferences;
     }
 
-    private void log(String msg){
-        System.out.println("^^^ Game: " + msg);
+
+    public void setView(GameView gameView){
+        this.gameView = gameView;
+
+        switch(turnState){
+            case AWAITING_NEW_GAME -> gameView.showNewGameLayout();
+            case GAME_OVER -> showGameOverOnView(1);
+            default -> initCardsAndUpdateView();
+        }
     }
 
 
-    public void setView(GameView gameView){
-        log("************* entered setView() ****************");
-        this.gameView = gameView;
-        if(turnState == TurnState.AWAITING_NEW_GAME){
-            gameView.showNewGameLayout();
-            return;
-        }
+    private void initCardsAndUpdateView(){
         if(cards == null || cards.isEmpty()){
             initDeckOfCards();
         }
@@ -67,7 +65,7 @@ public class Game {
 
     public void onNewGameLayoutShown(){
         cards = null;
-        turnState = turnState.AWAITING_NEW_GAME;
+        turnState = TurnState.AWAITING_NEW_GAME;
     }
 
 
@@ -103,7 +101,6 @@ public class Game {
         numberOfRemainingCards = numberOfCards;
         resetTurnState();
         initEachCard();
-        log("initDeckOfCards() cards size: " + cards.size());
     }
 
 
@@ -142,7 +139,6 @@ public class Game {
 
 
     private void handleFirstSelection(int position){
-        log("entered handleFirstSelection() position: " + position);
         gameView.setTitleWithTurns(++numberOfTurns);
         turnState = TurnState.FIRST_CARD_SELECTED;
         firstSelectedPosition = position;
@@ -153,7 +149,6 @@ public class Game {
 
 
     private void handleSecondSelection(int position){
-        log("entered handleSecondSelection() position: " + position);
         if(position == firstSelectedPosition){
             return;
         }
@@ -205,8 +200,8 @@ public class Game {
         }
     }
 
+
     private void flipCard(int position){
-        log("entered flipCard()");
         if(cards == null || position >= cards.size()){
             return;
         }
@@ -219,26 +214,43 @@ public class Game {
     }
 
 
-    private void displayResults(){
-        int currentRecord = gamePreferences.getCurrentTurnsRecordFromPreferences(numberOfCards);
-        if(numberOfTurns < currentRecord){
-            gamePreferences.saveNewTurnsRecord(numberOfTurns, numberOfCards);
-        }
-        gameView.displayResults(numberOfTurns, currentRecord );
-    }
-
-
     private void removeSelectedCards(){
         removeCard(firstSelectedCard);
         removeCard(secondSelectedCard);
         resetTurnState();
-        new Handler(Looper.getMainLooper()).postDelayed(() -> {
-            numberOfRemainingCards -= 2;
-            if(numberOfRemainingCards <= 0){
-                displayResults();
-            }
-        }, 1000);
+        numberOfRemainingCards -= 2;
+        showGameOverScreenWhenNoCardsRemain();
     }
+
+
+    private void showGameOverScreenWhenNoCardsRemain(){
+        if(numberOfRemainingCards > 0){
+            return;
+        }
+        turnState = TurnState.GAME_OVER;
+        saveScore();
+        showGameOverOnView(1000);
+    }
+
+
+    private void showGameOverOnView(int delay){
+        gameView.displayResults(numberOfTurns, getCurrentRecord(), delay);
+    }
+
+
+    private void saveScore(){
+        int currentRecord = getCurrentRecord();
+        if(numberOfTurns < currentRecord){
+            gamePreferences.saveNewTurnsRecord(numberOfTurns, numberOfCards);
+        }
+    }
+
+
+    private int getCurrentRecord(){
+        return gamePreferences.getCurrentTurnsRecordFromPreferences(numberOfCards);
+    }
+
+
 
 
     private void removeCard(Card card){

@@ -109,8 +109,8 @@ public class GameViewImpl implements GameView {
 
 
     @Override
-    public void displayResults(int numberOfTurns, int currentRecord) {
-        mainActivity.displayResults(numberOfTurns, currentRecord);
+    public void displayResults(int numberOfTurns, int currentRecord, int delay) {
+        mainActivity.displayResults(numberOfTurns, currentRecord, delay);
     }
 
 

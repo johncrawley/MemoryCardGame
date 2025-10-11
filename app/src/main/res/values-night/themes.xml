@@ -8,8 +8,7 @@
         <item name="colorSecondary">@color/teal_200</item>
         <item name="colorSecondaryVariant">@color/teal_200</item>
         <item name="colorOnSecondary">@color/black</item>
-        <!-- Status bar color. -->
-        <!-- Customize your theme here. -->
+
         <item name="colorPrimary">@color/button_tint</item>
         <item name="colorPrimaryDark">@color/status_bar_color</item>
         <item name="status_panel_background_color">@color/panel_background</item>
