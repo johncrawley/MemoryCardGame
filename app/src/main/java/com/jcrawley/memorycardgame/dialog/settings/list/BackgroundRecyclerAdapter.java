@@ -35,7 +35,7 @@ public class BackgroundRecyclerAdapter extends RecyclerView.Adapter<BackgroundRe
                 int position = this.getAbsoluteAdapterPosition();
                 recyclerHelper.deselectPreviouslySelectedView();
                 recyclerHelper.select(v, position);
-                mainActivity.setAndSaveBackground(background.getResourceId(), position);
+                mainActivity.setAndSaveBackground(background.resourceId(), position);
             });
         }
     }
@@ -67,7 +67,7 @@ public class BackgroundRecyclerAdapter extends RecyclerView.Adapter<BackgroundRe
     public void onBindViewHolder(@NonNull BackgroundRecyclerAdapter.BackgroundViewHolder holder, int position){
         Background background = backgrounds.get(position);
         holder.background = background;
-        holder.imageView.setBackground(AppCompatResources.getDrawable(mainActivity, background.getResourceId()));
+        holder.imageView.setBackground(AppCompatResources.getDrawable(mainActivity, background.resourceId()));
         recyclerHelper.selectItem(holder, position);
     }
 

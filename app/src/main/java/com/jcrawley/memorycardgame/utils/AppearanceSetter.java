@@ -46,11 +46,11 @@ public class AppearanceSetter {
 
 
     private static void setSavedBackground(MainActivity mainActivity){
-        GamePreferences gamePreferences = mainActivity.getGamePreferences();
+        var gamePreferences = mainActivity.getGamePreferences();
         List<Background> backgrounds = BackgroundFactory.getAll();
         int savedBgIndex = gamePreferences.getInt(GamePreferences.PREF_NAME_BACKGROUND_INDEX);
         Background savedBackground = backgrounds.get(savedBgIndex);
-        Drawable background = AppCompatResources.getDrawable(mainActivity, savedBackground.getResourceId());
+        Drawable background = AppCompatResources.getDrawable(mainActivity, savedBackground.resourceId());
         mainActivity.setBackground(background);
     }
 
