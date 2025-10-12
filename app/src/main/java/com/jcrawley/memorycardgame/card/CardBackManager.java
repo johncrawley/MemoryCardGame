@@ -15,7 +15,6 @@ public class CardBackManager implements CardTypeSetter {
     private final BitmapLoader bitmapLoader;
     private List<CardType> usableCardBackTypes;
     private List<CardType> selectableCardBackTypes;
-    private boolean isRandomEnabled;
     private final Random random;
 
     public CardBackManager(MainViewModel viewModel, BitmapLoader bitmapLoader) {
@@ -23,6 +22,7 @@ public class CardBackManager implements CardTypeSetter {
         this.bitmapLoader = bitmapLoader;
         setupCardBackTypes();
         random = new Random(System.currentTimeMillis());
+
     }
 
 
@@ -53,43 +53,63 @@ public class CardBackManager implements CardTypeSetter {
 
 
     public void setCardType(int savedTypeIndex){
+       if(viewModel.isCardBackInitialised){
+           return;
+       }
+       viewModel.isCardBackInitialised = true;
        List<CardType> cardBackTypes = getSelectableCardBackTypes();
        setCardType(cardBackTypes.get(savedTypeIndex));
     }
 
 
+    public boolean isRandomEnabled(){
+        return viewModel.isRandomCardBackEnabled;
+    }
+
+
     public void setCardType(CardType cardType){
         if(cardType == CardType.BACK_RANDOM){
-            if(viewModel.previouslySelectedCardTypeBack != CardType.BACK_RANDOM) {
-                setRandomCardBackType();
-                viewModel.previouslySelectedCardTypeBack  = CardType.BACK_RANDOM;
-            }
-            isRandomEnabled = true;
+            handleRandomSelection();
             return;
         }
         viewModel.currentCardBackResourceId = cardType.getResourceId();
         viewModel.previouslySelectedCardTypeBack  = cardType;
-        isRandomEnabled = false;
+        viewModel.isRandomCardBackEnabled = false;
     }
 
 
-    public void refreshCardBackType(){
-        if(!isRandomEnabled){
-            return;
+    public void chooseNewRandomBack(){
+        if(isRandomEnabled()){
+            setRandomCardBackType();
         }
-        setRandomCardBackType();
+    }
+
+
+    private void handleRandomSelection(){
+        if(viewModel.previouslySelectedCardTypeBack != CardType.BACK_RANDOM) {
+            setRandomCardBackType();
+            viewModel.previouslySelectedCardTypeBack  = CardType.BACK_RANDOM;
+        }
+        viewModel.isRandomCardBackEnabled = true;
     }
 
 
     private void setRandomCardBackType(){
-        var randomCardType = viewModel.previouslySelectedCardTypeBack ;
-        while(randomCardType == viewModel.previouslySelectedCardTypeBack ){
-            int randomIndex = random.nextInt(usableCardBackTypes.size());
-           randomCardType = usableCardBackTypes.get(randomIndex);
+        CardType randomCardBack;
+        do{
+            randomCardBack = getRandomCardBack();
         }
-        viewModel.currentCardBackResourceId = randomCardType.getResourceId();
+        while(randomCardBack == viewModel.previouslySelectedCardTypeBack);
+
+        viewModel.previouslySelectedCardTypeBack  = randomCardBack;
+        viewModel.currentCardBackResourceId = randomCardBack.getResourceId();
     }
 
+
+    private CardType getRandomCardBack(){
+        int randomIndex = random.nextInt(usableCardBackTypes.size());
+        return usableCardBackTypes.get(randomIndex);
+    }
 
     public void setCardBackOf(ImageView imageView){
         bitmapLoader.setCardBack(imageView, viewModel.currentCardBackResourceId);

@@ -11,7 +11,8 @@ import java.util.Map;
 import androidx.lifecycle.ViewModel;
 
 public class MainViewModel extends ViewModel {
-
+    public boolean isCardBackInitialised = false;
+    public boolean isRandomCardBackEnabled = false;
     public Map<Integer, Bitmap> cardFaceMap, cardBackMap;
     public CardFaceImages cardFaceImages = new CardFaceImages();
     public CardType previouslySelectedCardTypeBack = CardType.BACK_KALEIDOSCOPE_RED;

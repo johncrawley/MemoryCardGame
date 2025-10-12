@@ -6,7 +6,6 @@ import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,7 +17,6 @@ import com.jcrawley.memorycardgame.R;
 public class OptionsDialogFragment extends DialogFragment {
 
     public static OptionsDialogFragment newInstance() {
-        System.out.println("^^^ OptionsDialogFragment entered newInstance()");
         return new OptionsDialogFragment();
     }
 
@@ -33,8 +31,6 @@ public class OptionsDialogFragment extends DialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setupButtons(view);
-        //DialogFragmentUtils.setScrollViewHeight(this, view, R.id.aboutInfoScrollView, R.id.aboutInfoLayout);
-        //DialogFragmentUtils.setTransparentBackground(this);
     }
 
 
@@ -58,7 +54,7 @@ public class OptionsDialogFragment extends DialogFragment {
 
 
     private void startNewGame(){
-       MainActivity mainActivity = (MainActivity) getActivity();
+       var mainActivity = (MainActivity) getActivity();
        if(mainActivity != null){
            mainActivity.showNewGameDialog();
            dismissAfterDelay();
@@ -71,13 +67,11 @@ public class OptionsDialogFragment extends DialogFragment {
     }
 
 
-    public static Button setupButton(View parentView, int id, Runnable onClickAction){
-        Button button = parentView.findViewById(id);
-        if(button == null){
-            return null;
+    public static void setupButton(View parentView, int id, Runnable onClickAction){
+        var button = parentView.findViewById(id);
+        if(button != null){
+            button.setOnClickListener((View v)-> onClickAction.run());
         }
-        button.setOnClickListener((View v)-> onClickAction.run());
-        return button;
     }
 
 }

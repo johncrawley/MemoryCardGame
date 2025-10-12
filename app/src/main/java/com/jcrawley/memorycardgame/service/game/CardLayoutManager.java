@@ -25,7 +25,6 @@ public class CardLayoutManager {
     private View.OnClickListener onClickListener;
     private int numberOfCards;
     private int cardsAdded;
-   // private final Game game;
     private List<ImageView> cardViews;
     private boolean hasRun = false;
     private final ViewGroup parentLayout;
@@ -40,13 +39,11 @@ public class CardLayoutManager {
     public CardLayoutManager(MainActivity activity){
         this.activity = activity;
         this.parentLayout = activity.getCardLayout();
-       // this.viewModel = activity.getViewModel();
         this.cardBackManager = activity.getCardBackManager();
     }
 
 
     public void init(Consumer<Integer> clickConsumer){
-        log("entered init()");
         this.clickConsumer = clickConsumer;
         createClickListener();
     }
@@ -64,7 +61,7 @@ public class CardLayoutManager {
         parentLayout.removeAllViewsInLayout();
         this.numberOfCards = cards.size();
         cardViews = new ArrayList<>(numberOfCards);
-        addCardViews( true);
+        addCardViews();
         setVisibilityOnCardViews(cards, isVisible);
     }
 
@@ -79,12 +76,9 @@ public class CardLayoutManager {
     }
 
 
-    public void addCardViews(boolean shouldCardBackTypeBeRefreshed){
+    private void addCardViews(){
         if(hasRun){
             return;
-        }
-        if(shouldCardBackTypeBeRefreshed) {
-            cardBackManager.refreshCardBackType();
         }
         hasRun = true;
         cardsAdded = 0;
@@ -118,9 +112,9 @@ public class CardLayoutManager {
         if(cardArea < 0){
             cardArea = 900;
         }
-        cardWidth = (int)Math.floor(Math.sqrt(cardArea)) + 10;
+        cardWidth = (int) Math.floor(Math.sqrt(cardArea)) + 10;
         cardWidth -= reductionOffset;
-        cardHeight = (int)(cardWidth * 1.5);
+        cardHeight = (int) (cardWidth * 1.5);
 
         numberOfCardsPerRow = parentWidth / (Math.max(50, cardWidth));
         numberOfRows = parentHeight / (Math.max(50, cardHeight));
@@ -164,7 +158,6 @@ public class CardLayoutManager {
             }
         }
         return rowLayout;
-        //parentLayout.addView(rowLayout);
     }
 
 
@@ -195,15 +188,9 @@ public class CardLayoutManager {
     private void createClickListener(){
         onClickListener = view -> {
             if(view.getVisibility() == VISIBLE){
-                log("createClickListener() card view clicked!");
                 clickConsumer.accept((int)view.getTag(R.string.position_tag));
-                log("createClickListener() click consumer accepted!");
             }
         };
-    }
-
-    private void log(String msg){
-        System.out.println("^^^ CardLayoutManager: " + msg);
     }
 
 }

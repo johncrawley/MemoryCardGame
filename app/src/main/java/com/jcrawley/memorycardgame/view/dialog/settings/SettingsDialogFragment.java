@@ -18,7 +18,6 @@ import com.jcrawley.memorycardgame.MainActivity;
 import com.jcrawley.memorycardgame.R;
 import com.jcrawley.memorycardgame.view.background.BackgroundFactory;
 import com.jcrawley.memorycardgame.card.CardBackManager;
-import com.jcrawley.memorycardgame.card.CardTypeSetter;
 import com.jcrawley.memorycardgame.card.CardType;
 import com.jcrawley.memorycardgame.view.dialog.settings.list.BackgroundRecyclerAdapter;
 import com.jcrawley.memorycardgame.view.dialog.settings.list.CardTypeRecyclerAdapter;
@@ -26,7 +25,6 @@ import com.jcrawley.memorycardgame.view.utils.BitmapLoader;
 import com.jcrawley.memorycardgame.view.GameView;
 
 public class SettingsDialogFragment extends DialogFragment {
-
 
     private BitmapLoader bitmapLoader;
     private GameView gameView;
@@ -47,8 +45,6 @@ public class SettingsDialogFragment extends DialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //DialogFragmentUtils.setScrollViewHeight(this, view, R.id.aboutInfoScrollView, R.id.aboutInfoLayout);
-        //DialogFragmentUtils.setTransparentBackground(this);
         setDialogDimensions(view);
         assignFields();
         setupFaceTypesRecyclerView(view);
@@ -102,41 +98,50 @@ public class SettingsDialogFragment extends DialogFragment {
     }
 
 
-    private void setupBackTypesRecyclerView(View parentView){
-        ViewGroup settingView = parentView.findViewById(R.id.cardBacksSettingInclude);
-        setupSettingsSectionTitle(settingView, R.string.card_back_style_settings);
-        RecyclerView cardBacksRecyclerView = getRecyclerViewFrom(settingView);
-
-        CardTypeRecyclerAdapter cardTypeRecyclerAdapter = new CardTypeRecyclerAdapter(cardBackManager.getSelectableCardBackTypes(),
-                bitmapLoader,
-                cardBackManager,
-                ()->{
-                    gameView.switchBacksOnFaceDownCards();
-                    bitmapLoader.clearCardBackCache();
-                } );
-        cardTypeRecyclerAdapter.init(cardBacksRecyclerView, getContext(), gamePreferences, GamePreferences.PREF_NAME_CARD_BACK_INDEX);
-    }
-
-
     private void setupFaceTypesRecyclerView(View parentView){
-        MainActivity mainActivity = (MainActivity) getActivity();
+        var mainActivity = (MainActivity) getActivity();
         if(mainActivity == null){
             return;
         }
-        ViewGroup settingView = parentView.findViewById(R.id.cardFacesSettingInclude);
-        setupSettingsSectionTitle(settingView, R.string.card_face_style_settings);
-        RecyclerView cardFacesRecyclerView = getRecyclerViewFrom(settingView);
 
-        CardTypeSetter cardTypeSetter = mainActivity.getCardTypeSetter();
-        CardTypeRecyclerAdapter cardTypeRecyclerAdapter = new CardTypeRecyclerAdapter(CardType.getCardFaces(),
+        var adapter = new CardTypeRecyclerAdapter(CardType.getCardFaces(),
                 bitmapLoader,
-                cardTypeSetter,
+                mainActivity.getCardTypeSetter(),
                 ()-> bitmapLoader.clearCardFaceCache());
 
-        cardTypeRecyclerAdapter.init(cardFacesRecyclerView,
+        initRecyclerAdapter(parentView,
+                adapter,
+                R.id.cardFacesSettingInclude,
+                R.string.card_face_style_settings,
+                GamePreferences.PREF_NAME_CARD_FACE_INDEX);
+    }
+
+
+    private void setupBackTypesRecyclerView(View parentView){
+        var adapter = new CardTypeRecyclerAdapter(cardBackManager.getSelectableCardBackTypes(),
+                bitmapLoader,
+                cardBackManager,
+                ()-> {
+                    gameView.switchBacksOnFaceDownCards();
+                    bitmapLoader.clearCardBackCache();
+                });
+
+        initRecyclerAdapter(parentView,
+                adapter,
+                R.id.cardBacksSettingInclude,
+                R.string.card_back_style_settings,
+                GamePreferences.PREF_NAME_CARD_BACK_INDEX);
+    }
+
+
+    private void initRecyclerAdapter(View parentView, CardTypeRecyclerAdapter adapter, int settingsViewId, int titleId, String prefName){
+        ViewGroup settingView = parentView.findViewById(settingsViewId);
+        setupSettingsSectionTitle(settingView, titleId);
+        adapter.init(
+                getRecyclerViewFrom(settingView),
                 getContext(),
                 gamePreferences,
-                GamePreferences.PREF_NAME_CARD_FACE_INDEX);
+                prefName);
     }
 
 

@@ -29,12 +29,12 @@ public class AppearanceSetter {
         List<CardType> cardFaces = CardType.getCardFaces();
         int savedIndex = getSavedPosition(gamePreferences, GamePreferences.PREF_NAME_CARD_FACE_INDEX, cardFaces);
         viewModel.cardFaceImages.setCardType(cardFaces.get(savedIndex));
-
     }
 
 
     private static void setSavedCardBackType(CardBackManager cardBackManager, GamePreferences gamePreferences){
-        int savedIndex = getSavedPosition(gamePreferences, GamePreferences.PREF_NAME_CARD_BACK_INDEX,
+        int savedIndex = getSavedPosition(gamePreferences,
+                GamePreferences.PREF_NAME_CARD_BACK_INDEX,
                 cardBackManager.getSelectableCardBackTypes());
         cardBackManager.setCardType(savedIndex);
     }

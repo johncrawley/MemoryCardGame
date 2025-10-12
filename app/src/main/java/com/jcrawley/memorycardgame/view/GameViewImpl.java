@@ -64,7 +64,7 @@ public class GameViewImpl implements GameView {
         cardLayoutManager.addViewsFor(cards, clickConsumer, isVisible);
 
         for(int i = 0; i < numberOfCards; i++){
-            Card card = cards.get(i);
+            var card = cards.get(i);
             ImageView cardView = cardLayoutManager.getImageViewAt(i);
             if(card.isFaceDown()){
                 setFaceDown(cardView);
@@ -148,7 +148,17 @@ public class GameViewImpl implements GameView {
         addCardViews(cards, onClickConsumer, false);
         int initialDelay = mainActivity.getResources().getInteger(R.integer.swipe_in_cards_initial_delay);
         setAllCardsFaceDown();
+        log("swipeInCardsAfterDelay() about to handleRandomCardAssignment()");
+        handleRandomCardAssignment();
         new Handler(Looper.getMainLooper()).postDelayed(this::swipeInCards, initialDelay);
+    }
+
+
+    private void handleRandomCardAssignment(){
+        cardBackManager.chooseNewRandomBack();
+        if(cardBackManager.isRandomEnabled()){
+            switchBacksOnFaceDownCards();
+        }
     }
 
 

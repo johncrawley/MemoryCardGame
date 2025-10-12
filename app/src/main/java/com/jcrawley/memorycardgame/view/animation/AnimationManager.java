@@ -26,19 +26,11 @@ public class AnimationManager {
     private void setupAnimations(MainActivity mainActivity, int screenHeight){
         context = mainActivity.getApplicationContext();
         this.screenHeight = screenHeight;
-        long startTime = System.currentTimeMillis();
         resultsDropInAnimation = createDropInAnimation(mainActivity::onResultsDialogShown);
         resultsDropOutAnimation = createDropOutAnimation(mainActivity::onResultsDismissed);
         newGameDropInAnimation = createDropInAnimation(()->{});
         newGameDropOutAnimation = createDropOutAnimation(mainActivity::onNewGameScreenDismissed);
         cardsFadeOutAnimation = AnimationHelper.createFadeOutAnimationForCards(context, mainActivity::onCardsFadedOut);
-        long duration = System.currentTimeMillis() - startTime;
-        System.out.println("^^^ setupAnimations time: " + duration);
-    }
-
-
-    private void log(String msg){
-        System.out.println("^^^ AnimationManager: " + msg);
     }
 
 
@@ -58,8 +50,6 @@ public class AnimationManager {
 
 
     public Animation getNewGameDropOutAnimation(){
-        boolean isNull = newGameDropOutAnimation == null;
-        log("entered getNewGameDropOutAnimation() is null: " + isNull);
         return newGameDropOutAnimation;
     }
 
