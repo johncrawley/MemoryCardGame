@@ -3,6 +3,8 @@ package com.jcrawley.memorycardgame.utils;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import com.jcrawley.memorycardgame.view.utils.GameUtils;
+
 import org.junit.Test;
 
 import java.util.ArrayList;

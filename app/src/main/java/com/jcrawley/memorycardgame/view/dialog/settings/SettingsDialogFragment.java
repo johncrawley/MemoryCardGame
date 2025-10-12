@@ -1,4 +1,4 @@
-package com.jcrawley.memorycardgame.dialog.settings;
+package com.jcrawley.memorycardgame.view.dialog.settings;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,16 +13,16 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.jcrawley.memorycardgame.GamePreferences;
+import com.jcrawley.memorycardgame.view.GamePreferences;
 import com.jcrawley.memorycardgame.MainActivity;
 import com.jcrawley.memorycardgame.R;
-import com.jcrawley.memorycardgame.background.BackgroundFactory;
+import com.jcrawley.memorycardgame.view.background.BackgroundFactory;
 import com.jcrawley.memorycardgame.card.CardBackManager;
 import com.jcrawley.memorycardgame.card.CardTypeSetter;
-import com.jcrawley.memorycardgame.card.cardType.CardType;
-import com.jcrawley.memorycardgame.dialog.settings.list.BackgroundRecyclerAdapter;
-import com.jcrawley.memorycardgame.dialog.settings.list.CardTypeRecyclerAdapter;
-import com.jcrawley.memorycardgame.utils.BitmapLoader;
+import com.jcrawley.memorycardgame.card.CardType;
+import com.jcrawley.memorycardgame.view.dialog.settings.list.BackgroundRecyclerAdapter;
+import com.jcrawley.memorycardgame.view.dialog.settings.list.CardTypeRecyclerAdapter;
+import com.jcrawley.memorycardgame.view.utils.BitmapLoader;
 import com.jcrawley.memorycardgame.view.GameView;
 
 public class SettingsDialogFragment extends DialogFragment {

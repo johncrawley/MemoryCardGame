@@ -1,4 +1,4 @@
-package com.jcrawley.memorycardgame;
+package com.jcrawley.memorycardgame.view;
 
 import android.content.Context;
 import android.content.SharedPreferences;

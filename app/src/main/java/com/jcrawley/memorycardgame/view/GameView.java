@@ -1,8 +1,8 @@
 package com.jcrawley.memorycardgame.view;
 
 import com.jcrawley.memorycardgame.card.Card;
-import com.jcrawley.memorycardgame.game.CardAnimator;
-import com.jcrawley.memorycardgame.game.CardLayoutManager;
+import com.jcrawley.memorycardgame.view.animation.CardAnimator;
+import com.jcrawley.memorycardgame.service.game.CardLayoutManager;
 
 import java.util.List;
 import java.util.function.Consumer;

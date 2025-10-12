@@ -1,4 +1,4 @@
-package com.jcrawley.memorycardgame.dialog;
+package com.jcrawley.memorycardgame.view.dialog;
 
 import android.os.Bundle;
 import android.os.Handler;

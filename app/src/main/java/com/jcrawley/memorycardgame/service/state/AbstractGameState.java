@@ -1,6 +1,6 @@
 package com.jcrawley.memorycardgame.service.state;
 
-import com.jcrawley.memorycardgame.service.Game;
+import com.jcrawley.memorycardgame.service.game.Game;
 
 public abstract class AbstractGameState {
 

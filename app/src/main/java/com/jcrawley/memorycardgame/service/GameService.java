@@ -6,8 +6,9 @@ import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 
-import com.jcrawley.memorycardgame.GamePreferences;
+import com.jcrawley.memorycardgame.view.GamePreferences;
 import com.jcrawley.memorycardgame.MainActivity;
+import com.jcrawley.memorycardgame.service.game.Game;
 
 public class GameService extends Service {
     IBinder binder = new LocalBinder();

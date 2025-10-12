@@ -1,7 +1,6 @@
-package com.jcrawley.memorycardgame.service;
+package com.jcrawley.memorycardgame.service.game;
 
-import com.jcrawley.memorycardgame.game.TurnState;
-import com.jcrawley.memorycardgame.GamePreferences;
+import com.jcrawley.memorycardgame.view.GamePreferences;
 import com.jcrawley.memorycardgame.card.Card;
 import com.jcrawley.memorycardgame.card.CardFactory;
 import com.jcrawley.memorycardgame.view.GameView;

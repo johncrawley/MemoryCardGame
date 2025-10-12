@@ -1,17 +1,16 @@
 package com.jcrawley.memorycardgame.card;
 
 import com.jcrawley.memorycardgame.R;
-import com.jcrawley.memorycardgame.card.cardType.CardType;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class CardDeckImages implements CardTypeSetter{
+public class CardFaceImages implements CardTypeSetter{
 
     private final Map<CardType, Map<String, Integer>> decksMap;
     private Map<String, Integer> currentDeckMap;
 
-    public CardDeckImages(){
+    public CardFaceImages(){
         decksMap = new HashMap<>();
         addStandardDeck();
         addEasyReadDeck();
@@ -34,6 +33,7 @@ public class CardDeckImages implements CardTypeSetter{
     public void setCardType(CardType cardType){
         currentDeckMap = decksMap.get(cardType);
     }
+
 
     private void addStandardDeck(){
         Map<String, Integer> deckMap = new HashMap<>();

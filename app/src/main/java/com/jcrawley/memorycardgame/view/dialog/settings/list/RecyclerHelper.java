@@ -1,4 +1,4 @@
-package com.jcrawley.memorycardgame.dialog.settings.list;
+package com.jcrawley.memorycardgame.view.dialog.settings.list;
 
 import android.content.Context;
 import android.graphics.Color;

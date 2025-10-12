@@ -1,4 +1,4 @@
-package com.jcrawley.memorycardgame.game;
+package com.jcrawley.memorycardgame.view.animation;
 
 import android.content.Context;
 import android.os.Handler;
@@ -94,8 +94,6 @@ public class CardAnimator {
             card.startAnimation(animation);
         });
     }
-
-
 
 
     public int getInt(int resId){

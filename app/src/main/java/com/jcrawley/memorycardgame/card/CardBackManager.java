@@ -2,9 +2,8 @@ package com.jcrawley.memorycardgame.card;
 
 import android.widget.ImageView;
 
-import com.jcrawley.memorycardgame.utils.BitmapLoader;
-import com.jcrawley.memorycardgame.MainViewModel;
-import com.jcrawley.memorycardgame.card.cardType.CardType;
+import com.jcrawley.memorycardgame.view.utils.BitmapLoader;
+import com.jcrawley.memorycardgame.view.MainViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,7 +82,7 @@ public class CardBackManager implements CardTypeSetter {
 
 
     private void setRandomCardBackType(){
-        CardType randomCardType = viewModel.previouslySelectedCardTypeBack ;
+        var randomCardType = viewModel.previouslySelectedCardTypeBack ;
         while(randomCardType == viewModel.previouslySelectedCardTypeBack ){
             int randomIndex = random.nextInt(usableCardBackTypes.size());
            randomCardType = usableCardBackTypes.get(randomIndex);

@@ -1,4 +1,4 @@
-package com.jcrawley.memorycardgame.animation;
+package com.jcrawley.memorycardgame.view.animation;
 
 
 import android.content.Context;

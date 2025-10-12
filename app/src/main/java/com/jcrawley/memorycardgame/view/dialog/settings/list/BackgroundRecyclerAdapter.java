@@ -1,4 +1,4 @@
-package com.jcrawley.memorycardgame.dialog.settings.list;
+package com.jcrawley.memorycardgame.view.dialog.settings.list;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -6,7 +6,7 @@ import android.widget.ImageView;
 
 import com.jcrawley.memorycardgame.MainActivity;
 import com.jcrawley.memorycardgame.R;
-import com.jcrawley.memorycardgame.background.Background;
+import com.jcrawley.memorycardgame.view.background.Background;
 
 import java.util.ArrayList;
 import java.util.List;

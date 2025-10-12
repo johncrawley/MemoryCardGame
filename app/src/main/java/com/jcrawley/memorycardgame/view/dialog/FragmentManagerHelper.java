@@ -1,4 +1,4 @@
-package com.jcrawley.memorycardgame.dialog;
+package com.jcrawley.memorycardgame.view.dialog;
 
 
 import android.os.Bundle;
@@ -10,7 +10,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.jcrawley.memorycardgame.MainActivity;
-import com.jcrawley.memorycardgame.dialog.settings.SettingsDialogFragment;
+import com.jcrawley.memorycardgame.view.dialog.settings.SettingsDialogFragment;
 
 
 public class FragmentManagerHelper {

@@ -10,12 +10,12 @@ import com.jcrawley.memorycardgame.MainActivity;
 import com.jcrawley.memorycardgame.R;
 import com.jcrawley.memorycardgame.card.Card;
 import com.jcrawley.memorycardgame.card.CardBackManager;
-import com.jcrawley.memorycardgame.card.CardDeckImages;
-import com.jcrawley.memorycardgame.game.CardAnimator;
-import com.jcrawley.memorycardgame.game.CardLayoutManager;
-import com.jcrawley.memorycardgame.service.Game;
+import com.jcrawley.memorycardgame.card.CardFaceImages;
+import com.jcrawley.memorycardgame.view.animation.CardAnimator;
+import com.jcrawley.memorycardgame.service.game.CardLayoutManager;
+import com.jcrawley.memorycardgame.service.game.Game;
 import com.jcrawley.memorycardgame.service.GameService;
-import com.jcrawley.memorycardgame.utils.BitmapLoader;
+import com.jcrawley.memorycardgame.view.utils.BitmapLoader;
 
 import java.util.List;
 import java.util.Optional;
@@ -35,7 +35,7 @@ public class GameViewImpl implements GameView {
     private final ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
     private CardAnimator cardAnimator;
     private final CardBackManager cardBackManager;
-    public CardDeckImages cardDeckImages = new CardDeckImages();
+    public CardFaceImages cardFaceImages = new CardFaceImages();
     private ScheduledFuture <?> flipBackFuture;
 
 
@@ -70,7 +70,7 @@ public class GameViewImpl implements GameView {
                 setFaceDown(cardView);
             }
             else{
-                setFaceBitmapFor(cardView, card);
+                setBitmapForCardFace(cardView, card);
             }
         }
     }
@@ -90,7 +90,7 @@ public class GameViewImpl implements GameView {
             getGame().ifPresent(game -> game.checkCards(isSecondCard));
         });
         cardView.clearAnimation();
-        setFaceBitmapFor(cardView, card);
+        setBitmapForCardFace(cardView, card);
         animateCardFlip(cardView, 2, fullWayFlippedListener);
     }
 
@@ -98,7 +98,7 @@ public class GameViewImpl implements GameView {
     @Override
     public void quickFlip(Card card) {
         ImageView cardView = getImageViewFor(card);
-        setFaceBitmapFor(cardView, card);
+        setBitmapForCardFace(cardView, card);
         new Handler(Looper.getMainLooper()).post(() ->
             cardView.animate()
                     .rotationY(180)
@@ -210,7 +210,7 @@ public class GameViewImpl implements GameView {
 
 
     private void onHalfWayFlippedBack(ImageView cardView, Card card, Animator.AnimatorListener fullWayFlippedBackListener){
-        setFaceBitmapFor(cardView, card);
+        setBitmapForCardFace(cardView, card);
         setFaceDown(cardView);
         animateCardFlip(cardView, 0, fullWayFlippedBackListener);
     }
@@ -259,8 +259,8 @@ public class GameViewImpl implements GameView {
     }
 
 
-    private void setFaceBitmapFor(ImageView cardView, Card card){
-        int imageId = cardDeckImages.getImageIdFor(card);
+    private void setBitmapForCardFace(ImageView cardView, Card card){
+        int imageId = cardFaceImages.getImageIdFor(card);
         if(imageId == -1){
             return;
         }

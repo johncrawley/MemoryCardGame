@@ -1,11 +1,11 @@
-package com.jcrawley.memorycardgame.utils;
+package com.jcrawley.memorycardgame.view.utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.widget.ImageView;
 
-import com.jcrawley.memorycardgame.MainViewModel;
+import com.jcrawley.memorycardgame.view.MainViewModel;
 
 import java.util.HashMap;
 import java.util.Map;

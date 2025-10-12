@@ -1,4 +1,4 @@
-package com.jcrawley.memorycardgame.card.cardType;
+package com.jcrawley.memorycardgame.card;
 
 
 import com.jcrawley.memorycardgame.R;
@@ -12,6 +12,7 @@ public enum CardType {
     SIMPLE(R.drawable.card_face_simple, false),
     CAT(R.drawable.card_face_cat_2, false),
     DOG(R.drawable.card_face_dog_2, false),
+
     BACK_KALEIDOSCOPE_RED(R.drawable.card_back_kaleidoscope_red),
     BACK_KALEIDOSCOPE_BLUE(R.drawable.card_back_kaleidoscope_blue),
     BACK_KALEIDOSCOPE_GREEN(R.drawable.card_back_kaleidoscope_green),

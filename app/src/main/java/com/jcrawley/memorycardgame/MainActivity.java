@@ -30,18 +30,20 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.jcrawley.memorycardgame.animation.AnimationHelper;
-import com.jcrawley.memorycardgame.animation.AnimationManager;
+import com.jcrawley.memorycardgame.view.GamePreferences;
+import com.jcrawley.memorycardgame.view.MainViewModel;
+import com.jcrawley.memorycardgame.view.animation.AnimationHelper;
+import com.jcrawley.memorycardgame.view.animation.AnimationManager;
 import com.jcrawley.memorycardgame.card.CardTypeSetter;
 import com.jcrawley.memorycardgame.card.DeckSize;
 import com.jcrawley.memorycardgame.card.CardBackManager;
-import com.jcrawley.memorycardgame.game.CardAnimator;
-import com.jcrawley.memorycardgame.game.CardLayoutManager;
-import com.jcrawley.memorycardgame.service.Game;
+import com.jcrawley.memorycardgame.view.animation.CardAnimator;
+import com.jcrawley.memorycardgame.service.game.CardLayoutManager;
+import com.jcrawley.memorycardgame.service.game.Game;
 import com.jcrawley.memorycardgame.service.GameService;
-import com.jcrawley.memorycardgame.utils.AppearanceSetter;
-import com.jcrawley.memorycardgame.utils.BitmapLoader;
-import com.jcrawley.memorycardgame.dialog.FragmentManagerHelper;
+import com.jcrawley.memorycardgame.view.utils.AppearanceSetter;
+import com.jcrawley.memorycardgame.view.utils.BitmapLoader;
+import com.jcrawley.memorycardgame.view.dialog.FragmentManagerHelper;
 import com.jcrawley.memorycardgame.view.GameViewImpl;
 import com.jcrawley.memorycardgame.view.GameView;
 
@@ -147,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public CardTypeSetter getCardTypeSetter(){
-        return viewModel.cardDeckImages;
+        return viewModel.cardFaceImages;
     }
 
 

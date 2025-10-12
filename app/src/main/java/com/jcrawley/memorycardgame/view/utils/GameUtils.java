@@ -1,4 +1,4 @@
-package com.jcrawley.memorycardgame.utils;
+package com.jcrawley.memorycardgame.view.utils;
 
 import java.util.List;
 

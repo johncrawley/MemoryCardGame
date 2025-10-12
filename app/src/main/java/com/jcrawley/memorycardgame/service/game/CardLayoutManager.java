@@ -1,4 +1,4 @@
-package com.jcrawley.memorycardgame.game;
+package com.jcrawley.memorycardgame.service.game;
 
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;

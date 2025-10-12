@@ -1,16 +1,16 @@
-package com.jcrawley.memorycardgame.utils;
+package com.jcrawley.memorycardgame.view.utils;
 
 import android.graphics.drawable.Drawable;
 
 import androidx.appcompat.content.res.AppCompatResources;
 
-import com.jcrawley.memorycardgame.GamePreferences;
+import com.jcrawley.memorycardgame.view.GamePreferences;
 import com.jcrawley.memorycardgame.MainActivity;
-import com.jcrawley.memorycardgame.MainViewModel;
-import com.jcrawley.memorycardgame.background.Background;
-import com.jcrawley.memorycardgame.background.BackgroundFactory;
+import com.jcrawley.memorycardgame.view.MainViewModel;
+import com.jcrawley.memorycardgame.view.background.Background;
+import com.jcrawley.memorycardgame.view.background.BackgroundFactory;
 import com.jcrawley.memorycardgame.card.CardBackManager;
-import com.jcrawley.memorycardgame.card.cardType.CardType;
+import com.jcrawley.memorycardgame.card.CardType;
 
 import java.util.List;
 
@@ -28,7 +28,7 @@ public class AppearanceSetter {
     private static void setSavedCardFaceType(GamePreferences gamePreferences, MainViewModel viewModel){
         List<CardType> cardFaces = CardType.getCardFaces();
         int savedIndex = getSavedPosition(gamePreferences, GamePreferences.PREF_NAME_CARD_FACE_INDEX, cardFaces);
-        viewModel.cardDeckImages.setCardType(cardFaces.get(savedIndex));
+        viewModel.cardFaceImages.setCardType(cardFaces.get(savedIndex));
 
     }
 

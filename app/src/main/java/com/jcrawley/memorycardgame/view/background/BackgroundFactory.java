@@ -1,4 +1,4 @@
-package com.jcrawley.memorycardgame.background;
+package com.jcrawley.memorycardgame.view.background;
 
 import com.jcrawley.memorycardgame.R;
 
