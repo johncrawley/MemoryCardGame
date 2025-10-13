@@ -35,12 +35,13 @@ public class GameViewImpl implements GameView {
     private final ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
     private CardAnimator cardAnimator;
     private final CardBackManager cardBackManager;
-    public CardFaceImages cardFaceImages = new CardFaceImages();
     private ScheduledFuture <?> flipBackFuture;
+    private final CardFaceImages cardFaceImages;
 
 
-    public GameViewImpl(MainActivity mainActivity){
+    public GameViewImpl(MainActivity mainActivity, CardFaceImages cardFaceImages){
         this.mainActivity = mainActivity;
+        this.cardFaceImages = cardFaceImages;
         bitmapLoader = mainActivity.getBitmapLoader();
         this.cardBackManager = mainActivity.getCardBackManager();
     }

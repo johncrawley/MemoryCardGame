@@ -94,15 +94,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initViewModel();
         setupInsetPadding();
         initLayouts();
-        viewModel  = new ViewModelProvider(this).get(MainViewModel.class);
         initHelperClasses();
-        gameView = new GameViewImpl(MainActivity.this);
+        initGameView();
         setupOptionsButton();
         setupGameService();
         initBackgroundClickListener();
         AppearanceSetter.setSavedAppearance(MainActivity.this, cardBackManager, viewModel);
+    }
+
+
+    private void initGameView(){
+        gameView = new GameViewImpl(MainActivity.this, viewModel.cardFaceImages);
     }
 
 
@@ -112,6 +117,16 @@ public class MainActivity extends AppCompatActivity {
         cardBackManager = new CardBackManager(viewModel, bitmapLoader);
         cardLayoutManager = new CardLayoutManager(MainActivity.this);
         cardAnimator = new CardAnimator(screenWidth, getApplicationContext());
+    }
+
+
+    private void initViewModel(){
+        viewModel  = new ViewModelProvider(this).get(MainViewModel.class);
+    }
+
+
+    public MainViewModel getViewModel(){
+        return viewModel;
     }
 
 
@@ -196,7 +211,6 @@ public class MainActivity extends AppCompatActivity {
                 gameView.init(cardLayoutManager, cardAnimator);
             }});
     }
-
 
 
     private void initBackgroundClickListener(){

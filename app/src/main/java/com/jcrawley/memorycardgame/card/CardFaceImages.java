@@ -179,6 +179,7 @@ public class CardFaceImages implements CardTypeSetter{
         decksMap.put(CardType.CAT, addForAllSuits(drawableMap));
     }
 
+
     private void addDogDeck(){
         Map<Rank, Integer> drawableMap = new HashMap<>();
         drawableMap.put(Rank.TWO,    R.drawable.card_face_dog_2);

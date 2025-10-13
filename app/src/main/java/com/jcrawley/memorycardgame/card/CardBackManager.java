@@ -53,12 +53,11 @@ public class CardBackManager implements CardTypeSetter {
 
 
     public void setCardType(int savedTypeIndex){
-       if(viewModel.isCardBackInitialised){
-           return;
+       if(!viewModel.isCardBackInitialised){
+           viewModel.isCardBackInitialised = true;
+           List<CardType> cardBackTypes = getSelectableCardBackTypes();
+           setCardType(cardBackTypes.get(savedTypeIndex));
        }
-       viewModel.isCardBackInitialised = true;
-       List<CardType> cardBackTypes = getSelectableCardBackTypes();
-       setCardType(cardBackTypes.get(savedTypeIndex));
     }
 
 

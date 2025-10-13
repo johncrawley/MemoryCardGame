@@ -3,8 +3,9 @@ package com.jcrawley.memorycardgame.card;
 
 import com.jcrawley.memorycardgame.R;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public enum CardType {
 
@@ -71,14 +72,11 @@ public enum CardType {
 
 
    public static List<CardType> getCardFaces(){
-        List<CardType> cardFaceTypes = new ArrayList<>();
-        for(CardType cardType : CardType.values()){
-            if(!cardType.isCardBack()){
-                cardFaceTypes.add(cardType);
-            }
-        }
-        return cardFaceTypes;
+        return Arrays.stream(CardType.values())
+                .filter(ct -> !ct.isCardBack())
+                .collect(Collectors.toList());
     }
+
 
     public int getResourceId(){
         return resourceId;

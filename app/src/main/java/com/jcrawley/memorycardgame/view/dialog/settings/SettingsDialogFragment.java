@@ -103,7 +103,6 @@ public class SettingsDialogFragment extends DialogFragment {
         if(mainActivity == null){
             return;
         }
-
         var adapter = new CardTypeRecyclerAdapter(CardType.getCardFaces(),
                 bitmapLoader,
                 mainActivity.getCardTypeSetter(),
