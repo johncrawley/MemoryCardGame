@@ -132,7 +132,7 @@ public class GameViewImpl implements GameView {
 
     @Override
     public void showNewGameLayout(){
-        mainActivity.showNewGameDialog();
+        mainActivity.setNewGameDialogVisible();
     }
 
 

@@ -294,7 +294,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void removeAllCards(){
-        if(cardLayout != null && animationManager != null){
+        if(cardLayout != null
+                && cardLayout.getVisibility() == VISIBLE
+                && animationManager != null){
             cardLayout.startAnimation(animationManager.getCardsFadeOutAnimation());
         }
     }
@@ -355,10 +357,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void showNewGameDialog(){
+    public void dropInNewGameDialog(){
         removeAllCards();
         showNewGameLayout();
         hideStatusPanel();
+    }
+
+
+    public void setNewGameDialogVisible(){
+        statusPanel.setVisibility(INVISIBLE);
+        dismissResultsLayoutIfVisible();
+        newGameLayout.setVisibility(VISIBLE);
+        isShowingNewGameDialogue = true;
     }
 
 
@@ -407,8 +417,6 @@ public class MainActivity extends AppCompatActivity {
     public int getScreenHeight(){
         return screenHeight;
     }
-
-
 
 
     public void setTitleWithTurns(int turn){

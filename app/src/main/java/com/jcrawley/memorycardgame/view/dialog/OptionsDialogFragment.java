@@ -56,7 +56,7 @@ public class OptionsDialogFragment extends DialogFragment {
     private void startNewGame(){
        var mainActivity = (MainActivity) getActivity();
        if(mainActivity != null){
-           mainActivity.showNewGameDialog();
+           mainActivity.dropInNewGameDialog();
            dismissAfterDelay();
        }
     }
