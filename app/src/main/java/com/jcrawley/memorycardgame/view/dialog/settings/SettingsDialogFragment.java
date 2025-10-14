@@ -106,7 +106,13 @@ public class SettingsDialogFragment extends DialogFragment {
         var adapter = new CardTypeRecyclerAdapter(CardType.getCardFaces(),
                 bitmapLoader,
                 mainActivity.getCardTypeSetter(),
-                ()-> bitmapLoader.clearCardFaceCache());
+                ()-> {
+                    bitmapLoader.clearCardFaceCache();
+                    var gameView = mainActivity.getGameView();
+                    if(gameView != null){
+                        gameView.reloadFirstSelectedCardFace();
+                    }
+                });
 
         initRecyclerAdapter(parentView,
                 adapter,

@@ -37,6 +37,8 @@ public class GameViewImpl implements GameView {
     private final CardBackManager cardBackManager;
     private ScheduledFuture <?> flipBackFuture;
     private final CardFaceImages cardFaceImages;
+    private ImageView firstSelectedCardView;
+    private Card firstSelectedCard;
 
     public GameViewImpl(MainActivity mainActivity, CardFaceImages cardFaceImages){
         this.mainActivity = mainActivity;
@@ -79,6 +81,7 @@ public class GameViewImpl implements GameView {
     @Override
     public void flipOver(Card card, boolean isSecondCardSelected){
         ImageView cardView = getImageViewFor(card);
+        saveFirstSelected(card, cardView, !isSecondCardSelected);
         Animator.AnimatorListener halfWayFlip = createAnimatorListener(() -> onFinishedHalfFlip(cardView, card, isSecondCardSelected));
         animateCardFlip(cardView, 1, halfWayFlip);
     }
@@ -104,10 +107,18 @@ public class GameViewImpl implements GameView {
         }
     }
 
+    private void saveFirstSelected(Card card, ImageView cardView, boolean isFirstSelected){
+        if(isFirstSelected){
+            firstSelectedCard = card;
+            firstSelectedCardView = cardView;
+        }
+    }
+
 
     @Override
     public void quickFlip(Card card) {
         ImageView cardView = getImageViewFor(card);
+        saveFirstSelected(card, cardView, true);
         setBitmapForCardFace(cardView, card);
         new Handler(Looper.getMainLooper()).post(() ->
             cardView.animate()
@@ -115,6 +126,14 @@ public class GameViewImpl implements GameView {
                     .setDuration(1)
                     .start()
         );
+    }
+
+
+    @Override
+    public void reloadFirstSelectedCardFace(){
+        if(firstSelectedCardView != null){
+            setBitmapForCardFace(firstSelectedCardView, firstSelectedCard);
+        }
     }
 
 
@@ -185,6 +204,7 @@ public class GameViewImpl implements GameView {
 
     @Override
     public void flipBothCardsBackAfterDelay(Card card1, Card card2){
+        firstSelectedCardView = null;
         flipBackFuture = scheduledExecutorService.schedule(
                 ()-> flipBothCardsBack(card1, card2, 200),
                 getInt(R.integer.flip_cards_back_delay),
@@ -197,6 +217,7 @@ public class GameViewImpl implements GameView {
             return;
         }
         isFlipBackInitiated.set(true);
+        firstSelectedCardView = null;
         cancelFlipBackFuture();
         mainActivity.runOnUiThread(()->{
             flipCardBack(card1, 0 );
