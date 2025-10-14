@@ -3,5 +3,8 @@ package com.jcrawley.memorycardgame.service.game;
 public enum TurnState {AWAITING_NEW_GAME,
     NOTHING_SELECTED,
     FIRST_CARD_SELECTED,
-    SECOND_CARD_SELECTED,
+    BOTH_CARDS_FLIPPED_OVER,
+    IMMEDIATE_FLIP_BACK,
+    SECOND_CARD_IS_FLIPPING_OVER,
+    CARDS_ARE_FLIPPING_BACK,
     GAME_OVER}

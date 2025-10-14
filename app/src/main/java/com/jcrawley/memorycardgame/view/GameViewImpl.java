@@ -38,7 +38,6 @@ public class GameViewImpl implements GameView {
     private ScheduledFuture <?> flipBackFuture;
     private final CardFaceImages cardFaceImages;
 
-
     public GameViewImpl(MainActivity mainActivity, CardFaceImages cardFaceImages){
         this.mainActivity = mainActivity;
         this.cardFaceImages = cardFaceImages;
@@ -88,11 +87,21 @@ public class GameViewImpl implements GameView {
     private void onFinishedHalfFlip(ImageView cardView, Card card, boolean isSecondCard){
         Animator.AnimatorListener fullWayFlippedListener = createAnimatorListener(() -> {
             cardView.clearAnimation();
-            getGame().ifPresent(game -> game.checkCards(isSecondCard));
+            if(isSecondCard){
+                checkCards();
+            }
         });
         cardView.clearAnimation();
         setBitmapForCardFace(cardView, card);
         animateCardFlip(cardView, 2, fullWayFlippedListener);
+    }
+
+
+    private void checkCards(){
+        GameService gameService = mainActivity.getGameService();
+        if(gameService != null){
+            gameService.getGame().checkCards(true);
+        }
     }
 
 
@@ -147,10 +156,9 @@ public class GameViewImpl implements GameView {
     @Override
     public void swipeInCardsAfterDelay(List<Card> cards, Consumer<Integer> onClickConsumer){
         addCardViews(cards, onClickConsumer, false);
-        int initialDelay = mainActivity.getResources().getInteger(R.integer.swipe_in_cards_initial_delay);
         setAllCardsFaceDown();
-        log("swipeInCardsAfterDelay() about to handleRandomCardAssignment()");
         handleRandomCardAssignment();
+        int initialDelay = getInt(R.integer.swipe_in_cards_initial_delay);
         new Handler(Looper.getMainLooper()).postDelayed(this::swipeInCards, initialDelay);
     }
 
@@ -179,14 +187,13 @@ public class GameViewImpl implements GameView {
     public void flipBothCardsBackAfterDelay(Card card1, Card card2){
         flipBackFuture = scheduledExecutorService.schedule(
                 ()-> flipBothCardsBack(card1, card2, 200),
-                mainActivity.getResources().getInteger(R.integer.flip_cards_back_delay),
+                getInt(R.integer.flip_cards_back_delay),
                 TimeUnit.MILLISECONDS);
     }
 
 
     public void flipBothCardsBack(Card card1, Card card2, int secondFlipBackDelay){
         if(isFlipBackInitiated.get()){
-            log("flipBack already initiated, returning");
             return;
         }
         isFlipBackInitiated.set(true);
@@ -201,15 +208,13 @@ public class GameViewImpl implements GameView {
 
     private void flipCardBack(Card card, int delay) {
         ImageView cardView = cardLayoutManager.getImageViewAt(card.getPosition());
-        Animator.AnimatorListener onFullWayFlippedBack = createAnimatorListener(()-> onCardFullyFlippedBack(cardView));
-        Animator.AnimatorListener onHalfWayFlippedBack = createAnimatorListener( () -> onHalfWayFlippedBack(cardView, card, onFullWayFlippedBack));
-        animateCardFlip(cardView, 1, onHalfWayFlippedBack, delay);
+        var onFullWayFlippedBackListener = createAnimatorListener( () -> onCardFullyFlippedBack(cardView));
+        var onHalfWayFlippedBackListener = createAnimatorListener( () -> onHalfWayFlippedBack(cardView, card, onFullWayFlippedBackListener));
+        animateCardFlip(cardView, 1, onHalfWayFlippedBackListener, delay);
     }
 
 
     private ImageView getImageViewFor(Card card){
-        log("getImageViewFor() position: " + card.getPosition());
-        log("number of image view cards: " + cardLayoutManager.getCardViews().size());
         return cardLayoutManager.getImageViewAt(card.getPosition());
     }
 
@@ -236,11 +241,6 @@ public class GameViewImpl implements GameView {
     }
 
 
-    private void log(String msg){
-        System.out.println("^^^ GameViewImpl: " + msg);
-    }
-
-
     public void setAllCardsFaceDown(){
         for(ImageView card : cardLayoutManager.getCardViews()){
             setFaceDown(card);
@@ -259,11 +259,9 @@ public class GameViewImpl implements GameView {
 
 
     private void animateCardFlip(ImageView cardView, int rotationMultiplier, Animator.AnimatorListener onFinishedListener, int startDelay){
-        long duration = getInt(R.integer.flip_card_duration);
-        float halfRotation = getInt(R.integer.flip_card_half_rotation);
         cardView.animate()
-                .rotationY(halfRotation * rotationMultiplier)
-                .setDuration(duration)
+                .rotationY(90 * rotationMultiplier)
+                .setDuration(140)
                 .setStartDelay(startDelay)
                 .setListener(onFinishedListener)
                 .start();

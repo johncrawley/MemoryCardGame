@@ -228,10 +228,22 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void displayResults(int numberOfTurns, int currentRecord, int delay){
+        final int actualDelay = Math.max(0, delay);
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
             String recordText = getRecordTextFor(numberOfTurns, currentRecord);
-            displayResults(numberOfTurns, recordText );
-        }, delay);
+            TextView resultsTextView = findViewById(R.id.numberOfTurnsTakenTextView);
+            TextView recordTextView = findViewById(R.id.currentRecordTurnsTextView);
+            resultsTextView.setText(String.valueOf(numberOfTurns));
+            recordTextView.setText(recordText);
+            resultsLayout.setVisibility(VISIBLE);
+            hideStatusPanel();
+            if(actualDelay > 0){
+                resultsLayout.startAnimation(animationManager.getResultsDropInAnimation());
+            }
+            else{
+                onGameOverDialogShown();
+            }
+        }, actualDelay);
 
     }
 
@@ -276,11 +288,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void showNewGameDialog(){
-        removeAllCards();
-        showNewGameLayout();
-        hideStatusPanel();
-        notifyGameOfNewGameDialogPresence();
+    private void log(String msg){
+        System.out.println("^^^ MainActivity: " + msg);
     }
 
 
@@ -291,15 +300,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void notifyGameOfNewGameDialogPresence(){
-        if(isServiceConnected.get()){
-            var game = gameService.getGame();
-            game.onNewGameLayoutShown();
-        }
-    }
-
-
-    public void onResultsDialogShown(){
+    public void onGameOverDialogShown(){
         Handler handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(() -> isReadyToDismissResults=true, getResources().getInteger(R.integer.enable_dismiss_results_delay));
     }
@@ -354,6 +355,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public void showNewGameDialog(){
+        removeAllCards();
+        showNewGameLayout();
+        hideStatusPanel();
+    }
+
+
     private void showNewGameLayout(){
         if(isShowingNewGameDialogue){
             return;
@@ -364,6 +372,15 @@ public class MainActivity extends AppCompatActivity {
         if(animationManager != null){
             var animation = animationManager.getNewGameDropInAnimation();
             newGameLayout.startAnimation(animation);
+        }
+        notifyGameOfNewGameDialogPresence();
+    }
+
+
+    private void notifyGameOfNewGameDialogPresence(){
+        if(isServiceConnected.get()){
+            var game = gameService.getGame();
+            game.onNewGameLayoutShown();
         }
     }
 
@@ -392,15 +409,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void displayResults(int numberOfTurns, String recordText){
-        TextView resultsTextView = findViewById(R.id.numberOfTurnsTakenTextView);
-        TextView recordTextView = findViewById(R.id.currentRecordTurnsTextView);
-        resultsTextView.setText(String.valueOf(numberOfTurns));
-        recordTextView.setText(recordText);
-        resultsLayout.setVisibility(VISIBLE);
-        hideStatusPanel();
-        resultsLayout.startAnimation(animationManager.getResultsDropInAnimation());
-    }
 
 
     public void setTitleWithTurns(int turn){

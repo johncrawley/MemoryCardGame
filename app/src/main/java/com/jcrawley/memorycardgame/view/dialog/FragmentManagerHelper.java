@@ -16,19 +16,16 @@ import com.jcrawley.memorycardgame.view.dialog.settings.SettingsDialogFragment;
 public class FragmentManagerHelper {
 
     public static void showAboutDialog(MainActivity mainActivity){
-        log("entered showAboutDialog()");
         showDialog(mainActivity, AboutDialogFragment.newInstance(), "aboutDialogFragment");
     }
 
 
     public static void showSettingsDialog(MainActivity mainActivity){
-        log("entered showAboutDialog()");
         showDialog(mainActivity, SettingsDialogFragment.newInstance(), "settingsDialogFragment");
     }
 
 
     public static void showOptionsDialog(MainActivity mainActivity){
-        log("entered showAboutDialog()");
         showDialog(mainActivity, OptionsDialogFragment.newInstance(), "optionsDialogFragment");
     }
 

@@ -20,7 +20,6 @@ public class Game {
     private int firstSelectedPosition = -1;
     private int secondSelectedPosition = -1;
     private int numberOfRemainingCards;
-    private boolean isAlreadyInitialised;
 
     private Card firstSelectedCard, secondSelectedCard;
     
@@ -39,7 +38,7 @@ public class Game {
 
         switch(turnState){
             case AWAITING_NEW_GAME -> gameView.showNewGameLayout();
-            case GAME_OVER -> showGameOverOnView(1);
+            case GAME_OVER -> showGameOverOnView(-1);
             default -> initCardsAndUpdateView();
         }
     }
@@ -64,7 +63,7 @@ public class Game {
 
     public void onNewGameLayoutShown(){
         cards = null;
-        turnState = TurnState.AWAITING_NEW_GAME;
+        setTurnState(TurnState.AWAITING_NEW_GAME);
     }
 
 
@@ -111,7 +110,7 @@ public class Game {
 
 
     public void resetTurnState(){
-        turnState = TurnState.NOTHING_SELECTED;
+        setTurnState(TurnState.NOTHING_SELECTED);
     }
 
 
@@ -130,8 +129,8 @@ public class Game {
         }
         switch(turnState){
             case NOTHING_SELECTED: handleFirstSelection(position); break;
-            case FIRST_CARD_SELECTED:handleSecondSelection(position); break;
-            case SECOND_CARD_SELECTED: handleClickAfterSecondSelection(position); break;
+            case FIRST_CARD_SELECTED: handleSecondSelection(position); break;
+            case BOTH_CARDS_FLIPPED_OVER: handleClickAfterBothCardsAreFlipped(position); break;
             default: break;
         }
     }
@@ -139,7 +138,7 @@ public class Game {
 
     private void handleFirstSelection(int position){
         gameView.setTitleWithTurns(++numberOfTurns);
-        turnState = TurnState.FIRST_CARD_SELECTED;
+        setTurnState(TurnState.FIRST_CARD_SELECTED);
         firstSelectedPosition = position;
         firstSelectedCard = cards.get(position);
         flipCard(position);
@@ -151,7 +150,7 @@ public class Game {
         if(position == firstSelectedPosition){
             return;
         }
-        turnState = TurnState.SECOND_CARD_SELECTED;
+        setTurnState(TurnState.SECOND_CARD_IS_FLIPPING_OVER);
         secondSelectedPosition = position;
         secondSelectedCard = cards.get(position);
         flipCard(position);
@@ -160,9 +159,21 @@ public class Game {
     }
 
 
-    private void handleClickAfterSecondSelection(int position){
+    private void log(String msg){
+        System.out.println("^^^ Game: " + msg);
+    }
+
+
+    private void handleClickAfterBothCardsAreFlipped(int position){
         immediatelyFlipBackBothCardsIfNoMatch();
-        if(position != firstSelectedPosition && position != secondSelectedPosition){
+        clickOnNextCard(position);
+    }
+
+
+    private void clickOnNextCard(int position){
+        if(position != -1
+                && position != firstSelectedPosition
+                && position != secondSelectedPosition){
             resetTurnState();
             notifyClickOnPosition(position);
         }
@@ -170,11 +181,11 @@ public class Game {
 
 
     public void immediatelyFlipBackBothCardsIfNoMatch(){
-        if(turnState != TurnState.SECOND_CARD_SELECTED){
+        if(turnState != TurnState.BOTH_CARDS_FLIPPED_OVER){
             return;
         }
-
         if(!areCardsMatching()){
+            setTurnState(TurnState.IMMEDIATE_FLIP_BACK);
             gameView.flipBothCardsBack(firstSelectedCard, secondSelectedCard, 0);
             firstSelectedCard.setFaceDown();
             secondSelectedCard.setFaceDown();
@@ -191,8 +202,11 @@ public class Game {
         if(areCardsMatching()){
             removeSelectedCards();
             updateNumberOfTurnsOnView();
+            resetTurnState();
+            showGameOverScreenWhenNoCardsRemain();
         }
         else{
+            setTurnState(TurnState.BOTH_CARDS_FLIPPED_OVER);
             gameView.flipBothCardsBackAfterDelay(firstSelectedCard, secondSelectedCard);
             firstSelectedCard.setFaceDown();
             secondSelectedCard.setFaceDown();
@@ -216,9 +230,7 @@ public class Game {
     private void removeSelectedCards(){
         removeCard(firstSelectedCard);
         removeCard(secondSelectedCard);
-        resetTurnState();
         numberOfRemainingCards -= 2;
-        showGameOverScreenWhenNoCardsRemain();
     }
 
 
@@ -226,11 +238,17 @@ public class Game {
         if(numberOfRemainingCards > 0){
             return;
         }
-        turnState = TurnState.GAME_OVER;
+        setTurnState(TurnState.GAME_OVER);
         saveScore();
         showGameOverOnView(1000);
     }
 
+
+    private void setTurnState(TurnState turnState){
+        log("entered setTurnState():  " + turnState.name());
+        this.turnState = turnState;
+    }
+    
 
     private void showGameOverOnView(int delay){
         gameView.displayResults(numberOfTurns, getCurrentRecord(), delay);
@@ -248,8 +266,6 @@ public class Game {
     private int getCurrentRecord(){
         return gamePreferences.getCurrentTurnsRecordFromPreferences(numberOfCards);
     }
-
-
 
 
     private void removeCard(Card card){

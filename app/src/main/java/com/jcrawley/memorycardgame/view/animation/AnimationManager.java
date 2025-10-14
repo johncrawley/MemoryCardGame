@@ -26,7 +26,7 @@ public class AnimationManager {
     private void setupAnimations(MainActivity mainActivity, int screenHeight){
         context = mainActivity.getApplicationContext();
         this.screenHeight = screenHeight;
-        resultsDropInAnimation = createDropInAnimation(mainActivity::onResultsDialogShown);
+        resultsDropInAnimation = createDropInAnimation(mainActivity::onGameOverDialogShown);
         resultsDropOutAnimation = createDropOutAnimation(mainActivity::onResultsDismissed);
         newGameDropInAnimation = createDropInAnimation(()->{});
         newGameDropOutAnimation = createDropOutAnimation(mainActivity::onNewGameScreenDismissed);

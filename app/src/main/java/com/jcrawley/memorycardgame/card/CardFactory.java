@@ -41,16 +41,11 @@ public class CardFactory {
     public List<Card> getCards(int number){
         List<Card> listToAdd = number == allCards.size() ? allCards : getRandomCardsFromSuits(number);
         List<Card> cards = new ArrayList<>(listToAdd);
-        log("getCards() size: " + cards.size());
         Collections.shuffle(cards);
         init(cards);
         return cards;
     }
 
-
-    private void log(String msg){
-        System.out.println("^^^ CardFactory: " + msg);
-    }
 
     private void init(List<Card> cards){
         for(int i = 0 ; i < cards.size(); i++){
