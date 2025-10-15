@@ -67,7 +67,7 @@ public class BackgroundRecyclerAdapter extends RecyclerView.Adapter<BackgroundRe
     public void onBindViewHolder(@NonNull BackgroundRecyclerAdapter.BackgroundViewHolder holder, int position){
         Background background = backgrounds.get(position);
         holder.background = background;
-        holder.imageView.setBackground(AppCompatResources.getDrawable(mainActivity, background.resourceId()));
+        holder.imageView.setBackground(AppCompatResources.getDrawable(mainActivity, background.thumbnailResourceId()));
         recyclerHelper.selectItem(holder, position);
     }
 
