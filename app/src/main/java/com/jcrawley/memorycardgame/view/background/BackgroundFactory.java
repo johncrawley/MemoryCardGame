@@ -29,7 +29,8 @@ public class BackgroundFactory {
             R.drawable.background_tiled_black_diagonal_mirrored,
             R.drawable.background_tiled_diagonal_lines_green,
             R.drawable.background_tiled_diagonal_lines_green_brown,
-            R.drawable.background_tiled_fake_wood);
+            R.drawable.background_tiled_fake_wood,
+            R.drawable.background_image_stars_above);
 
 
     public static List<Background> getAll(){
