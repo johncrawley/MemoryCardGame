@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Memory Match Cards</string>
-    <string name="version" translatable="false">v2.9, 2021 – 2025</string>
+    <string name="version" translatable="false">v2.10, 2021 – 2025</string>
     <string name="position_tag" translatable="false">positionTag</string>
     <string name="number_of_turns_taken_text" translatable="false">100</string>
     <string name="turn">Turn&#160;</string>

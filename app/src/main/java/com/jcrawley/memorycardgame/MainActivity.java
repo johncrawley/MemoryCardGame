@@ -39,7 +39,6 @@ import com.jcrawley.memorycardgame.card.DeckSize;
 import com.jcrawley.memorycardgame.card.CardBackManager;
 import com.jcrawley.memorycardgame.view.animation.CardAnimator;
 import com.jcrawley.memorycardgame.service.game.CardLayoutManager;
-import com.jcrawley.memorycardgame.service.game.Game;
 import com.jcrawley.memorycardgame.service.GameService;
 import com.jcrawley.memorycardgame.view.utils.AppearanceSetter;
 import com.jcrawley.memorycardgame.view.utils.BitmapLoader;
@@ -57,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout resultsLayout;
     private LinearLayout newGameLayout;
     private LinearLayout cardLayout;
-    private boolean isReadyToDismissResults = false;
+    private boolean isReadyToDismissResults;
     private boolean isShowingNewGameDialogue;
     private MainViewModel viewModel;
     private GamePreferences gamePreferences;
@@ -96,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initViewModel();
         setupInsetPadding();
+        configureNavAndStatusBarAppearance();
         initLayouts();
         initHelperClasses();
         initGameView();
@@ -185,6 +185,11 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+    }
+
+
+    private void configureNavAndStatusBarAppearance(){
         var window = getWindow();
         var insetsController = WindowCompat.getInsetsController(window, window.getDecorView());
         insetsController.setAppearanceLightNavigationBars(false);
@@ -215,15 +220,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void initBackgroundClickListener(){
         ViewGroup background = findViewById(R.id.cardLayoutHolder);
-        if(background == null){
-            return;
+        if(background != null){
+            background.setOnClickListener(v -> {
+                if(gameService != null){
+                    gameService.getGame().immediatelyFlipBackBothCardsIfNoMatch();
+                }
+            });
         }
-        background.setOnClickListener(v -> {
-            if(gameService != null){
-                Game game = gameService.getGame();
-                game.immediatelyFlipBackBothCardsIfNoMatch();
-            }
-        });
     }
 
 
@@ -252,7 +255,6 @@ public class MainActivity extends AppCompatActivity {
         return numberOfTurns < currentRecord ? getString(R.string.results_status_new_record)
                 : numberOfTurns == currentRecord ? getString(R.string.results_status_matching_record)
                 : getString(R.string.results_status_current_record) + currentRecord;
-
     }
 
 
@@ -303,8 +305,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void onGameOverDialogShown(){
-        Handler handler = new Handler(Looper.getMainLooper());
-        handler.postDelayed(() -> isReadyToDismissResults=true, getResources().getInteger(R.integer.enable_dismiss_results_delay));
+        new Handler(Looper.getMainLooper())
+                .postDelayed(() -> isReadyToDismissResults = true, getResources().getInteger(R.integer.enable_dismiss_results_delay));
     }
 
 
