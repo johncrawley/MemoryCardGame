@@ -82,21 +82,21 @@ public class GameViewImpl implements GameView {
     public void flipOver(Card card, boolean isSecondCardSelected){
         ImageView cardView = getImageViewFor(card);
         saveFirstSelected(card, cardView, !isSecondCardSelected);
-        Animator.AnimatorListener halfWayFlip = createAnimatorListener(() -> onFinishedHalfFlip(cardView, card, isSecondCardSelected));
-        animateCardFlip(cardView, 1, halfWayFlip);
-    }
 
-
-    private void onFinishedHalfFlip(ImageView cardView, Card card, boolean isSecondCard){
-        Animator.AnimatorListener fullWayFlippedListener = createAnimatorListener(() -> {
+        var fullWayFlippedListener = createAnimatorListener(() -> {
             cardView.clearAnimation();
-            if(isSecondCard){
+            if(isSecondCardSelected){
                 checkCards();
             }
         });
-        cardView.clearAnimation();
-        setBitmapForCardFace(cardView, card);
-        animateCardFlip(cardView, 2, fullWayFlippedListener);
+
+        var halfWayFlippedListener = createAnimatorListener(() -> {
+            cardView.clearAnimation();
+            setBitmapForCardFace(cardView, card);
+            animateCardFlip(cardView, 2, fullWayFlippedListener);
+        });
+
+        animateCardFlip(cardView, 1, halfWayFlippedListener);
     }
 
 
