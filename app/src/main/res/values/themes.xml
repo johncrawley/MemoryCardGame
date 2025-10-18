@@ -16,14 +16,5 @@
     <item name="status_panel_text_color">@color/panel_text</item>
     <item name="android:windowBackground">@color/background_color</item>
 
-    <item name="android:navigationBarColor">
-        @android:color/transparent
-    </item>
-
-    <!-- Optional: set to transparent if your app is drawing behind the status bar. -->
-    <item name="android:statusBarColor">
-        @android:color/transparent
-    </item>
-
 </style>
 </resources>
