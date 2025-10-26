@@ -108,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initGameView(){
         gameView = new GameViewImpl(MainActivity.this, viewModel.cardFaceImages);
+        gameView.init(cardLayoutManager, cardAnimator);
     }
 
 
@@ -116,17 +117,12 @@ public class MainActivity extends AppCompatActivity {
         bitmapLoader = new BitmapLoader(MainActivity.this, viewModel);
         cardBackManager = new CardBackManager(viewModel, bitmapLoader);
         cardLayoutManager = new CardLayoutManager(MainActivity.this);
-        cardAnimator = new CardAnimator(screenWidth, getApplicationContext());
+        cardAnimator = new CardAnimator(getApplicationContext());
     }
 
 
     private void initViewModel(){
         viewModel  = new ViewModelProvider(this).get(MainViewModel.class);
-    }
-
-
-    public MainViewModel getViewModel(){
-        return viewModel;
     }
 
 
@@ -212,8 +208,7 @@ public class MainActivity extends AppCompatActivity {
                 cardLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 assignScreenDimensions();
                 animationManager = new AnimationManager(MainActivity.this, screenHeight);
-                cardAnimator = new CardAnimator(screenWidth, getApplicationContext());
-                gameView.init(cardLayoutManager, cardAnimator);
+                cardAnimator.setScreenWidth(screenWidth);
             }});
     }
 

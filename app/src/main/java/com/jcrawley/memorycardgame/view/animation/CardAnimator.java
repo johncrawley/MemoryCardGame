@@ -15,14 +15,19 @@ import java.util.List;
 
 public class CardAnimator {
 
-    private final int screenWidth;
+    private int screenWidth;
     private final Context context;
     private float previousElevation;
 
 
-    public CardAnimator(int screenWidth, Context context){
-        this.screenWidth = screenWidth;
+    public CardAnimator(Context context){
+        this.screenWidth = 1200;
         this.context = context;
+    }
+
+
+    public void setScreenWidth(int screenWidth){
+        this.screenWidth = screenWidth;
     }
 
 
