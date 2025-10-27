@@ -318,12 +318,15 @@ public class GameViewImpl implements GameView {
     public void switchBacksOnFaceDownCards(){
         getGame().ifPresent(game ->{
             int firstSelectedPosition = game.getFirstSelectedPosition();
-            List<ImageView> views = cardLayoutManager.getCardViews();
+            if(cardLayoutManager == null){
+                return;
+            }
+            var views = cardLayoutManager.getCardViews();
+
             for(int i = 0; i < views.size(); i++){
-                if(i == firstSelectedPosition){
-                    continue;
+                if(i != firstSelectedPosition){
+                    cardBackManager.setCardBackOf(views.get(i));
                 }
-                cardBackManager.setCardBackOf(views.get(i));
             }
         });
     }

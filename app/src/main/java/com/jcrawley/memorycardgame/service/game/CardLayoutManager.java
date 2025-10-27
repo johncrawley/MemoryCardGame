@@ -15,6 +15,7 @@ import com.jcrawley.memorycardgame.card.Card;
 import com.jcrawley.memorycardgame.card.CardBackManager;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -119,7 +120,7 @@ public class CardLayoutManager {
 
 
     public List<ImageView> getCardViews(){
-        return cardViews;
+        return cardViews != null ? cardViews : Collections.emptyList();
     }
 
 
