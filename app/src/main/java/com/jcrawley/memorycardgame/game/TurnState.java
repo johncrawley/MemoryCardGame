@@ -1,4 +1,4 @@
-package com.jcrawley.memorycardgame.service.game;
+package com.jcrawley.memorycardgame.game;
 
 public enum TurnState {AWAITING_NEW_GAME,
     NOTHING_SELECTED,

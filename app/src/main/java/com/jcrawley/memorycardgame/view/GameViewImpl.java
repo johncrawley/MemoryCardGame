@@ -12,9 +12,7 @@ import com.jcrawley.memorycardgame.card.Card;
 import com.jcrawley.memorycardgame.card.CardBackManager;
 import com.jcrawley.memorycardgame.card.CardFaceImages;
 import com.jcrawley.memorycardgame.view.animation.CardAnimator;
-import com.jcrawley.memorycardgame.service.game.CardLayoutManager;
-import com.jcrawley.memorycardgame.service.game.Game;
-import com.jcrawley.memorycardgame.service.GameService;
+import com.jcrawley.memorycardgame.game.Game;
 import com.jcrawley.memorycardgame.view.utils.BitmapLoader;
 
 import java.util.List;
@@ -106,9 +104,9 @@ public class GameViewImpl implements GameView {
 
 
     private void checkCards(){
-        GameService gameService = mainActivity.getGameService();
-        if(gameService != null){
-            gameService.getGame().checkCards(true);
+        var game = mainActivity.getGame();
+        if(game != null){
+            game.checkCards(true);
         }
     }
 
@@ -160,20 +158,17 @@ public class GameViewImpl implements GameView {
     }
 
 
+
     private void resetTurnState(){
-        getGame().ifPresent(Game::resetTurnState);
+        var game = mainActivity.getGame();
+        if(game != null){
+            game.resetTurnState();
+        }
     }
 
 
     private Optional<Game> getGame(){
-        GameService gameService = mainActivity.getGameService();
-        if(gameService != null){
-            Game game = gameService.getGame();
-            if(game != null){
-                return Optional.of(game);
-            }
-        }
-        return Optional.empty();
+        return Optional.ofNullable(mainActivity.getGame());
     }
 
 

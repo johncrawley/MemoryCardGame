@@ -12,13 +12,9 @@ import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.content.ComponentName;
-import android.content.Intent;
-import android.content.ServiceConnection;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.IBinder;
 import android.os.Looper;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -30,6 +26,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.jcrawley.memorycardgame.game.Game;
 import com.jcrawley.memorycardgame.view.GamePreferences;
 import com.jcrawley.memorycardgame.view.MainViewModel;
 import com.jcrawley.memorycardgame.view.animation.AnimationHelper;
@@ -38,16 +35,12 @@ import com.jcrawley.memorycardgame.card.CardTypeSetter;
 import com.jcrawley.memorycardgame.card.DeckSize;
 import com.jcrawley.memorycardgame.card.CardBackManager;
 import com.jcrawley.memorycardgame.view.animation.CardAnimator;
-import com.jcrawley.memorycardgame.service.game.CardLayoutManager;
-import com.jcrawley.memorycardgame.service.GameService;
+import com.jcrawley.memorycardgame.view.CardLayoutManager;
 import com.jcrawley.memorycardgame.view.utils.AppearanceSetter;
 import com.jcrawley.memorycardgame.view.utils.BitmapLoader;
 import com.jcrawley.memorycardgame.view.dialog.FragmentManagerHelper;
 import com.jcrawley.memorycardgame.view.GameViewImpl;
 import com.jcrawley.memorycardgame.view.GameView;
-
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -66,50 +59,16 @@ public class MainActivity extends AppCompatActivity {
     private TextView statusText;
     private ViewGroup mainLayout;
     private ViewGroup statusPanel;
-    private GameService gameService;
-    private final AtomicBoolean isServiceConnected = new AtomicBoolean();
     private CardAnimator cardAnimator;
     private CardLayoutManager cardLayoutManager;
     private GameView gameView;
-    private CountDownLatch viewInitialisedCountdown = new CountDownLatch(1);
-
-    private final ServiceConnection connection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName className, IBinder service) {
-            GameService.LocalBinder binder = (GameService.LocalBinder) service;
-            MainActivity.this.gameService = binder.getService();
-            awaitViewInit();
-            gameService.setActivity(MainActivity.this);
-            isServiceConnected.set(true);
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName arg0) {
-            isServiceConnected.set(false);
-        }
-    };
-
-
-    private void awaitViewInit(){
-        try{
-            viewInitialisedCountdown.await();
-            log("view initialised, about to register activity with service.");
-        }catch (InterruptedException e){
-            log(e.getMessage());
-        }
-    }
-
-
-    private void log(String msg){
-        System.out.println("^^^ MainActivity : " + msg);
-    }
+    private Game game;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        viewInitialisedCountdown = new CountDownLatch(1);
         initViewModel();
         setupInsetPadding();
         configureNavAndStatusBarAppearance();
@@ -117,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
         initHelperClasses();
         initGameView();
         setupOptionsButton();
-        setupGameService();
         initBackgroundClickListener();
         AppearanceSetter.setSavedAppearance(MainActivity.this, cardBackManager, viewModel);
     }
@@ -125,6 +83,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void initViewModel(){
         viewModel  = new ViewModelProvider(this).get(MainViewModel.class);
+
+    }
+
+    private void initGame(){
+        game = new Game(viewModel.gameModel, gameView, new GamePreferences(getApplicationContext()));
     }
 
 
@@ -135,7 +98,6 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
     }
 
 
@@ -158,7 +120,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     private void initHelperClasses(){
         gamePreferences = new GamePreferences(MainActivity.this);
         bitmapLoader = new BitmapLoader(MainActivity.this, viewModel);
@@ -170,12 +131,6 @@ public class MainActivity extends AppCompatActivity {
     private void initGameView(){
         gameView = new GameViewImpl(MainActivity.this, viewModel.cardFaceImages);
         gameView.init(cardLayoutManager, cardAnimator);
-    }
-
-    private void setupGameService() {
-        Intent intent = new Intent(getApplicationContext(), GameService.class);
-        getApplicationContext().startService(intent);
-        getApplicationContext().bindService(intent, connection, 0);
     }
 
 
@@ -190,8 +145,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public GameService getGameService(){
-        return gameService;
+    public Game getGame(){
+        return game;
     }
 
 
@@ -215,7 +170,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     @Override
     public void onResume(){
         super.onResume();
@@ -232,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
                 assignScreenDimensions();
                 animationManager = new AnimationManager(MainActivity.this, screenHeight);
                 cardAnimator.setScreenWidth(screenWidth);
-                viewInitialisedCountdown.countDown();
+                initGame();
             }});
     }
 
@@ -240,11 +194,7 @@ public class MainActivity extends AppCompatActivity {
     private void initBackgroundClickListener(){
         ViewGroup background = findViewById(R.id.cardLayoutHolder);
         if(background != null){
-            background.setOnClickListener(v -> {
-                if(gameService != null){
-                    gameService.getGame().immediatelyFlipBackBothCardsIfNoMatch();
-                }
-            });
+            background.setOnClickListener(v -> game.immediatelyFlipBackBothCardsIfNoMatch());
         }
     }
 
@@ -346,9 +296,7 @@ public class MainActivity extends AppCompatActivity {
     public void onNewGameScreenDismissed(){
         newGameLayout.clearAnimation();
         newGameLayout.setVisibility(View.GONE);
-        if(gameService != null){
-            gameService.getGame().startAgain();
-        }
+        game.startAgain();
     }
 
 
@@ -383,10 +331,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void notifyGameOfNewGameDialogPresence(){
-        if(isServiceConnected.get()){
-            var game = gameService.getGame();
-            game.onNewGameLayoutShown();
-        }
+        game.onNewGameLayoutShown();
     }
 
 

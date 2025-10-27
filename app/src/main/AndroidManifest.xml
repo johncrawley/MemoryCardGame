@@ -19,16 +19,6 @@
             </intent-filter>
         </activity>
 
-        <service
-            android:name=".service.GameService"
-            android:enabled="true"
-            android:exported="false"
-            android:label="GameService"
-            android:stopWithTask="true">
-            <intent-filter>
-                <action android:name="com.jcrawley.memorycardgame.service.GameService" />
-            </intent-filter>
-        </service>
     </application>
 
 </manifest>
