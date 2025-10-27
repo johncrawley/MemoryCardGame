@@ -64,21 +64,25 @@ public class SettingsDialogFragment extends DialogFragment {
         gameView = mainActivity.getGameView();
     }
 
-
+    // required because we are using a scroll view in the dialog for smaller displays.
     public void setDialogDimensions(View parentView){
-        MainActivity mainActivity = (MainActivity)getActivity();
+        var mainActivity = (MainActivity) getActivity();
         if(mainActivity == null){
             return;
         }
         int width = (mainActivity.getScreenWidth() * 80) / 100;
         int height = (mainActivity.getScreenHeight() * 85) / 100;
+
         parentView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
+                View cardFaceSettingsLayout = parentView.findViewById(R.id.cardFacesSettingInclude);
+                // multiply by 4 to include card back and background settings, and dialog heading.
+                int maxHeight = cardFaceSettingsLayout.getMeasuredHeight() * 4;
+                int adjustedHeight = Math.min(maxHeight, height);
                 parentView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(width, height);
+                FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(width, adjustedHeight);
                 parentView.setLayoutParams(layoutParams);
-
             }
         });
     }
