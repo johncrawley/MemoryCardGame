@@ -159,11 +159,6 @@ public class Game {
     }
 
 
-    private void log(String msg){
-        System.out.println("^^^ Game: " + msg);
-    }
-
-
     private void handleClickAfterBothCardsAreFlipped(int position){
         immediatelyFlipBackBothCardsIfNoMatch();
         clickOnNextCard(position);
@@ -245,7 +240,6 @@ public class Game {
 
 
     private void setTurnState(TurnState turnState){
-        log("entered setTurnState():  " + turnState.name());
         this.turnState = turnState;
     }
     

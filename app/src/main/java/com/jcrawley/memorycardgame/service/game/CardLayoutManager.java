@@ -4,12 +4,12 @@ import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.jcrawley.memorycardgame.MainActivity;
 import com.jcrawley.memorycardgame.R;
 import com.jcrawley.memorycardgame.card.Card;
 import com.jcrawley.memorycardgame.card.CardBackManager;
@@ -21,12 +21,10 @@ import java.util.function.Consumer;
 public class CardLayoutManager {
 
     private int cardWidth, cardHeight;
-    private final MainActivity activity;
     private View.OnClickListener onClickListener;
     private int numberOfCards;
     private int cardsAdded;
     private List<ImageView> cardViews;
-    private boolean hasRun = false;
     private final ViewGroup parentLayout;
     private int numberOfCardsPerRow;
     private int numberOfRows;
@@ -34,12 +32,13 @@ public class CardLayoutManager {
     private final CardBackManager cardBackManager;
     private final List<ViewGroup> cardRows = new ArrayList<>();
     private Consumer<Integer> clickConsumer;
+    private final Context context;
 
     @SuppressLint("UseCompatLoadingForDrawables")
-    public CardLayoutManager(MainActivity activity){
-        this.activity = activity;
-        this.parentLayout = activity.getCardLayout();
-        this.cardBackManager = activity.getCardBackManager();
+    public CardLayoutManager(Context context, CardBackManager cardBackManager, ViewGroup cardLayout){
+        this.context = context;
+        this.parentLayout = cardLayout;
+        this.cardBackManager = cardBackManager;
     }
 
 
@@ -49,13 +48,7 @@ public class CardLayoutManager {
     }
 
 
-    private int getInt(int resId){
-        return activity.getResources().getInteger(resId);
-    }
-
-
     public void addViewsFor(List<Card> cards, Consumer<Integer> clickConsumer, boolean isVisible){
-        hasRun = false;
         this.clickConsumer = clickConsumer;
         createClickListener();
         parentLayout.removeAllViewsInLayout();
@@ -77,10 +70,6 @@ public class CardLayoutManager {
 
 
     private void addCardViews(){
-        if(hasRun){
-            return;
-        }
-        hasRun = true;
         cardsAdded = 0;
         setDimensions();
         addCardsToParent();
@@ -136,6 +125,7 @@ public class CardLayoutManager {
 
     public ImageView getImageViewAt(int position){
         int index = position >= cardViews.size() ? 0 : position;
+
         return cardViews.get(index);
     }
 
@@ -145,12 +135,14 @@ public class CardLayoutManager {
         for(int i = 0; i < numberOfRows; i++){
           cardRows.add(createRowOfCards(numberOfCardsPerRow));
         }
-        activity.setCardRows(cardRows);
+        for(ViewGroup cardRow : cardRows){
+            parentLayout.addView(cardRow);
+        }
     }
 
 
     private ViewGroup createRowOfCards(int numberOfCardsPerRow){
-        LinearLayout rowLayout = new LinearLayout(activity);
+        LinearLayout rowLayout = new LinearLayout(context);
         for(int i = 0; i < numberOfCardsPerRow; i++){
             if(cardsAdded < numberOfCards){
                 ImageView imageView = createCard();
@@ -162,7 +154,7 @@ public class CardLayoutManager {
 
 
     private ImageView createCard(){
-        ImageView imageView = new ImageView(activity);
+        ImageView imageView = new ImageView(context);
         int id = View.generateViewId();
         imageView.setId(id);
         cardViews.add(imageView);
@@ -178,7 +170,9 @@ public class CardLayoutManager {
 
 
     private void createPadding(){
-        padding = getInt(R.integer.minimum_card_padding) + (cardWidth / getInt(R.integer.card_width_padding_divisor));
+        int minimumCardPadding = 5;
+        int cardWidthPaddingDivisor = 18;
+        padding = minimumCardPadding + (cardWidth / cardWidthPaddingDivisor);
         if(numberOfCards < 10){
             padding += 10;
         }

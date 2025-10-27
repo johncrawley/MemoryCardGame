@@ -62,18 +62,23 @@ public class GameViewImpl implements GameView {
 
 
     public void addCardViews(List<Card> cards, Consumer<Integer> clickConsumer, boolean isVisible){
-        int numberOfCards = cards.size();
         cardLayoutManager.addViewsFor(cards, clickConsumer, isVisible);
+        var views = cardLayoutManager.getCardViews();
 
-        for(int i = 0; i < numberOfCards; i++){
-            var card = cards.get(i);
-            ImageView cardView = cardLayoutManager.getImageViewAt(i);
-            if(card.isFaceDown()){
-                setFaceDown(cardView);
+        for(int i = 0; i < views.size(); i++){
+            if(i < cards.size()){
+                initCardViewAt(views.get(i), cards.get(i));
             }
-            else{
-                setBitmapForCardFace(cardView, card);
-            }
+        }
+    }
+
+
+    private void initCardViewAt(ImageView cardView, Card card){
+        if(card.isFaceDown()){
+            setFaceDown(cardView);
+        }
+        else{
+            setBitmapForCardFace(cardView, card);
         }
     }
 

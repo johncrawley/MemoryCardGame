@@ -46,7 +46,7 @@ import com.jcrawley.memorycardgame.view.dialog.FragmentManagerHelper;
 import com.jcrawley.memorycardgame.view.GameViewImpl;
 import com.jcrawley.memorycardgame.view.GameView;
 
-import java.util.List;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 
@@ -71,13 +71,14 @@ public class MainActivity extends AppCompatActivity {
     private CardAnimator cardAnimator;
     private CardLayoutManager cardLayoutManager;
     private GameView gameView;
-
+    private CountDownLatch viewInitialisedCountdown = new CountDownLatch(1);
 
     private final ServiceConnection connection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName className, IBinder service) {
             GameService.LocalBinder binder = (GameService.LocalBinder) service;
             MainActivity.this.gameService = binder.getService();
+            awaitViewInit();
             gameService.setActivity(MainActivity.this);
             isServiceConnected.set(true);
         }
@@ -89,10 +90,26 @@ public class MainActivity extends AppCompatActivity {
     };
 
 
+    private void awaitViewInit(){
+        try{
+            viewInitialisedCountdown.await();
+            log("view initialised, about to register activity with service.");
+        }catch (InterruptedException e){
+            log(e.getMessage());
+        }
+    }
+
+
+    private void log(String msg){
+        System.out.println("^^^ MainActivity : " + msg);
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        viewInitialisedCountdown = new CountDownLatch(1);
         initViewModel();
         setupInsetPadding();
         configureNavAndStatusBarAppearance();
@@ -106,25 +123,54 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void initGameView(){
-        gameView = new GameViewImpl(MainActivity.this, viewModel.cardFaceImages);
-        gameView.init(cardLayoutManager, cardAnimator);
+    private void initViewModel(){
+        viewModel  = new ViewModelProvider(this).get(MainViewModel.class);
     }
+
+
+    private void setupInsetPadding(){
+        EdgeToEdge.enable(this);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.mainLayout), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+
+    }
+
+
+    private void configureNavAndStatusBarAppearance(){
+        var window = getWindow();
+        var insetsController = WindowCompat.getInsetsController(window, window.getDecorView());
+        insetsController.setAppearanceLightNavigationBars(false);
+        insetsController.setAppearanceLightStatusBars(false);
+    }
+
+
+    private void initLayouts(){
+        mainLayout = findViewById(R.id.mainLayout);
+        statusPanel = findViewById(R.id.statusPanelInclude);
+        cardLayout = findViewById(R.id.cardLayout);
+        newGameLayout = findViewById(R.id.new_game_include);
+        resultsLayout = findViewById(R.id.game_over_include);
+        resultsLayout.setOnClickListener(view -> dismissResults());
+        initStartGameButtons();
+    }
+
 
 
     private void initHelperClasses(){
         gamePreferences = new GamePreferences(MainActivity.this);
         bitmapLoader = new BitmapLoader(MainActivity.this, viewModel);
         cardBackManager = new CardBackManager(viewModel, bitmapLoader);
-        cardLayoutManager = new CardLayoutManager(MainActivity.this);
+        cardLayoutManager = new CardLayoutManager(getApplicationContext(), cardBackManager, cardLayout);
         cardAnimator = new CardAnimator(getApplicationContext());
     }
 
-
-    private void initViewModel(){
-        viewModel  = new ViewModelProvider(this).get(MainViewModel.class);
+    private void initGameView(){
+        gameView = new GameViewImpl(MainActivity.this, viewModel.cardFaceImages);
+        gameView.init(cardLayoutManager, cardAnimator);
     }
-
 
     private void setupGameService() {
         Intent intent = new Intent(getApplicationContext(), GameService.class);
@@ -164,33 +210,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public ViewGroup getCardLayout(){
-        return cardLayout;
-    }
-
-
     public GamePreferences getGamePreferences(){
         return this.gamePreferences;
     }
 
-
-    private void setupInsetPadding(){
-        EdgeToEdge.enable(this);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.mainLayout), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
-
-    }
-
-
-    private void configureNavAndStatusBarAppearance(){
-        var window = getWindow();
-        var insetsController = WindowCompat.getInsetsController(window, window.getDecorView());
-        insetsController.setAppearanceLightNavigationBars(false);
-        insetsController.setAppearanceLightStatusBars(false);
-    }
 
 
     @Override
@@ -209,6 +232,7 @@ public class MainActivity extends AppCompatActivity {
                 assignScreenDimensions();
                 animationManager = new AnimationManager(MainActivity.this, screenHeight);
                 cardAnimator.setScreenWidth(screenWidth);
+                viewInitialisedCountdown.countDown();
             }});
     }
 
@@ -242,7 +266,6 @@ public class MainActivity extends AppCompatActivity {
                 onGameOverDialogShown();
             }
         }, actualDelay);
-
     }
 
 
@@ -262,31 +285,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void setBackground(Drawable drawable){
         mainLayout.setBackground(drawable);
-    }
-
-
-    public void setCardRows(List<ViewGroup> cardRows){
-        runOnUiThread(()->{
-            for(ViewGroup cardRow : cardRows){
-                cardLayout.addView(cardRow);
-            }
-        });
-    }
-
-
-    private void initLayouts(){
-        mainLayout = findViewById(R.id.mainLayout);
-        statusPanel = findViewById(R.id.statusPanelInclude);
-        cardLayout = findViewById(R.id.cardLayout);
-        newGameLayout = findViewById(R.id.new_game_include);
-        resultsLayout = findViewById(R.id.game_over_include);
-        resultsLayout.setOnClickListener(view -> dismissResults());
-        initStartGameButtons();
-    }
-
-
-    private void log(String msg){
-        System.out.println("^^^ MainActivity: " + msg);
     }
 
 
