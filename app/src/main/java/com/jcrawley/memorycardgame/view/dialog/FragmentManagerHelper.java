@@ -1,13 +1,7 @@
 package com.jcrawley.memorycardgame.view.dialog;
 
-
-import android.os.Bundle;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.jcrawley.memorycardgame.MainActivity;
 import com.jcrawley.memorycardgame.view.dialog.settings.SettingsDialogFragment;
@@ -29,63 +23,18 @@ public class FragmentManagerHelper {
         showDialog(mainActivity, OptionsDialogFragment.newInstance(), "optionsDialogFragment");
     }
 
-    private static void log(String msg){
-        System.out.println("^^^ FragmentManagerHelper : " + msg);
-    }
-
-    public static void showDialog(Fragment parentFragment, DialogFragment dialogFragment, String tag, Bundle bundle){
-        FragmentManager fragmentManager = parentFragment.getParentFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        removePreviousFragmentTransaction(fragmentManager, tag, fragmentTransaction);
-        dialogFragment.setArguments(bundle);
-        dialogFragment.show(fragmentTransaction, tag);
-    }
-
 
     public static void showDialog(AppCompatActivity activity, DialogFragment dialogFragment, String tag){
-        if(activity == null){
-            return;
+        var fragmentManager = activity.getSupportFragmentManager();
+        var existingFragment = fragmentManager.findFragmentByTag(tag);
+        if (existingFragment != null) {
+            fragmentManager.beginTransaction()
+                    .remove(existingFragment)
+                    .commit();
         }
-        FragmentManager fragmentManager = activity.getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        removePreviousFragmentTransaction(fragmentManager, tag, fragmentTransaction);
-        dialogFragment.show(fragmentTransaction, tag);
-    }
-
-
-    private static void removePreviousFragmentTransaction(FragmentManager fragmentManager, String tag, FragmentTransaction fragmentTransaction){
-        Fragment prev = fragmentManager.findFragmentByTag(tag);
-        if (prev != null) {
-            fragmentTransaction.remove(prev);
-        }
-        fragmentTransaction.addToBackStack(null);
-    }
-
-    /*
-    public static void setListener(Fragment fragment, String key, Consumer<Bundle> consumer){
-        fragment.getParentFragmentManager().setFragmentResultListener(key, fragment, (requestKey, bundle) -> consumer.accept(bundle));
-    }
-
-
-    public static void setListener(Fragment fragment, Message key, Consumer<Bundle> consumer){
-        fragment.getParentFragmentManager().setFragmentResultListener(key.toString(), fragment, (requestKey, bundle) -> consumer.accept(bundle));
-    }
-    */
-
-    public static void sendMessages(Fragment fragment, Message... messages){
-        for(Message message : messages){
-            sendMessage(fragment, message);
-        }
-    }
-
-
-    public static void sendMessage(Fragment fragment, Message message){
-        sendMessage(fragment, message, new Bundle());
-    }
-
-
-    public static void sendMessage(Fragment fragment, Message message, Bundle bundle){
-        fragment.getParentFragmentManager().setFragmentResult(message.toString(), bundle);
+        fragmentManager.beginTransaction()
+                .add(dialogFragment , tag)
+                .commit();
     }
 
 }

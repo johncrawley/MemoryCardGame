@@ -27,10 +27,8 @@ public class Game {
     }
 
     private void initCardsAndUpdateView(){
-        log("entered initCardsAndUpdateView()");
         if(gameModel.hasNoCards()){
             int numberOfCards = gamePreferences.getNumberOfCards();
-            log("game model has no cards, initialising deck with "  + numberOfCards + " cards");
             gameModel.initDeckOfCards(numberOfCards);
         }
         gameView.addCardViews(gameModel.getCards(), this::notifyClickOnPosition);

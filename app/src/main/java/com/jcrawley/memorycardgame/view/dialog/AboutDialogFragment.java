@@ -15,7 +15,6 @@ import com.jcrawley.memorycardgame.R;
 public class AboutDialogFragment extends DialogFragment {
 
     public static AboutDialogFragment newInstance() {
-        System.out.println("^^^ AboutDialogFragment entered newInstance()");
         return new AboutDialogFragment();
     }
 
@@ -38,6 +37,5 @@ public class AboutDialogFragment extends DialogFragment {
     private void setupButtons(View parentView){
        // ButtonMaker.setupButton(parentView, R.id.dismissAboutDialogButton, this::dismiss);
     }
-
 
 }

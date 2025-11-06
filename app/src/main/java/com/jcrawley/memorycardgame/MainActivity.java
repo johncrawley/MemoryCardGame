@@ -136,7 +136,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupOptionsButton(){
         ImageButton optionsButton = findViewById(R.id.optionsButton);
-        optionsButton.setOnClickListener(v -> FragmentManagerHelper.showOptionsDialog(MainActivity.this));
+        optionsButton.setOnClickListener(v -> {
+            if(viewModel.isOptionsButtonEnabled.get()){
+                FragmentManagerHelper.showOptionsDialog(MainActivity.this);
+                viewModel.isOptionsButtonEnabled.set(false);
+            }
+        });
     }
 
 
@@ -312,6 +317,13 @@ public class MainActivity extends AppCompatActivity {
         dismissResultsLayoutIfVisible();
         newGameLayout.setVisibility(VISIBLE);
         isShowingNewGameDialogue = true;
+    }
+
+
+    public void enableOptionsButton(){
+        if(viewModel != null){
+            viewModel.isOptionsButtonEnabled.set(true);
+        }
     }
 
 

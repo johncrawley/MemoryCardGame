@@ -8,12 +8,14 @@ import com.jcrawley.memorycardgame.card.CardType;
 import com.jcrawley.memorycardgame.game.GameModel;
 
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import androidx.lifecycle.ViewModel;
 
 public class MainViewModel extends ViewModel {
 
     public GameModel gameModel = new GameModel();
+    public AtomicBoolean isOptionsButtonEnabled = new AtomicBoolean(true);
 
     public boolean isCardBackInitialised = false;
     public boolean isRandomCardBackEnabled = false;
