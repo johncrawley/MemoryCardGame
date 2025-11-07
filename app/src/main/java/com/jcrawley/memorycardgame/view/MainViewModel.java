@@ -3,7 +3,7 @@ package com.jcrawley.memorycardgame.view;
 import android.graphics.Bitmap;
 
 import com.jcrawley.memorycardgame.R;
-import com.jcrawley.memorycardgame.card.CardFaceImages;
+import com.jcrawley.memorycardgame.card.deck.CardFaceImages;
 import com.jcrawley.memorycardgame.card.CardType;
 import com.jcrawley.memorycardgame.game.GameModel;
 

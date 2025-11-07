@@ -10,7 +10,7 @@ import com.jcrawley.memorycardgame.MainActivity;
 import com.jcrawley.memorycardgame.R;
 import com.jcrawley.memorycardgame.card.Card;
 import com.jcrawley.memorycardgame.card.CardBackManager;
-import com.jcrawley.memorycardgame.card.CardFaceImages;
+import com.jcrawley.memorycardgame.card.deck.CardFaceImages;
 import com.jcrawley.memorycardgame.view.animation.CardAnimator;
 import com.jcrawley.memorycardgame.game.Game;
 import com.jcrawley.memorycardgame.view.utils.BitmapLoader;

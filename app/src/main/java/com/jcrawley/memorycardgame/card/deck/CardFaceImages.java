@@ -1,11 +1,16 @@
-package com.jcrawley.memorycardgame.card;
+package com.jcrawley.memorycardgame.card.deck;
 
 import com.jcrawley.memorycardgame.R;
+import com.jcrawley.memorycardgame.card.Card;
+import com.jcrawley.memorycardgame.card.CardType;
+import com.jcrawley.memorycardgame.card.CardTypeSetter;
+import com.jcrawley.memorycardgame.card.Rank;
+import com.jcrawley.memorycardgame.card.Suit;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class CardFaceImages implements CardTypeSetter{
+public class CardFaceImages implements CardTypeSetter {
 
     private final Map<CardType, Map<String, Integer>> decksMap;
     private Map<String, Integer> currentDeckMap;

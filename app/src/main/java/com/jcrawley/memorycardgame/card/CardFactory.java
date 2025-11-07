@@ -23,13 +23,14 @@ public class CardFactory {
        setupCardMap();
     }
 
+
     private void setupCardMap(){
         rankMap = new HashMap<>(14);
         Rank[] ranks = Rank.values();
-        for(Rank rank : ranks){
-            List<Card> cards = new ArrayList<>();
-            for(Suit suit : Suit.values()){
-                Card card = new Card(rank, suit);
+        for(var rank : ranks){
+            var cards = new ArrayList<Card>();
+            for(var suit : Suit.values()){
+                var card = new Card(rank, suit);
                 cards.add(card);
                 allCards.add(card);
             }
@@ -104,6 +105,7 @@ public class CardFactory {
     private int getRandomRankIndex(){
         return random.nextInt(Rank.values().length);
     }
+
 
     private int getRandomSuitIndex(){
         return random.nextInt(Suit.values().length);
