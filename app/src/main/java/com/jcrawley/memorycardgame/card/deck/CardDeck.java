@@ -10,5 +10,6 @@ public interface CardDeck {
 
     Map<String, Integer> getImageMap();
     void assign(Suit suit, Rank rank, int drawableId);
+    void assign(Rank rank, int drawableId);
     int getImageIdFor(Card card);
 }

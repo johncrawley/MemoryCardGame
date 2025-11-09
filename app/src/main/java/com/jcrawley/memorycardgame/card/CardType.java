@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 public enum CardType {
 
     STANDARD(R.drawable.card_face_standard, false),
-    SIMPLE(R.drawable.card_face_simple, false),
+    EASY_READ(R.drawable.card_face_simple, false),
     CAT(R.drawable.card_face_cat_2, false),
     DOG(R.drawable.card_face_dog_2, false),
 
