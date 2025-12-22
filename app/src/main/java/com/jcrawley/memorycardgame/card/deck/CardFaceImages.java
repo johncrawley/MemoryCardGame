@@ -42,6 +42,9 @@ public class CardFaceImages implements CardTypeSetter {
 
     public void setCardType(CardType cardType){
         currentDeck = deckMap.get(cardType);
+        if(currentDeck != null){
+            currentDeck.init();
+        }
     }
 
 
@@ -213,6 +216,30 @@ public class CardFaceImages implements CardTypeSetter {
     }
 
 
+    private void addShapesDeck(){
+        var dogs = List.of(R.drawable.card_face_dog_2,
+                R.drawable.card_face_dog_3,
+                R.drawable.card_face_dog_4,
+                R.drawable.card_face_dog_5,
+                R.drawable.card_face_dog_6,
+                R.drawable.card_face_dog_7,
+                R.drawable.card_face_dog_8,
+                R.drawable.card_face_dog_9,
+                R.drawable.card_face_dog_10,
+                R.drawable.card_face_dog_jack,
+                R.drawable.card_face_dog_king,
+                R.drawable.card_face_dog_queen,
+                R.drawable.card_face_dog_ace);
+        createSimpleDeck(DOG, dogs);
+    }
+
+
+    private void createRandomisedDeck(CardType cardType, List<Integer> ids){
+        var deck = new RandomisedCardDeckImpl(ids);
+        deckMap.put(cardType, deck);
+    }
+
+
     private void createSimpleDeck(CardType cardType, List<Integer> ids){
         var deck = new CardDeckImpl();
         assign(deck, ids);
@@ -220,7 +247,7 @@ public class CardFaceImages implements CardTypeSetter {
     }
 
 
-    private void assign(CardDeck deck, Suit suit, List<Integer> ids){
+    private void assign(CardDeckImpl deck, Suit suit, List<Integer> ids){
         var ranks = Rank.values();
         for(int i = 0; i < ranks.length; i++){
             deck.assign(suit, ranks[i], ids.get(i) );
@@ -228,7 +255,7 @@ public class CardFaceImages implements CardTypeSetter {
     }
 
 
-    private void assign(CardDeck deck, List<Integer> ids){
+    private void assign(CardDeckImpl deck, List<Integer> ids){
         var ranks = Rank.values();
         for(int i = 0; i < ranks.length; i++){
             deck.assign(ranks[i], ids.get(i) );

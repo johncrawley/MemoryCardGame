@@ -6,13 +6,11 @@ import com.jcrawley.memorycardgame.card.Rank;
 import com.jcrawley.memorycardgame.card.Suit;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class CardDeckImpl implements CardDeck{
 
     private final Map<String, Integer> imageMap;
-
 
     public CardDeckImpl(){
         imageMap = new HashMap<>();
@@ -20,19 +18,17 @@ public class CardDeckImpl implements CardDeck{
 
 
     @Override
-    public Map<String, Integer> getImageMap() {
-        return imageMap;
+    public void init(){
+        //do nothing
     }
 
 
-    @Override
     public void assign(Suit suit, Rank rank, int drawableId) {
         var key = getKeyFor(suit, rank);
         imageMap.put(key, drawableId);
     }
 
 
-    @Override
     public void assign(Rank rank, int drawableId) {
         assign(Suit.DIAMONDS, rank, drawableId);
         assign(Suit.HEARTS, rank, drawableId);
