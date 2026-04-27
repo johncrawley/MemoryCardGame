@@ -3,11 +3,13 @@ package com.jcrawley.memorycardgame.card.deck;
 import static com.jcrawley.memorycardgame.card.CardType.CAT;
 import static com.jcrawley.memorycardgame.card.CardType.DOG;
 import static com.jcrawley.memorycardgame.card.CardType.EASY_READ;
+import static com.jcrawley.memorycardgame.card.CardType.SHAPE;
 import static com.jcrawley.memorycardgame.card.CardType.STANDARD;
 import static com.jcrawley.memorycardgame.card.Suit.CLUBS;
 import static com.jcrawley.memorycardgame.card.Suit.DIAMONDS;
 import static com.jcrawley.memorycardgame.card.Suit.HEARTS;
 import static com.jcrawley.memorycardgame.card.Suit.SPADES;
+
 
 import com.jcrawley.memorycardgame.R;
 import com.jcrawley.memorycardgame.card.Card;
@@ -31,20 +33,36 @@ public class CardFaceImages implements CardTypeSetter {
         addEasyReadDeck();
         addCatDeck();
         addDogDeck();
+        addShapesDeck();
         currentDeck = deckMap.get(STANDARD);
     }
 
 
+    public void init(){
+        for(var deck : deckMap.values()){
+            if(deck != null){
+                deck.init();
+            }
+        }
+    }
+
+
     public int getImageIdFor(Card card){
+        if(currentDeck == null){
+            if(deckMap.get(STANDARD) == null){
+                addStandardDeck();
+            }
+            currentDeck = deckMap.get(STANDARD);
+        }
+        if(currentDeck == null){
+            return R.drawable.card_face_empty;
+        }
         return currentDeck.getImageIdFor(card);
     }
 
 
     public void setCardType(CardType cardType){
         currentDeck = deckMap.get(cardType);
-        if(currentDeck != null){
-            currentDeck.init();
-        }
     }
 
 
@@ -217,20 +235,24 @@ public class CardFaceImages implements CardTypeSetter {
 
 
     private void addShapesDeck(){
-        var dogs = List.of(R.drawable.card_face_dog_2,
-                R.drawable.card_face_dog_3,
-                R.drawable.card_face_dog_4,
-                R.drawable.card_face_dog_5,
-                R.drawable.card_face_dog_6,
-                R.drawable.card_face_dog_7,
-                R.drawable.card_face_dog_8,
-                R.drawable.card_face_dog_9,
-                R.drawable.card_face_dog_10,
-                R.drawable.card_face_dog_jack,
-                R.drawable.card_face_dog_king,
-                R.drawable.card_face_dog_queen,
-                R.drawable.card_face_dog_ace);
-        createSimpleDeck(DOG, dogs);
+        var shapes = List.of(R.drawable.card_face_shape_1,
+                R.drawable.card_face_shape_2,
+                R.drawable.card_face_shape_3,
+                R.drawable.card_face_shape_4,
+                R.drawable.card_face_shape_5,
+                R.drawable.card_face_shape_6,
+                R.drawable.card_face_shape_7,
+                R.drawable.card_face_shape_8,
+                R.drawable.card_face_shape_9,
+                R.drawable.card_face_shape_10,
+                R.drawable.card_face_shape_11,
+                R.drawable.card_face_shape_12,
+                R.drawable.card_face_shape_13,
+                R.drawable.card_face_shape_15,
+                R.drawable.card_face_shape_16,
+                R.drawable.card_face_shape_17,
+                R.drawable.card_face_shape_18);
+        createRandomisedDeck(SHAPE, shapes);
     }
 
 

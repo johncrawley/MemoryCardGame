@@ -26,7 +26,7 @@ public class CardFactory {
 
     private void setupCardMap(){
         rankMap = new HashMap<>(14);
-        Rank[] ranks = Rank.values();
+        var ranks = Rank.values();
         for(var rank : ranks){
             var cards = new ArrayList<Card>();
             for(var suit : Suit.values()){
@@ -40,8 +40,8 @@ public class CardFactory {
 
 
     public List<Card> getCards(int number){
-        List<Card> listToAdd = number == allCards.size() ? allCards : getRandomCardsFromSuits(number);
-        List<Card> cards = new ArrayList<>(listToAdd);
+        var listToAdd = number == allCards.size() ? allCards : getRandomCardsFromSuits(number);
+        var cards = new ArrayList<>(listToAdd);
         Collections.shuffle(cards);
         init(cards);
         return cards;
@@ -57,10 +57,10 @@ public class CardFactory {
 
 
     private List<Card> getRandomCardsFromSuits(int number){
-        List<Card> cards = new ArrayList<>();
+        var cards = new ArrayList<Card>();
         int numberOfPairs = number / 2;
-        for(Rank rank : getRandomRanks(numberOfPairs)){
-            List<Card> cardsInRank = rankMap.get(rank);
+        for(var rank : getRandomRanks(numberOfPairs)){
+            var cardsInRank = rankMap.get(rank);
             assert(cardsInRank != null);
             if(number > 26){
                 cards.addAll(cardsInRank);
@@ -77,7 +77,7 @@ public class CardFactory {
 
 
     private Set<Rank> getRandomRanks(int number){
-        Set<Rank> rankSet = new HashSet<>(number);
+        var rankSet = new HashSet<Rank>(number);
         initRandom();
 
         while(rankSet.size() < number && rankSet.size() < ranks.length){
@@ -89,7 +89,7 @@ public class CardFactory {
 
     private Set<Card> getTwoRandomCardsFrom(List<Card> cardsToChooseFrom){
         initRandom();
-        Set<Card> cards = new HashSet<>();
+        var cards = new HashSet<Card>();
         while(cards.size() < 2){
             cards.add(cardsToChooseFrom.get(getRandomSuitIndex()));
         }

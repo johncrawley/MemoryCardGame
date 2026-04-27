@@ -87,7 +87,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initGame(){
-        game = new Game(viewModel.gameModel, gameView, new GamePreferences(getApplicationContext()));
+        game = new Game(viewModel.gameModel,
+                viewModel.cardFaceImages,
+                gameView,
+                new GamePreferences(getApplicationContext()));
     }
 
 

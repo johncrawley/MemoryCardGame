@@ -290,6 +290,9 @@ public class GameViewImpl implements GameView {
 
 
     private void setBitmapForCardFace(ImageView cardView, Card card){
+        if(cardFaceImages == null){
+            return;
+        }
         int imageId = cardFaceImages.getImageIdFor(card);
         if(imageId == -1){
             return;

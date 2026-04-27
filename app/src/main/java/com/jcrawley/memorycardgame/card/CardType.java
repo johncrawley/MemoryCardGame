@@ -13,6 +13,7 @@ public enum CardType {
     EASY_READ(R.drawable.card_face_simple, false),
     CAT(R.drawable.card_face_cat_2, false),
     DOG(R.drawable.card_face_dog_2, false),
+    SHAPE(R.drawable.card_face_shape_11, false),
 
     BACK_KALEIDOSCOPE_RED(R.drawable.card_back_kaleidoscope_red),
     BACK_KALEIDOSCOPE_BLUE(R.drawable.card_back_kaleidoscope_blue),

@@ -1,5 +1,6 @@
 package com.jcrawley.memorycardgame.game;
 
+import com.jcrawley.memorycardgame.card.deck.CardFaceImages;
 import com.jcrawley.memorycardgame.view.GamePreferences;
 import com.jcrawley.memorycardgame.view.GameView;
 
@@ -8,10 +9,12 @@ public class Game {
     private final GamePreferences gamePreferences;
     private final GameView gameView;
     private final GameModel gameModel;
+    private final CardFaceImages cardFaceImages;
 
-    public Game(GameModel gameModel, GameView gameView, GamePreferences gamePreferences){
+    public Game(GameModel gameModel, CardFaceImages cardFaceImages, GameView gameView, GamePreferences gamePreferences){
         ensureUnavailableCardsAreInvisible();
         this.gameModel = gameModel;
+        this.cardFaceImages = cardFaceImages;
         this.gameView = gameView;
         this.gamePreferences = gamePreferences;
 
@@ -22,9 +25,6 @@ public class Game {
         }
     }
 
-    private void log(String msg){
-        System.out.println("^^^ Game: " + msg);
-    }
 
     private void initCardsAndUpdateView(){
         if(gameModel.hasNoCards()){
@@ -67,6 +67,7 @@ public class Game {
 
     public void startAgain(){
         gameModel.initDeckOfCards(gamePreferences.getNumberOfCards());
+        cardFaceImages.init();
         gameView.swipeInCardsAfterDelay(gameModel.getCards(), this::notifyClickOnPosition);
     }
 

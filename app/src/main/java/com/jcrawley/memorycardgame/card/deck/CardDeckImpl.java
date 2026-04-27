@@ -39,10 +39,13 @@ public class CardDeckImpl implements CardDeck{
 
     @Override
     public int getImageIdFor(Card card){
-        String key = getKeyFor(card.getSuit(), card.getRank());
-        Integer imageId = imageMap.get(key);
+        if(card == null){
+            return R.drawable.card_face_empty;
+        }
+        var key = getKeyFor(card.getSuit(), card.getRank());
+        var imageId = imageMap.get(key);
         if(imageId == null){
-            return R.drawable.card_back_kaleidoscope_red;
+            return R.drawable.card_face_empty;
         }
         return imageId;
     }
