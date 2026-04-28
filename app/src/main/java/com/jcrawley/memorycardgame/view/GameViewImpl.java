@@ -154,7 +154,9 @@ public class GameViewImpl implements GameView {
 
     @Override
     public void showNewGameLayout(){
-        mainActivity.setNewGameDialogVisible();
+        if(mainActivity != null){
+            mainActivity.setNewGameDialogVisible();
+        }
     }
 
 

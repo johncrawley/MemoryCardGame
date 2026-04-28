@@ -6,11 +6,9 @@ import android.view.animation.Animation;
 
 import com.jcrawley.memorycardgame.MainActivity;
 
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class AnimationManager {
-
 
     private Animation resultsDropInAnimation, resultsDropOutAnimation, newGameDropInAnimation, newGameDropOutAnimation;
     private Animation cardsFadeOutAnimation;
@@ -18,7 +16,7 @@ public class AnimationManager {
     private Context context;
 
     public AnimationManager(MainActivity mainActivity, int screenHeight){
-        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        var executorService = Executors.newSingleThreadExecutor();
         executorService.execute(()-> setupAnimations(mainActivity, screenHeight));
     }
 

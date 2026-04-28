@@ -336,10 +336,15 @@ public class MainActivity extends AppCompatActivity {
         }
         isShowingNewGameDialogue = true;
         dismissResultsLayoutIfVisible();
+        if(newGameLayout == null){
+            return;
+        }
         newGameLayout.setVisibility(VISIBLE);
         if(animationManager != null){
             var animation = animationManager.getNewGameDropInAnimation();
-            newGameLayout.startAnimation(animation);
+            if(animation != null){
+                newGameLayout.startAnimation(animation);
+            }
         }
         notifyGameOfNewGameDialogPresence();
     }
@@ -351,7 +356,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void dismissResultsLayoutIfVisible(){
-        if(resultsLayout.getVisibility() == VISIBLE){
+        if(resultsLayout != null && resultsLayout.getVisibility() == VISIBLE){
             resultsLayout.startAnimation(animationManager.getResultsDropOutAnimation());
         }
     }
