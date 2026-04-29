@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/background_color"
+    android:layout_height="match_parent"
+    android:padding="@dimen/main_layout_padding"
+    android:id="@+id/mainLayout"
+    tools:context=".MainActivity">
+
+
+    <include layout="@layout/status_panel"
+        android:id="@+id/statusPanelInclude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:layout_margin="@dimen/_8sdp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+
+        <include layout="@layout/options_panel"
+            android:id="@+id/optionsPanelInclude"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_8sdp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+    <LinearLayout
+        android:id="@+id/cardLayoutHolder"
+        android:layout_width="0dp"
+        android:orientation="vertical"
+        android:layout_height="0dp"
+        android:paddingHorizontal="@dimen/_16sdp"
+        android:paddingTop="@dimen/_16sdp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/statusPanelInclude"
+        app:layout_constraintEnd_toStartOf="@id/optionsPanelInclude">
+
+        <LinearLayout
+            android:id="@+id/cardLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/card_layout_padding"
+            android:orientation="vertical">
+        </LinearLayout>
+    </LinearLayout>
+
+    <include
+        android:id="@+id/game_over_include"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        layout="@layout/dialog_game_over" />
+
+    <include
+        android:id="@+id/new_game_include"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        layout="@layout/dialog_new_game" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
