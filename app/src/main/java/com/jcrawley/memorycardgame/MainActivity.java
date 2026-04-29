@@ -6,7 +6,6 @@ import static android.view.View.VISIBLE;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
-import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -16,11 +15,9 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -83,8 +80,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void initViewModel(){
         viewModel  = new ViewModelProvider(this).get(MainViewModel.class);
-
     }
+
 
     private void initGame(){
         game = new Game(viewModel.gameModel,
@@ -97,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
     private void setupInsetPadding(){
         EdgeToEdge.enable(this);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.mainLayout), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            var systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
@@ -130,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
         cardLayoutManager = new CardLayoutManager(getApplicationContext(), cardBackManager, cardLayout);
         cardAnimator = new CardAnimator(getApplicationContext());
     }
+
 
     private void initGameView(){
         gameView = new GameViewImpl(MainActivity.this, viewModel.cardFaceImages);
@@ -210,7 +208,7 @@ public class MainActivity extends AppCompatActivity {
     public void displayResults(int numberOfTurns, int currentRecord, int delay){
         final int actualDelay = Math.max(0, delay);
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
-            String recordText = getRecordTextFor(numberOfTurns, currentRecord);
+            var recordText = getRecordTextFor(numberOfTurns, currentRecord);
             TextView resultsTextView = findViewById(R.id.numberOfTurnsTakenTextView);
             TextView recordTextView = findViewById(R.id.currentRecordTurnsTextView);
             resultsTextView.setText(String.valueOf(numberOfTurns));
@@ -235,7 +233,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void setAndSaveBackground(int drawableId, int backgroundIndex){
-        Drawable background = AppCompatResources.getDrawable(MainActivity.this, drawableId);
+        var background = AppCompatResources.getDrawable(MainActivity.this, drawableId);
         mainLayout.setBackground(background);
         gamePreferences.saveInt(GamePreferences.PREF_NAME_BACKGROUND_INDEX, backgroundIndex);
     }
@@ -363,7 +361,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void assignScreenDimensions() {
-        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        var displayMetrics = getResources().getDisplayMetrics();
         screenHeight = displayMetrics.heightPixels;
         screenWidth = displayMetrics.widthPixels;
     }
@@ -383,7 +381,7 @@ public class MainActivity extends AppCompatActivity {
         if(statusText == null){
             statusText = findViewById(R.id.statusText);
         }
-        String turnsWithTitle = String.valueOf(turn);
+        var turnsWithTitle = String.valueOf(turn);
         statusText.setText(turnsWithTitle);
         if(turn > 0 && statusPanel.getVisibility() != VISIBLE){
             showStatusPanel();
@@ -395,7 +393,7 @@ public class MainActivity extends AppCompatActivity {
         if(statusPanel.getVisibility() == VISIBLE){
             return;
         }
-        Animation fadeInAnimation = AnimationHelper.createFadeInAnimation(MainActivity.this);
+        var fadeInAnimation = AnimationHelper.createFadeInAnimation(MainActivity.this);
         statusPanel.clearAnimation();
         statusPanel.setAnimation(fadeInAnimation);
         statusPanel.setVisibility(VISIBLE);
@@ -407,7 +405,7 @@ public class MainActivity extends AppCompatActivity {
         if(statusPanel.getVisibility() == INVISIBLE){
             return;
         }
-        Animation fadeOutAnimation = AnimationHelper.createFadeOutAnimation(MainActivity.this, statusPanel);
+        var fadeOutAnimation = AnimationHelper.createFadeOutAnimation(MainActivity.this, statusPanel);
         statusPanel.clearAnimation();
         statusPanel.setAnimation(fadeOutAnimation);
         statusPanel.animate();

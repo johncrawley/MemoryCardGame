@@ -10,7 +10,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="?attr/status_panel_text_color"
-            android:textSize="32sp"
+            android:textSize="28sp"
             android:maxLines="1"
             android:minWidth="@dimen/_40sdp"
             android:visibility="visible"
