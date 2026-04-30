@@ -83,6 +83,7 @@ public class GameViewImpl implements GameView {
 
     @Override
     public void flipOver(Card card, boolean isSecondCardSelected){
+        card.setIsFlipping(true);
         ImageView cardView = getImageViewFor(card);
         saveFirstSelected(card, cardView, !isSecondCardSelected);
 
@@ -91,6 +92,7 @@ public class GameViewImpl implements GameView {
             if(isSecondCardSelected){
                 checkCards();
             }
+            card.setIsFlipping(false);
         });
 
         var halfWayFlippedListener = createAnimatorListener(() -> {
@@ -109,6 +111,7 @@ public class GameViewImpl implements GameView {
             game.checkCards(true);
         }
     }
+
 
     private void saveFirstSelected(Card card, ImageView cardView, boolean isFirstSelected){
         if(isFirstSelected){
@@ -160,7 +163,6 @@ public class GameViewImpl implements GameView {
     }
 
 
-
     private void resetTurnState(){
         var game = mainActivity.getGame();
         if(game != null){
@@ -179,6 +181,11 @@ public class GameViewImpl implements GameView {
         addCardViews(cards, onClickConsumer, false);
         setAllCardsFaceDown();
         handleRandomCardAssignment();
+        swipeIn();
+    }
+
+
+    private void swipeIn(){
         int initialDelay = getInt(R.integer.swipe_in_cards_initial_delay);
         new Handler(Looper.getMainLooper()).postDelayed(this::swipeInCards, initialDelay);
     }
@@ -219,8 +226,10 @@ public class GameViewImpl implements GameView {
             return;
         }
         isFlipBackInitiated.set(true);
+        card1.setIsFlipping(true);
+        card2.setIsFlipping(true);
         firstSelectedCardView = null;
-        cancelFlipBackFuture();
+        cancelScheduledFlipBack();
         mainActivity.runOnUiThread(()->{
             flipCardBack(card1, 0 );
             flipCardBack(card2, secondFlipBackDelay);
@@ -230,8 +239,8 @@ public class GameViewImpl implements GameView {
 
 
     private void flipCardBack(Card card, int delay) {
-        ImageView cardView = cardLayoutManager.getImageViewAt(card.getPosition());
-        var onFullWayFlippedBackListener = createAnimatorListener( () -> onCardFullyFlippedBack(cardView));
+        var cardView = cardLayoutManager.getImageViewAt(card.getPosition());
+        var onFullWayFlippedBackListener = createAnimatorListener( () -> onCardFullyFlippedBack(cardView, card));
         var onHalfWayFlippedBackListener = createAnimatorListener( () -> onHalfWayFlippedBack(cardView, card, onFullWayFlippedBackListener));
         animateCardFlip(cardView, 1, onHalfWayFlippedBackListener, delay);
     }
@@ -242,9 +251,10 @@ public class GameViewImpl implements GameView {
     }
 
 
-    private void onCardFullyFlippedBack(ImageView cardView){
+    private void onCardFullyFlippedBack(ImageView cardView, Card card){
         isFlipBackInitiated.set(false);
         cardView.clearAnimation();
+        card.setIsFlipping(false);
     }
 
 
@@ -255,7 +265,7 @@ public class GameViewImpl implements GameView {
     }
 
 
-    private void cancelFlipBackFuture(){
+    private void cancelScheduledFlipBack(){
         if(flipBackFuture != null
                 && !flipBackFuture.isCancelled()
                 && !flipBackFuture.isDone()){

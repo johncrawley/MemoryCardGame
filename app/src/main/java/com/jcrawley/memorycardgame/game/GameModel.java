@@ -1,7 +1,6 @@
 package com.jcrawley.memorycardgame.game;
 
 import static com.jcrawley.memorycardgame.game.TurnState.BOTH_CARDS_FLIPPED_OVER;
-import static com.jcrawley.memorycardgame.game.TurnState.IMMEDIATE_FLIP_BACK;
 
 import com.jcrawley.memorycardgame.card.Card;
 import com.jcrawley.memorycardgame.card.CardFactory;
@@ -17,13 +16,7 @@ public class GameModel {
     private List<Card> cards = new ArrayList<>();
     private TurnState turnState = TurnState.NOTHING_SELECTED;
     private int numberOfTurns, numberOfCards;
-    private int firstSelectedPosition = -1;
     private int secondSelectedPosition = -1;
-
-    public void setNumberOfRemainingCards(int numberOfRemainingCards) {
-        this.numberOfRemainingCards = numberOfRemainingCards;
-    }
-
     private int numberOfRemainingCards;
     private Card firstSelectedCard;
     private Card secondSelectedCard;
@@ -32,17 +25,9 @@ public class GameModel {
         return firstSelectedCard;
     }
 
+
     public Card getSecondSelectedCard() {
         return secondSelectedCard;
-    }
-
-
-    public void setSecondSelectedCard(Card secondSelectedCard) {
-        this.secondSelectedCard = secondSelectedCard;
-    }
-
-    public void setFirstSelectedCard(Card firstSelectedCard) {
-        this.firstSelectedCard = firstSelectedCard;
     }
 
 
@@ -78,7 +63,9 @@ public class GameModel {
 
 
     public void setBothSelectedCardsFaceDown(boolean isSimultaneousFlip){
-        setTurnState(isSimultaneousFlip ? IMMEDIATE_FLIP_BACK : BOTH_CARDS_FLIPPED_OVER);
+        if(!isSimultaneousFlip){
+            setTurnState(BOTH_CARDS_FLIPPED_OVER);
+        }
         firstSelectedCard.setFaceDown();
         secondSelectedCard.setFaceDown();
     }
@@ -86,7 +73,6 @@ public class GameModel {
 
     public void selectFirstPosition(int position){
         setTurnState(TurnState.FIRST_CARD_SELECTED);
-        setFirstSelectedPosition(position);
         firstSelectedCard = cards.get(position);
         flipCard(position);
     }
@@ -144,21 +130,8 @@ public class GameModel {
         return secondSelectedPosition;
     }
 
-    public void setFirstSelectedPosition(int position){
-        firstSelectedPosition = position;
-    }
-
     public void setSecondSelectedPosition(int position){
         secondSelectedPosition = position;
-    }
-
-
-    public CardFactory getCardFactory(){
-        return cardFactory;
-    }
-
-    public boolean hasFlipBackAlreadyBeenInitiated(){
-        return hasFlipBackAlreadyBeenInitiated.get();
     }
 
     public List<Card> getCards(){
@@ -177,48 +150,19 @@ public class GameModel {
         numberOfTurns++;
     }
 
-    public void resetNumberOfTurns(){
-        numberOfTurns = 0;
-    }
-
     public int getNumberOfCards(){
         return numberOfCards;
     }
-
-    public void setNumberOfCards(int numberOfCards){
-        this.numberOfCards = numberOfCards;
-    }
-
-
-
-    public void onNewGameLayoutShown(){
-        cards = null;
-        setTurnState(TurnState.AWAITING_NEW_GAME);
-    }
-
-
-
-    private void ensureUnavailableCardsAreInvisible(){
-        if(cards == null){
-            return;
-        }
-        for(Card card : cards){
-            if(card.isUnavailable()){
-                card.setVisible(false);
-            }
-        }
-    }
-
-
-
 
     public void resetTurnState(){
         setTurnState(TurnState.NOTHING_SELECTED);
     }
 
+
     public void setTurnState(TurnState turnState){
         this.turnState = turnState;
     }
+
 
     public boolean areCardsMatching(){
         return firstSelectedCard.getRank() == secondSelectedCard.getRank();

@@ -35,7 +35,7 @@ public class CardAnimator {
         int delay = getInt(R.integer.swipe_in_all_cards_initial_delay);
         int delayIncrement = getInt(R.integer.swipe_in_all_cards_delay_offset);
         delayIncrement -= cards.size();
-        for(View card : cards){
+        for(var card : cards){
             card.setVisibility(View.VISIBLE);
             swipeIn(card, delay);
             delay+=delayIncrement;
@@ -46,7 +46,7 @@ public class CardAnimator {
     private void swipeIn(View card, int delay){
         savePreviousElevation(card);
         setHighElevation(card);
-        Animation animation = new TranslateAnimation(
+        var animation = new TranslateAnimation(
                 screenWidth + 10,
                 0,
                 0,

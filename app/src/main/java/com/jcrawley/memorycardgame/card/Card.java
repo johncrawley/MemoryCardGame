@@ -9,6 +9,7 @@ public class Card {
     private boolean isFaceDown;
     private int position;
     private final AtomicBoolean isAvailable = new AtomicBoolean(true);
+    private final AtomicBoolean isCurrentlyBeingFlipped = new AtomicBoolean(false);
 
 
     public Card(Rank rank, Suit suit){
@@ -22,6 +23,11 @@ public class Card {
         this.isVisible = true;
         this.isFaceDown = true;
         isAvailable.set(true);
+    }
+
+
+    public void setIsFlipping(boolean isBeingFlipped){
+        isCurrentlyBeingFlipped.set(isBeingFlipped);
     }
 
 
@@ -41,6 +47,11 @@ public class Card {
 
 
     public boolean isUnavailable(){
+        return !isAvailable.get();
+    }
+
+
+    public boolean isCurrentlyBeingFlipped(){
         return !isAvailable.get();
     }
 

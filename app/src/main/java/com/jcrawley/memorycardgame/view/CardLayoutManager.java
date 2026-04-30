@@ -63,7 +63,7 @@ public class CardLayoutManager {
     private void setVisibilityOnCardViews(List<Card> cards, boolean isVisible){
         for(int i = 0; i < cardViews.size(); i++){
             View cardView = cardViews.get(i);
-            Card card = cards.get(i);
+            var card = cards.get(i);
             int visibility = isVisible && card.isVisible() ? VISIBLE : INVISIBLE;
             cardView.setVisibility(visibility);
         }
@@ -155,18 +155,18 @@ public class CardLayoutManager {
 
 
     private ImageView createCard(){
-        ImageView imageView = new ImageView(context);
+        var imageView = new ImageView(context);
         int id = View.generateViewId();
         imageView.setId(id);
         cardViews.add(imageView);
         cardBackManager.setCardBackOf(imageView);
         imageView.setPadding(padding, padding, padding, padding);
-        LinearLayout.LayoutParams layoutParams =  new LinearLayout.LayoutParams(cardWidth, cardHeight);
+        var layoutParams =  new LinearLayout.LayoutParams(cardWidth, cardHeight);
         imageView.setTag(R.string.position_tag, cardsAdded);
         imageView.setOnClickListener(onClickListener);
         imageView.setLayoutParams(layoutParams);
         cardsAdded++;
-        return  imageView;
+        return imageView;
     }
 
 

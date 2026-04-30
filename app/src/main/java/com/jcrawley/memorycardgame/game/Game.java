@@ -1,5 +1,7 @@
 package com.jcrawley.memorycardgame.game;
 
+import static com.jcrawley.memorycardgame.game.TurnState.BOTH_CARDS_FLIPPED_OVER;
+
 import com.jcrawley.memorycardgame.card.deck.CardFaceImages;
 import com.jcrawley.memorycardgame.view.GamePreferences;
 import com.jcrawley.memorycardgame.view.GameView;
@@ -11,14 +13,14 @@ public class Game {
     private final GameModel gameModel;
     private final CardFaceImages cardFaceImages;
 
-    public Game(GameModel gameModel, CardFaceImages cardFaceImages, GameView gameView, GamePreferences gamePreferences){
+    public Game(GameModel gameModel, CardFaceImages cardFaceImages, GameView gameView, GamePreferences gamePreferences) {
         ensureUnavailableCardsAreInvisible();
         this.gameModel = gameModel;
         this.cardFaceImages = cardFaceImages;
         this.gameView = gameView;
         this.gamePreferences = gamePreferences;
 
-        switch(gameModel.getTurnState()){
+        switch (gameModel.getTurnState()) {
             case AWAITING_NEW_GAME -> gameView.showNewGameLayout();
             case GAME_OVER -> showGameOverOnView(-1);
             default -> initCardsAndUpdateView();
@@ -26,38 +28,42 @@ public class Game {
     }
 
 
-    private void initCardsAndUpdateView(){
-        if(gameModel.hasNoCards()){
+    private void initCardsAndUpdateView() {
+        if (gameModel.hasNoCards()) {
             int numberOfCards = gamePreferences.getNumberOfCards();
             gameModel.initDeckOfCards(numberOfCards);
         }
-        gameView.addCardViews(gameModel.getCards(), this::notifyClickOnPosition);
+        gameView.addCardViews(gameModel.getCards(), this::onCardClicked);
         quickFlipFirstSelectedCard();
         updateNumberOfTurnsOnView();
     }
 
 
-    public void resetTurnState(){
+    public void resetTurnState() {
         gameModel.resetTurnState();
     }
 
 
-    public void onNewGameLayoutShown(){
+    public void onNewGameLayoutShown() {
         gameModel.destroyCards();
     }
 
 
-    private void quickFlipFirstSelectedCard(){
-        if(gameModel.getTurnState() == TurnState.FIRST_CARD_SELECTED){
-            gameView.quickFlip(gameModel.getFirstSelectedCard());
+    private void quickFlipFirstSelectedCard() {
+        var card = gameModel.getFirstSelectedCard();
+        if (card == null || card.isCurrentlyBeingFlipped()) {
+            return;
+        }
+        if (gameModel.getTurnState() == TurnState.FIRST_CARD_SELECTED) {
+            gameView.quickFlip(card);
         }
     }
 
 
-    private void ensureUnavailableCardsAreInvisible(){
-        if(gameModel != null && gameModel.hasCards()){
-            for(var card : gameModel.getCards()){
-                if(card.isUnavailable()){
+    private void ensureUnavailableCardsAreInvisible() {
+        if (gameModel != null && gameModel.hasCards()) {
+            for (var card : gameModel.getCards()) {
+                if (card.isUnavailable()) {
                     card.setVisible(false);
                 }
             }
@@ -65,30 +71,43 @@ public class Game {
     }
 
 
-    public void startAgain(){
+    private void log(String msg) {
+        System.out.println("^^^ Game: " + msg);
+    }
+
+
+    public void startAgain() {
         gameModel.initDeckOfCards(gamePreferences.getNumberOfCards());
         cardFaceImages.init();
-        gameView.swipeInCardsAfterDelay(gameModel.getCards(), this::notifyClickOnPosition);
+        gameView.swipeInCardsAfterDelay(gameModel.getCards(), this::onCardClicked);
     }
 
 
-    public void notifyClickOnPosition(int position){
+    public void onCardClicked(int position) {
         var cards = gameModel.getCards();
-        if(cards == null
+        if (cards == null
                 || cards.size() <= position
-                || cards.get(position).isUnavailable()){
+                || cards.get(position).isUnavailable()
+                || cards.get(position).isCurrentlyBeingFlipped()) {
             return;
         }
-        switch(gameModel.getTurnState()){
-            case NOTHING_SELECTED: handleFirstSelection(position); break;
-            case FIRST_CARD_SELECTED: handleSecondSelection(position); break;
-            case BOTH_CARDS_FLIPPED_OVER: handleClickAfterBothCardsAreFlipped(position); break;
-            default: break;
+        switch (gameModel.getTurnState()) {
+            case NOTHING_SELECTED:
+                handleFirstSelection(position);
+                break;
+            case FIRST_CARD_SELECTED:
+                handleSecondSelection(position);
+                break;
+            case BOTH_CARDS_FLIPPED_OVER:
+                handleClickAfterBothCardsAreFlipped(position);
+                break;
+            default:
+                break;
         }
     }
 
 
-    private void handleFirstSelection(int position){
+    private void handleFirstSelection(int position) {
         gameModel.incNumberOfTurns();
         gameView.setTitleWithTurns(gameModel.getNumberOfTurns());
         gameModel.selectFirstPosition(position);
@@ -96,8 +115,8 @@ public class Game {
     }
 
 
-    private void handleSecondSelection(int position){
-        if(position == gameModel.getFirstSelectedPosition()){
+    private void handleSecondSelection(int position) {
+        if (position == gameModel.getFirstSelectedPosition()) {
             return;
         }
         gameModel.selectSecondPosition(position);
@@ -105,9 +124,22 @@ public class Game {
     }
 
 
-    private void handleClickAfterBothCardsAreFlipped(int position){
-        immediatelyFlipBackBothCardsIfNoMatch();
-        clickOnNextCard(position);
+    private void handleClickAfterBothCardsAreFlipped(int position) {
+        var isNotCurrentlySelected = isNotCurrentlySelected(position);
+        immediatelyFlipBackNonMatchedCards();
+        if(isNotCurrentlySelected){
+              clickOnNextCard(position);
+        }
+    }
+
+
+    private boolean isNotCurrentlySelected(int position) {
+        var card1 = gameModel.getFirstSelectedCard();
+        var card2 = gameModel.getSecondSelectedCard();
+        if(card1 == null || card2 == null){
+            return true;
+        }
+        return position != card1.getPosition() && position != card2.getPosition();
     }
 
 
@@ -116,17 +148,19 @@ public class Game {
                 && position != gameModel.getFirstSelectedPosition()
                 && position != gameModel.getSecondSelectedPosition()){
             gameModel.resetTurnState();
-            notifyClickOnPosition(position);
+            onCardClicked(position);
         }
     }
 
 
-    public void immediatelyFlipBackBothCardsIfNoMatch(){
-        if(gameModel.getTurnState() == TurnState.BOTH_CARDS_FLIPPED_OVER && !gameModel.areCardsMatching()){
+    public void immediatelyFlipBackNonMatchedCards(){
+        if(gameModel.getTurnState() == BOTH_CARDS_FLIPPED_OVER
+                && !gameModel.areCardsMatching()){
             var card1 = gameModel.getFirstSelectedCard();
             var card2 = gameModel.getSecondSelectedCard();
             gameView.flipBothCardsBack(card1, card2, 0);
             gameModel.setBothSelectedCardsFaceDown(true);
+
         }
     }
 

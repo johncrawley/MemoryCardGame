@@ -200,7 +200,7 @@ public class MainActivity extends AppCompatActivity {
     private void initBackgroundClickListener(){
         ViewGroup background = findViewById(R.id.cardLayoutHolder);
         if(background != null){
-            background.setOnClickListener(v -> game.immediatelyFlipBackBothCardsIfNoMatch());
+            background.setOnClickListener(v -> game.immediatelyFlipBackNonMatchedCards());
         }
     }
 
@@ -216,7 +216,9 @@ public class MainActivity extends AppCompatActivity {
             resultsLayout.setVisibility(VISIBLE);
             hideStatusPanel();
             if(actualDelay > 0){
-                resultsLayout.startAnimation(animationManager.getResultsDropInAnimation());
+                if(resultsLayout != null){
+                    resultsLayout.startAnimation(animationManager.getResultsDropInAnimation());
+                }
             }
             else{
                 onGameOverDialogShown();
