@@ -5,15 +5,19 @@ import android.content.Context;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 
-import com.jcrawley.memorycardgame.MainActivity;
 
 public class AnimationManager {
 
-    private final int screenHeight;
+    private int screenHeight;
     private final Context context;
 
-    public AnimationManager(MainActivity mainActivity, int screenHeight){
-        context = mainActivity.getApplicationContext();
+    public AnimationManager(Context context, int screenHeight){
+        this.context =  context;
+        this.screenHeight = screenHeight;
+    }
+
+
+    public void setScreenHeight(int screenHeight){
         this.screenHeight = screenHeight;
     }
 

@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initAnimationManager();
         initViewModel();
         setupInsetPadding();
         configureNavAndStatusBarAppearance();
@@ -80,6 +81,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void initViewModel(){
         viewModel  = new ViewModelProvider(this).get(MainViewModel.class);
+    }
+
+
+    private void initAnimationManager(){
+        animationManager = new AnimationManager(getApplicationContext(), 2000);
     }
 
 
@@ -190,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
             public void onGlobalLayout() {
                 cardLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 assignScreenDimensions();
-                animationManager = new AnimationManager(MainActivity.this, screenHeight);
+                animationManager.setScreenHeight(screenHeight);
                 cardAnimator.setScreenWidth(screenWidth);
                 initGame();
             }});
