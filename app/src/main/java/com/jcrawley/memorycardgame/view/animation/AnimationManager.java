@@ -2,58 +2,62 @@ package com.jcrawley.memorycardgame.view.animation;
 
 
 import android.content.Context;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 
 import com.jcrawley.memorycardgame.MainActivity;
 
-import java.util.concurrent.Executors;
-
 public class AnimationManager {
 
-    private Animation resultsDropInAnimation, resultsDropOutAnimation, newGameDropInAnimation, newGameDropOutAnimation;
-    private Animation cardsFadeOutAnimation;
-    private int screenHeight;
-    private Context context;
+    private final int screenHeight;
+    private final Context context;
 
     public AnimationManager(MainActivity mainActivity, int screenHeight){
-        var executorService = Executors.newSingleThreadExecutor();
-        executorService.execute(()-> setupAnimations(mainActivity, screenHeight));
-    }
-
-
-    private void setupAnimations(MainActivity mainActivity, int screenHeight){
         context = mainActivity.getApplicationContext();
         this.screenHeight = screenHeight;
-        resultsDropInAnimation = createDropInAnimation(mainActivity::onGameOverDialogShown);
-        resultsDropOutAnimation = createDropOutAnimation(mainActivity::onResultsDismissed);
-        newGameDropInAnimation = createDropInAnimation(()->{});
-        newGameDropOutAnimation = createDropOutAnimation(mainActivity::onNewGameScreenDismissed);
-        cardsFadeOutAnimation = AnimationHelper.createFadeOutAnimationForCards(context, mainActivity::onCardsFadedOut);
     }
 
 
-    public Animation getResultsDropInAnimation(){
-        return resultsDropInAnimation;
+    public void dropOut(ViewGroup layout, Runnable onAnimationFinished){
+        var animation = createDropOutAnimation(onAnimationFinished);
+        if(layout != null){
+            layout.startAnimation(animation);
+        }
     }
 
 
-    public Animation getResultsDropOutAnimation(){
-        return resultsDropOutAnimation;
+    public void fadeOut(ViewGroup layout, Runnable onAnimationFinished){
+        var animation = AnimationHelper.createFadeOutAnimationForCards(context, onAnimationFinished);
+        if(layout != null){
+            layout.startAnimation(animation);
+        }
     }
 
 
-    public Animation getNewGameDropInAnimation(){
-        return newGameDropInAnimation;
+    public void dropIn(ViewGroup layout){
+        var animation = createDropInAnimation();
+        if(layout != null){
+            layout.startAnimation(animation);
+        }
     }
 
 
-    public Animation getNewGameDropOutAnimation(){
-        return newGameDropOutAnimation;
+    public void dropIn(ViewGroup layout, Runnable onAnimationFinished){
+        var animation = createDropInAnimation(onAnimationFinished);
+        if(layout != null){
+            layout.startAnimation(animation);
+        }
     }
 
 
-    public Animation getCardsFadeOutAnimation(){
-        return cardsFadeOutAnimation;
+    public void startDropOutAnimation(ViewGroup layout, Runnable onAnimationFinished){
+        var animation = createDropOutAnimation(onAnimationFinished);
+        layout.startAnimation(animation);
+    }
+
+
+    private Animation createDropInAnimation(){
+        return AnimationHelper.createDropInAnimation(context, screenHeight);
     }
 
 

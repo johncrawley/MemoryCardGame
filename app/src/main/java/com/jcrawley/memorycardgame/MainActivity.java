@@ -215,10 +215,10 @@ public class MainActivity extends AppCompatActivity {
             recordTextView.setText(recordText);
             resultsLayout.setVisibility(VISIBLE);
             hideStatusPanel();
-            if(actualDelay > 0){
-                if(resultsLayout != null){
-                    resultsLayout.startAnimation(animationManager.getResultsDropInAnimation());
-                }
+            if(actualDelay > 0
+                && resultsLayout != null
+                && animationManager != null){
+                animationManager.dropIn(resultsLayout, this::onGameOverDialogShown);
             }
             else{
                 onGameOverDialogShown();
@@ -250,7 +250,7 @@ public class MainActivity extends AppCompatActivity {
         if(cardLayout != null
                 && cardLayout.getVisibility() == VISIBLE
                 && animationManager != null){
-            cardLayout.startAnimation(animationManager.getCardsFadeOutAnimation());
+            animationManager.fadeOut(cardLayout, this::onCardsFadedOut);
         }
     }
 
@@ -290,11 +290,14 @@ public class MainActivity extends AppCompatActivity {
         isShowingNewGameDialogue = false;
         newGameLayout.clearAnimation();
         newGameLayout.setVisibility(VISIBLE);
-        newGameLayout.startAnimation(animationManager.getNewGameDropOutAnimation());
+        animationManager.startDropOutAnimation(newGameLayout, this::onNewGameScreenDismissed);
     }
 
 
     public void onResultsDismissed(){
+        if(resultsLayout == null){
+            return;
+        }
         resultsLayout.clearAnimation();
         resultsLayout.setVisibility(View.GONE);
         showNewGameLayout();
@@ -302,6 +305,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void onNewGameScreenDismissed(){
+        if(newGameLayout == null){
+            return;
+        }
         newGameLayout.clearAnimation();
         newGameLayout.setVisibility(View.GONE);
         game.startAgain();
@@ -341,10 +347,7 @@ public class MainActivity extends AppCompatActivity {
         }
         newGameLayout.setVisibility(VISIBLE);
         if(animationManager != null){
-            var animation = animationManager.getNewGameDropInAnimation();
-            if(animation != null){
-                newGameLayout.startAnimation(animation);
-            }
+            animationManager.dropIn(newGameLayout);
         }
         notifyGameOfNewGameDialogPresence();
     }
@@ -356,8 +359,10 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void dismissResultsLayoutIfVisible(){
-        if(resultsLayout != null && resultsLayout.getVisibility() == VISIBLE){
-            resultsLayout.startAnimation(animationManager.getResultsDropOutAnimation());
+        if(resultsLayout != null
+                && resultsLayout.getVisibility() == VISIBLE
+                && animationManager != null){
+            animationManager.dropOut(resultsLayout, this::onResultsDismissed);
         }
     }
 
@@ -418,8 +423,11 @@ public class MainActivity extends AppCompatActivity {
         if(isReadyToDismissResults) {
             isReadyToDismissResults = false;
             resultsLayout.clearAnimation();
-            resultsLayout.startAnimation(animationManager.getResultsDropOutAnimation());
+            if(animationManager != null){
+                animationManager.dropOut(resultsLayout, this::onResultsDismissed);
+            }
         }
     }
+
 
 }
